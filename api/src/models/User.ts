@@ -15,7 +15,6 @@ interface UserModel
     InferCreationAttributes<UserModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<string>;
   UUID: CreationOptional<string>;
   firstName: string;
   lastName: string;
@@ -34,56 +33,63 @@ module.exports = (sequelize: Sequelize) => {
   sequelize.define<UserModel>(
     path.basename(__filename, path.extname(__filename)).toLowerCase(),
     {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-      },
-      
       UUID: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
       }, 
 
       firstName: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isAlpha: true,
+        }
       },
 
       lastName: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+        isAlpha: true,
+        }
       },
       
       username: {
-        type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
       },
 
       email: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+        isEmail: true,
+        }
       },
 
       mobile_zone: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
       },
       mobile: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
       },
 
       address: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
       },
 
       imagenDePerfil: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
       },
     },
-    { timestamps: false }
+    { timestamps: false,
+      paranoid: true,
+    }
   );
 };

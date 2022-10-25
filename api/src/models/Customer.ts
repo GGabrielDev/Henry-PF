@@ -30,6 +30,8 @@ import {
           primaryKey: true,
         },
       }, 
-      { timestamps: false },
+      { timestamps: false 
+        paranoid: true,
+      },
     );
   };

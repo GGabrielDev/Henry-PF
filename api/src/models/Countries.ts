@@ -16,11 +16,11 @@ interface CountriesModel
         InferCreationAttributes<CountriesModel>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: CreationOptional<string>;
+    id: CreationOptional<number>;
     nameSpanish: string;
     name: string;
     code: string;
-    callingCode: number;
+    mobileZone: number;
     flag: string;
 }
 
@@ -33,10 +33,11 @@ module.exports = (sequelize: Sequelize) => {
         path.basename(__filename, path.extname(__filename)).toLowerCase(),
         {
             id: {
-                type: DataTypes.NUMBER,
-                defaultValue: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
                 primaryKey: true,
             },
+
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -57,12 +58,12 @@ module.exports = (sequelize: Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: false,
                 validate: {
-                    isNumeric: true,
+                    isAlpha: true,
                 }
             },
 
-            callingCode: {
-                type: DataTypes.STRING,
+            mobileZone: {
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 validate: {
                     isNumeric: true,
@@ -71,7 +72,7 @@ module.exports = (sequelize: Sequelize) => {
 
             flag: {
                 type: DataTypes.STRING,
-                allowNull: true,
+                allowNull: false,
                 validate:{
                     isUrl: true,
                 }

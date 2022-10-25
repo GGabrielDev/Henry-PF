@@ -74,6 +74,7 @@ module.exports = (sequelize: Sequelize) => {
       mobile: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           is: /^[0-9]+(-[0-9]+)+$/i,
         }

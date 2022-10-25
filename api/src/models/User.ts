@@ -5,7 +5,6 @@ import {
   Model,
   Sequelize,
   DataTypes,
-  DATE,
 } from "sequelize";
 import path from "path";
 
@@ -15,13 +14,11 @@ interface UserModel
     InferCreationAttributes<UserModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<string>;
-  UUID: CreationOptional<string>;
+  uuid: CreationOptional<string>;
   firstName: string;
   lastName: string;
   username: string;
   email: string;
-  mobile_zone: string;
   mobile: string;
   address: string;
   imagenDePerfil: CreationOptional<string>;
@@ -34,56 +31,69 @@ module.exports = (sequelize: Sequelize) => {
   sequelize.define<UserModel>(
     path.basename(__filename, path.extname(__filename)).toLowerCase(),
     {
-      id: {
+      uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      
-      UUID: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      }, 
 
       firstName: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isAlpha: true,
+        }
       },
 
       lastName: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isAlpha: true,
+        }
       },
-      
+
       username: {
-        type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isAlphanumeric: true,
+        }
       },
 
       email: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true,
+        }
       },
 
-      mobile_zone: {
-        type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
-      },
       mobile: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          is: /^[0-9]+(-[0-9]+)+$/i,
+        }
       },
 
       address: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        allowNull: false,
       },
 
       imagenDePerfil: {
         type: DataTypes.STRING,
-        defaultValue: DataTypes.STRING,
+        validate: {
+          isUrl: true,
+        }
       },
     },
-    { timestamps: false }
+    {
+      timestamps: false,
+      paranoid: true,
+    },
   );
 };

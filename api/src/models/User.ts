@@ -5,6 +5,7 @@ import {
   Model,
   Sequelize,
   DataTypes,
+  DATE,
 } from "sequelize";
 import path from "path";
 
@@ -15,6 +16,15 @@ interface UserModel
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<string>;
+  UUID: CreationOptional<string>;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  mobile_zone: string;
+  mobile: string;
+  address: string;
+  imagenDePerfil: CreationOptional<string>;
 }
 
 // Exportamos una funcion que define el modelo
@@ -28,6 +38,50 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
+      },
+      
+      UUID: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      }, 
+
+      firstName: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
+      },
+
+      lastName: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
+      },
+      
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
+      },
+
+      email: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
+      },
+
+      mobile_zone: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
+      },
+      mobile: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
+      },
+
+      address: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
+      },
+
+      imagenDePerfil: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.STRING,
       },
     },
     { timestamps: false }

@@ -66,11 +66,12 @@ const NavbarContainer = styled.div`
     transition: 0.5s;
     &:hover {
       color: ${({ theme }) => theme.primary};
-  }
+    }
 
-  @media screen and (max-width: 1000px) {
-    .userinfo-text {
-      display: none;
+    @media screen and (max-width: 1000px) {
+      .userinfo-text {
+        display: none;
+      }
     }
   }
 `;
@@ -164,7 +165,7 @@ const Userinfo = styled.div`
   .icono__user {
     font-size: 20px;
     display: block;
-    background-color: ${({ theme }) => theme.tertiary};
+    background-color: transparent;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.1);
   }

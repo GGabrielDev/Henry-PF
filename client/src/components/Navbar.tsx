@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -19,7 +20,9 @@ const Navbar = () => {
             <div className="userinfo-item userinfo-text">Mans</div>
             <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item">
-              <BiUser className="icono__user" />
+              <Link to="/usuario">
+                <BiUser className="icono__user" />
+              </Link>
             </div>
             <div className="userinfo-item">
               <button>
@@ -164,6 +167,8 @@ const Userinfo = styled.div`
 
   .icono__user {
     font-size: 20px;
+    text-decoration: none;
+    color: black;
     display: block;
     background-color: transparent;
     border-radius: 50%;

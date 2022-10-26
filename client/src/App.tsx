@@ -1,13 +1,9 @@
-import Navbar from "./components/Navbar";
-import SliderContainer from "./components/Slider/SliderContainer";
-import Filtros from "./components/Filtros/Filtros";
+import Router from "./Router/Router";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <SliderContainer />
-      <Filtros />
+      <Router />
     </div>
   );
 }

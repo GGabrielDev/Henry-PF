@@ -20,6 +20,8 @@ const FiltrosContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  width: 100%;
+  flex-wrap: wrap;
   .filtro__name {
     padding: 5px 5px;
     margin: 0 15px;

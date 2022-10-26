@@ -18,6 +18,7 @@ interface UserModel
   firstName: string;
   lastName: string;
   username: string;
+  genero: string;
   email: string;
   mobile: string;
   address: string;
@@ -60,6 +61,11 @@ module.exports = (sequelize: Sequelize) => {
         validate: {
           isAlphanumeric: true,
       },
+    },
+
+    genero:{
+      type: DataTypes.ENUM("M","F","No binario", "No quiero decir"),
+      defaultValue:"No quiero decir",
     },
 
       email: {

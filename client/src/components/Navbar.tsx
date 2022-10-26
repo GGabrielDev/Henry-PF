@@ -172,6 +172,10 @@ const Userinfo = styled.div`
 
   @media screen and (max-width: 1000px) {
     width: 150px;
+
+    .userinfo-text{
+      display: none;
+    }
   }
   @media screen and (max-width: 350px) {
     width: 130px;

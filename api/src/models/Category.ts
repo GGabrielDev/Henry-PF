@@ -14,7 +14,7 @@ import {
       InferCreationAttributes<CategoryModel>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: CreationOptional<string>;
+    id: number;
     name: string;
   }
   
@@ -27,8 +27,10 @@ import {
       {
         id: {
           type: DataTypes.NUMBER,
-          defaultValue: DataTypes.NUMBER,
+          autoIncrement: true,
           unique: true,
+          primaryKey:true,
+          
           validate:{
             isNumeric: true,
           }

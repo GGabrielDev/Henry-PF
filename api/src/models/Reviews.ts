@@ -14,9 +14,9 @@ import {
       InferCreationAttributes<ReviewModel>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: CreationOptional<string>;
+    uuid: CreationOptional<string>;
     title: string;
-    cuerpo: string;
+    body: string;
     score: string;
   }
   
@@ -27,9 +27,10 @@ import {
     sequelize.define<ReviewModel>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        id: {
-          type: DataTypes.NUMBER,
-          unique: true,
+        uuid: {
+          type: DataTypes.UUID,
+          defaultValue: DataTypes.UUIDV4,
+          primaryKey: true,
         },
   
         title: {
@@ -40,7 +41,7 @@ import {
           }
         },
 
-        cuerpo: {
+        body: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {

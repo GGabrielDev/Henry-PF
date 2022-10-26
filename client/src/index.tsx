@@ -6,6 +6,8 @@ import { store } from "./app/store";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider } from "styled-components";
+import { Themes } from "./components/Theme/Theme";
 
 const GlobalStyles = createGlobalStyle`
 	* {
@@ -28,9 +30,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <GlobalStyles />
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <ThemeProvider theme={Themes}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -1,6 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-import { Themes } from "./Theme/Theme";
 import {BiUser,BiShoppingBag} from "react-icons/bi"
 
 const Navbar = () => {

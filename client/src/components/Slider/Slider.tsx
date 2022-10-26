@@ -41,7 +41,7 @@ const CarouselButtonContainer = styled.div`
 `;
 
 const CarouselButton = styled.button`
-  color: #b9b9b9;
+  color: ${({ theme }) => theme.primary};
   cursor: pointer;
   padding: 10px;
   border: none;

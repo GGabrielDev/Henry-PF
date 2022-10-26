@@ -5,4 +5,5 @@ export const Themes = {
   details: "#0d192b" /* VERDE */,
   tertiary: "#0d192b" /* VERDE OSCURO */,
   light: "#fff" /* BLANCO */,
+  price: "#ffa600" //*NARANJA*
 };

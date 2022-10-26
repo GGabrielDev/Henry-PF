@@ -1,8 +1,8 @@
 export const Themes = {
-  primary: "#07f9a2" /* VERDE AGUA */,
-  secondary: "#0d192b" /* MEGRO*/,
-  subtitle: "##09c184" /* VERDE AGUA OCURO*/,
-  details: "#0d192b" /* VERDE */,
-  tertiary: "#0d192b" /* VERDE OSCURO */,
+  primary: "#c2b9fa" /* VIOLETA PASTEL */,
+  secondary: "#f1deff" /* VIOLETA PASTEL CLARO*/,
+  dark: "#1a1833" /* NEGRO*/,
+  details: "#77767c" /* GRIS */,
+  tertiary: "#e2e2e2" /* GRIS CLARO */,
   light: "#fff" /* BLANCO */,
 };

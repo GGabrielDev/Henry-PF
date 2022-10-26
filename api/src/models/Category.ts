@@ -30,10 +30,6 @@ import {
           autoIncrement: true,
           unique: true,
           primaryKey:true,
-          
-          validate:{
-            isNumeric: true,
-          }
         },
   
         name: {

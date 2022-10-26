@@ -130,7 +130,7 @@ const Headermiddle = styled.div`
     }
 `;
 
-const Logo = styled.div`
+export const Logo = styled.div`
   width: 200px;
   height: 60px;
   display: flex;

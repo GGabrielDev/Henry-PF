@@ -1,7 +1,6 @@
-import { produceWithPatches } from "immer";
-import React, {ReactElement} from "react";
+import  {ReactElement} from "react";
 import styled from "styled-components";
-import { Themes } from "../Theme/Theme";
+
 
 interface Props{
     children:ReactElement
@@ -10,9 +9,14 @@ interface Props{
 export function AuthCard(props:Props){
     return(
         <AuthContainer>
-            {props.children}
+          {props.children}
         </AuthContainer>
     )
 }
-const AuthContainer= styled.div`
+
+const AuthContainer = styled.div`
+display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
 `

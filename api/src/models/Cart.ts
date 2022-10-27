@@ -8,10 +8,10 @@ import {
   } from "sequelize";
   import path from "path";
   
-  interface Customer_Orders_Product_Model
+  interface Cart_Model
     extends Model<
-      InferAttributes<Customer_Orders_Product_Model>,
-      InferCreationAttributes<Customer_Orders_Product_Model>
+      InferAttributes<Cart_Model>,
+      InferCreationAttributes<Cart_Model>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
     id: CreationOptional<number>;
@@ -22,7 +22,7 @@ import {
   // Luego le injectamos la conexion a sequelize.
   module.exports = (sequelize: Sequelize) => {
     // defino el modelo
-    sequelize.define<Customer_Orders_Product_Model>(
+    sequelize.define<Cart_Model>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
         id: {

@@ -146,7 +146,7 @@ const Headermiddle = styled.div`
     }
 `;
 
-export export const Logo = styled.div`
+export const Logo = styled.div`
   width: 200px;
   height: 60px;
   display: flex;

@@ -1,8 +1,42 @@
-
+import {useState} from "react"
 import styled from "styled-components";
 import Navbar from '../components/Navbar';
+import Validate,{formType, errType} from "../components/addProduct/validate";
+
+
 
 const Publicar = () => {
+  const [err, setErr] = useState<errType> ({
+    name: "",
+    price_local: "",
+    stock: "",
+    description: "",
+    suspended: "",
+  });
+  const [input, setInput] = useState<formType>({
+    name: "",
+    price_local: 0,
+    stock: 0,
+    description: "",
+    suspended: "",
+  });
+
+  const handleChange = (e:any) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+    setErr(Validate({ ...input, [e.target.name]: e.target.value }));
+    
+    // console.log(input)
+    console.log(err);
+  };
+  const handleSubmit = (e:any) => {
+    e.preventDefault()
+    console.log(err.name.length)
+    if(err.name === "null" || err.price_local==="null" || err.stock==="null" || err.description==="null" || err.suspended==="null"){
+      alert("faltan datos")
+    } else{
+      alert("vas bien")
+    }
+  };
   return (
     <PublicarContainer>
       <Navbar/>
@@ -13,23 +47,23 @@ const Publicar = () => {
             <div className="productinfo__left">
               <div className="inputinfo">
                 <label htmlFor="">Nombre del producto:</label>
-                <input name='name' type="text" />
+                <input name='name' type="text"  onChange={handleChange} />
               </div>
               <div className="inputinfo">
                 <label htmlFor="price_unit">Precio:</label>
-                <input name='price_unit(local)' type="number" />
+                <input name='price_local' type="number" onChange={handleChange} />
               </div>
               <div className="inputinfo">
                 <label htmlFor="stock">Stock:</label>
-                <input name='stock' type="number" />
+                <input name='stock' type="number" onChange={handleChange} />
               </div>
               <div className="inputinfo">
                 <label htmlFor="description">Descripcion:</label>
-                <textarea name='description' rows={5} cols={33} />
+                <textarea name='description' rows={5} cols={33} onChange={handleChange} />
               </div>
               <div className="inputinfo">
                 <label htmlFor="suspended">Estado:</label>
-                <select name="suspended" id="">
+                <select name="suspended" id="" onChange={handleChange}>
                   <option value="" selected disabled hidden>Choose here</option>
                   <option value="si">Activo</option>
                   <option value="no">Suspendido</option>
@@ -44,7 +78,7 @@ const Publicar = () => {
 
             </div>
           </div>
-          <button className='submitproduct'>Submit</button>
+          <button onClick={handleSubmit} className='submitproduct'>Submit</button>
         </form>
         
       </AddProduct>
@@ -115,6 +149,7 @@ const AddProduct = styled.div`
       border: none;
       border-radius: 4px;
       margin-bottom: 10px;
+      padding: 10px;
     }
 
     select{

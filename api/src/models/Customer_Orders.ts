@@ -14,7 +14,11 @@ import {
       InferCreationAttributes<CustomerModel>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: CreationOptional<string>;
+    cust_order_id: CreationOptional<string>;
+    adress_dest: string;
+    name_dest_person: string;
+    sale_date: Date;
+    total_price: number;
   }
   
   // Exportamos una funcion que define el modelo
@@ -24,11 +28,33 @@ import {
     sequelize.define<CustomerModel>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        id: {
+        cust_order_id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
         },
+
+        adress_dest:{
+          type: DataTypes.STRING,
+          allowNull:false,
+        },
+
+        name_dest_person: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+
+        sale_date: {
+          type: DataTypes.DATE,
+        },
+
+        total_price: {
+          type: DataTypes.FLOAT(8,2),
+          allowNull:false,
+          validate: {
+            isNumeric:true,
+          }
+        }
       }, 
       { timestamps: false,
         paranoid: true, 

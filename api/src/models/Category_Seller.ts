@@ -8,31 +8,32 @@ import {
   } from "sequelize";
   import path from "path";
   
-  interface CategoryModel
+  interface Category_Seller_Model
     extends Model<
-      InferAttributes<CategoryModel>,
-      InferCreationAttributes<CategoryModel>
+      InferAttributes<Category_Seller_Model>,
+      InferCreationAttributes<Category_Seller_Model>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: number;
-    name: string;
+    cate_prod_id: CreationOptional<string>;
+    name_cate_prod: string;
+    image: string;
   }
   
   // Exportamos una funcion que define el modelo
   // Luego le injectamos la conexion a sequelize.
   module.exports = (sequelize: Sequelize) => {
     // defino el modelo
-    sequelize.define<CategoryModel>(
+    sequelize.define<Category_Seller_Model>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        id: {
+        cate_prod_id: {
           type: DataTypes.NUMBER,
           autoIncrement: true,
           unique: true,
           primaryKey:true,
         },
   
-        name: {
+        name_cate_prod: {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
@@ -40,6 +41,15 @@ import {
             isAlphanumeric: true,
           }
         },
+
+        image: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          validate: {
+            isUrl: true,
+          }
+        }
+
       },
       {
         timestamps: false,

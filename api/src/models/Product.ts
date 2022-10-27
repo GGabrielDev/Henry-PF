@@ -22,6 +22,7 @@ import {
     stock: string;
     image: CreationOptional<string>;
     suspended: boolean;
+    tamano: string;
   }
   
   // Exportamos una funcion que define el modelo
@@ -88,6 +89,12 @@ import {
           type: DataTypes.BOOLEAN,
           allowNull: false,
         },
+
+        tamano:{
+          type: DataTypes.ENUM("XS", "S", "M", "L", "XL", "Null"),
+          allowNull: true,
+          defaultValue: null,
+        }
       },
       {
         timestamps: false,

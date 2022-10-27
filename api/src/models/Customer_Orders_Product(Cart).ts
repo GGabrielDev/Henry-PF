@@ -8,49 +8,54 @@ import {
   } from "sequelize";
   import path from "path";
   
-  interface ReviewModel
+  interface Customer_Orders_Product_Model
     extends Model<
-      InferAttributes<ReviewModel>,
-      InferCreationAttributes<ReviewModel>
+      InferAttributes<Customer_Orders_Product_Model>,
+      InferCreationAttributes<Customer_Orders_Product_Model>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    commentId: CreationOptional<string>;
-    body: string;
-    score: string;
+    cart_id: CreationOptional<string>;
+    name_prod: string;
+    price_prod: number;
+    amount: number;
   }
   
   // Exportamos una funcion que define el modelo
   // Luego le injectamos la conexion a sequelize.
   module.exports = (sequelize: Sequelize) => {
     // defino el modelo
-    sequelize.define<ReviewModel>(
+    sequelize.define<Customer_Orders_Product_Model>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        commentId: {
+        cart_id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
         },
 
-        body: {
-            type: DataTypes.STRING,
+        name_prod:{
+            type: DataTypes.STRING(120),
             allowNull: false,
-            validate: {
-              isAlphanumeric: true,
-            }
-          },
+        },
 
-        score: {
-            type: DataTypes.ENUM("1","2","3","4","5"),
+        amount: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
-                isNumeric: true
+                isNumeric: false,
             }
         },
+
+        price_prod: {
+          type: DataTypes.FLOAT(8,2),
+          allowNull:false,
+          validate: {
+            isNumeric:true,
+          }
+        },
+      }, 
+      { timestamps: false,
+        paranoid: true, 
     },
-      {
-        timestamps: false,
-        paranoid: true,
-      },
     );
   };

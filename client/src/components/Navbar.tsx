@@ -30,13 +30,6 @@ const Navbar = () => {
         <Headermiddle>
           <Logo>PedirYa</Logo>
           <Userinfo>
-
-            <div className="userinfo-item userinfo-text">
-              Mans
-            </div>
-            <div className="userinfo-item userinfo-text">
-              Womans
-            </div>
             <div className="userinfo-item userinfo-text">Mans</div>
             <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item">
@@ -74,6 +67,17 @@ const NavbarContainer = styled.div`
 
   .userinfo-item{
     cursor: pointer;
+  }
+
+  .userinfo-item button{
+    svg{
+      color: white;
+    }
+  }
+
+  .userinfo-text{
+    font-weight: 400;
+    color: gray;
   }
 
   .infocategories-item{
@@ -148,7 +152,7 @@ export const Logo = styled.div`
   justify-content: center;
   font-size: 40px;
   font-weight: 700;
-  color: #8400ff;
+  color: ${({ theme }) => theme.primary};
 
   @media screen and (max-width:1000px){
       width: auto;
@@ -168,7 +172,7 @@ const Userinfo = styled.div`
 
     button{
       border-radius: 7px;
-      background-color: #8400ff;
+      background-color: ${({ theme }) => theme.primary};
       color: white;
       border: none;
       padding: 7px 10px;
@@ -192,13 +196,12 @@ const Userinfo = styled.div`
     color: black;
     }
 
-
-    @media screen and (max-width:1000px){
-      width: 150px;
-    }
-    @media screen and (max-width:350px){
-      width: 130px;
-    }
+  @media screen and (max-width: 1000px) {
+    width: 150px;
+  }
+  @media screen and (max-width: 350px) {
+    width: 130px;
+  }
 `;
 
 const Headerbottom = styled.div`

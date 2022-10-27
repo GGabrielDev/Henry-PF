@@ -5,49 +5,49 @@ import {
   AiOutlineUser,
   AiOutlineArrowLeft,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const MenuUsuario = () => {
   return (
     <MenuUsuarioContainer>
       <MenuUsuarioContent>
-        <Link to="/">
+        <NavLink to="/">
           <div className="menu__back">
             <AiOutlineArrowLeft className="user__icon-arrow" /> Volver
           </div>
-        </Link>
+        </NavLink>
 
         <div className="menu__title">
           Personal <AiOutlineUser className="user__icon " />
         </div>
 
         <div className="menu__sections">
-          <Link to="/usuario/general">
-            <span className="menu__sections-name active">General</span>
-          </Link>
-          <Link to="/usuario/compras">
-            <span className="menu__sections-name">Compras</span>
-          </Link>
-          <Link to="/usuario/favoritos">
-            <span className="menu__sections-name">Favoritos</span>
-          </Link>
-          <Link to="/usuario/editar">
-            <span className="menu__sections-name name__ultimate">
-              Editar perfil
-            </span>
-          </Link>
+          <NavLink to="/usuario/general" className="menu__sections-name">
+            <span>General</span>
+          </NavLink>
+          <NavLink to="/usuario/compras" className="menu__sections-name">
+            <span>Compras</span>
+          </NavLink>
+          <NavLink to="/usuario/favoritos" className="menu__sections-name">
+            <span>Favoritos</span>
+          </NavLink>
+          <NavLink to="/usuario/editar" className="menu__sections-name">
+            <span className="name__ultimate">Editar perfil</span>
+          </NavLink>
         </div>
-
         <div className="menu__title">
           Medios de pago <AiFillCreditCard className="user__icon " />
         </div>
-
         <div className="menu__sections">
-          <span className="menu__sections-name">Tarjeta</span>
-          <span className="menu__sections-name">Mecador Pago</span>
-          <span className="menu__sections-name name__ultimate">
-            Editar Métodos
-          </span>
+          <NavLink to="/usuario/editar" className="menu__sections-name">
+            <span>Tarjeta</span>
+          </NavLink>
+          <NavLink to="/usuario/editar" className="menu__sections-name">
+            <span>Mecador Pago</span>
+          </NavLink>
+          <NavLink to="/usuario/editar" className="menu__sections-name">
+            <span className="name__ultimate">Editar Métodos</span>
+          </NavLink>
         </div>
       </MenuUsuarioContent>
     </MenuUsuarioContainer>
@@ -59,12 +59,15 @@ export default MenuUsuario;
 const MenuUsuarioContainer = styled.div`
   width: 250px;
   height: 100%;
-  border-right: 1px solid rgb(0, 0, 0, 0.1);
   .icon_user {
     margin: 0 5px;
   }
   Link {
     text-decoration: none;
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 150px;
   }
 `;
 
@@ -81,7 +84,7 @@ const MenuUsuarioContent = styled.div`
     margin-right: 5px;
   }
   .menu__title {
-    font-size: bold;
+    font-size: 15px;
     color: ${({ theme }) => theme.primary};
     display: flex;
     align-items: center;
@@ -113,5 +116,22 @@ const MenuUsuarioContent = styled.div`
 
   .name__ultimate {
     margin-bottom: 0px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 10px;
+    .menu__title {
+      font-size: 13px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    padding: 5px;
+    .menu__title {
+      font-size: 11px;
+    }
+    .menu__sections-name {
+      padding: 0;
+    }
   }
 `;

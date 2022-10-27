@@ -23,7 +23,7 @@ interface UserModel
   mobile: string;
   address: string;
   imagenDePerfil: CreationOptional<string>;
-  isAdmin: string;
+  userType: string;
   suspended: boolean;
 }
 
@@ -100,9 +100,8 @@ module.exports = (sequelize: Sequelize) => {
         }
       },
 
-      isAdmin:{
-        type: DataTypes.ENUM("Administrador", "Vendedor", "Usuario"),
-        defaultValue: false,
+      userType:{
+        type: DataTypes.ENUM("Administrador General", "Administrador", "Usuario"),
         allowNull: false,
       },
 

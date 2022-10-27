@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+
 import { Themes } from "./Theme/Theme";
-import {BiUser,BiShoppingBag} from "react-icons/bi"
-import {Link} from 'react-router-dom';
+
+
+import { BiUser, BiShoppingBag } from "react-icons/bi";
+import { Link } from "react-router-dom";
+
 
 const Navbar = () => {
   return (
@@ -27,17 +31,22 @@ const Navbar = () => {
         <Headermiddle>
           <Logo>PedirYa</Logo>
           <Userinfo>
+
             <div className="userinfo-item userinfo-text">
               Mans
             </div>
             <div className="userinfo-item userinfo-text">
               Womans
             </div>
+            <div className="userinfo-item userinfo-text">Mans</div>
+            <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item">
-              <Link to='/auth/login'>
-              <BiUser/>
+              <Link to="/usuario">
+                <BiUser className="icono__user" />
               </Link>
+
             </div>
+           
             <div className="userinfo-item">
               <button><BiShoppingBag/> Cart(0)</button>
             </div>
@@ -175,9 +184,17 @@ const Userinfo = styled.div`
       }
     }
 
+
     svg{
       font-size: 30px;
     }
+
+    svg{
+      font-size: 30px;
+    text-decoration: none;
+    color: black;
+    }
+
 
     @media screen and (max-width:1000px){
       width: 150px;

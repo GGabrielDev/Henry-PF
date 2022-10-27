@@ -101,7 +101,7 @@ module.exports = (sequelize: Sequelize) => {
       },
 
       isAdmin:{
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM("Administrador", "Vendedor", "Usuario"),
         defaultValue: false,
         allowNull: false,
       },

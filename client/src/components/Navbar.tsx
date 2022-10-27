@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Themes } from "./Theme/Theme";
 import {BiUser,BiShoppingBag} from "react-icons/bi"
+import {Link} from 'react-router-dom';
 
 const Navbar = () => {
   return (
@@ -33,7 +34,9 @@ const Navbar = () => {
               Womans
             </div>
             <div className="userinfo-item">
+              <Link to='/auth/login'>
               <BiUser/>
+              </Link>
             </div>
             <div className="userinfo-item">
               <button><BiShoppingBag/> Cart(0)</button>

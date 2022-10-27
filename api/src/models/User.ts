@@ -7,32 +7,36 @@ import {
   DataTypes,
 } from "sequelize";
 import path from "path";
+import { userInfo } from "os";
 
-interface UserModel
-  extends Model<
-    InferAttributes<UserModel>,
-    InferCreationAttributes<UserModel>
-  > {
+class User extends Model<
+  InferAttributes<User>,
+  InferCreationAttributes<User>
+> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  id: CreationOptional<string>;
-  firstName: string;
-  lastName: string;
-  username: string;
-  genero: string;
-  email: string;
-  mobile: string;
-  address: string;
-  imagenDePerfil: CreationOptional<string>;
-  userType: string;
-  suspended: boolean;
+  declare id: CreationOptional<string>;
+  declare firstName: string;
+  declare lastName: string;
+  declare username: string;
+  declare genero: string;
+  declare email: string;
+  declare mobile: string;
+  declare address: string;
+  declare imagenDePerfil: string | null;
+  declare userType: string;
+  declare suspended: boolean;
+  // timestamps!
+  // createdAt can be undefined during creation
+  declare createdAt: CreationOptional<Date>;
+  // updatedAt can be undefined during creation
+  declare updatedAt: CreationOptional<Date>;
 }
 
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize: Sequelize) => {
   // defino el modelo
-  sequelize.define<UserModel>(
-    path.basename(__filename, path.extname(__filename)).toLowerCase(),
+  User.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -62,13 +66,13 @@ module.exports = (sequelize: Sequelize) => {
         unique: true,
         validate: {
           isAlphanumeric: true,
+        },
       },
-    },
 
-    genero:{
-      type: DataTypes.ENUM("M","F","No binario", "No quiero decir"),
-      defaultValue:"No quiero decir",
-    },
+      genero: {
+        type: DataTypes.ENUM("M", "F", "No binario", "No quiero decir"),
+        defaultValue: "No quiero decir",
+      },
 
       email: {
         type: DataTypes.STRING,
@@ -100,17 +104,24 @@ module.exports = (sequelize: Sequelize) => {
         }
       },
 
-      userType:{
+      userType: {
         type: DataTypes.ENUM("Administrador General", "Administrador", "Usuario"),
         allowNull: false,
       },
 
       suspended: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
       },
+
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
+
     },
     {
-      timestamps: false,
+      sequelize,
+      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      timestamps: true,
       paranoid: true,
     },
   );

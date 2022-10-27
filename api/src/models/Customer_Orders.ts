@@ -1,63 +1,64 @@
 import {
-    CreationOptional,
-    InferAttributes,
-    InferCreationAttributes,
-    Model,
-    Sequelize,
-    DataTypes,
-  } from "sequelize";
-  import path from "path";
-  
-  interface Customer_Orders_Model
-    extends Model<
-      InferAttributes<Customer_Orders_Model>,
-      InferCreationAttributes<Customer_Orders_Model>
-    > {
-    // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: CreationOptional<string>;
-    adress_dest: string;
-    name_dest_person: string;
-    sale_date: Date;
-    total_price: number;
-  }
-  
-  // Exportamos una funcion que define el modelo
-  // Luego le injectamos la conexion a sequelize.
-  module.exports = (sequelize: Sequelize) => {
-    // defino el modelo
-    sequelize.define<Customer_Orders_Model>(
-      path.basename(__filename, path.extname(__filename)).toLowerCase(),
-      {
-        id: {
-          type: DataTypes.UUID,
-          defaultValue: DataTypes.UUIDV4,
-          primaryKey: true,
-        },
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+  Sequelize,
+  DataTypes,
+} from "sequelize";
+import path from "path";
 
-        adress_dest:{
-          type: DataTypes.STRING,
-          allowNull:false,
-        },
+class Customer_Orders extends Model<
+    InferAttributes<Customer_Orders>,
+    InferCreationAttributes<Customer_Orders>
+  > {
+  // Some fields are optional when calling UserModel.create() or UserModel.build()
+  declare id: CreationOptional<string>;
+  declare destination: string;
+  declare destination_person: string;
+  declare sale_date: Date;
+  declare total_price: number;
+}
 
-        name_dest_person: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
+// Exportamos una funcion que define el modelo
+// Luego le injectamos la conexion a sequelize.
+module.exports = (sequelize: Sequelize) => {
+  // defino el modelo
+  Customer_Orders.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
 
-        sale_date: {
-          type: DataTypes.DATE,
-        },
+      destination: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
 
-        total_price: {
-          type: DataTypes.FLOAT(8,2),
-          allowNull:false,
-          validate: {
-            isNumeric:true,
-          }
+      destination_person: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+
+      sale_date: {
+        type: DataTypes.DATE,
+      },
+
+      total_price: {
+        type: DataTypes.DECIMAL(8, 2),
+        allowNull: false,
+        validate: {
+          isNumeric: true,
         }
-      }, 
-      { timestamps: false,
-        paranoid: true, 
+      }
     },
-    );
-  };
+    {
+      sequelize,
+      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      timestamps: false,
+      paranoid: true,
+    },
+  );
+};

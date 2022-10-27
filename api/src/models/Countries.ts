@@ -19,9 +19,10 @@ interface CountriesModel
     id: CreationOptional<number>;
     nameSpanish: string;
     name: string;
-    code: string;
+    code_cca3: string;
     mobileZone: number;
     flag: string;
+    code_currencies: string;
 }
 
 // Exportamos una funcion que define el modelo
@@ -54,7 +55,7 @@ module.exports = (sequelize: Sequelize) => {
                 }
             },
 
-            code: {
+            code_cca3: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 validate: {
@@ -77,6 +78,11 @@ module.exports = (sequelize: Sequelize) => {
                     isUrl: true,
                 }
               },
+
+            code_currencies: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
 
         },
         {

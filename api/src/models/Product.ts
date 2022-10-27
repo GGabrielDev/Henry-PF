@@ -21,6 +21,7 @@ import {
     priceLocal: number;
     stock: string;
     image: CreationOptional<string>;
+    suspended: boolean;
   }
   
   // Exportamos una funcion que define el modelo
@@ -81,6 +82,11 @@ import {
           validate: {
             isUrl: true,
           }
+        },
+
+        suspended: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
         },
       },
       {

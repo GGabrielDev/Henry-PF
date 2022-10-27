@@ -23,6 +23,8 @@ interface UserModel
   mobile: string;
   address: string;
   imagenDePerfil: CreationOptional<string>;
+  isAdmin: boolean;
+  suspended: boolean;
 }
 
 // Exportamos una funcion que define el modelo
@@ -71,7 +73,7 @@ module.exports = (sequelize: Sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
         validate: {
           isEmail: true,
         }
@@ -80,7 +82,7 @@ module.exports = (sequelize: Sequelize) => {
       mobile: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
         validate: {
           is: /^[0-9]+(-[0-9]+)+$/i,
         }
@@ -96,6 +98,16 @@ module.exports = (sequelize: Sequelize) => {
         validate: {
           isUrl: true,
         }
+      },
+
+      isAdmin:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
+
+      suspended: {
+        type: DataTypes.BOOLEAN,
       },
     },
     {

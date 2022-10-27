@@ -24,7 +24,7 @@ export default function FormLog(){
           <Logo>PedirYa</Logo>
         </div>
 
-        <EmailIput>
+        <EmailInput>
           <div className="mx-2 mt-1"> 
             
           </div>
@@ -36,7 +36,7 @@ export default function FormLog(){
             placeholder="Email"
             onChange={ e => handleChange(e) }
           />
-        </EmailIput>
+        </EmailInput>
 
         <PasswordInput>
           <div className="mx-2 mt-1"> 
@@ -104,14 +104,14 @@ const FormContainer = styled.div`
   
 }
 `;
-const EmailIput = styled.div`
+export const EmailInput = styled.div`
 .input__email{
   border:none;
   font-size: 18px
 }
 
 `;
-const PasswordInput = styled.div`
+export const PasswordInput = styled.div`
 .input__pass{
   border:none;
   font-size: 18px

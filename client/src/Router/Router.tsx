@@ -1,8 +1,10 @@
 import { Route, Routes } from "react-router-dom";
+import  {Register}  from "../Pages/Register";
 import Home from "../Pages/Home";
 import { Login } from "../Pages/Login";
 import Publicar from "../Pages/Publicar";
 import Usuario from "../Pages/Usuario";
+import { Recover } from "../Pages/Recover";
 
 const Router = () => {
   return (
@@ -12,6 +14,9 @@ const Router = () => {
       <Route path="/usuario" element={<Usuario />} />
       <Route path="/auth/login" element={<Login />} />
 
+
+      <Route path="/auth/recover" element={<Recover />} />
+      <Route path="auth/register" element={<Register />} />
     </Routes>
   );
 };

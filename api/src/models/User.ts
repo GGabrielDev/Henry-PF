@@ -23,7 +23,7 @@ interface UserModel
   mobile: string;
   address: string;
   imagenDePerfil: CreationOptional<string>;
-  isAdmin: boolean;
+  isAdmin: string;
   suspended: boolean;
 }
 

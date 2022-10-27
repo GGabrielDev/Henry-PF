@@ -8,26 +8,23 @@ import {
 } from "sequelize";
 import path from "path";
 
-class Review extends Model<
-  InferAttributes<Review>,
-  InferCreationAttributes<Review>
-> {
+class Customer_Orders extends Model<
+    InferAttributes<Customer_Orders>,
+    InferCreationAttributes<Customer_Orders>
+  > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<string>;
-  declare body: string;
-  declare score: string;// timestamps!
-  // createdAt can be undefined during creation
-  declare createdAt: CreationOptional<Date>;
-  // updatedAt can be undefined during creation
-  declare updatedAt: CreationOptional<Date>;
+  declare destination: string;
+  declare destination_person: string;
+  declare sale_date: Date;
+  declare total_price: number;
 }
 
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize: Sequelize) => {
   // defino el modelo
-  Review.init(
-
+  Customer_Orders.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -35,30 +32,32 @@ module.exports = (sequelize: Sequelize) => {
         primaryKey: true,
       },
 
-      body: {
+      destination: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          isAlphanumeric: true,
-        }
       },
 
-      score: {
-        type: DataTypes.ENUM("1", "2", "3", "4", "5"),
+      destination_person: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+
+      sale_date: {
+        type: DataTypes.DATE,
+      },
+
+      total_price: {
+        type: DataTypes.DECIMAL(8, 2),
         allowNull: false,
         validate: {
-          isNumeric: true
+          isNumeric: true,
         }
-      },
-
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
-
+      }
     },
     {
       sequelize,
       tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
-      timestamps: true,
+      timestamps: false,
       paranoid: true,
     },
   );

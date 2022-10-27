@@ -17,23 +17,21 @@ const MenuUsuario = () => {
           </div>
         </Link>
 
-        <Link to="/"></Link>
-
         <div className="menu__title">
           Personal <AiOutlineUser className="user__icon " />
         </div>
 
         <div className="menu__sections">
-          <Link to="/general">
+          <Link to="/usuario/general">
             <span className="menu__sections-name active">General</span>
           </Link>
-          <Link to="/compras">
+          <Link to="/usuario/compras">
             <span className="menu__sections-name">Compras</span>
           </Link>
-          <Link to="/favoritos">
+          <Link to="/usuario/favoritos">
             <span className="menu__sections-name">Favoritos</span>
           </Link>
-          <Link to="/editar">
+          <Link to="/usuario/editar">
             <span className="menu__sections-name name__ultimate">
               Editar perfil
             </span>
@@ -99,7 +97,7 @@ const MenuUsuarioContent = styled.div`
   .menu__sections-name {
     margin-bottom: 5px;
     padding: 5px 20px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.dark};
     display: block;
     font-size: 11px;
     transition: 0.5s;

@@ -55,7 +55,7 @@ const GeneralContent = styled.div`
   width: 100%;
   height: 100%;
   padding: 20px 100px;
-  border-left: 1px solid rgb(0, 0, 0, 0.1);
+  border-left: 1px solid ${({ theme }) => theme.border};
 
   .general__perfil-title {
     font-size: 20px;
@@ -71,7 +71,7 @@ const GeneralContent = styled.div`
   }
 
   .img__container {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: ${({ theme }) => theme.border};
     width: 150px;
     height: 150px;
     border-radius: 100%;

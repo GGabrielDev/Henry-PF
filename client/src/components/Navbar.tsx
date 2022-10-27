@@ -9,30 +9,17 @@ const Navbar = () => {
       <Header>
         <Headertop>
           <Infotop>
-            <div className="infotop-item">
-              Client service
-            </div>
-            <div className="infotop-item">
-              FAQ
-            </div>
-            <div className="infotop-item">
-              About
-            </div>
-            <div className="infotop-item">
-              Eng
-            </div>
+            <div className="infotop-item">Client service</div>
+            <div className="infotop-item">FAQ</div>
+            <div className="infotop-item">About</div>
+            <div className="infotop-item">Eng</div>
           </Infotop>
         </Headertop>
         <Headermiddle>
           <Logo>PedirYa</Logo>
           <Userinfo>
-
-            <div className="userinfo-item userinfo-text">
-              Mans
-            </div>
-            <div className="userinfo-item userinfo-text">
-              Womans
-            </div>
+            <div className="userinfo-item userinfo-text">Mans</div>
+            <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item userinfo-text">Mans</div>
             <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item userinfo-text">Mans</div>
@@ -44,9 +31,10 @@ const Navbar = () => {
             </div>
 
             <div className="userinfo-item">
-              <button><BiShoppingBag/> Cart(0)</button>
+              <button>
+                <BiShoppingBag /> Cart(0)
+              </button>
             </div>
-
           </Userinfo>
         </Headermiddle>
         <Headerbottom>
@@ -59,7 +47,6 @@ const Navbar = () => {
             <div className="infocategories-item">Sports</div>
           </Infocategories>
         </Headerbottom>
-
       </Header>
     </NavbarContainer>
   );
@@ -70,7 +57,7 @@ export default Navbar;
 const NavbarContainer = styled.div`
   width: 100%;
 
-  .userinfo-item{
+  .userinfo-item {
     cursor: pointer;
   }
 
@@ -99,51 +86,46 @@ const NavbarContainer = styled.div`
 `;
 
 const Header = styled.div`
-
-    width: 100%;
-    position: absolute;
-
-  
+  width: 100%;
+  position: absolute;
 `;
 
 const Headertop = styled.div`
-    
-    height: 30px;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    border-bottom: 1.3px solid #f0f0f0;
-  
-    @media screen and (max-width:500px){
-      justify-content: center;
-    }
+  height: 30px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  border-bottom: 1.3px solid #f0f0f0;
 
+  @media screen and (max-width: 500px) {
+    justify-content: center;
+  }
 `;
 
 const Infotop = styled.div`
-    display: flex;
-    justify-content: space-around;
-    width: 230px;
-    margin-right: 50px;
+  display: flex;
+  justify-content: space-around;
+  width: 230px;
+  margin-right: 50px;
 
-    .infotop-item{
+  .infotop-item {
     font-size: 12px;
   }
 
-  @media screen and (max-width:500px){
-      margin: 0;
-    }
+  @media screen and (max-width: 500px) {
+    margin: 0;
+  }
 `;
 
 const Headermiddle = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 0 100px;
-    border-bottom: 1.3px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 100px;
+  border-bottom: 1.3px solid #f0f0f0;
 
-    @media screen and (max-width:1000px){
-      padding: 0 20px;
-    }
+  @media screen and (max-width: 1000px) {
+    padding: 0 20px;
+  }
 `;
 
 export const Logo = styled.div`
@@ -154,14 +136,13 @@ export const Logo = styled.div`
   justify-content: center;
   font-size: 40px;
   font-weight: 700;
-  color: #8400ff;
+  color: ${({ theme }) => theme.primary};
 
-  @media screen and (max-width:1000px){
-      width: auto;
-      justify-content: start;
-      font-size: 30px;
-    }
-  
+  @media screen and (max-width: 1000px) {
+    width: auto;
+    justify-content: start;
+    font-size: 30px;
+  }
 `;
 
 const Userinfo = styled.div`
@@ -175,14 +156,12 @@ const Userinfo = styled.div`
   button {
     border-radius: 7px;
     background-color: ${({ theme }) => theme.primary};
-
     color: white;
     border: none;
     padding: 7px 10px;
     display: flex;
     align-items: center;
     cursor: pointer;
-
     svg {
       font-size: 20px;
       margin-right: 5px;
@@ -195,16 +174,15 @@ const Userinfo = styled.div`
   svg {
     font-size: 30px;
     text-decoration: none;
-    color: black;
+    color: ${({ theme }) => theme.dark};
   }
 
-
-    @media screen and (max-width:1000px){
-      width: 150px;
-    }
-    @media screen and (max-width:350px){
-      width: 130px;
-    }
+  @media screen and (max-width: 1000px) {
+    width: 150px;
+  }
+  @media screen and (max-width: 350px) {
+    width: 130px;
+  }
 `;
 
 const Headerbottom = styled.div`
@@ -216,18 +194,18 @@ const Headerbottom = styled.div`
     justify-content: center;
   }
 
-    @media screen and (max-width:500px){
-      display: none;
-    }
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 
 const Infocategories = styled.div`
-    margin-left: 100px;
-    display: flex;
-    width: 400px;
-    justify-content: space-between;
+  margin-left: 100px;
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
 
-    @media screen and (max-width:1000px){
-      margin: 0;
-    }
+  @media screen and (max-width: 1000px) {
+    margin: 0;
+  }
 `;

@@ -77,7 +77,7 @@ const MenuUsuarioContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: start;
-    color: black;
+    color: ${({theme})=>theme.dark};
   }
 
   .user__icon-arrow {
@@ -107,10 +107,10 @@ const MenuUsuarioContent = styled.div`
     cursor: pointer;
     font-weight: 500;
     &:hover {
-      background-color: #f7f7f7;
+      background-color: ${({theme})=>theme.light};
     }
     &.active {
-      background-color: #f7f7f7;
+      background-color: ${({theme})=>theme.tertiary};
     }
   }
 

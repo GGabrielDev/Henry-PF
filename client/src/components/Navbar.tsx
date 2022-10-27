@@ -7,7 +7,6 @@ import { Themes } from "./Theme/Theme";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-
 const Navbar = () => {
   return (
     <NavbarContainer>
@@ -44,7 +43,6 @@ const Navbar = () => {
               <Link to="/usuario">
                 <BiUser className="icono__user" />
               </Link>
-
             </div>
            
             <div className="userinfo-item">
@@ -188,7 +186,6 @@ const Userinfo = styled.div`
     svg{
       font-size: 30px;
     }
-
     svg{
       font-size: 30px;
     text-decoration: none;

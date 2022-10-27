@@ -11,7 +11,6 @@ const Router = () => {
       <Route path="/publicar" element={<Publicar />} />
       <Route path="/usuario" element={<Usuario />} />
       <Route path="/auth/login" element={<Login />} />
-
     </Routes>
   );
 };

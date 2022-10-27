@@ -14,7 +14,7 @@ import {
       InferCreationAttributes<ReviewModel>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    commentId: CreationOptional<string>;
+    id: CreationOptional<string>;
     body: string;
     score: string;
   }
@@ -26,7 +26,7 @@ import {
     sequelize.define<ReviewModel>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        commentId: {
+        id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,

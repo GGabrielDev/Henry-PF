@@ -14,7 +14,7 @@ interface UserModel
     InferCreationAttributes<UserModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  uuid: CreationOptional<string>;
+  id: CreationOptional<string>;
   firstName: string;
   lastName: string;
   username: string;
@@ -34,7 +34,7 @@ module.exports = (sequelize: Sequelize) => {
   sequelize.define<UserModel>(
     path.basename(__filename, path.extname(__filename)).toLowerCase(),
     {
-      uuid: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,

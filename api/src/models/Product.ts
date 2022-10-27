@@ -14,7 +14,7 @@ import {
       InferCreationAttributes<ProductModel>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    uuid: CreationOptional<string>;
+    id: CreationOptional<string>;
     name: string;
     description: string;
     price_dollar: number;
@@ -32,7 +32,7 @@ import {
     sequelize.define<ProductModel>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        uuid: {
+        id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,

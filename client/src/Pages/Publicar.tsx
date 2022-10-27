@@ -1,6 +1,5 @@
-import React from 'react'
+
 import styled from "styled-components";
-import { Themes } from "../../src/components/Theme/Theme";
 import Navbar from '../components/Navbar';
 
 const Publicar = () => {
@@ -27,6 +26,14 @@ const Publicar = () => {
               <div className="inputinfo">
                 <label htmlFor="description">Descripcion:</label>
                 <textarea name='description' rows={5} cols={33} />
+              </div>
+              <div className="inputinfo">
+                <label htmlFor="suspended">Estado:</label>
+                <select name="suspended" id="">
+                  <option value="" selected disabled hidden>Choose here</option>
+                  <option value="si">Activo</option>
+                  <option value="no">Suspendido</option>
+                </select>
               </div>
 
             </div>
@@ -95,8 +102,8 @@ const AddProduct = styled.div`
       width: 500px;
       height: 40px;
       padding: 10px;
-      background-color: #ebebeb;
-      border: 1px solid #ebebeb;
+      background-color: ${({ theme }) => theme.tertiary};
+      border: none;
       border-radius: 4px;
       margin-bottom: 10px;
     }
@@ -104,8 +111,17 @@ const AddProduct = styled.div`
     textarea{
       width: 500px;
       resize: none;
-      background-color: #ebebeb;
-      border: 1px solid #ebebeb;
+      background-color: ${({ theme }) => theme.tertiary};
+      border: none;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    select{
+      width: 500px;
+      resize: none;
+      background-color: ${({ theme }) => theme.tertiary};
+      border:none;
       border-radius: 4px;
       margin-bottom: 10px;
     }
@@ -123,7 +139,7 @@ const AddProduct = styled.div`
   .imageupload{
     width: 270px;
     height: 270px;
-    background-color: #ebebeb;
+    background-color: ${({ theme }) => theme.tertiary};
     display: flex;
     align-items: center;
     justify-content: center;

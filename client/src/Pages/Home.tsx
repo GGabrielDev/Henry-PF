@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import SliderContainer from "../components/Slider/SliderContainer";
-import Filtros from "../components/Filtros/Filtros";
+import SliderContainer from "../components/Home/Slider/SliderContainer";
+import Filtros from "../components/Home/Filtros/Filtros";
 
 const Home = () => {
   return (

@@ -1,9 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
-import { Themes } from "./Theme/Theme";
-
-
 import { BiUser, BiShoppingBag } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
@@ -39,12 +35,14 @@ const Navbar = () => {
             </div>
             <div className="userinfo-item userinfo-text">Mans</div>
             <div className="userinfo-item userinfo-text">Womans</div>
+            <div className="userinfo-item userinfo-text">Mans</div>
+            <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item">
               <Link to="/usuario/general">
                 <BiUser className="icono__user" />
               </Link>
             </div>
-           
+
             <div className="userinfo-item">
               <button><BiShoppingBag/> Cart(0)</button>
             </div>
@@ -76,20 +74,28 @@ const NavbarContainer = styled.div`
     cursor: pointer;
   }
 
-  .infocategories-item{
+  .userinfo-item button {
+    svg {
+      color: white;
+    }
+  }
+
+  .userinfo-text {
+    font-weight: 400;
+    color: gray;
+  }
+
+  .infocategories-item {
     font-weight: 500;
     font-size: 14px;
     cursor: pointer;
   }
 
-  @media screen and (max-width:1000px){
-    .userinfo-text{
+  @media screen and (max-width: 1000px) {
+    .userinfo-text {
       display: none;
     }
-
   }
-
-
 `;
 
 const Header = styled.div`
@@ -140,7 +146,7 @@ const Headermiddle = styled.div`
     }
 `;
 
-export const Logo = styled.div`
+export export const Logo = styled.div`
   width: 200px;
   height: 60px;
   display: flex;
@@ -159,38 +165,38 @@ export const Logo = styled.div`
 `;
 
 const Userinfo = styled.div`
-    width: 400px;
-    height: 60px;
+  width: 400px;
+  height: 60px;
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    border-radius: 7px;
+    background-color: ${({ theme }) => theme.primary};
+
+    color: white;
+    border: none;
+    padding: 7px 10px;
     display: flex;
-    font-weight: 600;
     align-items: center;
-    justify-content: space-between;
+    cursor: pointer;
 
-    button{
-      border-radius: 7px;
-      background-color: #8400ff;
-      color: white;
-      border: none;
-      padding: 7px 10px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-
-      svg{
-        font-size: 20px;
-        margin-right: 5px;
-      }
+    svg {
+      font-size: 20px;
+      margin-right: 5px;
     }
+  }
 
-
-    svg{
-      font-size: 30px;
-    }
-    svg{
-      font-size: 30px;
+  svg {
+    font-size: 30px;
+  }
+  svg {
+    font-size: 30px;
     text-decoration: none;
     color: black;
-    }
+  }
 
 
     @media screen and (max-width:1000px){
@@ -202,14 +208,13 @@ const Userinfo = styled.div`
 `;
 
 const Headerbottom = styled.div`
-    display: flex;
-    align-items: center;
-    height: 40px;
+  display: flex;
+  align-items: center;
+  height: 40px;
 
-    @media screen and (max-width:1000px){
-      justify-content: center;
-
-    }
+  @media screen and (max-width: 1000px) {
+    justify-content: center;
+  }
 
     @media screen and (max-width:500px){
       display: none;

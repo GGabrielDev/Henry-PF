@@ -20,6 +20,7 @@ const Router = () => {
       <Route path="/usuario/editar" element={<UserEdit />} />
 
       {/* <Route path="/usuario" element={<Usuario />} /> */}
+
       <Route path="/auth/login" element={<Login />} />
     </Routes>
   );

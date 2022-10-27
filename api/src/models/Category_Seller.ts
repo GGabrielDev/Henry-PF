@@ -8,25 +8,25 @@ import {
   } from "sequelize";
   import path from "path";
   
-  interface CategoryModel
-    extends Model<
-      InferAttributes<CategoryModel>,
-      InferCreationAttributes<CategoryModel>
+  class Category_Seller extends Model<
+      InferAttributes<Category_Seller>,
+      InferCreationAttributes<Category_Seller>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: number;
-    name: string;
+    declare id: CreationOptional<number>;
+    declare name: string;
+    declare image: string;
   }
   
   // Exportamos una funcion que define el modelo
   // Luego le injectamos la conexion a sequelize.
   module.exports = (sequelize: Sequelize) => {
     // defino el modelo
-    sequelize.define<CategoryModel>(
-      path.basename(__filename, path.extname(__filename)).toLowerCase(),
+    Category_Seller.init(
+  
       {
         id: {
-          type: DataTypes.NUMBER,
+          type: DataTypes.INTEGER,
           autoIncrement: true,
           unique: true,
           primaryKey:true,
@@ -40,8 +40,19 @@ import {
             isAlphanumeric: true,
           }
         },
+
+        image: {
+          type: DataTypes.STRING,
+          allowNull: true,
+          validate: {
+            isUrl: true,
+          }
+        }
+
       },
       {
+        sequelize,
+        tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
         timestamps: false,
         paranoid: true,
       },

@@ -17,8 +17,8 @@ import {
     uuid: CreationOptional<string>;
     name: string;
     description: string;
-    priceDollar: number;
-    priceLocal: number;
+    price_dollar: number;
+    price_local: number;
     stock: string;
     image: CreationOptional<string>;
     suspended: boolean;
@@ -46,7 +46,7 @@ import {
           }
         },
 
-        priceDollar: {
+        price_dollar: {
             type: DataTypes.FLOAT(8,2),
             allowNull: false,
             validate: {
@@ -54,7 +54,7 @@ import {
             }
         },
 
-        priceLocal:{
+        price_local:{
             type: DataTypes.FLOAT(8,2),
             allowNull: false,
             validate: {

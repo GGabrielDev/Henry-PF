@@ -14,9 +14,7 @@ import {
       InferCreationAttributes<Customer_Orders_Product_Model>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    cart_id: CreationOptional<string>;
-    name_prod: string;
-    price_prod: number;
+    id: CreationOptional<number>;
     amount: number;
   }
   
@@ -27,15 +25,10 @@ import {
     sequelize.define<Customer_Orders_Product_Model>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        cart_id: {
+        id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
-        },
-
-        name_prod:{
-            type: DataTypes.STRING(120),
-            allowNull: false,
         },
 
         amount: {
@@ -44,14 +37,6 @@ import {
             validate: {
                 isNumeric: false,
             }
-        },
-
-        price_prod: {
-          type: DataTypes.FLOAT(8,2),
-          allowNull:false,
-          validate: {
-            isNumeric:true,
-          }
         },
       }, 
       { timestamps: false,

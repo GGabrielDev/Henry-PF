@@ -14,8 +14,8 @@ import {
       InferCreationAttributes<Category_Producto_Model>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    cate_prod_id: CreationOptional<string>;
-    name_cate_prod: string;
+    id: CreationOptional<number>;
+    name: string;
     image: string;
   }
   
@@ -26,14 +26,14 @@ import {
     sequelize.define<Category_Producto_Model>(
       path.basename(__filename, path.extname(__filename)).toLowerCase(),
       {
-        cate_prod_id: {
-          type: DataTypes.NUMBER,
+        id: {
+          type: DataTypes.INTEGER,
           autoIncrement: true,
           unique: true,
           primaryKey:true,
         },
   
-        name_cate_prod: {
+        name: {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,

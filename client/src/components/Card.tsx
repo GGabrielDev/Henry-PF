@@ -43,9 +43,9 @@ const CardContainer = styled.div`
   margin-left: 15px;
   
 .card__container{
-    width: 200px;    
+    max-width: 200px;    
     border-radius:15px;
-    height: 300px;
+    max-height: 300px;
     box-shadow: 2px 2px 15px #30303021;    
 }
 .card__sumaresta{
@@ -54,8 +54,8 @@ const CardContainer = styled.div`
 }
 
 .card__image{
-    width:100%;
-    height:100%;
+    max-width: 100%;
+    max-height: 100%;    
     border-radius:15px;  
 }
 
@@ -76,7 +76,8 @@ const CardContainer = styled.div`
     width:50%;
     height:100%;
     margin-top:5px;
-    margin-bottom:5px;       
+    margin-bottom:5px;    
+    bottom : 29px;
 } 
 
 .card__name__price{
@@ -91,14 +92,17 @@ const CardContainer = styled.div`
     border-radius:50px;
     width:20px;
     height:20px;
-    border:none;   
+    border:none;  
+    position: relative;
+     
    
 }
 .card_shop{      
     font-size: 40px;
     position: relative;    
     left: 78px;
-    border-radius: 50px;      
+    border-radius: 50px;  
+    bottom: 33px;
 }
 .card_color_name{    
     font-size: 17px;
@@ -114,7 +118,7 @@ const CardContainer = styled.div`
 .card_color_price{
     position: relative;
     color: ${Themes.primary};
-    top: 33px; 
+    top: 5px; 
     }
 
 .card__container:hover{

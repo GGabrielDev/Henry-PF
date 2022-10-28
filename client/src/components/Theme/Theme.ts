@@ -8,4 +8,5 @@ export const Themes = {
   border: "rgba(0, 0, 0, 0.1)" /* COLOR CLARITO PARA LOS BORDES */,
   cream: "#fffff4" /* COLOR BLANCO MAS CREMA*/,
   cream2: "#fdfdfd",
+  error: "#ff0000",
 };

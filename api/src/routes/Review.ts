@@ -4,40 +4,34 @@ import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
 const router = Router();
-const { Product } = Models;
+const { Review } = Models;
 
-type ProductParams = {
-  productId: string;
+type ReviewParams = {
+  reviewId: string;
 };
 
-type ProductQuery = {
-  name: string;
+type ReviewQuery = {
+  body: string;
 };
 
-type ProductBody = {
-  name: string;
-  description: string;
-  price_dollar: number;
-  price_local: number;
-  stock: string;
-  image: string | null;
-  suspended: boolean;
-  size: string;
+type ReviewBody = {
+  body: string;
+  score: string;
 };
 
-type RouteRequest = Request<ProductParams, ProductQuery, ProductBody>;
+type RouteRequest = Request<ReviewParams, ReviewQuery, ReviewBody>;
 
 router.get(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { name } = req.query;
+      const { body } = req.query;
 
-      const result = await Product.findAll({
-        where: name
+      const result = await Review.findAll({
+        where: body
           ? {
-              name: {
-                [Op.iLike]: `%${name}%`,
+              body: {
+                [Op.iLike]: `%${body}%`,
               },
             }
           : {},
@@ -58,34 +52,17 @@ router.post(
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
       const {
-        name,
-        description,
-        price_dollar,
-        price_local,
-        stock,
-        image,
-        suspended,
-        size,
+        body,
+        score,
       } = req.body;
 
       if (
-        name ||
-        description ||
-        price_dollar ||
-        price_local ||
-        stock ||
-        suspended ||
-        size
+        body ||
+        score
       ) {
-        const result = await Product.create({
-          name,
-          description,
-          price_dollar,
-          price_local,
-          stock,
-          image,
-          suspended,
-          size,
+        const result = await Review.create({
+          body,
+          score,
         });
 
         return res.status(201).send(result);
@@ -98,19 +75,13 @@ router.post(
 );
 
 router.put(
-  "/:productId",
+  "/:reviewId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { productId } = req.params;
+      const { reviewId } = req.params;
       const possibleValues = [
-        "name",
-        "description",
-        "price_dolar",
-        "price_local",
-        "stock",
-        "image",
-        "suspended",
-        "size",
+        "body",
+        "score",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
         possibleValues.find((possibleValue) => possibleValue === value[0])
@@ -125,14 +96,14 @@ router.put(
 
       const body = Object.fromEntries(arrayBody);
 
-      if (!productId) {
+      if (!reviewId) {
         throw new HttpException(
           400,
-          "The Product ID is missing in the request"
+          "The Review ID is missing in the request"
         );
       }
 
-      const result = await Product.findByPk(productId)
+      const result = await Review.findByPk(reviewId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -159,18 +130,18 @@ router.put(
 );
 
 router.delete(
-  "/:productId",
+  "/:reviewId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { productId } = req.params;
+      const { reviewId } = req.params;
 
-      if (!productId) {
+      if (!reviewId) {
         throw new HttpException(
           400,
-          "The Product ID is missing in the request"
+          "The Review ID is missing in the request"
         );
       }
-      const result = await Product.findByPk(productId)
+      const result = await Review.findByPk(reviewId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -182,12 +153,12 @@ router.delete(
         });
 
       if (!result) {
-        throw new HttpException(404, "The requested Product doesn't exist");
+        throw new HttpException(404, "The requested Review doesn't exist");
       }
 
       await result.destroy();
 
-      res.status(200).send("The choosed Product was deleted successfully");
+      res.status(200).send("The choosed Review was deleted successfully");
     } catch (error) {
       next(error);
     }

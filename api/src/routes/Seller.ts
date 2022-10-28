@@ -3,36 +3,30 @@ import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
 const router = Router();
-const { User } = Models;
+const { Seller } = Models;
 
-type UserParams = {
-  userId: string;
+type SellerParams = {
+  sellerId: string;
 };
 
-type UserQuery = {};
+type SellerQuery = {};
 
-type UserBody = {
-  firstName: string;
-  lastName: string;
-  username: string;
-  gender: string;
-  email: string;
-  mobile: string;
-  address: string;
-  imagenDePerfil: string | null;
-  userType: string;
-  suspended: boolean;
+type SellerBody = {
+  nombreNegocio: string;
+  pay_Money: string;
+  imageLogo: string | null;
+  template_page: string;
 };
 
-type RouteRequest = Request<UserParams, UserQuery, UserBody>;
+type RouteRequest = Request<SellerParams, SellerQuery, SellerBody>;
 
 router.get(
-  "/:userId",
+  "/:sellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { sellerId } = req.params;
 
-      const result = await User.findByPk(userId)
+      const result = await Seller.findByPk(sellerId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -44,7 +38,7 @@ router.get(
         });
 
       if (!result) {
-        throw new HttpException(404, "No User belongs to this ID");
+        throw new HttpException(404, "No seller is associated for this id");
       }
       return res.status(200).send(result);
     } catch (error) {
@@ -57,49 +51,17 @@ router.post(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const {
-        firstName,
-        lastName,
-        username,
-        gender,
-        email,
-        mobile,
-        address,
-        imagenDePerfil,
-        userType,
-        suspended,
-      } = req.body;
+      const { nombreNegocio, pay_Money, imageLogo, template_page } = req.body;
 
-      if (
-        firstName ||
-        lastName ||
-        username ||
-        gender ||
-        email ||
-        mobile ||
-        address ||
-        userType ||
-        suspended
-      ) {
-        const result = await User.create({
-          firstName,
-          lastName,
-          username,
-          gender,
-          email,
-          mobile,
-          address,
-          imagenDePerfil,
-          userType,
-          suspended,
+      if (nombreNegocio || pay_Money || template_page) {
+        const result = await Seller.create({
+          nombreNegocio,
+          pay_Money,
+          imageLogo,
+          template_page,
         });
 
         return res.status(201).send(result);
-      } else {
-        throw new HttpException(
-          400,
-          "There's required entries missing in the request's body"
-        );
       }
     } catch (error) {
       console.log(error);
@@ -109,21 +71,15 @@ router.post(
 );
 
 router.put(
-  "/:userId",
+  "/:sellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { sellerId } = req.params;
       const possibleValues = [
-        "firstName",
-        "lastName",
-        "username",
-        "gender",
-        "email",
-        "mobile",
-        "address",
-        "imagenDePerfil",
-        "userType",
-        "suspended",
+        "nombreNegocio",
+        "pay_Money",
+        "imageLogo",
+        "template_page",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
         possibleValues.find((possibleValue) => possibleValue === value[0])
@@ -138,11 +94,11 @@ router.put(
 
       const body = Object.fromEntries(arrayBody);
 
-      if (!userId) {
-        throw new HttpException(400, "The User ID is missing in the request");
+      if (!sellerId) {
+        throw new HttpException(400, "The Seller ID is missing in the request");
       }
 
-      const result = await User.findByPk(userId)
+      const result = await Seller.findByPk(sellerId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -154,7 +110,7 @@ router.put(
         });
 
       if (!result) {
-        throw new HttpException(404, "The requested User doesn't exist");
+        throw new HttpException(404, "The requested Seller doesn't exist");
       } else {
         result.set(body);
         await result.save();
@@ -169,16 +125,15 @@ router.put(
 );
 
 router.delete(
-  "/:userId",
+  "/:sellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { sellerId } = req.params;
 
-      if (!userId) {
-        throw new HttpException(400, "The User ID is missing in the request");
+      if (!sellerId) {
+        throw new HttpException(400, "The Seller ID is missing in the request");
       }
-
-      const result = await User.findByPk(userId)
+      const result = await Seller.findByPk(sellerId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -190,12 +145,12 @@ router.delete(
         });
 
       if (!result) {
-        throw new HttpException(404, "The requested User doesn't exist");
+        throw new HttpException(404, "The requested Seller doesn't exist");
       }
 
       await result.destroy();
 
-      res.status(200).send("The choosed User was deleted successfully");
+      res.status(200).send("The choosed Seller was deleted successfully");
     } catch (error) {
       next(error);
     }
@@ -203,4 +158,3 @@ router.delete(
 );
 
 export default router;
-

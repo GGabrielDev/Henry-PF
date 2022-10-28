@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import  {Register}  from "../Pages/Register";
 import Home from "../Pages/Home";
 import { Login } from "../Pages/Login";
 import Publicar from "../Pages/Publicar";
@@ -7,6 +8,7 @@ import UserCompras from "../components/Usuario/UserCompras";
 import UserCompraDetalle from "../components/Usuario/UserComprasDetalle";
 import UserEdit from "../components/Usuario/UserEdit";
 import UserFavoritos from "../components/Usuario/UserFavoritos";
+import { Recover } from "../Pages/Recover";
 
 const Router = () => {
   return (
@@ -22,7 +24,9 @@ const Router = () => {
       <Route path="/usuario/editar" element={<UserEdit />} />
 
       {/* <Route path="/usuario" element={<Usuario />} /> */}
-
+      {/* rutas autenticacion usuario */}
+      <Route path="auth/recover" element={<Recover />} />
+      <Route path="auth/register" element={<Register />} />
       <Route path="/auth/login" element={<Login />} />
     </Routes>
   );

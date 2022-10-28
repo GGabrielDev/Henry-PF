@@ -21,7 +21,7 @@ class Product extends Model<
   declare stock: string;
   declare image: CreationOptional<string>;
   declare suspended: boolean;
-  declare tamano: string;
+  declare size: string;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -45,47 +45,47 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlphanumeric: true,
-        }
+          is: /^[A-Za-z0-9\s]*$/,
+        },
       },
 
       price_dollar: {
         type: DataTypes.DECIMAL(8, 2),
         allowNull: false,
         validate: {
-          isNumeric: true
-        }
+          isNumeric: true,
+        },
       },
 
       price_local: {
         type: DataTypes.DECIMAL(8, 2),
         allowNull: false,
         validate: {
-          isNumeric: true
-        }
+          isNumeric: true,
+        },
       },
 
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-          isAlphanumeric: true,
-        }
+          is: /^[A-Za-z0-9\s]*$/,
+        },
       },
 
       stock: {
         type: DataTypes.INTEGER,
         allowNull: true,
         validate: {
-          isNumeric: true
-        }
+          isNumeric: true,
+        },
       },
 
       image: {
         type: DataTypes.STRING,
         validate: {
           isUrl: true,
-        }
+        },
       },
 
       suspended: {
@@ -93,7 +93,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
       },
 
-      tamano: {
+      size: {
         type: DataTypes.ENUM("XS", "S", "M", "L", "XL", "Null"),
         allowNull: true,
         defaultValue: null,
@@ -104,9 +104,12 @@ module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
-      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      tableName: path
+        .basename(__filename, path.extname(__filename))
+        .toLowerCase(),
       timestamps: true,
       paranoid: true,
-    },
+    }
   );
 };
+

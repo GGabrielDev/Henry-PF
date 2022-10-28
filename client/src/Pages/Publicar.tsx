@@ -1,7 +1,8 @@
-import {useState} from "react"
+import {useState,ChangeEvent,SyntheticEvent} from "react"
 import styled from "styled-components";
 import Navbar from '../components/Navbar';
 import Validate,{formType, errType} from "../components/addProduct/validate";
+import { symlink } from "fs";
 
 
 
@@ -12,26 +13,31 @@ const Publicar = () => {
     stock: "",
     description: "",
     suspended: "",
+    url:"",
   });
   const [input, setInput] = useState<formType>({
     name: "",
-    price_local: 0,
-    stock: 0,
+    price_local: -1,
+    stock: -1,
     description: "",
     suspended: "",
+    url:"",
   });
 
-  const handleChange = (e:any) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-    setErr(Validate({ ...input, [e.target.name]: e.target.value }));
+  const handleChange = (event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) => {
+    // console.log(event)
+    setInput({ ...input, [event.target.name]: event.target.value });
+    // setErr(Validate({ ...input, [e.target.name]: e.target.value }));
     
     // console.log(input)
-    console.log(err);
+    // console.log(err);
   };
-  const handleSubmit = (e:any) => {
-    e.preventDefault()
-    console.log(err.name.length)
-    if(err.name === "null" || err.price_local==="null" || err.stock==="null" || err.description==="null" || err.suspended==="null"){
+  const handleSubmit = (event:SyntheticEvent) => {
+    event.preventDefault()
+    setErr(Validate( input ))
+
+
+    if(input.name === "" || input.price_local === -1 || input.stock ===-1 || input.description ==="" || input.suspended ==="" || input.url === ""){
       alert("faltan datos")
     } else{
       alert("vas bien")
@@ -48,33 +54,41 @@ const Publicar = () => {
               <div className="inputinfo">
                 <label htmlFor="">Nombre del producto:</label>
                 <input name='name' type="text"  onChange={handleChange} />
+                {err.name ? <p className="errortext"> {err.name} </p> : "" }
               </div>
               <div className="inputinfo">
-                <label htmlFor="price_unit">Precio:</label>
+                <label htmlFor="price_local">Precio:</label>
                 <input name='price_local' type="number" onChange={handleChange} />
+                {err.price_local ? <p className="errortext"> {err.price_local} </p> : "" }
               </div>
               <div className="inputinfo">
                 <label htmlFor="stock">Stock:</label>
                 <input name='stock' type="number" onChange={handleChange} />
+                {err.stock ? <p className="errortext"> {err.stock} </p> : "" }
               </div>
               <div className="inputinfo">
                 <label htmlFor="description">Descripcion:</label>
                 <textarea name='description' rows={5} cols={33} onChange={handleChange} />
+                {err.description ? <p className="errortext"> {err.description} </p> : "" }
               </div>
               <div className="inputinfo">
                 <label htmlFor="suspended">Estado:</label>
                 <select name="suspended" id="" onChange={handleChange}>
-                  <option value="" selected disabled hidden>Choose here</option>
+                  <option value="" disabled hidden>Choose here</option>
                   <option value="si">Activo</option>
                   <option value="no">Suspendido</option>
                 </select>
+                {err.suspended ? <p className="errortext">  {err.suspended} </p> : "" }
               </div>
 
             </div>
             <div className="productinfo__Right">
               <div className="imageupload">
-                <input type="file" />
+                <input type="file" name="url" onChange={handleChange}/>
+                
               </div>
+
+              {err.url ? <p className="errortext"> {err.url} </p> : "" }
 
             </div>
           </div>
@@ -120,17 +134,25 @@ const AddProduct = styled.div`
     width: 60%;
   }
 
+  .errortext{
+      font-size: 12px;
+      color: ${({ theme }) => theme.error};
+    }
+
   .inputinfo{
     display: flex;
     flex-direction: column;
+    height: 85px;
+    margin-bottom: 10px;
 
     label{
       font-weight: 600;
       font-size: 20px;
-      margin-bottom: 10px;
       color: ${({ theme }) => theme.primary};
 
     }
+
+
 
     input{
       width: 500px;
@@ -139,7 +161,6 @@ const AddProduct = styled.div`
       background-color: ${({ theme }) => theme.tertiary};
       border: none;
       border-radius: 4px;
-      margin-bottom: 10px;
     }
 
     textarea{
@@ -181,7 +202,7 @@ const AddProduct = styled.div`
     margin-bottom: 25px;
 
     input{
-      width: 135px;
+      width: 230px;
     }
   }
 

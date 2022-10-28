@@ -1,5 +1,4 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { Op } from "sequelize";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 

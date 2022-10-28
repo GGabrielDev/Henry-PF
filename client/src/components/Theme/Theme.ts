@@ -5,5 +5,7 @@ export const Themes = {
   details: "#77767c" /* GRIS */,
   tertiary: "#ebebeb" /* GRIS CLARO */,
   light: "#fff" /* BLANCO */,
-  border:"rgba(0, 0, 0, 0.1)"
+  border: "rgba(0, 0, 0, 0.1)" /* COLOR CLARITO PARA LOS BORDES */,
+  cream: "#fffff4" /* COLOR BLANCO MAS CREMA*/,
+  cream2: "#fdfdfd",
 };

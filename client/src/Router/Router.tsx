@@ -4,6 +4,7 @@ import { Login } from "../Pages/Login";
 import Publicar from "../Pages/Publicar";
 import UserGeneral from "../components/Usuario/UserGeneral";
 import UserCompras from "../components/Usuario/UserCompras";
+import UserCompraDetalle from "../components/Usuario/UserComprasDetalle";
 import UserEdit from "../components/Usuario/UserEdit";
 import UserFavoritos from "../components/Usuario/UserFavoritos";
 
@@ -16,6 +17,7 @@ const Router = () => {
       {/* rutas usuario */}
       <Route path="/usuario/general" element={<UserGeneral />} />
       <Route path="/usuario/compras" element={<UserCompras />} />
+      <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
       <Route path="/usuario/favoritos" element={<UserFavoritos />} />
       <Route path="/usuario/editar" element={<UserEdit />} />
 

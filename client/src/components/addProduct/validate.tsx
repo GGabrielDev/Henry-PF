@@ -4,9 +4,10 @@ export type formType = {
     stock: number,
     description: string,
     suspended: string,
+    url:string,
 }
 export type errType = Record<
-    "name" | "price_local" | "stock" | "description" | "suspended",string
+    "name" | "price_local" | "stock" | "description" | "suspended" | "url",string
 > 
 
 
@@ -19,6 +20,7 @@ function Validate(input:formType) {
         stock: "",
         description: "",
         suspended: "",
+        url:"",
     }
     let regExpSoloLetters = /[^a-zA-Z\s]/g;
     
@@ -30,7 +32,7 @@ function Validate(input:formType) {
     }
     if(!input.price_local){
       error.price_local = 'Se requiere una precio'
-    }else if(input.price_local < -1){
+    }else if(input.price_local < 0){
         error.price_local = 'Se requiere un precio desde $0'
     }
 
@@ -47,6 +49,9 @@ function Validate(input:formType) {
   
     if(!input.suspended){
       error.suspended = 'Falta seleccionar el estado'
+    }
+    if(!input.url){
+      error.url = 'Falta seleccionar una imagen'
     }
 
     return error

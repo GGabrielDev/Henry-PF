@@ -1,5 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
-import { Op, Model } from "sequelize";
+import { Op } from "sequelize";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
@@ -15,14 +15,14 @@ type ProductQuery = {
 };
 
 type ProductBody = {
-  name: string | undefined;
-  description: string | undefined;
-  price_dollar: number | undefined;
-  price_local: number | undefined;
-  stock: string | undefined;
-  image: string | null | undefined;
-  suspended: boolean | undefined;
-  size: string | undefined;
+  name: string;
+  description: string;
+  price_dollar: number;
+  price_local: number;
+  stock: string;
+  image: string | null;
+  suspended: boolean;
+  size: string;
 };
 
 type RouteRequest = Request<ProductParams, ProductQuery, ProductBody>;
@@ -170,7 +170,16 @@ router.delete(
           "The Product ID is missing in the request"
         );
       }
-      const result = await Product.findByPk(productId);
+      const result = await Product.findByPk(productId)
+        .then((value) => value)
+        .catch((error) => {
+          if (error.parent.code === "22P02") {
+            throw new HttpException(
+              400,
+              "The format of the request is not UUID"
+            );
+          }
+        });
 
       if (!result) {
         throw new HttpException(404, "The requested Product doesn't exist");

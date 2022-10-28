@@ -1,3 +1,5 @@
+
+
 export const Themes = {
   primary: "#a2b9fa" /* VIOLETA PASTEL */,
   secondary: "#f1deff" /* VIOLETA PASTEL CLARO*/,
@@ -6,5 +8,6 @@ export const Themes = {
   tertiary: "#ebebeb" /* GRIS CLARO */,
   light: "#fff" /* BLANCO */,
   border:"rgba(0, 0, 0, 0.1)",
-  error:"#ff0000"
+  error:"#ff0000",
+  Whatsapp:"#5ad442"
 };

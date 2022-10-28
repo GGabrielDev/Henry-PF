@@ -9,6 +9,7 @@ require("./db.js");
 express.json({ limit: "50mb" });
 const server = express();
 
+server.use(express.json());
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use((_, res: Response, next: NextFunction) => {

@@ -7,18 +7,14 @@ import {
   DataTypes,
 } from "sequelize";
 import path from "path";
-import { userInfo } from "os";
 
-class User extends Model<
-  InferAttributes<User>,
-  InferCreationAttributes<User>
-> {
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<string>;
   declare firstName: string;
   declare lastName: string;
   declare username: string;
-  declare genero: string;
+  declare gender: string;
   declare email: string;
   declare mobile: string;
   declare address: string;
@@ -49,7 +45,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         validate: {
           isAlpha: true,
-        }
+        },
       },
 
       lastName: {
@@ -57,7 +53,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         validate: {
           isAlpha: true,
-        }
+        },
       },
 
       username: {
@@ -69,7 +65,7 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      genero: {
+      gender: {
         type: DataTypes.ENUM("M", "F", "No binario", "No quiero decir"),
         defaultValue: "No quiero decir",
       },
@@ -80,7 +76,7 @@ module.exports = (sequelize: Sequelize) => {
         unique: false,
         validate: {
           isEmail: true,
-        }
+        },
       },
 
       mobile: {
@@ -89,7 +85,7 @@ module.exports = (sequelize: Sequelize) => {
         unique: false,
         validate: {
           is: /^[0-9]+(-[0-9]+)+$/i,
-        }
+        },
       },
 
       address: {
@@ -101,11 +97,15 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         validate: {
           isUrl: true,
-        }
+        },
       },
 
       userType: {
-        type: DataTypes.ENUM("Administrador General", "Administrador", "Usuario"),
+        type: DataTypes.ENUM(
+          "Administrador General",
+          "Administrador",
+          "Usuario"
+        ),
         allowNull: false,
       },
 
@@ -116,13 +116,15 @@ module.exports = (sequelize: Sequelize) => {
 
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
-
     },
     {
       sequelize,
-      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      tableName: path
+        .basename(__filename, path.extname(__filename))
+        .toLowerCase(),
       timestamps: true,
       paranoid: true,
-    },
+    }
   );
 };
+

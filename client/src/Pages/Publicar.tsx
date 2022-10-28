@@ -1,7 +1,8 @@
-import {useState} from "react"
+import {useState,ChangeEvent,SyntheticEvent} from "react"
 import styled from "styled-components";
 import Navbar from '../components/Navbar';
 import Validate,{formType, errType} from "../components/addProduct/validate";
+import { symlink } from "fs";
 
 
 
@@ -23,16 +24,17 @@ const Publicar = () => {
     url:"",
   });
 
-  const handleChange = (e:any) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+  const handleChange = (event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) => {
+    // console.log(event)
+    setInput({ ...input, [event.target.name]: event.target.value });
     // setErr(Validate({ ...input, [e.target.name]: e.target.value }));
     
-    console.log(input)
+    // console.log(input)
     // console.log(err);
   };
-  const handleSubmit = (e:any) => {
-    e.preventDefault()
-    setErr(Validate({ ...input, [e.target.name]: e.target.value }))
+  const handleSubmit = (event:SyntheticEvent) => {
+    event.preventDefault()
+    setErr(Validate( input ))
 
 
     if(input.name === "" || input.price_local === -1 || input.stock ===-1 || input.description ==="" || input.suspended ==="" || input.url === ""){
@@ -72,7 +74,7 @@ const Publicar = () => {
               <div className="inputinfo">
                 <label htmlFor="suspended">Estado:</label>
                 <select name="suspended" id="" onChange={handleChange}>
-                  <option value="" selected disabled hidden>Choose here</option>
+                  <option value="" disabled hidden>Choose here</option>
                   <option value="si">Activo</option>
                   <option value="no">Suspendido</option>
                 </select>
@@ -134,7 +136,7 @@ const AddProduct = styled.div`
 
   .errortext{
       font-size: 12px;
-      color: red;
+      color: ${({ theme }) => theme.error};
     }
 
   .inputinfo{

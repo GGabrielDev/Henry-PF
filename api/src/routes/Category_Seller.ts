@@ -3,36 +3,28 @@ import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
 const router = Router();
-const { User } = Models;
+const { Category_Seller } = Models;
 
-type UserParams = {
-  userId: string;
+type Category_SellerParams = {
+  categorySellerId: string;
 };
 
-type UserQuery = {};
+type Category_SellerQuery = {};
 
-type UserBody = {
-  firstName: string;
-  lastName: string;
-  username: string;
-  gender: string;
-  email: string;
-  mobile: string;
-  address: string;
-  imagenDePerfil: string | null;
-  userType: string;
-  suspended: boolean;
+type Category_SellerBody = {
+    name: string;
+    image: string;
 };
 
-type RouteRequest = Request<UserParams, UserQuery, UserBody>;
+type RouteRequest = Request<Category_SellerParams, Category_SellerQuery, Category_SellerBody>;
 
 router.get(
-  "/:userId",
+  "/:categorySellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { categorySellerId } = req.params;
 
-      const result = await User.findByPk(userId)
+      const result = await Category_Seller.findByPk(categorySellerId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -44,7 +36,7 @@ router.get(
         });
 
       if (!result) {
-        throw new HttpException(404, "No User belongs to this ID");
+        throw new HttpException(404, "No category belongs to this ID");
       }
       return res.status(200).send(result);
     } catch (error) {
@@ -58,40 +50,17 @@ router.post(
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
       const {
-        firstName,
-        lastName,
-        username,
-        gender,
-        email,
-        mobile,
-        address,
-        imagenDePerfil,
-        userType,
-        suspended,
+        name,
+        image,
       } = req.body;
 
       if (
-        firstName ||
-        lastName ||
-        username ||
-        gender ||
-        email ||
-        mobile ||
-        address ||
-        userType ||
-        suspended
+        name ||
+        image
       ) {
-        const result = await User.create({
-          firstName,
-          lastName,
-          username,
-          gender,
-          email,
-          mobile,
-          address,
-          imagenDePerfil,
-          userType,
-          suspended,
+        const result = await Category_Seller.create({
+            name,
+            image,
         });
 
         return res.status(201).send(result);
@@ -109,21 +78,13 @@ router.post(
 );
 
 router.put(
-  "/:userId",
+  "/:categorySellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { categorySellerId } = req.params;
       const possibleValues = [
-        "firstName",
-        "lastName",
-        "username",
-        "gender",
-        "email",
-        "mobile",
-        "address",
-        "imagenDePerfil",
-        "userType",
-        "suspended",
+        "name",
+        "image",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
         possibleValues.find((possibleValue) => possibleValue === value[0])
@@ -138,11 +99,11 @@ router.put(
 
       const body = Object.fromEntries(arrayBody);
 
-      if (!userId) {
-        throw new HttpException(400, "The User ID is missing in the request");
+      if (!categorySellerId) {
+        throw new HttpException(400, "The category ID is missing in the request");
       }
 
-      const result = await User.findByPk(userId)
+      const result = await Category_Seller.findByPk(categorySellerId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -154,7 +115,7 @@ router.put(
         });
 
       if (!result) {
-        throw new HttpException(404, "The requested User doesn't exist");
+        throw new HttpException(404, "The requested category doesn't exist");
       } else {
         result.set(body);
         await result.save();
@@ -169,16 +130,16 @@ router.put(
 );
 
 router.delete(
-  "/:userId",
+  "/:categorySellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { categorySellerId } = req.params;
 
-      if (!userId) {
-        throw new HttpException(400, "The User ID is missing in the request");
+      if (!categorySellerId) {
+        throw new HttpException(400, "The category ID is missing in the request");
       }
 
-      const result = await User.findByPk(userId)
+      const result = await Category_Seller.findByPk(categorySellerId)
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {
@@ -190,12 +151,12 @@ router.delete(
         });
 
       if (!result) {
-        throw new HttpException(404, "The requested User doesn't exist");
+        throw new HttpException(404, "The requested category doesn't exist");
       }
 
       await result.destroy();
 
-      res.status(200).send("The choosed User was deleted successfully");
+      res.status(200).send("The chosen category was deleted successfully");
     } catch (error) {
       next(error);
     }
@@ -203,4 +164,3 @@ router.delete(
 );
 
 export default router;
-

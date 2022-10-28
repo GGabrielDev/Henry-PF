@@ -7,6 +7,7 @@ import UserGeneral from "../components/Usuario/UserGeneral";
 import UserCompras from "../components/Usuario/UserCompras";
 import UserEdit from "../components/Usuario/UserEdit";
 import UserFavoritos from "../components/Usuario/UserFavoritos";
+import { Recover } from "../Pages/Recover";
 
 const Router = () => {
   return (
@@ -21,6 +22,8 @@ const Router = () => {
       <Route path="/usuario/editar" element={<UserEdit />} />
 
       {/* <Route path="/usuario" element={<Usuario />} /> */}
+      {/* rutas autenticacion usuario */}
+      <Route path="auth/recover" element={<Recover />} />
       <Route path="auth/register" element={<Register />} />
       <Route path="/auth/login" element={<Login />} />
     </Routes>

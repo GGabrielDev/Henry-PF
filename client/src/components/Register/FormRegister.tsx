@@ -1,10 +1,14 @@
 import styled from "styled-components";
-import {EmailInput, PasswordInput} from "../Login/FormLog"
+
 import {Logo} from "../Navbar"
 export function FormRegister (){
+    const handleSubmit= ()=>{
+
+    }
     return(
-       <div>
+       <form onSubmit={handleSubmit} autoComplete="off">
             <RegisterContainer>
+                
                 <div>
                     <Logo>PedirYa</Logo>
                 </div>
@@ -54,9 +58,10 @@ export function FormRegister (){
                 <ButtonRegister>
                     <button type="submit" className="btn__primary">Register</button>
                 </ButtonRegister>
+                
             </RegisterContainer>
-            
-       </div> 
+           </form> 
+       
     )
 }
 

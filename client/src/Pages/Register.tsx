@@ -4,9 +4,7 @@ import { FormRegister } from "../components/Register/FormRegister";
 
 export function Register(){
     return(
-        <>
-       
-             
+        <> 
             <FormRegister />
         </>
     )

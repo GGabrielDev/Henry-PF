@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Themes } from "../Theme/Theme";
+import { Themes } from "../../Theme/Theme";
 
 const Filtros = () => {
   return (

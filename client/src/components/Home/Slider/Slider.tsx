@@ -89,7 +89,7 @@ export default function Carousel(props: Props) {
   return (
     <Carouselcontainer>
       <CarouselImg
-        src={require(`../assets/imagenesSlider/${selectedImage}`)}
+        src={require(`../../assets/imagenesSlider/${selectedImage}`)}
         alt="Gentleman"
         className={loaded ? "loaded" : ""}
         onLoad={() => setLoaded(true)}

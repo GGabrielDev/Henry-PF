@@ -20,10 +20,6 @@ const Navbar = () => {
           <Userinfo>
             <div className="userinfo-item userinfo-text">Mans</div>
             <div className="userinfo-item userinfo-text">Womans</div>
-            <div className="userinfo-item userinfo-text">Mans</div>
-            <div className="userinfo-item userinfo-text">Womans</div>
-            <div className="userinfo-item userinfo-text">Mans</div>
-            <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item">
               <Link to="/usuario/general">
                 <BiUser className="icono__user" />

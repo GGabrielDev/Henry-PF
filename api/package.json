@@ -1,12 +1,12 @@
 {
-  "name": "henry-pf-api",
+  "name": "ven911",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node -r dotenv/config dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -r dotenv/config -q dist/index.js\""
+    "start": "node dist/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js -r dotenv/config\""
   },
   "keywords": [],
   "author": "",

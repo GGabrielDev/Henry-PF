@@ -34,6 +34,8 @@ function Validate(input:formType) {
       error.price_local = 'Se requiere una precio'
     }else if(input.price_local < 0){
         error.price_local = 'Se requiere un precio desde $0'
+    } else if(isNaN(input.price_local )){
+      error.price_local = 'Tiene que ser un numero'
     }
 
     if(!input.stock){

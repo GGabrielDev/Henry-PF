@@ -25,19 +25,15 @@ const Publicar = () => {
   });
 
   const handleChange = (event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) => {
-    // console.log(event)
     setInput({ ...input, [event.target.name]: event.target.value });
-    // setErr(Validate({ ...input, [e.target.name]: e.target.value }));
-    
-    // console.log(input)
-    // console.log(err);
+    setErr(Validate({ ...input, [event.target.name]: event.target.value }));
   };
   const handleSubmit = (event:SyntheticEvent) => {
     event.preventDefault()
     setErr(Validate( input ))
 
 
-    if(input.name === "" || input.price_local === -1 || input.stock ===-1 || input.description ==="" || input.suspended ==="" || input.url === ""){
+    if(input.name === "" || input.price_local === -1 || input.stock ===-1 || err.price_local === "Tiene que ser un numero" || input.description ==="" || input.suspended ==="" || input.url === ""){
       alert("faltan datos")
     } else{
       alert("vas bien")

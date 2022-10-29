@@ -1,15 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
+import {BsFilter,BsSortNumericDown} from "react-icons/bs"
 
 const Filtros = () => {
   return (
     <FiltrosContainer>
-      <div className="filtro__name active">Hot</div>
-      <div className="filtro__name">Mas bajo</div>
-      <div className="filtro__name">Mas alto</div>
-      <div className="filtro__name">Hombre</div>
-      <div className="filtro__name">Mujer</div>
+      <button className="buttonfilter"><BsFilter/></button>
+      <div className="inputcontainerfilet">
+        <select name="filtervalor" defaultValue={'DEFAULT'}>
+          <option value="DEFAULT"  disabled hidden>All</option>
+          <option value="si">Motherboard</option>
+          <option value="no">Placa de video</option>
+          <option value="no">Monitores</option>
+        </select>
+      </div>
+      <button className="buttonfilter">
+        <select name="filtervalor" id="">
+          <option value="DEFAULT"  disabled hidden>Sort by:</option>
+          <option value="si">Mayor valor</option>
+          <option value="no">Menor valor</option>
+        </select>
+      </button>
     </FiltrosContainer>
   );
 };
@@ -17,24 +29,73 @@ const Filtros = () => {
 export default Filtros;
 
 const FiltrosContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
   width: 100%;
-  flex-wrap: wrap;
-  .filtro__name {
-    padding: 5px 5px;
-    margin: 0 15px;
-    border: 1px solid ${Themes.secondary};
-    border-radius: 5px;
-    margin-top: 10px;
-    transition: 0.5s;
-    cursor: pointer;
-    &:hover {
-      background-color: ${Themes.primary};
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 100px;
+
+  .buttonfilter{
+    width: 130px;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+
+    color: ${({ theme }) => theme.dark};
+    font-size: 30px;
+    svg{
+      cursor: pointer;
+    }
+
+  }
+
+  .inputcontainerfilet{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    select{
+      
+      margin: 0 10px;
     }
   }
-  .active {
-    background-color: ${Themes.primary};
-  }
+
+  select{
+      background-color:${({ theme }) => theme.tertiary};
+      border: 0px;
+      outline: none;
+      width: 200px;
+      height: 30px;
+      padding: 0 10px;
+      
+
+    }
+
+    @media screen and (max-width: 925px){
+      padding: 20px 20px;
+      .inputcontainerfilet{
+        width: 100%;
+
+        select{
+          width: 100%;
+        }
+      }
+
+      .buttonfilter{
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 400px){
+      .buttonfilter{
+
+        width: 120px;
+
+        select{
+          width: 100%;
+        }
+      }
+    }
+
+
 `;

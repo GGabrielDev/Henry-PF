@@ -1,12 +1,16 @@
 import React from "react";
 import styled, { ThemeContext } from "styled-components";
+import Navbar from "../Navbar";
 
 const Error404 = () => {
   return (
-    <ErrorContainer>
-      <Error>Error 404</Error>
-      <ErrorTecto>La pagína que buscas no esta disponible</ErrorTecto>
-    </ErrorContainer>
+    <>
+      <Navbar />
+      <ErrorContainer>
+        <Error>Error 404</Error>
+        <ErrorTecto>La pagína que buscas no esta disponible</ErrorTecto>
+      </ErrorContainer>
+    </>
   );
 };
 

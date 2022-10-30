@@ -18,7 +18,7 @@ class Product extends Model<
   declare description: string;
   declare price_dollar: number | null;
   declare price_local: number;
-  declare stock: string;
+  declare stock: string | null;
   declare image: CreationOptional<string> | null;
   declare suspended: boolean;
   declare size: string | null;

@@ -1,10 +1,18 @@
+import {
+    GET_PRODUCTS
+} from "./actions"
 export interface Action{
     type:string,
     payload:any
 }
 
-const isAuthenticated = { loggedIn:false};
-export function reducers(state= isAuthenticated, action:Action){
+const initialState = { 
+    loggedIn:false,
+    products:[],
+    productsAll:[],
+
+};
+export function reducers(state= initialState, action:Action){
     switch(action.type){
         case 'LOGIN':
             return {
@@ -14,6 +22,13 @@ export function reducers(state= isAuthenticated, action:Action){
         case 'LOGOUT':
             return{
                 loggedIn:false
+            }
+        case GET_PRODUCTS:
+            
+            return{
+            ...state,
+            products:action.payload,
+            productsAll:action.payload
             }
         default:
             return state;

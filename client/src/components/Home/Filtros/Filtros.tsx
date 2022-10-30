@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
 import {BsFilter,BsSortNumericDown} from "react-icons/bs"
 import { useAppDispatch } from "../../../app/hooks";
-import { filtroPrecio } from "../../../redux/actions";
+
+import { filterAsc } from "../../../features/products/productSlice";
 
 const Filtros = () => {
   const dispatch = useAppDispatch();
   const handleAsc = (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>)=>{
-    dispatch(filtroPrecio(e.target.value))
+    dispatch(filterAsc(e.target.value))
   }
   return (
     <FiltrosContainer>

@@ -2,29 +2,29 @@ import { useState} from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import img from './Utils/prueba.png';
-
+import img2 from './Utils/tipo.jpg';
 import { BsInfoCircle } from 'react-icons/bs';
 
-
+type CardType ={
+    name:string,
+    price_local: number,
+    image:string|null|undefined
+}
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
-const Card = () =>{
+const Card = ({name, price_local, image}:CardType) =>{
     const [count, setCount]= useState(0);   
        
     return(
         <CardContainer>
             <div className='card__container'>
-               <Link to={"/detalle"}>
-                <div className="info">
-                <BsInfoCircle/>
-                </div>
-               </Link>
-                <div>
+               
+                <div className="card__image">
                 <img src={img} alt='' className="card__image"/>
                 </div>                                                     
                 <div className="card__info">                               
-                <div className="card_color_name">Placa de Video MSI 3080</div>              
+                <div className="card_color_name">{name}</div>              
                 <div className="card__name__price">
-                <h2 className="card_color_price">59.99$</h2>
+                <h2 className="card_color_price">{price_local}</h2>
                 </div>
                 <div className="card__sumaresta">         
                 <div className="card__buttons">
@@ -33,9 +33,15 @@ const Card = () =>{
                 <button onClick={()=> setCount(count + 1)} className='button__card'> + </button>
                 </div>  
                  </div> 
-                </div>               
+                </div> 
+                <div className="div__comprar">
+                <Link to={"/detalle"}>
+                <div className="info">
+                <BsInfoCircle/>
+                </div>
+               </Link>              
                 <button className="button">COMPRAR</button>         
-                             
+                       </div>      
             </div>          
             
         </CardContainer>
@@ -47,17 +53,22 @@ const CardContainer = styled.div`
   width: 100%;
   height:100%;
   margin-top: 30px;
-  margin-left: 15px;
+    display:grid;
   
-
+.div__comprar{
+    display:flex;
+    margin-bottom:10px;
+    justify-content:space-between;
+}
 .card__info{
-    position: relative;
-    bottom: 10px;
+    
+    
+    margin-left:10px
 }  
 .info{
-    position: absolute;  
+     
     font-size: 35px;
-    margin-top:259px;
+    
     margin-left: 20px;    
     color: ${({ theme }) => theme.dark};
     cursor: pointer;
@@ -76,8 +87,10 @@ const CardContainer = styled.div`
 .card__container{
     max-width: 200px;    
     border-radius:15px;
-    max-height: 300px;
-    box-shadow: 2px 2px 15px #30303021;    
+    max-height: 100%;
+    box-shadow: 2px 2px 15px #30303021;
+    margin-left:40px;
+    justify-content:space-evenly   
 }
 .card__sumaresta{
     position: relative;
@@ -90,7 +103,8 @@ const CardContainer = styled.div`
 }
 
 .card__image{
-    max-width: 100%;
+    position:relative;
+    max-width: 200px;
     max-height: 100%;    
     border-radius:15px;  
 }
@@ -119,7 +133,7 @@ const CardContainer = styled.div`
 
 .card__name__price{
     margin-left:10px;
-    margin-right:10px;
+    
     display: flex;
     font-size:12px;
     justify-content:space-between;
@@ -140,6 +154,7 @@ const CardContainer = styled.div`
     border-radius: 50px;  
     bottom: 55px;
 }
+.
 .card_color_name{    
     font-size: 17px;
     color: ${({ theme }) => theme.dark}; 
@@ -147,7 +162,7 @@ const CardContainer = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
-    position: relative;   
+    
         
 }
 .card_color_price{
@@ -163,8 +178,8 @@ const CardContainer = styled.div`
 
 .button{    
     position: relative;
-    bottom: 35px;
-    left: 100px;
+    
+    margin-right:10px;
     border-radius: 15px;
     background-color: ${({ theme }) => theme.primary};
     color: ${({ theme }) => theme.light};

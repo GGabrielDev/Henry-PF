@@ -1,9 +1,15 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
 import {BsFilter,BsSortNumericDown} from "react-icons/bs"
+import { useAppDispatch } from "../../../app/hooks";
+import { filtroPrecio } from "../../../redux/actions";
 
 const Filtros = () => {
+  const dispatch = useAppDispatch();
+  const handleAsc = (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>)=>{
+    dispatch(filtroPrecio(e.target.value))
+  }
   return (
     <FiltrosContainer>
       <button className="buttonfilter"><BsFilter/></button>
@@ -16,10 +22,10 @@ const Filtros = () => {
         </select>
       </div>
       <button className="buttonfilter">
-        <select name="filtervalor" id="">
-          <option value="DEFAULT"  disabled hidden>Sort by:</option>
-          <option value="si">Mayor valor</option>
-          <option value="no">Menor valor</option>
+        <select onChange={(e)=>handleAsc(e)} name="filtervalor" id="">
+          <option value="all"  disabled hidden>Sort by:</option>
+          <option value="des">Mayor valor</option>
+          <option value="asc">Menor valor</option>
         </select>
       </button>
     </FiltrosContainer>

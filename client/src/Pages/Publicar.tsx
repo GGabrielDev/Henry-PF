@@ -4,6 +4,10 @@ import Navbar from '../components/Navbar';
 import Validate,{formType, errType} from "../components/addProduct/validate";
 import { symlink } from "fs";
 
+import { createProduct } from "../redux/actions";
+import { useAppDispatch } from "../app/hooks";
+
+
 
 
 const Publicar = () => {
@@ -23,6 +27,7 @@ const Publicar = () => {
     suspended: "",
     url:"",
   });
+  const dispatch = useAppDispatch()
 
   const handleChange = (event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) => {
     setInput({ ...input, [event.target.name]: event.target.value });
@@ -31,6 +36,14 @@ const Publicar = () => {
   const handleSubmit = (event:SyntheticEvent) => {
     event.preventDefault()
     setErr(Validate( input ))
+    setInput({ name: "",
+    price_local: -1,
+    stock: -1,
+    description: "",
+    suspended: "",
+    url:"",
+  })
+
 
 
     if(input.name === "" || input.price_local === -1 || input.stock ===-1 || err.price_local === "Tiene que ser un numero" || input.description ==="" || input.suspended ==="" || input.url === ""){
@@ -44,7 +57,7 @@ const Publicar = () => {
       <Navbar/>
       <AddProduct>
         <h1 className='addproduct-title'>Add Product</h1>
-        <form action="" className='formularioproduct'>
+        <form onSubmit={handleSubmit} action="" className='formularioproduct'>
           <div className="productinfo">
             <div className="productinfo__left">
               <div className="inputinfo">
@@ -71,8 +84,8 @@ const Publicar = () => {
                 <label htmlFor="suspended">Estado:</label>
                 <select name="suspended" id="" onChange={handleChange}>
                   <option value="" disabled hidden>Choose here</option>
-                  <option value="si">Activo</option>
-                  <option value="no">Suspendido</option>
+                  <option value='true'>Activo</option>
+                  <option value="false">Suspendido</option>
                 </select>
                 {err.suspended ? <p className="errortext">  {err.suspended} </p> : "" }
               </div>
@@ -88,7 +101,7 @@ const Publicar = () => {
 
             </div>
           </div>
-          <button onClick={handleSubmit} className='submitproduct'>Submit</button>
+          <button onClick={()=> dispatch(createProduct(input))} className='submitproduct'>Submit</button>
         </form>
         
       </AddProduct>

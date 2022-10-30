@@ -152,6 +152,7 @@ module.exports = (sequelize: Sequelize) => {
 
       imagenDePerfil: {
         type: DataTypes.STRING,
+        allowNull:true,
         validate: {
           isUrl: true,
         },
@@ -163,11 +164,13 @@ module.exports = (sequelize: Sequelize) => {
           "Administrador",
           "Usuario"
         ),
+        defaultValue: "Usuario",
         allowNull: false,
       },
 
       suspended: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
         allowNull: false,
       },
 

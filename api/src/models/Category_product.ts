@@ -28,7 +28,7 @@ export class Category_Product extends Model<
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<number>;
   declare name: string;
-  declare image: string;
+  declare image: string | null;
   // You can also pre-declare possible inclusions, these will only be populated if you
   // actively include a relation.
   declare products?: NonAttribute<Product[]>; // Note this is optional since it's only populated when explicitly requested in code

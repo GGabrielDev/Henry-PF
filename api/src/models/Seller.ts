@@ -110,6 +110,7 @@ module.exports = (sequelize: Sequelize) => {
 
       imageLogo: {
         type: DataTypes.STRING,
+        allowNull: true,
         validate: {
           isUrl: true,
         },

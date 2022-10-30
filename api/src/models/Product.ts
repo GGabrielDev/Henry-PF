@@ -45,12 +45,12 @@ export class Product extends Model<
   declare id: CreationOptional<string>;
   declare name: string;
   declare description: string;
-  declare price_dollar: number;
+  declare price_dollar: number | null;
   declare price_local: number;
-  declare stock: string;
-  declare image: CreationOptional<string>;
+  declare stock: string | null;
+  declare image: CreationOptional<string> | null;
   declare suspended: boolean;
-  declare size: string;
+  declare size: string | null;
   // foreign keys are automatically added by associations methods (like Project.belongsTo)
   declare sellerId: ForeignKey<Seller["id"]>;
   // `seller` is an eagerly-loaded association.
@@ -143,7 +143,7 @@ module.exports = (sequelize: Sequelize) => {
 
       price_dollar: {
         type: DataTypes.DECIMAL(8, 2),
-        allowNull: false,
+        allowNull: true,
         validate: {
           isNumeric: true,
         },
@@ -175,6 +175,7 @@ module.exports = (sequelize: Sequelize) => {
 
       image: {
         type: DataTypes.STRING,
+        allowNull:true,
         validate: {
           isUrl: true,
         },
@@ -182,7 +183,7 @@ module.exports = (sequelize: Sequelize) => {
 
       suspended: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        defaultValue: false,
       },
 
       size: {

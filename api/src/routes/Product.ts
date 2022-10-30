@@ -187,7 +187,7 @@ router.delete(
 
       await result.destroy();
 
-      res.status(200).send("The choosed Product was deleted successfully");
+      res.status(200).send("The chosen Product was deleted successfully");
     } catch (error) {
       next(error);
     }

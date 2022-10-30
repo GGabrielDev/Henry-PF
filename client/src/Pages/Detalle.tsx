@@ -74,7 +74,7 @@ const DetalleContainer = styled.div`
  
   
 .det__container{
-    width: 1000px;    
+    width: 100%;    
     border-radius:15px;
     height: 750px;
     box-shadow: 2px 2px 15px #30303021;     

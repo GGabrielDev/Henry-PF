@@ -1,4 +1,4 @@
-import { Sequelize, Model, ModelStatic } from "sequelize";
+import { Sequelize, Model, ModelCtor } from "sequelize";
 import fs from "fs";
 import path from "path";
 
@@ -48,14 +48,61 @@ modelDefiners.forEach((model) => {
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-// -- Destructuring here.
+const {
+  Category_Product,
+  Category_Seller,
+  Countries,
+  Product,
+  Review,
+  Seller,
+  User,
+} = sequelize.models;
 
 // Aqui irian las declaraciones de las junction tables.
 // -- Declare here.
 
 // Aca vendrian las declaraciones de las relaciones
 // Ejemplo: Product.hasMany(Reviews);
-// -- Declare here.
+User.hasOne(Seller, { sourceKey: "userId" });
+Seller.belongsTo(User, { targetKey: "userId" });
+Product.belongsToMany(Category_Product, {
+  targetKey: "productId",
+  through: "category_product_join",
+});
+Category_Product.belongsToMany(Product, {
+  targetKey: "categoryId",
+  through: "category_product_join",
+});
+Product.hasMany(Review, {
+  foreignKey: "productId",
+});
+Review.belongsTo(Product, {
+  targetKey: "productId",
+});
+Countries.hasMany(User, {
+  foreignKey: "userId",
+});
+User.belongsTo(Countries, {
+  targetKey: "userId",
+});
+Category_Seller.hasMany(Seller, {
+  foreignKey: "categoryId",
+});
+Seller.belongsTo(Category_Seller, {
+  targetKey: "categoryId",
+});
+Seller.hasMany(Product, {
+  foreignKey: "sellerId",
+});
+Product.belongsTo(Seller, {
+  targetKey: "sellerId",
+});
+User.hasMany(Review, {
+  foreignKey: "userId",
+}),
+  Review.belongsTo(User, {
+    targetKey: "userId",
+  });
 
 export const Models = sequelize.models; // Para importar un objeto con solo los modelos: import { Models } from "./db.js"
 export default sequelize; // Para importar la conexión de Sequelize: import sequelize from './db.js';

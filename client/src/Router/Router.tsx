@@ -10,12 +10,15 @@ import UserEdit from "../components/Usuario/UserEdit";
 import UserFavoritos from "../components/Usuario/UserFavoritos";
 import { Recover } from "../Pages/Recover";
 import Error404 from "../components/Error/Error404";
+import Detalle from "../Pages/Detalle";
 
 const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/publicar" element={<Publicar />} />
+      <Route path="/detalle" element={<Detalle />} />
+      
 
       {/* rutas usuario */}
       <Route path="/usuario/general" element={<UserGeneral />} />

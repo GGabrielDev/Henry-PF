@@ -10,4 +10,6 @@ export const Themes = {
   cream2: "#fdfdfd",
   error: "#ff0000",
   Whatsapp: "#5ad442",
+  info: "rgb(0, 0, 255)"
+  
 };

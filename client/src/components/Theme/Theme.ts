@@ -9,4 +9,5 @@ export const Themes = {
   cream: "#fffff4" /* COLOR BLANCO MAS CREMA*/,
   cream2: "#fdfdfd",
   error: "#ff0000",
+  Whatsapp: "#5ad442",
 };

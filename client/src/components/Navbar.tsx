@@ -16,13 +16,20 @@ const Navbar = () => {
           </Infotop>
         </Headertop>
         <Headermiddle>
-          <Logo>PedirYa</Logo>
+          <Link to="/">
+            <Logo>PedirYa</Logo>
+          </Link>
+
           <Userinfo>
             <div className="userinfo-item userinfo-text">Mans</div>
             <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item">
-              <Link to="/usuario/general">
+              {/* <Link to="/usuario/general">
                 <BiUser className="icono__user" />
+              </Link> */}
+
+              <Link to="/auth/login">
+                <button className="button__login">INICIAR SESIÓN</button>
               </Link>
             </div>
 
@@ -152,8 +159,8 @@ const Userinfo = styled.div`
   button {
     border-radius: 7px;
     background-color: ${({ theme }) => theme.primary};
-    color: white;
-    border: none;
+    color: ${({ theme }) => theme.light};
+    border: 1px solid transparent;
     padding: 7px 10px;
     display: flex;
     align-items: center;
@@ -161,6 +168,14 @@ const Userinfo = styled.div`
     svg {
       font-size: 20px;
       margin-right: 5px;
+    }
+    &:hover {
+      border: 1px solid ${({ theme }) => theme.primary};
+      background-color: ${({ theme }) => theme.light};
+      color: ${({ theme }) => theme.primary};
+      svg {
+        color: ${({ theme }) => theme.primary};
+      }
     }
   }
 

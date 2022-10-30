@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import  {Register}  from "../Pages/Register";
+import { Register } from "../Pages/Register";
 import Home from "../Pages/Home";
 import { Login } from "../Pages/Login";
 import Publicar from "../Pages/Publicar";
@@ -9,6 +9,7 @@ import UserCompraDetalle from "../components/Usuario/UserComprasDetalle";
 import UserEdit from "../components/Usuario/UserEdit";
 import UserFavoritos from "../components/Usuario/UserFavoritos";
 import { Recover } from "../Pages/Recover";
+import Error404 from "../components/Error/Error404";
 
 const Router = () => {
   return (
@@ -28,6 +29,10 @@ const Router = () => {
       <Route path="auth/recover" element={<Recover />} />
       <Route path="auth/register" element={<Register />} />
       <Route path="/auth/login" element={<Login />} />
+
+      {/* error en la ruta */}
+
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 };

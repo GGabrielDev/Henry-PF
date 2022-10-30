@@ -64,6 +64,17 @@ const General = () => {
           </div>
         </div>
       </div>
+
+      <h2 className="section">Metodo de pago: </h2>
+
+      <div className="detail__card">
+        <div className="card__resumen">
+          <div className="card__resumen-item">
+            <p className="detail-product">VISA</p>
+            <p className="detail__value">****4040</p>
+          </div>
+        </div>
+      </div>
     </GeneralContainer>
   );
 };
@@ -183,5 +194,27 @@ const GeneralContainer = styled.div`
 
   @media screen and (max-width: 768px) {
     height: auto;
+  }
+
+  @media screen and (max-width: 576px) {
+    .detail__card {
+      flex-direction: column;
+    }
+
+    .card__section1 {
+      flex-direction: column;
+    }
+
+    .detail-product {
+      width: 100%;
+    }
+
+    .detail-product-container {
+      flex-direction: column;
+    }
+
+    .detail-products {
+      margin: 0;
+    }
   }
 `;

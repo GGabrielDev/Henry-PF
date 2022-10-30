@@ -1,5 +1,6 @@
 import axios from 'axios';
 export const GET_PRODUCTS='GET_PRODUCTS';
+export const FILTER_PRICE='FILTER_PRICE'
 
 type CreateProductResponse={
     name: string,
@@ -34,5 +35,12 @@ export const getAllProducts = () => async (dispatch:any)=>{
     });
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const filtroPrecio=(payload:string)=>{
+    return{
+        type:FILTER_PRICE,
+        payload
     }
 }

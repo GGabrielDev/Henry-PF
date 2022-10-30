@@ -91,6 +91,8 @@ const NavbarContainer = styled.div`
 const Header = styled.div`
   width: 100%;
   position: absolute;
+  z-index: 1000;
+
 `;
 
 const Headertop = styled.div`
@@ -140,6 +142,7 @@ export const Logo = styled.div`
   font-size: 40px;
   font-weight: 700;
   color: ${({ theme }) => theme.primary};
+
 
   @media screen and (max-width: 1000px) {
     width: auto;

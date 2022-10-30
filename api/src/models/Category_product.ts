@@ -1,14 +1,27 @@
 import {
+  Association,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyCountAssociationsMixin,
+  BelongsToManyCreateAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManyHasAssociationMixin,
+  BelongsToManyHasAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+  BelongsToManyRemoveAssociationMixin,
+  BelongsToManyRemoveAssociationsMixin,
   CreationOptional,
   InferAttributes,
   InferCreationAttributes,
   Model,
+  NonAttribute,
   Sequelize,
   DataTypes,
 } from "sequelize";
 import path from "path";
+import { Product } from "./Product";
 
-class Category_Product extends Model<
+export class Category_Product extends Model<
   InferAttributes<Category_Product>,
   InferCreationAttributes<Category_Product>
 > {
@@ -16,6 +29,38 @@ class Category_Product extends Model<
   declare id: CreationOptional<number>;
   declare name: string;
   declare image: string | null;
+  // You can also pre-declare possible inclusions, these will only be populated if you
+  // actively include a relation.
+  declare products?: NonAttribute<Product[]>; // Note this is optional since it's only populated when explicitly requested in code
+  // Since TS cannot determine model association at compile time
+  // we have to declare them here purely virtually
+  // these will not exist until `Model.init` was called.
+  declare getProduct: BelongsToManyGetAssociationsMixin<Product>;
+  declare countProducts: BelongsToManyCountAssociationsMixin;
+  declare hasProduct: BelongsToManyHasAssociationMixin<Product, Product["id"]>;
+  declare hasProducts: BelongsToManyHasAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare setProduct: BelongsToManySetAssociationsMixin<Product, Product["id"]>;
+  declare addProduct: BelongsToManyAddAssociationMixin<Product, Product["id"]>;
+  declare addProducts: BelongsToManyAddAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeProduct: BelongsToManyRemoveAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeProducts: BelongsToManyRemoveAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare createProduct: BelongsToManyCreateAssociationMixin<Product>;
+
+  declare static associations: {
+    products: Association<Category_Product, Product>;
+  };
 }
 
 // Exportamos una funcion que define el modelo
@@ -37,7 +82,7 @@ module.exports = (sequelize: Sequelize) => {
         unique: true,
         validate: {
           isAlphanumeric: true,
-        }
+        },
       },
 
       image: {
@@ -45,15 +90,17 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: true,
         validate: {
           isUrl: true,
-        }
-      }
-
+        },
+      },
     },
     {
       sequelize,
-      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      tableName: path
+        .basename(__filename, path.extname(__filename))
+        .toLowerCase(),
       timestamps: false,
       paranoid: true,
-    },
+    }
   );
 };
+

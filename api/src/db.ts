@@ -63,45 +63,53 @@ const {
 
 // Aca vendrian las declaraciones de las relaciones
 // Ejemplo: Product.hasMany(Reviews);
-User.hasOne(Seller, { sourceKey: "userId" });
-Seller.belongsTo(User, { targetKey: "userId" });
+User.hasOne(Seller, { sourceKey: "id" });
+Seller.belongsTo(User, { targetKey: "id" });
 Product.belongsToMany(Category_Product, {
-  targetKey: "productId",
   through: "category_product_join",
 });
 Category_Product.belongsToMany(Product, {
-  targetKey: "categoryId",
   through: "category_product_join",
 });
 Product.hasMany(Review, {
-  foreignKey: "productId",
+  sourceKey: "id",
+  foreignKey: "reviewId",
+  as: "reviews",
 });
 Review.belongsTo(Product, {
-  targetKey: "productId",
+  targetKey: "id",
 });
 Countries.hasMany(User, {
+  sourceKey: "id",
   foreignKey: "userId",
+  as: "users",
 });
 User.belongsTo(Countries, {
-  targetKey: "userId",
+  targetKey: "id",
 });
 Category_Seller.hasMany(Seller, {
+  sourceKey: "id",
   foreignKey: "categoryId",
+  as: "categories",
 });
 Seller.belongsTo(Category_Seller, {
-  targetKey: "categoryId",
+  targetKey: "id",
 });
 Seller.hasMany(Product, {
-  foreignKey: "sellerId",
+  sourceKey: "id",
+  foreignKey: "productId",
+  as: "products",
 });
 Product.belongsTo(Seller, {
-  targetKey: "sellerId",
+  targetKey: "id",
 });
 User.hasMany(Review, {
-  foreignKey: "userId",
+  sourceKey: "id",
+  foreignKey: "reviewId",
+  as: "reviews",
 }),
   Review.belongsTo(User, {
-    targetKey: "userId",
+    targetKey: "id",
   });
 
 export const Models = sequelize.models; // Para importar un objeto con solo los modelos: import { Models } from "./db.js"

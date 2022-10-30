@@ -51,7 +51,7 @@ module.exports = (sequelize: Sequelize) => {
 
       price_dollar: {
         type: DataTypes.DECIMAL(8, 2),
-        allowNull: false,
+        allowNull: true,
         validate: {
           isNumeric: true,
         },
@@ -83,6 +83,7 @@ module.exports = (sequelize: Sequelize) => {
 
       image: {
         type: DataTypes.STRING,
+        allowNull:true,
         validate: {
           isUrl: true,
         },
@@ -90,7 +91,7 @@ module.exports = (sequelize: Sequelize) => {
 
       suspended: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        defaultValue: false,
       },
 
       size: {

@@ -16,12 +16,12 @@ class Product extends Model<
   declare id: CreationOptional<string>;
   declare name: string;
   declare description: string;
-  declare price_dollar: number;
+  declare price_dollar: number | null;
   declare price_local: number;
   declare stock: string;
-  declare image: CreationOptional<string>;
+  declare image: CreationOptional<string> | null;
   declare suspended: boolean;
-  declare size: string;
+  declare size: string | null;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;

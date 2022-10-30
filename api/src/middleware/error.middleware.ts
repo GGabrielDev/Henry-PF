@@ -13,12 +13,17 @@ import HttpException from "../exceptions/HttpException";
 
 const handleError: ErrorRequestHandler = (err, req, res, next) => {
   let customError = err;
+  console.log(err);
 
   if (!(err instanceof HttpException)) {
-    customError = new HttpException(
-      500,
-      "Oh no, this is embarrasing. We are having troubles my friend"
-    );
+    if ((err.code = "credentials_required")) {
+      customError = new HttpException(err.status, err.inner.message);
+    } else {
+      customError = new HttpException(
+        500,
+        "Oh no, this is embarrasing. We are having troubles my friend"
+      );
+    }
   }
 
   // we are not using the next function to prvent from triggering

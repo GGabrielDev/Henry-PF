@@ -19,10 +19,10 @@ class Seller extends Model<
   declare imageLogo: string | null;
   declare template_page: string;
   // timestamps!
-// createdAt can be undefined during creation
-declare createdAt: CreationOptional<Date>;
-// updatedAt can be undefined during creation
-declare updatedAt: CreationOptional<Date>;
+  // createdAt can be undefined during creation
+  declare createdAt: CreationOptional<Date>;
+  // updatedAt can be undefined during creation
+  declare updatedAt: CreationOptional<Date>;
 }
 
 // Exportamos una funcion que define el modelo
@@ -34,7 +34,7 @@ module.exports = (sequelize: Sequelize) => {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
-        primaryKey:true,
+        primaryKey: true,
       },
 
       nombreNegocio: {
@@ -42,7 +42,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         validate: {
           isAlpha: true,
-        }
+        },
       },
 
       pay_Money: {
@@ -54,22 +54,25 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         validate: {
           isUrl: true,
-        }
+        },
       },
 
       template_page: {
-        type: DataTypes.ENUM("1", "2", "3")
+        type: DataTypes.ENUM("1", "2", "3"),
       },
 
-      createdAt:DataTypes.DATE,
-      updatedAt:DataTypes.DATE,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
     },
 
     {
       sequelize,
-      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      tableName: path
+        .basename(__filename, path.extname(__filename))
+        .toLowerCase(),
       timestamps: true,
       paranoid: true,
-    },
+    }
   );
 };
+

@@ -1,14 +1,43 @@
 import {
+  Association,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyCountAssociationsMixin,
+  BelongsToManyCreateAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManyHasAssociationMixin,
+  BelongsToManyHasAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+  BelongsToManyRemoveAssociationMixin,
+  BelongsToManyRemoveAssociationsMixin,
   CreationOptional,
+  ForeignKey,
+  HasManyAddAssociationMixin,
+  HasManyAddAssociationsMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  HasManyHasAssociationMixin,
+  HasManyGetAssociationsMixin,
+  HasManySetAssociationsMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasOneGetAssociationMixin,
+  HasOneSetAssociationMixin,
+  HasOneCreateAssociationMixin,
   InferAttributes,
   InferCreationAttributes,
   Model,
+  NonAttribute,
   Sequelize,
   DataTypes,
 } from "sequelize";
 import path from "path";
+import { Category_Product } from "./Category_product";
+import { Review } from "./Review";
+import { Seller } from "./Seller";
 
-class Product extends Model<
+export class Product extends Model<
   InferAttributes<Product>,
   InferCreationAttributes<Product>
 > {
@@ -22,11 +51,74 @@ class Product extends Model<
   declare image: CreationOptional<string>;
   declare suspended: boolean;
   declare size: string;
+  // foreign keys are automatically added by associations methods (like Project.belongsTo)
+  declare sellerId: ForeignKey<Seller["id"]>;
+  // `seller` is an eagerly-loaded association.
+  // We tag it as `NonAttribute`
+  declare seller?: NonAttribute<Seller>;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
   // updatedAt can be undefined during creation
   declare updatedAt: CreationOptional<Date>;
+  // Since TS cannot determine model association at compile time
+  // we have to declare them here purely virtually
+  // these will not exist until `Model.init` was called.
+  declare getCategory: BelongsToManyGetAssociationsMixin<Category_Product>;
+  declare countCategories: BelongsToManyCountAssociationsMixin;
+  declare hasCategory: BelongsToManyHasAssociationMixin<
+    Category_Product,
+    Category_Product["id"]
+  >;
+  declare hasCategories: BelongsToManyHasAssociationsMixin<
+    Category_Product,
+    Category_Product["id"]
+  >;
+  declare setCategory: BelongsToManySetAssociationsMixin<
+    Category_Product,
+    Category_Product["id"]
+  >;
+  declare addCategory: BelongsToManyAddAssociationMixin<
+    Category_Product,
+    Category_Product["id"]
+  >;
+  declare addCategories: BelongsToManyAddAssociationsMixin<
+    Category_Product,
+    Category_Product["id"]
+  >;
+  declare removeCategory: BelongsToManyRemoveAssociationMixin<
+    Category_Product,
+    Category_Product["id"]
+  >;
+  declare removeCategories: BelongsToManyRemoveAssociationsMixin<
+    Category_Product,
+    Category_Product["id"]
+  >;
+  declare createCategory: BelongsToManyCreateAssociationMixin<Category_Product>;
+
+  declare getReview: HasManyGetAssociationsMixin<Review>;
+  declare countReviews: HasManyCountAssociationsMixin;
+  declare hasReview: HasManyHasAssociationMixin<Review, Review["id"]>;
+  declare hasReviews: HasManyHasAssociationsMixin<Review, Review["id"]>;
+  declare setReview: HasManySetAssociationsMixin<Review, Review["id"]>;
+  declare addReview: HasManyAddAssociationMixin<Review, Review["id"]>;
+  declare addReviews: HasManyAddAssociationsMixin<Review, Review["id"]>;
+  declare removeReview: HasManyRemoveAssociationMixin<Review, Review["id"]>;
+  declare removeReviews: HasManyRemoveAssociationsMixin<Review, Review["id"]>;
+  declare createReview: HasManyCreateAssociationMixin<Review>;
+
+  declare getSeller: HasOneGetAssociationMixin<Seller>;
+  declare setSeller: HasOneSetAssociationMixin<Seller, Seller["id"]>;
+  declare createSeller: HasOneCreateAssociationMixin<Seller>;
+  // You can also pre-declare possible inclusions, these will only be populated if you
+  // actively include a relation.
+  declare categories?: NonAttribute<Category_Product[]>; // Note this is optional since it's only populated when explicitly requested in code
+  declare reviews?: NonAttribute<Review[]>;
+
+  declare static associations: {
+    categories: Association<Product, Category_Product>;
+    reviews: Association<Product, Review>;
+  };
 }
 
 // Exportamos una funcion que define el modelo
@@ -112,4 +204,3 @@ module.exports = (sequelize: Sequelize) => {
     }
   );
 };
-

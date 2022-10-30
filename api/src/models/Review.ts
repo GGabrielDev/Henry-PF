@@ -1,14 +1,21 @@
 import {
+  BelongsToGetAssociationMixin,
+  BelongsToSetAssociationMixin,
+  BelongsToCreateAssociationMixin,
   CreationOptional,
+  ForeignKey,
   InferAttributes,
   InferCreationAttributes,
   Model,
+  NonAttribute,
   Sequelize,
   DataTypes,
 } from "sequelize";
 import path from "path";
+import { Product } from "./Product";
+import { User } from "./User";
 
-class Review extends Model<
+export class Review extends Model<
   InferAttributes<Review>,
   InferCreationAttributes<Review>
 > {
@@ -16,11 +23,27 @@ class Review extends Model<
   declare id: CreationOptional<string>;
   declare body: string;
   declare score: string;
+  // foreign keys are automatically added by associations methods (like Project.belongsTo)
+  declare productId: ForeignKey<Product["id"]>;
+  declare userId: ForeignKey<User["id"]>;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
   // updatedAt can be undefined during creation
   declare updatedAt: CreationOptional<Date>;
+  // `product` is an eagerly-loaded association.
+  // We tag it as `NonAttribute`
+  declare product?: NonAttribute<Product>;
+  // Since TS cannot determine model association at compile time
+  // we have to declare them here purely virtually
+  // these will not exist until `Model.init` was called.
+  declare getProduct: BelongsToGetAssociationMixin<Product>;
+  declare setProduct: BelongsToSetAssociationMixin<Product, Product["id"]>;
+  declare createProduct: BelongsToCreateAssociationMixin<Product>;
+
+  declare getUser: BelongsToGetAssociationMixin<User>;
+  declare setUser: BelongsToSetAssociationMixin<User, User["id"]>;
+  declare createUser: BelongsToCreateAssociationMixin<User>;
 }
 
 // Exportamos una funcion que define el modelo
@@ -64,4 +87,3 @@ module.exports = (sequelize: Sequelize) => {
     }
   );
 };
-

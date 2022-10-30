@@ -7,31 +7,42 @@ import {
     DataTypes,
   } from "sequelize";
   import path from "path";
+import { CallTracker } from "assert";
   
-  interface CustomerModel
-    extends Model<
-      InferAttributes<CustomerModel>,
-      InferCreationAttributes<CustomerModel>
+  class Cart extends Model<
+      InferAttributes<Cart>,
+      InferCreationAttributes<Cart>
     > {
     // Some fields are optional when calling UserModel.create() or UserModel.build()
-    id: CreationOptional<string>;
+    declare id: CreationOptional<number>;
+    declare amount: number;
   }
   
   // Exportamos una funcion que define el modelo
   // Luego le injectamos la conexion a sequelize.
   module.exports = (sequelize: Sequelize) => {
     // defino el modelo
-    sequelize.define<CustomerModel>(
-      path.basename(__filename, path.extname(__filename)).toLowerCase(),
+    Cart.init(
       {
         id: {
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           primaryKey: true,
         },
+
+        amount: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                isNumeric: false,
+            }
+        },
       }, 
-      { timestamps: false,
-        paranoid: true, 
+      { 
+        sequelize,
+        tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+        timestamps: false,
+        paranoid: true,
     },
     );
   };

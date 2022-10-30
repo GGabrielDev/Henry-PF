@@ -8,31 +8,33 @@ import {
 } from "sequelize";
 import path from "path";
 
-interface UserModel
-  extends Model<
-    InferAttributes<UserModel>,
-    InferCreationAttributes<UserModel>
-  > {
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  uuid: CreationOptional<string>;
-  firstName: string;
-  lastName: string;
-  username: string;
-  genero: string;
-  email: string;
-  mobile: string;
-  address: string;
-  imagenDePerfil: CreationOptional<string>;
+  declare id: CreationOptional<string>;
+  declare firstName: string;
+  declare lastName: string;
+  declare username: string;
+  declare gender: string;
+  declare email: string;
+  declare mobile: string;
+  declare address: string;
+  declare imagenDePerfil: string | null;
+  declare userType: string;
+  declare suspended: boolean;
+  // timestamps!
+  // createdAt can be undefined during creation
+  declare createdAt: CreationOptional<Date>;
+  // updatedAt can be undefined during creation
+  declare updatedAt: CreationOptional<Date>;
 }
 
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize: Sequelize) => {
   // defino el modelo
-  sequelize.define<UserModel>(
-    path.basename(__filename, path.extname(__filename)).toLowerCase(),
+  User.init(
     {
-      uuid: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
@@ -43,7 +45,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         validate: {
           isAlpha: true,
-        }
+        },
       },
 
       lastName: {
@@ -51,7 +53,7 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         validate: {
           isAlpha: true,
-        }
+        },
       },
 
       username: {
@@ -60,30 +62,30 @@ module.exports = (sequelize: Sequelize) => {
         unique: true,
         validate: {
           isAlphanumeric: true,
+        },
       },
-    },
 
-    genero:{
-      type: DataTypes.ENUM("M","F","No binario", "No quiero decir"),
-      defaultValue:"No quiero decir",
-    },
+      gender: {
+        type: DataTypes.ENUM("M", "F", "No binario", "No quiero decir"),
+        defaultValue: "No quiero decir",
+      },
 
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
         validate: {
           isEmail: true,
-        }
+        },
       },
 
       mobile: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
         validate: {
           is: /^[0-9]+(-[0-9]+)+$/i,
-        }
+        },
       },
 
       address: {
@@ -95,12 +97,34 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         validate: {
           isUrl: true,
-        }
+        },
       },
+
+      userType: {
+        type: DataTypes.ENUM(
+          "Administrador General",
+          "Administrador",
+          "Usuario"
+        ),
+        allowNull: false,
+      },
+
+      suspended: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
     },
     {
-      timestamps: false,
+      sequelize,
+      tableName: path
+        .basename(__filename, path.extname(__filename))
+        .toLowerCase(),
+      timestamps: true,
       paranoid: true,
-    },
+    }
   );
 };
+

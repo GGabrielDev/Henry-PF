@@ -1,22 +1,28 @@
 import { useState} from "react";
 import styled from "styled-components";
-import { Themes } from "./Theme/Theme";
+import { Link } from "react-router-dom";
 import img from './Utils/prueba.png';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+
+import { BsInfoCircle } from 'react-icons/bs';
 
 
-//foto, precio, cantidad, agregar carrito, nombre
+//NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = () =>{
     const [count, setCount]= useState(0);   
        
     return(
         <CardContainer>
             <div className='card__container'>
+               <Link to={"/detalle"}>
+                <div className="info">
+                <BsInfoCircle/>
+                </div>
+               </Link>
                 <div>
                 <img src={img} alt='' className="card__image"/>
                 </div>                                                     
                 <div className="card__info">                               
-                <div className="card_color_name">Tornillo</div>              
+                <div className="card_color_name">Placa de Video MSI 3080</div>              
                 <div className="card__name__price">
                 <h2 className="card_color_price">59.99$</h2>
                 </div>
@@ -27,8 +33,9 @@ const Card = () =>{
                 <button onClick={()=> setCount(count + 1)} className='button__card'> + </button>
                 </div>  
                  </div> 
-                </div>  
-                <h3 className="card_shop"><AiOutlineShoppingCart/></h3>  
+                </div>               
+                <button className="button">COMPRAR</button>         
+                             
             </div>          
             
         </CardContainer>
@@ -42,6 +49,30 @@ const CardContainer = styled.div`
   margin-top: 30px;
   margin-left: 15px;
   
+
+.card__info{
+    position: relative;
+    bottom: 10px;
+}  
+.info{
+    position: absolute;  
+    font-size: 35px;
+    margin-top:259px;
+    margin-left: 20px;    
+    color: ${({ theme }) => theme.dark};
+    cursor: pointer;
+}
+.info:hover{
+    transform: scale(1.1);  
+    color: ${({ theme }) => theme.primary};
+ }
+
+.comp{
+    position: relative;
+    font-size: 15px;
+    left: 5px;
+    bottom: 20px;
+}
 .card__container{
     max-width: 200px;    
     border-radius:15px;
@@ -51,6 +82,11 @@ const CardContainer = styled.div`
 .card__sumaresta{
     position: relative;
     left: 100px ;    
+}
+.comprar{
+    position: relative;
+    bottom: 5px;
+    left: 55px;
 }
 
 .card__image{
@@ -78,6 +114,7 @@ const CardContainer = styled.div`
     margin-top:5px;
     margin-bottom:5px;    
     bottom : 29px;
+    right: 7px ;
 } 
 
 .card__name__price{
@@ -93,31 +130,29 @@ const CardContainer = styled.div`
     width:20px;
     height:20px;
     border:none;  
-    position: relative;
-     
+    position: relative;    
    
 }
 .card_shop{      
-    font-size: 40px;
+    font-size: 35px;
     position: relative;    
-    left: 78px;
+    left: 85px;
     border-radius: 50px;  
-    bottom: 33px;
+    bottom: 55px;
 }
 .card_color_name{    
     font-size: 17px;
-    color: ${Themes.dark}; 
+    color: ${({ theme }) => theme.dark}; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
-    position: relative;
-    left: 10px;
+    position: relative;   
         
 }
 .card_color_price{
     position: relative;
-    color: ${Themes.primary};
+    color: ${({ theme }) => theme.primary}; 
     top: 5px; 
     }
 
@@ -125,6 +160,33 @@ const CardContainer = styled.div`
     transform: scale(1.1); 
     box-shadow: 2px 2px 15px #30303076;    
 }
+
+.button{    
+    position: relative;
+    bottom: 35px;
+    left: 100px;
+    border-radius: 15px;
+    background-color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.light};
+    border: 1px solid transparent;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    svg {
+      font-size: 20px;
+      margin-right: 5px;
+    }
+    &:hover {
+      border: 1px solid ${({ theme }) => theme.primary};
+      background-color: ${({ theme }) => theme.light};
+      color: ${({ theme }) => theme.primary};
+      svg {
+        color: ${({ theme }) => theme.primary};
+      }
+    }
+  }
+
 `; 
 
 

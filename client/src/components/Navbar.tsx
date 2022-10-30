@@ -1,5 +1,7 @@
+import React from "react";
 import styled from "styled-components";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -14,13 +16,23 @@ const Navbar = () => {
           </Infotop>
         </Headertop>
         <Headermiddle>
-          <Logo>PedirYa</Logo>
+          <Link to="/">
+            <Logo>PedirYa</Logo>
+          </Link>
+
           <Userinfo>
             <div className="userinfo-item userinfo-text">Mans</div>
             <div className="userinfo-item userinfo-text">Womans</div>
             <div className="userinfo-item">
-              <BiUser className="icono__user" />
+              {/* <Link to="/usuario/general">
+                <BiUser className="icono__user" />
+              </Link> */}
+
+              <Link to="/auth/login">
+                <button className="button__login">INICIAR SESIÓN</button>
+              </Link>
             </div>
+
             <div className="userinfo-item">
               <button>
                 <BiShoppingBag /> Cart(0)
@@ -52,26 +64,26 @@ const NavbarContainer = styled.div`
     cursor: pointer;
   }
 
-  .infocategories-item {
-    font-weight: 500;
-    font-size: 12px;
-    cursor: pointer;
-    transition: 0.5s;
-    &:hover {
-      color: ${({ theme }) => theme.primary};
+  .userinfo-item button {
+    svg {
+      color: white;
     }
   }
 
   .userinfo-text {
-    transition: 0.5s;
-    &:hover {
-      color: ${({ theme }) => theme.primary};
-    }
+    font-weight: 400;
+    color: gray;
+  }
 
-    @media screen and (max-width: 1000px) {
-      .userinfo-text {
-        display: none;
-      }
+  .infocategories-item {
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .userinfo-text {
+      display: none;
     }
   }
 `;
@@ -119,7 +131,7 @@ const Headermiddle = styled.div`
   }
 `;
 
-const Logo = styled.div`
+export const Logo = styled.div`
   width: 200px;
   height: 60px;
   display: flex;
@@ -143,31 +155,37 @@ const Userinfo = styled.div`
   font-weight: 600;
   align-items: center;
   justify-content: space-between;
-  color: ${({ theme }) => theme.details};
-  font-size: 13px;
 
   button {
     border-radius: 7px;
     background-color: ${({ theme }) => theme.primary};
-    color: white;
-    border: none;
+    color: ${({ theme }) => theme.light};
+    border: 1px solid transparent;
     padding: 7px 10px;
     display: flex;
     align-items: center;
     cursor: pointer;
-
     svg {
-      font-size: 15px;
+      font-size: 20px;
       margin-right: 5px;
+    }
+    &:hover {
+      border: 1px solid ${({ theme }) => theme.primary};
+      background-color: ${({ theme }) => theme.light};
+      color: ${({ theme }) => theme.primary};
+      svg {
+        color: ${({ theme }) => theme.primary};
+      }
     }
   }
 
-  .icono__user {
-    font-size: 20px;
-    display: block;
-    background-color: transparent;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+  svg {
+    font-size: 30px;
+  }
+  svg {
+    font-size: 30px;
+    text-decoration: none;
+    color: ${({ theme }) => theme.dark};
   }
 
   @media screen and (max-width: 1000px) {

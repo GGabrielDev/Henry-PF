@@ -1,13 +1,15 @@
-import express, { ErrorRequestHandler, NextFunction, Response } from "express";
+import express, { NextFunction, Response } from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import routes from "./routes";
+import errorHandler from "./middleware/error.middleware";
 
 require("./db.js");
 
 express.json({ limit: "50mb" });
 const server = express();
 
+server.use(express.json());
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use((_, res: Response, next: NextFunction) => {
@@ -24,13 +26,6 @@ server.use((_, res: Response, next: NextFunction) => {
 server.use("/", routes);
 
 // Error catching endware.
-const errorHandler: ErrorRequestHandler = (err, _, res) => {
-  // eslint-disable-line no-unused-vars
-  const status = err.status || 500;
-  const message = err.message || err;
-  console.error(err);
-  res.status(status).send(message);
-};
 server.use(errorHandler);
 
 export default server;

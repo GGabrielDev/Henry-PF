@@ -95,26 +95,32 @@ const GeneralContent = styled.div`
   }
 
   .subir__img {
-    background-color: ${({ theme }) => theme.secondary};
+    background-color: ${({ theme }) => theme.primary};
     border: 1px solid ${({ theme }) => theme.border};
+    color:${({ theme }) => theme.light} ;
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
     transition: 0.4s;
     &:hover {
-      background-color: ${({ theme }) => theme.primary};
+      background-color: ${({ theme }) => theme.light};
+      color: ${({ theme }) => theme.primary};
+      border: 1px solid ${({ theme }) => theme.primary};
     }
   }
 
   .borrar__img {
-    background-color: ${({ theme }) => theme.secondary};
+    background-color: ${({ theme }) => theme.primary};
+    color:${({ theme }) => theme.light} ;
     border-radius: 5px;
     padding: 5px;
     border: 1px solid ${({ theme }) => theme.border};
     cursor: pointer;
     transition: 0.4s;
     &:hover {
-      background-color: ${({ theme }) => theme.primary};
+      background-color: ${({ theme }) => theme.light};
+      color: ${({ theme }) => theme.primary};
+      border: 1px solid ${({ theme }) => theme.primary};
     }
   }
 

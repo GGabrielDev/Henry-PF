@@ -9,28 +9,28 @@ const Navbar = () => {
       <Header>
         <Headertop>
           <Infotop>
+            <div className="infotop-item">
+              <Link className="infotop-item-ini" to="/auth/login">
+                Iniciar sesion
+              </Link>
+            </div>
             <div className="infotop-item">Client service</div>
             <div className="infotop-item">FAQ</div>
             <div className="infotop-item">About</div>
-            <div className="infotop-item">Eng</div>
           </Infotop>
         </Headertop>
         <Headermiddle>
           <Link to="/">
-            <Logo>PedirYa</Logo>
+            <Logo>TuGamer</Logo>
           </Link>
 
           <Userinfo>
-            <div className="userinfo-item userinfo-text">Mans</div>
-            <div className="userinfo-item userinfo-text">Womans</div>
+            <div className="userinfo-item userinfo-text">Notebooks</div>
+            <div className="userinfo-item userinfo-text">Cpu</div>
             <div className="userinfo-item">
               {/* <Link to="/usuario/general">
                 <BiUser className="icono__user" />
               </Link> */}
-
-              <Link to="/auth/login">
-                <button className="button__login">INICIAR SESIÓN</button>
-              </Link>
             </div>
 
             <div className="userinfo-item">
@@ -42,12 +42,11 @@ const Navbar = () => {
         </Headermiddle>
         <Headerbottom>
           <Infocategories>
-            <div className="infocategories-item">Top</div>
-            <div className="infocategories-item">Bottom</div>
-            <div className="infocategories-item">Watch</div>
-            <div className="infocategories-item">Shoes</div>
-            <div className="infocategories-item">Bag</div>
-            <div className="infocategories-item">Sports</div>
+            <div className="infocategories-item">Monitor</div>
+            <div className="infocategories-item">Ram</div>
+            <div className="infocategories-item">SSD</div>
+            <div className="infocategories-item">Grafica</div>
+            <div className="infocategories-item">Procesador</div>
           </Infocategories>
         </Headerbottom>
       </Header>
@@ -59,9 +58,6 @@ export default Navbar;
 
 const NavbarContainer = styled.div`
   width: 100%;
-  
-  
-
 
   .userinfo-item {
     cursor: pointer;
@@ -69,19 +65,27 @@ const NavbarContainer = styled.div`
 
   .userinfo-item button {
     svg {
-      color: white;
+      color: ${({ theme }) => theme.light};
     }
   }
 
   .userinfo-text {
     font-weight: 400;
-    color: gray;
+    color: ${({ theme }) => theme.details};
+    transition: 0.5s;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .infocategories-item {
     font-weight: 500;
     font-size: 14px;
     cursor: pointer;
+    transition: 0.5s;
+    &:hover {
+      color: ${({ theme }) => theme.primary};
+    }
   }
 
   @media screen and (max-width: 1000px) {
@@ -94,6 +98,7 @@ const NavbarContainer = styled.div`
 const Header = styled.div`
   width: 100%;
   position: absolute;
+  z-index: 10;
 `;
 
 const Headertop = styled.div`
@@ -111,11 +116,15 @@ const Headertop = styled.div`
 const Infotop = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 230px;
+  width: 310px;
   margin-right: 50px;
 
   .infotop-item {
     font-size: 12px;
+  }
+
+  .infotop-item-ini {
+    color: ${({ theme }) => theme.dark};
   }
 
   @media screen and (max-width: 500px) {
@@ -143,7 +152,6 @@ export const Logo = styled.div`
   font-size: 40px;
   font-weight: 700;
   color: ${({ theme }) => theme.primary};
-
 
   @media screen and (max-width: 1000px) {
     width: auto;

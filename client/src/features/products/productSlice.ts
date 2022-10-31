@@ -41,8 +41,9 @@ async()=>{
 }
 )
 export const getProductId = createAsyncThunk('product/getProductId', 
-async(id:string| undefined)=>{
+async(id:string | undefined)=>{
     try {
+        console.log(id)
         const res = await axios.get(`http://localhost:3001/products/${id}`)
         console.log(res.data)
         return res.data

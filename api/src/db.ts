@@ -97,7 +97,7 @@ Seller.belongsTo(Category_Seller, {
 });
 Seller.hasMany(Product, {
   sourceKey: "id",
-  foreignKey: "productId",
+  foreignKey: "sellerId",
   as: "products",
 });
 Product.belongsTo(Seller, {

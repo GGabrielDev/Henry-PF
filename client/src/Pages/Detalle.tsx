@@ -1,12 +1,25 @@
 import styled from "styled-components";
 import img from "../components/Utils/prueba.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdFavorite } from "react-icons/md";
 import Navbar from "../components/Navbar";
+import { useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { detailProduct, getProductId, ProductType } from "../features/products/productSlice";
 
 const Detalle = () => {
   const [count, setCount] = useState(0);
-
+  const dispatch= useAppDispatch();
+  const detalle = useAppSelector(detailProduct) as ProductType;
+  const { id }  = useParams<{id?:string}>();
+  useEffect(()=>{
+    console.log(id)
+    dispatch(getProductId(id))
+    
+  },[dispatch, id])
+  
+  console.log(detalle)
+  if(id){
   return (
     <>
       <Navbar />
@@ -18,24 +31,15 @@ const Detalle = () => {
         </div>
         <div className="det__container">
           <div className="det_props">
-            <div className="det__dec">Placa de videos aourus 2080ti</div>
-            <div className="det__dec0">$325.251</div>
+            <div className="det__dec">{detalle.name}</div>
+            <div className="det__dec0">{detalle.price_local}</div>
             <div className="det__dec2">
-              ***LO QUE TENES QUE SABER DE ESTE PRODUCTO*** Cantidad de memoria
-              12GB interfaz de memoria 384 bits Tipo de DRAM GDDR6X Reloj de
-              gráficos 1260 MHz Reloj de impulso 1710 MHz Reloj de la memoria 19
-              Gb/s Núcleos CUDA 8960 Ancho de banda de memoria (GB/seg) 912
-              microsoftdirectx Microsoft DirectX® 12 último OpenGL 4.6 Soporte
-              de autobús PCI-E 4.0 HDMI hdmi 2.1 DisplayPort DP1.4a x 3 Máxima
-              Resolución Digital 7680x4320 Altura ranura 2.7 Tamaño del tablero
-              304x136x60mm Potencia de la tarjeta gráfica 350W Potencia mínima
-              recomendada del sistema 850W Conectores de alimentación
-              suplementarios 8 pines X3
+              {detalle.description}
             </div>
           </div>
           <div className="det_cant">
             <div className="det__cant2">
-              <div className="det__dec3">Cantidad en stock: 8</div>
+              <div className="det__dec3">Cantidad en stock: {detalle.stock}</div>
               <div className="det__dec4">Cantidad que desea comprar:</div>
               <div className="botones">
                 <button
@@ -69,6 +73,9 @@ const Detalle = () => {
       </DetalleContainer>
     </>
   );
+}else{
+  return <div>Loading ...</div>;
+}
 };
 export default Detalle;
 

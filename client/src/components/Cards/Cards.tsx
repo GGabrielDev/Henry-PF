@@ -5,6 +5,10 @@ import {
   selectProducts,
 } from "../../features/products/productSlice";
 import Card from "../Card";
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2d58ec8ead41f943ccb53708433c9c0ad0c8c1bb
 import styled from "styled-components";
 export default function Cards(){
     const products = useAppSelector(selectProducts);
@@ -34,4 +38,8 @@ const DivCards = styled.div`
     justify-content: space-around;
     flex-wrap: wrap;
    
+<<<<<<< HEAD
 `
+=======
+`
+>>>>>>> 2d58ec8ead41f943ccb53708433c9c0ad0c8c1bb

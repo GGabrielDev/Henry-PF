@@ -7,7 +7,9 @@ import styled from "styled-components";
 
 export default function FormLog() {
   const { dispatchUser }: any = useContext(AuthContext);
-  const handleSubmit = () => {};
+  const handleSubmit = (e:any) => {
+    e.reset();
+  };
   const handleChange = (
     e: React.ChangeEvent<HTMLFormElement | HTMLInputElement>
   ) => {};

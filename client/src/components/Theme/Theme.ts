@@ -1,5 +1,5 @@
 export const Themes = {
-  primary: "#a2b9fa" /* VIOLETA PASTEL */,
+  primary: "#d90057" /* VIOLETA PASTEL */,
   secondary: "#f1deff" /* VIOLETA PASTEL CLARO*/,
   dark: "#1a1833" /* NEGRO*/,
   details: "#77767c" /* GRIS */,
@@ -9,7 +9,7 @@ export const Themes = {
   cream: "#fffff4" /* COLOR BLANCO MAS CREMA*/,
   cream2: "#fdfdfd",
   error: "#ff0000",
-  Whatsapp: "#5ad442",
+  Whatsapp: "#77b8a6",
   info: "rgb(0, 0, 255)"
   
 };

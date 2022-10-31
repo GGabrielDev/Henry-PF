@@ -173,10 +173,13 @@ const GeneralContent = styled.div`
     padding: 2px;
     border-radius: 5px;
     cursor: pointer;
-    background-color: ${({ theme }) => theme.secondary};
+    background-color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.light};
     transition: 0.5s;
     &:hover {
-      background-color: ${({ theme }) => theme.primary};
+      background-color: ${({ theme }) => theme.light};
+      color: ${({ theme }) => theme.primary};
+      border: 1px solid ${({ theme }) => theme.primary};
     }
   }
 

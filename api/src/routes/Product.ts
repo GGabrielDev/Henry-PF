@@ -56,6 +56,45 @@ router.get(
   }
 );
 
+router.get(
+  "/productId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const { productId } = req.params;
+
+      if (!productId) {
+        throw new HttpException(
+          400,
+          "The Product ID is missing in the request"
+        );
+      }
+
+      const result = await Product.findByPk(productId, {
+        include: [
+          Product.associations.categories,
+          Product.associations.reviews,
+        ],
+      })
+        .then((value) => value)
+        .catch((error) => {
+          if (error.parent.code === "22P02") {
+            throw new HttpException(
+              400,
+              "The format of the request is not UUID"
+            );
+          }
+        });
+
+      if (!result)
+        throw new HttpException(404, "The requested Product doesn't exist");
+
+      return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {

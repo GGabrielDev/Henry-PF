@@ -4,9 +4,12 @@ import Navbar from "../components/Navbar";
 
 export function Login(){
     return(
-        <>
-            <Navbar/>
-            <FormLog/>             
+    <>
+        
+            
+        <div><Navbar/></div>
+        <FormLog/>  
+                       
         </>
     )
 }

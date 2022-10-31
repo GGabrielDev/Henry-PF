@@ -17,9 +17,9 @@ export default function FormLog(){
     return(
         
     <AuthCard>
-    
-    <form onSubmit={handleSubmit} autoComplete="off">
-      <FormContainer>
+     <FormContainer>
+    <form  onSubmit={handleSubmit} autoComplete="off">
+     
         <div>
           <Logo>PedirYa</Logo>
         </div>
@@ -78,15 +78,16 @@ export default function FormLog(){
            <h5>Don't have an account?</h5>
           <Link to="/auth/register">Register</Link>
         </RegisterDiv>
-        </FormContainer>
+        
       </form>
-      
+      </FormContainer>
         </AuthCard>
     )
 }
 
 const FormContainer = styled.div`
-  width: 450px;
+ 
+  form{ width: 450px;
   height: 600px;
   position: relative;
   transition: all .2s ease;
@@ -100,21 +101,33 @@ const FormContainer = styled.div`
   margin-top:160px;
   font-size:17px;
   
-@media screen and (max-width: 500px) {
-  
+ } @media screen and (max-width: 500px) {
+    width: 100%;
+    form{ width:100%;
+    border:none;
+    box-shadow:none;
+    margin:0;
+    padding-top:100px;
+    }
 }
+
 `;
 export const EmailInput = styled.div`
 .input__email{
-  border:none;
-  font-size: 18px
+  border: 1px solid ${({ theme }) => theme.border};
+  font-size: 18px;
+  padding: 7px;
+  border-radius: 7px;
 }
 
 `;
 export const PasswordInput = styled.div`
 .input__pass{
-  border:none;
-  font-size: 18px
+  border: 1px solid ${({ theme }) => theme.border};
+  font-size: 18px;
+  padding: 7px;
+  border-radius: 7px;
+
 }
 `;
 const ButtonLogin = styled.div`

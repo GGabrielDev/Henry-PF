@@ -6,12 +6,13 @@ import img2 from './Utils/tipo.jpg';
 import { BsInfoCircle } from 'react-icons/bs';
 
 type CardType ={
+    id:string,
     name:string,
     price_local: number,
     image:string|null|undefined
 }
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
-const Card = ({name, price_local, image}:CardType) =>{
+const Card = ({name, price_local, image, id}:CardType) =>{
     const [count, setCount]= useState(0);   
        
     return(
@@ -35,7 +36,7 @@ const Card = ({name, price_local, image}:CardType) =>{
                  </div> 
                 </div> 
                 <div className="div__comprar">
-                <Link to={"/detalle"}>
+                <Link to={`/detalle/${id}`}>
                 <div className="info">
                 <BsInfoCircle/>
                 </div>

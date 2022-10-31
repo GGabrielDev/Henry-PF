@@ -9,7 +9,7 @@ import styled from "styled-components";
 export default function Cards(){
     const products = useAppSelector(selectProducts);
     const dispatch= useAppDispatch();
-    console.log(products)
+   
     useEffect(()=>{
         dispatch(getProducts())
     },[])
@@ -20,7 +20,7 @@ export default function Cards(){
             {products?.map((e)=>{
                 return(
 
-                    <Card key={e.id} name={e.name} price_local={e.price_local} image={e.image} />
+                    <Card key={e.id} name={e.name} price_local={e.price_local} image={e.image} id={e.id} />
                 )
             })}
         </DivCards>

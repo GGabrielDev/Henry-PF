@@ -14,15 +14,18 @@ export type ProductType={
     suspended: boolean,
     size:string|null|undefined,
 }
+
 export interface SliceState{
     products:ProductType[],
-    productsAll: ProductType[]
+    productsAll: ProductType[],
+    details:ProductType | {}
 }
 
-const initialState:SliceState = { 
+export const initialState:SliceState = { 
     
     products:[],
     productsAll:[],
+    details:{},
 
 };
 
@@ -37,7 +40,17 @@ async()=>{
     }
 }
 )
-
+export const getProductId = createAsyncThunk('product/getProductId', 
+async(id:string| undefined)=>{
+    try {
+        const res = await axios.get(`http://localhost:3001/products/${id}`)
+        console.log(res.data)
+        return res.data
+        
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 export const productSlice = createSlice({name:'product', initialState, reducers:{
     filterAsc:(state,action:PayloadAction<string>)=> {
@@ -57,8 +70,11 @@ export const productSlice = createSlice({name:'product', initialState, reducers:
 
 },extraReducers:(builder)=>{
     builder.addCase(getProducts.fulfilled, (state,action:PayloadAction<ProductType[]>)=>{
-        state.products=action.payload
-        state.productsAll=action.payload
+        state.products = action.payload
+        state.productsAll = action.payload
+    })
+    .addCase(getProductId.fulfilled, (state, action:PayloadAction<ProductType>)=>{
+        state.details = action.payload
     })
 }
 })
@@ -67,6 +83,6 @@ export const {filterAsc}= productSlice.actions
 
 export const selectProducts = (state:RootState)=> state.products.productsAll
 export const selectFilterProducts = (state:RootState)=> state.products.products
-
+export const detailProduct =(state:RootState)=> state.products.details
 
 export default productSlice.reducer

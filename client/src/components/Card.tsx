@@ -50,10 +50,9 @@ const Card = ({name, price_local, image}:CardType) =>{
 
 export default Card
 const CardContainer = styled.div`
-  width: 100%;
-  height:100%;
-  margin-top: 30px;
-    display:grid;
+  margin:15px;
+  background-color: red;
+
   
 .div__comprar{
     display:flex;
@@ -89,7 +88,7 @@ const CardContainer = styled.div`
     border-radius:15px;
     max-height: 100%;
     box-shadow: 2px 2px 15px #30303021;
-    margin-left:40px;
+    
     justify-content:space-evenly   
 }
 .card__sumaresta{
@@ -154,7 +153,7 @@ const CardContainer = styled.div`
     border-radius: 50px;  
     bottom: 55px;
 }
-.
+
 .card_color_name{    
     font-size: 17px;
     color: ${({ theme }) => theme.dark}; 

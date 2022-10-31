@@ -50,32 +50,26 @@ const Card = ({name, price_local, image}:CardType) =>{
 
 export default Card
 const CardContainer = styled.div`
-  margin:15px;
-  background-color: red;
+    border-radius: 10px;
+    margin:15px;
+    background-color:white;
+    width: 200px;   
 
   
 .div__comprar{
     display:flex;
-    margin-bottom:10px;
     justify-content:space-between;
+    align-items: center;
 }
-.card__info{
-    
-    
-    margin-left:10px
-}  
+
 .info{
      
     font-size: 35px;
-    
-    margin-left: 20px;    
+    display: flex;
+    align-items: center;
     color: ${({ theme }) => theme.dark};
     cursor: pointer;
 }
-.info:hover{
-    transform: scale(1.1);  
-    color: ${({ theme }) => theme.primary};
- }
 
 .comp{
     position: relative;
@@ -84,16 +78,22 @@ const CardContainer = styled.div`
     bottom: 20px;
 }
 .card__container{
+    padding: 10px;
     max-width: 200px;    
-    border-radius:15px;
     max-height: 100%;
     box-shadow: 2px 2px 15px #30303021;
+    border-radius: 13px;
     
-    justify-content:space-evenly   
+    justify-content:space-evenly;   
+    transition: 0.3s;
+
+    &:hover{
+        box-shadow: 2px 2px 15px #3030304c;
+    }
 }
+
+
 .card__sumaresta{
-    position: relative;
-    left: 100px ;    
 }
 .comprar{
     position: relative;
@@ -106,6 +106,11 @@ const CardContainer = styled.div`
     max-width: 200px;
     max-height: 100%;    
     border-radius:15px;  
+
+
+    img{
+        width: 100%;
+    }
 }
 
 .talle__off{
@@ -116,23 +121,16 @@ const CardContainer = styled.div`
     border:none; 
 }
 .card__buttons{
-    position: relative;
     display:flex;
     background-color:none;
     border-radius:50px;
-    justify-content:space-evenly;
-    align-items: center;   
-    width:50%;
-    height:100%;
-    margin-top:5px;
-    margin-bottom:5px;    
-    bottom : 29px;
-    right: 7px ;
+    align-items: center;
+    justify-content: end;
+    padding-right: 10px;
+    gap: 15px;
 } 
 
 .card__name__price{
-    margin-left:10px;
-    
     display: flex;
     font-size:12px;
     justify-content:space-between;
@@ -170,20 +168,16 @@ const CardContainer = styled.div`
     top: 5px; 
     }
 
-.card__container:hover{
-    transform: scale(1.1); 
-    box-shadow: 2px 2px 15px #30303076;    
-}
 
 .button{    
     position: relative;
-    
+    height: 30px;
+    padding: 10px;
     margin-right:10px;
-    border-radius: 15px;
+    border-radius: 7px;
     background-color: ${({ theme }) => theme.primary};
     color: ${({ theme }) => theme.light};
     border: 1px solid transparent;
-    padding: 7px 10px;
     display: flex;
     align-items: center;
     cursor: pointer;

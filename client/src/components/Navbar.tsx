@@ -9,28 +9,31 @@ const Navbar = () => {
       <Header>
         <Headertop>
           <Infotop>
+
+            <div className="infotop-item">
+              <Link to="/auth/login">
+                Iniciar sesion
+              </Link>
+            </div>
             <div className="infotop-item">Client service</div>
             <div className="infotop-item">FAQ</div>
             <div className="infotop-item">About</div>
-            <div className="infotop-item">Eng</div>
           </Infotop>
         </Headertop>
         <Headermiddle>
           <Link to="/">
-            <Logo>PedirYa</Logo>
+            <Logo>TuGamer</Logo>
           </Link>
 
           <Userinfo>
-            <div className="userinfo-item userinfo-text">Mans</div>
-            <div className="userinfo-item userinfo-text">Womans</div>
+            <div className="userinfo-item userinfo-text">Notebooks</div>
+            <div className="userinfo-item userinfo-text">Cpu</div>
             <div className="userinfo-item">
               {/* <Link to="/usuario/general">
                 <BiUser className="icono__user" />
               </Link> */}
 
-              <Link to="/auth/login">
-                <button className="button__login">INICIAR SESIÓN</button>
-              </Link>
+
             </div>
 
             <div className="userinfo-item">
@@ -42,11 +45,12 @@ const Navbar = () => {
         </Headermiddle>
         <Headerbottom>
           <Infocategories>
-            <div className="infocategories-item">Top</div>
-            <div className="infocategories-item">Bottom</div>
-            <div className="infocategories-item">Watch</div>
-            <div className="infocategories-item">Shoes</div>
-            <div className="infocategories-item">Bag</div>
+
+            <div className="infocategories-item">Monitor</div>
+            <div className="infocategories-item">Ram</div>
+            <div className="infocategories-item">SSD</div>
+            <div className="infocategories-item">Grafica</div>
+            <div className="infocategories-item">Procesador</div>
             <div className="infocategories-item">Sports</div>
           </Infocategories>
         </Headerbottom>
@@ -94,6 +98,7 @@ const NavbarContainer = styled.div`
 const Header = styled.div`
   width: 100%;
   position: absolute;
+  z-index: 10;
 `;
 
 const Headertop = styled.div`
@@ -111,7 +116,7 @@ const Headertop = styled.div`
 const Infotop = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 230px;
+  width: 310px;
   margin-right: 50px;
 
   .infotop-item {

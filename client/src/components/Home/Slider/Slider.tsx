@@ -19,7 +19,7 @@ const Carouselcontainer = styled.div`
 const CarouselImg = styled.img`
   width: 100%;
   opacity: 0;
-  transition: 2s;
+  transition: 1s;
   &.loaded {
     opacity: 1;
   }
@@ -75,7 +75,7 @@ export default function Carousel(props: Props) {
         : images.length - 1;
       setSelectedImage(images[nextIndex]);
       setSelectedIndex(nextIndex);
-    }, 400);
+    }, 200);
   };
 
   const previous = () => {

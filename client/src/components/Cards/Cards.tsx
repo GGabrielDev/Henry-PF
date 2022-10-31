@@ -19,8 +19,10 @@ export default function Cards(){
         <DivCards>
             {products?.map((e)=>{
                 return(
+                    <div className="gridcard" key={e.id}>
+                        <Card  name={e.name} price_local={e.price_local} image={e.image} />
+                    </div>
 
-                    <Card key={e.id} name={e.name} price_local={e.price_local} image={e.image} />
                 )
             })}
         </DivCards>
@@ -28,10 +30,34 @@ export default function Cards(){
   );
 }
 const DivCards = styled.div`
-    background-color: blue;
     width:100%;
-    display:flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: auto;
+
+    @media screen and (max-width: 940px){
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 725px){
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 475px){
+        grid-template-columns: repeat(4, 1fr);
+        overflow: auto;
+    }
+    @media screen and (min-width: 1400px){
+        grid-template-columns: repeat(5, 1fr);
+        overflow: auto;
+    }
+
+
+    .gridcard{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /* display:flex;
     justify-content: space-around;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
    
 `

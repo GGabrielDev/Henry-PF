@@ -40,14 +40,33 @@ async()=>{
 
 
 export const productSlice = createSlice({name:'product', initialState, reducers:{
+    filterAsc:(state,action:PayloadAction<string>)=> {
+    const allproducts = state.productsAll
+    const ordenamiento=
+    action.payload ==='des'? allproducts.sort(function (a, b) {
+        return a.price_local - b.price_local
+    }): action.payload ==='asc'? allproducts.sort(function (a, b) {
+            return b.price_local- a.price_local
+          })
+        : state.productsAll
+        state.products= ordenamiento
+           
+        },
+
+    
 
 },extraReducers:(builder)=>{
     builder.addCase(getProducts.fulfilled, (state,action:PayloadAction<ProductType[]>)=>{
         state.products=action.payload
+        state.productsAll=action.payload
     })
 }
 })
 
-export const selectProducts = (state:RootState)=> state.products.products
+export const {filterAsc}= productSlice.actions
+
+export const selectProducts = (state:RootState)=> state.products.productsAll
+export const selectFilterProducts = (state:RootState)=> state.products.products
+
 
 export default productSlice.reducer

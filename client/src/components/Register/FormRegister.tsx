@@ -6,8 +6,10 @@ export function FormRegister (){
 
     }
     return(
+        <>
+    <RegisterContainer>
        <form onSubmit={handleSubmit} autoComplete="off">
-            <RegisterContainer>
+            
                 
                 <div>
                     <Logo>PedirYa</Logo>
@@ -59,18 +61,24 @@ export function FormRegister (){
                     <button type="submit" className="btn__primary">Register</button>
                 </ButtonRegister>
                 
-            </RegisterContainer>
+            
            </form> 
-       
+       </RegisterContainer>
+       </>
     )
 }
 
 const RegisterContainer = styled.div`
-    position:relative;
+    width: 100%;
+    height: 100vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    form{ position:relative;
     width: 450px;
     height: 600px;
     align-items:center;
-    align-content:center;
+    
     transition: all .2s ease;
     box-shadow: 3px 3px 20px ${({ theme }) => theme.secondary};
     border-radius: 15px;
@@ -78,9 +86,19 @@ const RegisterContainer = styled.div`
     flex-flow:column;
     border: 3px ${({ theme }) => theme.secondary} solid;
     justify-content: space-evenly;
-   
-    
     font-size:17px;
+}
+
+    @media screen and (max-width: 500px) {
+    width: 100%;
+    form{ width:100%;
+    border:none;
+    box-shadow:none;
+    margin:0;
+    padding-top:100px;
+    }
+}
+
 `
 const InputRegister = styled.div`
 
@@ -88,9 +106,11 @@ justify-content:space-between;
 width: 400px;
 
 .input__name{
-    border:none;
-    font-size: 18px;
-    margin-left:5px
+   border: 1px solid ${({ theme }) => theme.border};
+  font-size: 18px;
+  padding: 7px;
+  border-radius: 7px;
+  margin-left:7px
   }
 `
 

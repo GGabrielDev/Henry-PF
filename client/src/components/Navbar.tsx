@@ -59,6 +59,9 @@ export default Navbar;
 
 const NavbarContainer = styled.div`
   width: 100%;
+  
+  
+
 
   .userinfo-item {
     cursor: pointer;
@@ -91,6 +94,7 @@ const NavbarContainer = styled.div`
 const Header = styled.div`
   width: 100%;
   position: absolute;
+  z-index: 10;
 `;
 
 const Headertop = styled.div`

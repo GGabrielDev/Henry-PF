@@ -9,9 +9,8 @@ const Navbar = () => {
       <Header>
         <Headertop>
           <Infotop>
-
             <div className="infotop-item">
-              <Link to="/auth/login">
+              <Link className="infotop-item-ini" to="/auth/login">
                 Iniciar sesion
               </Link>
             </div>
@@ -32,8 +31,6 @@ const Navbar = () => {
               {/* <Link to="/usuario/general">
                 <BiUser className="icono__user" />
               </Link> */}
-
-
             </div>
 
             <div className="userinfo-item">
@@ -45,13 +42,11 @@ const Navbar = () => {
         </Headermiddle>
         <Headerbottom>
           <Infocategories>
-
             <div className="infocategories-item">Monitor</div>
             <div className="infocategories-item">Ram</div>
             <div className="infocategories-item">SSD</div>
             <div className="infocategories-item">Grafica</div>
             <div className="infocategories-item">Procesador</div>
-            <div className="infocategories-item">Sports</div>
           </Infocategories>
         </Headerbottom>
       </Header>
@@ -63,9 +58,6 @@ export default Navbar;
 
 const NavbarContainer = styled.div`
   width: 100%;
-  
-  
-
 
   .userinfo-item {
     cursor: pointer;
@@ -73,19 +65,27 @@ const NavbarContainer = styled.div`
 
   .userinfo-item button {
     svg {
-      color: white;
+      color: ${({ theme }) => theme.light};
     }
   }
 
   .userinfo-text {
     font-weight: 400;
-    color: gray;
+    color: ${({ theme }) => theme.details};
+    transition: 0.5s;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .infocategories-item {
     font-weight: 500;
     font-size: 14px;
     cursor: pointer;
+    transition: 0.5s;
+    &:hover {
+      color: ${({ theme }) => theme.primary};
+    }
   }
 
   @media screen and (max-width: 1000px) {
@@ -123,6 +123,10 @@ const Infotop = styled.div`
     font-size: 12px;
   }
 
+  .infotop-item-ini {
+    color: ${({ theme }) => theme.dark};
+  }
+
   @media screen and (max-width: 500px) {
     margin: 0;
   }
@@ -148,7 +152,6 @@ export const Logo = styled.div`
   font-size: 40px;
   font-weight: 700;
   color: ${({ theme }) => theme.primary};
-
 
   @media screen and (max-width: 1000px) {
     width: auto;

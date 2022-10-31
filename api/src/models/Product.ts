@@ -176,9 +176,9 @@ module.exports = (sequelize: Sequelize) => {
       image: {
         type: DataTypes.STRING,
         allowNull:true,
-        validate: {
-          isUrl: true,
-        },
+        // validate: {
+        //   isUrl: true,
+        // },
       },
 
       suspended: {

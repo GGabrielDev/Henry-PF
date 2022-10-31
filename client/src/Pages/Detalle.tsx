@@ -11,10 +11,12 @@ const Detalle = () => {
     <>
       <Navbar />
       <DetalleContainer>
-        <div className="det__container">
+        <div className="imagen__caja">
           <div className="det_fot">
             <img src={img} alt="producto" className="det__img1" />
           </div>
+        </div>
+        <div className="det__container">
           <div className="det_props">
             <div className="det__dec">Placa de videos aourus 2080ti</div>
             <div className="det__dec0">$325.251</div>
@@ -77,14 +79,21 @@ const DetalleContainer = styled.div`
   justify-content: center;
   padding-top: 130px;
 
+  .imagen__caja {
+    display: flex;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
   .det__container {
-    width: 100%;
     background-color: ${({ theme }) => theme.cream2};
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
+    padding: 10px;
   }
 
   .det_fot {
@@ -92,6 +101,10 @@ const DetalleContainer = styled.div`
     border: 1px solid ${({ theme }) => theme.border};
     border-radius: 10px;
     margin-bottom: 10px;
+    transition: 0.5s;
+    &:hover {
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
     .det__img1 {
       padding: 5px;
       width: 100%;
@@ -106,6 +119,11 @@ const DetalleContainer = styled.div`
 
   .det__dec2,
   .det__dec4 {
+    margin-bottom: 10px;
+  }
+
+  .det__dec0 {
+    text-align: center;
     margin-bottom: 10px;
   }
 
@@ -155,9 +173,44 @@ const DetalleContainer = styled.div`
     path {
       color: ${({ theme }) => theme.tertiary};
       cursor: pointer;
+      transition: 0.5s;
       &:hover {
         color: ${({ theme }) => theme.error};
       }
+    }
+  }
+
+  @media screen and (max-width: 855px) {
+    flex-direction: column;
+
+    .det_fot {
+      width: 300px;
+    }
+
+    .det_props {
+      width: 100%;
+    }
+
+    .det_cant {
+      width: 100%;
+    }
+
+    .botones {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .det__dec2 {
+      text-align: center;
+    }
+
+    .det__dec3 {
+      text-align: center;
+    }
+
+    .det__dec4 {
+      text-align: center;
     }
   }
 `;

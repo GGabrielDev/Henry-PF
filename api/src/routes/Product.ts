@@ -6,7 +6,7 @@ import { Category_Product as Category_Product_Type } from "../models/Category_pr
 import { Product as Product_Type } from "../models/Product"
 
 const router = Router();
-const { Product } = Models;
+const { Product, Category_Product } = Models;
 
 type ProductParams = {
   productId: string;
@@ -57,7 +57,7 @@ router.get(
 );
 
 router.get(
-  "/productId",
+  "/:productId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
       const { productId } = req.params;
@@ -70,19 +70,15 @@ router.get(
       }
 
       const result = await Product.findByPk(productId, {
-        include: [
-          Product.associations.categories,
-          Product.associations.reviews,
-        ],
+        include: Product.associations.categories,
       })
         .then((value) => value)
         .catch((error) => {
-          if (error.parent.code === "22P02") {
-            throw new HttpException(
-              400,
-              "The format of the request is not UUID"
-            );
-          }
+          console.log(error);
+          throw new HttpException(
+            500,
+            "An error has occured getting the Product"
+          );
         });
 
       if (!result)

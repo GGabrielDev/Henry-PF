@@ -23,6 +23,7 @@ position: fixed;
 
 
 
+
 .botonflotante{
     width: 275px;
     height: 50px;
@@ -31,12 +32,12 @@ position: fixed;
     position: fixed;
     display: flex;
     align-items: center;
-    top: 500px;
     left: 0;
     right: 0px;
     bottom: 0px;
     margin: auto;
     cursor: pointer;
+    margin-bottom:40px;
 }
 
 .flotantelogo{

@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import img from "../components/Utils/prueba.png";
+import img from "../../components/Tugamer/Utils/prueba.png";
 import { useEffect, useState } from "react";
 import { MdFavorite } from "react-icons/md";
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Tugamer/Navbar";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { detailProduct, getProductId, ProductType } from "../features/products/productSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { detailProduct, getProductId, ProductType } from "../../features/products/productSlice";
 
 const Detalle = () => {
   const [count, setCount] = useState(0);
@@ -15,7 +15,6 @@ const Detalle = () => {
   useEffect(()=>{
     console.log(id)
     dispatch(getProductId(id))
-    
   },[dispatch, id])
   
   console.log(detalle)

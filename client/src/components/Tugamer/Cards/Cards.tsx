@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   getProducts,
   selectProducts,
-} from "../../features/products/productSlice";
+} from "../../../features/products/productSlice";
 import Card from "../Card";
 import styled from "styled-components";
 export default function Cards(){
     const products = useAppSelector(selectProducts);
     const dispatch= useAppDispatch();
-   
+
     useEffect(()=>{
         dispatch(getProducts())
     },[])
@@ -17,7 +17,7 @@ export default function Cards(){
   return (
     <>
         <DivCards>
-            {products?.map((e)=>{
+            {products?.map((e:any)=>{
                 return(
                     <div className="gridcard" key={e.id}>
                         <Card  name={e.name} price_local={e.price_local} image={e.image} id={e.id} />

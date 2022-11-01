@@ -1,8 +1,8 @@
 import React from "react";
 import MenuUsuario from "./MenuUsuario";
 import styled from "styled-components";
-import Perfil from "../assets/imagenesSlider/profile.png";
-import Paisaje from "../assets/imagenesSlider/49838.jpg";
+import Perfil from "../../assets/imagenesSlider/profile.png";
+import Paisaje from "../../assets/imagenesSlider/49838.jpg";
 
 const General = () => {
   return (

@@ -1,11 +1,11 @@
 import {useState,ChangeEvent,SyntheticEvent} from "react"
 import styled from "styled-components";
-import Navbar from '../components/Navbar';
-import Validate,{formType, errType} from "../components/addProduct/validate";
+import Navbar from '../../components/Tugamer/Navbar';
+import Validate,{formType, errType} from "../../components/Tugamer/addProduct/validate";
 import { symlink } from "fs";
 
-import { createProduct } from "../redux/actions";
-import { useAppDispatch } from "../app/hooks";
+import { createProduct } from "../../redux/actions";
+import { useAppDispatch } from "../../app/hooks";
 
 
 

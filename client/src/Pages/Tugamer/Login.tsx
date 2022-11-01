@@ -1,5 +1,5 @@
-import FormLog from "../components/Login/FormLog";
-import Navbar from "../components/Navbar";
+import FormLog from "../../components/Login/FormLog";
+import Navbar from "../../components/Tugamer/Navbar";
 
 
 export function Login(){

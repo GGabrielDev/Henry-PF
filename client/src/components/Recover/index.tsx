@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Logo} from "../Navbar"
+import {Logo} from "../Tugamer/Navbar"
 export function FormRecover(){
     return(
 

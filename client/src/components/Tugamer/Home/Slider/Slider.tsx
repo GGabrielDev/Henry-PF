@@ -56,6 +56,7 @@ interface Props {
 }
 
 export default function Carousel(props: Props) {
+  
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState(props.images[0]);
   const [loaded, setLoaded] = useState(false);
@@ -89,7 +90,7 @@ export default function Carousel(props: Props) {
   return (
     <Carouselcontainer>
       <CarouselImg
-        src={require(`../../assets/imagenesSlider/${selectedImage}`)}
+        src={require(`../../../../assets/imagenesSlider/${selectedImage}`)}
         alt="Gentleman"
         className={loaded ? "loaded" : ""}
         onLoad={() => setLoaded(true)}

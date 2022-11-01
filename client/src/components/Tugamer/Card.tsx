@@ -36,7 +36,7 @@ const Card = ({name, price_local, image, id}:CardType) =>{
                  </div> 
                 </div> 
                 <div className="div__comprar">
-                <Link to={`/detalle/${id}`}>
+                <Link to={`/tugamer/detalle/${id}`}>
                 <div className="info">
                 <BsInfoCircle/>
                 </div>

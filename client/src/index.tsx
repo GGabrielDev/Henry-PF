@@ -7,7 +7,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "styled-components";
-import { Themes } from "./components/Theme/Theme";
+import { Themes } from "./components/Tugamer/Theme/Theme";
 
 const GlobalStyles = createGlobalStyle`
 	* {

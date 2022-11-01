@@ -11,7 +11,7 @@ import UserFavoritos from "../Pages/Usuario/UserFavoritos";
 import { Recover } from "../Pages/Tugamer/Recover";
 import Error404 from "../Pages/Error404";
 import Detalle from "../Pages/Tugamer/Detalle";
-import Landingpage from "../Pages/Tugamer/Landingpage";
+import Landingpage from "../Pages/Landing";
 
 const Router = () => {
   return (
@@ -20,7 +20,6 @@ const Router = () => {
       <Route path="/tugamer" element={<Tugamer />} />
       <Route path="/tugamer/publicar" element={<Publicar />} />
       <Route path="/tugamer/detalle/:id" element={<Detalle />} />
-      
 
       {/* rutas usuario */}
       <Route path="/usuario/*" element={<UserGeneral />} />

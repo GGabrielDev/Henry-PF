@@ -8,8 +8,12 @@ const { DB_HOST } = process.env || "localhost";
 const { DB_PORT } = process.env || "5432";
 const { DB_NAME } = process.env || "henry_pf";
 
+const { DB_ROUTE } = process.env;
+
 const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+  DB_ROUTE
+    ? DB_ROUTE
+    : `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
   {
     logging: false, // set to console.log to see the raw SQL queries
     native: false, // lets Sequelize know we can use pg-native for ~30% more speed

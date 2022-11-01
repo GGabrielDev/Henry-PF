@@ -3,13 +3,13 @@ import { Register } from "../Pages/Tugamer/Register";
 import Tugamer from "../Pages/Tugamer/Tugamer";
 import { Login } from "../Pages/Tugamer/Login";
 import Publicar from "../Pages/Tugamer/Publicar";
-import UserGeneral from "../components/Usuario/UserGeneral";
-import UserCompras from "../components/Usuario/UserCompras";
-import UserCompraDetalle from "../components/Usuario/UserComprasDetalle";
-import UserEdit from "../components/Usuario/UserEdit";
-import UserFavoritos from "../components/Usuario/UserFavoritos";
+import UserGeneral from "../Pages/Usuario/UserGeneral";
+import UserCompras from "../Pages/Usuario/UserCompras";
+import UserCompraDetalle from "../Pages/Usuario/UserComprasDetalle";
+import UserEdit from "../Pages/Usuario/UserEdit";
+import UserFavoritos from "../Pages/Usuario/UserFavoritos";
 import { Recover } from "../Pages/Tugamer/Recover";
-import Error404 from "../components/Error/Error404";
+import Error404 from "../Pages/Error404";
 import Detalle from "../Pages/Tugamer/Detalle";
 import Landingpage from "../Pages/Tugamer/Landingpage";
 
@@ -23,7 +23,7 @@ const Router = () => {
       
 
       {/* rutas usuario */}
-      <Route path="/usuario/general" element={<UserGeneral />} />
+      <Route path="/usuario/*" element={<UserGeneral />} />
       <Route path="/usuario/compras" element={<UserCompras />} />
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
       <Route path="/usuario/favoritos" element={<UserFavoritos />} />

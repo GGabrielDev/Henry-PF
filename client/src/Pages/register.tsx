@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import {Logo} from "../Tugamer/Navbar"
+import {Logo} from "../components/Tugamer/Navbar"
 export function FormRegister (){
     const handleSubmit= ()=>{
 

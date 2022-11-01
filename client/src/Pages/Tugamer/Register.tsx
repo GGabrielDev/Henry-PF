@@ -1,5 +1,5 @@
 import Navbar from "../../components/Tugamer/Navbar";
-import { FormRegister } from "../../components/Register";
+import { FormRegister } from "../register";
 
 
 export function Register(){

@@ -1,4 +1,4 @@
-import FormLog from "../../components/Login/FormLog";
+import FormLog from "../FormLog";
 import Navbar from "../../components/Tugamer/Navbar";
 
 

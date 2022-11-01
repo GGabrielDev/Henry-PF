@@ -20,7 +20,7 @@
 import server from "./src/app";
 import sequelize, { checkConnection } from "./src/db";
 
-const { API_PORT } = process.env || 3080;
+const { API_PORT } = process.env || 3001;
 
 // Syncing all the models at once.
 checkConnection().then(async () => {

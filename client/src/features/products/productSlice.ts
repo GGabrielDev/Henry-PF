@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import axios from 'axios'
 
+const {DB_HOST} = process.env || 'localhost';
+const {API_PORT} = process.env || '3001';
 
 export type ProductType={
     id:string,
@@ -32,7 +34,7 @@ export const initialState:SliceState = {
 export const getProducts = createAsyncThunk('product/getProducts',
 async()=>{
     try {
-        const res = await axios.get("http://localhost:3001/products");
+        const res = await axios.get(`http://${DB_HOST}:${API_PORT}/products`);
     
     return res.data.result;
     } catch (error) {
@@ -44,7 +46,7 @@ export const getProductId = createAsyncThunk('product/getProductId',
 async(id:string | undefined)=>{
     try {
         console.log(id)
-        const res = await axios.get(`http://localhost:3001/products/${id}`)
+        const res = await axios.get(`http://${DB_HOST}:${API_PORT}/products/${id}`)
         console.log(res.data)
         return res.data
         

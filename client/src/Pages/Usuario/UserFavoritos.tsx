@@ -71,7 +71,7 @@ const GeneralContent = styled.div`
   }
 
   .img__container {
-    background-color: ${({theme})=>theme.border};
+    background-color: ${({ theme }) => theme.border};
     width: 150px;
     height: 150px;
     border-radius: 100%;

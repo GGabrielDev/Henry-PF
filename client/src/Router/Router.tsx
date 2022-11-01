@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import { Register } from "../Pages/Tugamer/Register";
 import Tugamer from "../Pages/Tugamer/Tugamer";
 import { Login } from "../Pages/Tugamer/Login";
@@ -11,13 +11,13 @@ import UserFavoritos from "../Pages/Usuario/UserFavoritos";
 import { Recover } from "../Pages/Tugamer/Recover";
 import Error404 from "../Pages/Error404";
 import Detalle from "../Pages/Tugamer/Detalle";
-
-import Landingpage from "../Pages/Landingpage";
+import Landingpage from "../Pages/Landing/Landingpage";
 
 const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Landingpage />} />
+
       <Route path="/tugamer" element={<Tugamer />} />
       <Route path="/tugamer/publicar" element={<Publicar />} />
       <Route path="/tugamer/detalle/:id" element={<Detalle />} />

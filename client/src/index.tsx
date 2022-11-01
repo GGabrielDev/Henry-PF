@@ -1,15 +1,13 @@
 import React from "react";
-import dotenv from "dotenv";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { store } from "./app/store";
 import App from "./App";
+import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider } from "styled-components";
 import { Themes } from "./components/Tugamer/Theme/Theme";
-
-dotenv.config();
 
 const GlobalStyles = createGlobalStyle`
 	* {

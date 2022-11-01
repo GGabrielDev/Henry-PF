@@ -1,23 +1,25 @@
 import { Route, Routes } from "react-router-dom";
-import { Register } from "../Pages/Register";
-import Home from "../Pages/Home";
-import { Login } from "../Pages/Login";
-import Publicar from "../Pages/Publicar";
+import { Register } from "../Pages/Tugamer/Register";
+import Tugamer from "../Pages/Tugamer/Tugamer";
+import { Login } from "../Pages/Tugamer/Login";
+import Publicar from "../Pages/Tugamer/Publicar";
 import UserGeneral from "../components/Usuario/UserGeneral";
 import UserCompras from "../components/Usuario/UserCompras";
 import UserCompraDetalle from "../components/Usuario/UserComprasDetalle";
 import UserEdit from "../components/Usuario/UserEdit";
 import UserFavoritos from "../components/Usuario/UserFavoritos";
-import { Recover } from "../Pages/Recover";
+import { Recover } from "../Pages/Tugamer/Recover";
 import Error404 from "../components/Error/Error404";
-import Detalle from "../Pages/Detalle";
+import Detalle from "../Pages/Tugamer/Detalle";
+import Landingpage from "../Pages/Tugamer/Landingpage";
 
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/publicar" element={<Publicar />} />
-      <Route path="/detalle/:id" element={<Detalle />} />
+      <Route path="/" element={<Landingpage />} />
+      <Route path="/tugamer" element={<Tugamer />} />
+      <Route path="/tugamer/publicar" element={<Publicar />} />
+      <Route path="/tugamer/detalle/:id" element={<Detalle />} />
       
 
       {/* rutas usuario */}
@@ -35,7 +37,7 @@ const Router = () => {
 
       {/* error en la ruta */}
 
-      <Route path="*" element={<Error404 />} />
+      <Route path="/tugamer/*" element={<Error404 />} />
     </Routes>
   );
 };

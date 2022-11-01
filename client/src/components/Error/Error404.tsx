@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { ThemeContext } from "styled-components";
-import Navbar from "../Navbar";
+import Navbar from "../Tugamer/Navbar";
 
 const Error404 = () => {
   return (

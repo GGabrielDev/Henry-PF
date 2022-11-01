@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Imagen3 from "../assets/imagenesSlider/hamburguesas.jpg";
-import vendedor from "../assets/imagenesSlider/vendedor.jpg";
-import { Logo } from "../Navbar";
+import Imagen3 from "../../assets/imagenesSlider/hamburguesas.jpg";
+import vendedor from "../../assets/imagenesSlider/vendedor.jpg";
+import { Logo } from "../Tugamer/Navbar";
 
 const General = () => {
   return (

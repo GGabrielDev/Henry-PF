@@ -2,7 +2,7 @@ import { AuthContext } from "./components/Login/Auth";
 import Router from "./Router/Router";
 import {useReducer} from "react";
 import { reducers } from "./redux/reducer";
-import { ShoppingCartProvider } from "./components/context/SoppingCartContext";
+import { ShoppingCartProvider } from "./components/Tugamer/context/SoppingCartContext";
 import { Provider } from "react-redux";
 import {store} from "./app/store"
 const init = ()=>{

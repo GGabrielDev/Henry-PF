@@ -1,4 +1,4 @@
-import { Logo } from "../Navbar";
+import { Logo } from "../Tugamer/Navbar";
 import { AuthCard } from "./AuthCard";
 import { Link } from "react-router-dom";
 import React, { useContext } from "react";
@@ -7,7 +7,10 @@ import styled from "styled-components";
 
 export default function FormLog() {
   const { dispatchUser }: any = useContext(AuthContext);
-  const handleSubmit = () => {};
+  const handleSubmit = (e:any) => {
+    e.preventDefault()
+    console.log(e)
+  };
   const handleChange = (
     e: React.ChangeEvent<HTMLFormElement | HTMLInputElement>
   ) => {};

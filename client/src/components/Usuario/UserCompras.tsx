@@ -1,9 +1,9 @@
 import React from "react";
 import MenuUsuario from "./MenuUsuario";
 import styled from "styled-components";
-import Imagen from "../assets/imagenesSlider/luis perfumes.jpg";
-import Imagen2 from "../assets/imagenesSlider/5fa8fb32d99eb.jpeg";
-import Imagen3 from "../assets/imagenesSlider/hamburguesas.jpg";
+import Imagen from "../../assets/imagenesSlider/luis perfumes.jpg";
+import Imagen2 from "../../assets/imagenesSlider/5fa8fb32d99eb.jpeg";
+import Imagen3 from "../../assets/imagenesSlider/hamburguesas.jpg";
 import { Link } from "react-router-dom";
 
 const General = () => {

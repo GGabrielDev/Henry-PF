@@ -2,9 +2,9 @@ import React, {ChangeEvent} from "react";
 import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
 import {BsFilter,BsSortNumericDown} from "react-icons/bs"
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "../../../../app/hooks";
 
-import { filterAsc } from "../../../features/products/productSlice";
+import { filterAsc } from "../../../../features/products/productSlice";
 
 const Filtros = () => {
   const dispatch = useAppDispatch();

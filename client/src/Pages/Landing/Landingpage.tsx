@@ -14,6 +14,8 @@ const Landingpage = () => {
         </div>
 
         <Navbarlanding />
+        
+
       </ThemeProvider>
     </Landingpages>
   );

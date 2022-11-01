@@ -11,7 +11,8 @@ import UserFavoritos from "../Pages/Usuario/UserFavoritos";
 import { Recover } from "../Pages/Tugamer/Recover";
 import Error404 from "../Pages/Error404";
 import Detalle from "../Pages/Tugamer/Detalle";
-import Landingpage from "../Pages/Landing";
+
+import Landingpage from "../Pages/Landingpage";
 
 const Router = () => {
   return (

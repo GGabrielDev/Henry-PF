@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   getProducts,
   selectProducts,
-} from "../../../features/products/productSlice";
-import Card from "../Card";
+} from "../../features/products/productSlice";
+import Card from "./Card";
 import styled from "styled-components";
 export default function Cards(){
     const products = useAppSelector(selectProducts);

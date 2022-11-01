@@ -1,6 +1,6 @@
 
 import styled from "styled-components";
-import UserGeneral from "../../components/Usuario/UserGeneral";
+import UserGeneral from "../Usuario/UserGeneral";
 
 const Usuario = () => {
   return (

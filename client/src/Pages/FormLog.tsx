@@ -1,8 +1,8 @@
-import { Logo } from "../Tugamer/Navbar";
-import { AuthCard } from "./AuthCard";
+import { Logo } from "../components/Tugamer/Navbar";
+import { AuthCard } from "../components/Login/AuthCard";
 import { Link } from "react-router-dom";
 import React, { useContext } from "react";
-import { AuthContext } from "./Auth";
+import { AuthContext } from "../components/Login/Auth";
 import styled from "styled-components";
 
 export default function FormLog() {
@@ -18,7 +18,7 @@ export default function FormLog() {
   return (
     <AuthCard>
       <FormContainer>
-        <form onSubmit={handleSubmit} autoComplete="off">
+        <form className="formrecover" onSubmit={handleSubmit} autoComplete="off">
           <div>
             <Logo>TuGamer</Logo>
           </div>
@@ -85,10 +85,9 @@ export default function FormLog() {
 }
 
 const FormContainer = styled.div`
-  form {
+  .formrecover {
     width: 450px;
     height: 600px;
-    position: relative;
     transition: all 0.2s ease;
     box-shadow: 3px 3px 20px ${({ theme }) => theme.secondary};
     border-radius: 15px;
@@ -97,7 +96,7 @@ const FormContainer = styled.div`
     border: 1px ${({ theme }) => theme.secondary} solid;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: 160px;
+    margin-top: 160px !important; 
     font-size: 17px;
   }
   @media screen and (max-width: 500px) {

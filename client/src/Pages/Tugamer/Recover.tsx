@@ -1,5 +1,5 @@
 import Navbar from "../../components/Tugamer/Navbar";
-import { FormRecover } from "../../components/Recover/index";
+import { FormRecover } from "../recover";
 
 export function Recover(){
     return(

@@ -12,6 +12,7 @@ type CreateProductResponse={
 }
 
 export const createProduct = (payload: object) => async () =>{
+
     try{
         const res = await axios.post<CreateProductResponse>("http://localhost:3001/products", payload, {
             headers: {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Logo} from "../Tugamer/Navbar"
+import {Logo} from "../components/Tugamer/Navbar"
 export function FormRecover(){
     return(
 
@@ -24,6 +24,7 @@ const RecoverContainer = styled.div`
     display:flex;
     justify-content: center;
     align-items:center;
+
     form{ position:relative;
     width: 450px;
     height: 600px;
@@ -37,6 +38,7 @@ const RecoverContainer = styled.div`
     border: 3px ${({ theme }) => theme.secondary} solid;
     justify-content: space-evenly;
     font-size:17px;
+    margin-top: 160px;
 }
 
     @media screen and (max-width: 500px) {

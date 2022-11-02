@@ -153,6 +153,10 @@ const Landingpages = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    h1{
+      font-size: 60px;
+    }
   }
 
   .aboutinfo {

@@ -1,16 +1,20 @@
 import axios from "axios";
 import env from "react-dotenv";
 
-const { API_KEY } = env;
+const { API_KEY } = process.env;
+
+
+
 
 const productConnection = axios.create({
-  baseURL: `${API_KEY}/products`,
+  baseURL: `http://localhost:3001/products`,
   timeout: 8000,
 });
 
 export const getAllProducts = async () => {
   try {
-    const res = await productConnection("/");
+    const res = await productConnection("");
+
     return res.data.results;
   } catch (error) {
     return error;

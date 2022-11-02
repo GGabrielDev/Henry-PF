@@ -96,7 +96,7 @@ module.exports = (sequelize: Sequelize) => {
 
       mobile_zone: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull:true,
         validate: {
           isNumeric: true,
         },
@@ -112,7 +112,7 @@ module.exports = (sequelize: Sequelize) => {
 
       code_currencies: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {

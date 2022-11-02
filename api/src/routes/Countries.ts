@@ -42,7 +42,7 @@ router.get(
       });
 
       if (result.length === 0) {
-        throw new HttpException(404, "No entries has been found.");
+        throw new HttpException(404, "No entries have been found.");
       }
       return res.status(200).send({ amount: result.length, result });
     } catch (error) {

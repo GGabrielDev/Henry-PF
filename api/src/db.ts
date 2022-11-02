@@ -72,9 +72,11 @@ User.hasOne(Seller, { sourceKey: "id" });
 Seller.belongsTo(User, { targetKey: "id" });
 Product.belongsToMany(Category_Product, {
   through: "category_product_join",
+  as: "product",
 });
 Category_Product.belongsToMany(Product, {
   through: "category_product_join",
+  as: "categories",
 });
 Product.hasMany(Review, {
   sourceKey: "id",
@@ -87,7 +89,7 @@ Review.belongsTo(Product, {
 Countries.hasMany(User, {
   sourceKey: "id",
   foreignKey: "userId",
-  as: "users",
+  as: "usersCountry",
 });
 User.belongsTo(Countries, {
   targetKey: "id",

@@ -161,7 +161,7 @@ module.exports = (sequelize: Sequelize) => {
       userType: {
         type: DataTypes.ENUM(
           "Administrador General",
-          "Administrador",
+          "Vendedor",
           "Usuario"
         ),
         defaultValue: "Usuario",

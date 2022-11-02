@@ -151,7 +151,7 @@ module.exports = (sequelize: Sequelize) => {
 
       price_local: {
         type: DataTypes.DECIMAL(8, 2),
-        allowNull: false,
+        allowNull: true,
         validate: {
           isNumeric: true,
         },

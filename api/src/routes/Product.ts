@@ -47,7 +47,7 @@ router.get(
       });
 
       if (result.length === 0) {
-        throw new HttpException(404, "No entries has been found.");
+        return res.status(204).send("No entries have been found.");
       }
       return res.status(200).send({ amount: result.length, result });
     } catch (error) {
@@ -124,8 +124,8 @@ router.post(
           suspended,
           size,
         }) as Product_Type;
-        result.addCategories(categories.map(value => value.id))
-        return res.status(201).send(await Product.findByPk(result.id, { include: [Product.associations.categories] }));
+        //result.addCategories(categories.map(value => value.id))
+        return res.status(201).send(await Product.findByPk(result.id ));
       }
     } catch (error) {
       console.log(error);

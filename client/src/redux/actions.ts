@@ -10,13 +10,13 @@ type CreateProductResponse={
     suspended: string,
     url:string
 }
-const {DB_HOST} = process.env || 'localhost';
-const {API_PORT} = process.env || '3001';
+
+const {REACT_APP_API_KEY} = process.env || 'localhost:3001';
 
 export const createProduct = (payload: CreateProductResponse) => async () =>{
 
     try{
-        const res = await axios.post<CreateProductResponse>(`http://${DB_HOST}:${API_PORT}/products`, payload,);
+        const res = await axios.post<CreateProductResponse>(`http://localhost:3001/products`, payload,);
 
         console.log('1')
         return res.data

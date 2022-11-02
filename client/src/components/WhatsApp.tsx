@@ -1,13 +1,39 @@
 import styled from "styled-components";
 import Whatsapp from "../assets/imagenesSlider/iconoWTP.png";
-
+const carrito = [
+  {
+    Nombre: "producto 1",
+    Monto: 100.0,
+  },
+  {
+    Nombre: "producto 2",
+    Monto: 150.0,
+  },
+  {
+    Nombre: "producto 3",
+    Monto: 200.0,
+  },
+];
 const WhatsApp = () => {
+  let productosParaWsp = carrito.map(
+    (producto) => `- ${producto.Nombre}, $${producto.Monto}`
+  );
+  const productosConFormatoAmigable = productosParaWsp.join("\n");
   return (
+    <a
+        href={
+          "https://api.whatsapp.com/send?phone=+573053721294&text=Me%20interesan%20los%20siguientes%20productos:" +
+          " " +
+          productosConFormatoAmigable
+        }
+      >
     <WhatsAppContainer>
       <div className="whatsapp-content">
         <img className="whatsapp-img" src={Whatsapp} alt="" />
+
       </div>
     </WhatsAppContainer>
+    </a>
   );
 };
 

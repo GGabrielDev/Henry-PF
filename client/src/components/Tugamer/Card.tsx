@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import img from './Utils/prueba.png';
 import img2 from './Utils/tipo.jpg';
 import { BsInfoCircle } from 'react-icons/bs';
+import { useShoppingCart } from "./context/SoppingCartContext";
 
 type CardType ={
     id:string,
@@ -13,8 +14,9 @@ type CardType ={
 }
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({name, price_local, image, id}:CardType) =>{
-    const [count, setCount]= useState(0);   
-       
+     
+    const {incrementCartQuantity, decrementCartQuantity, getItemQuantity}=useShoppingCart()
+    const quantity=getItemQuantity(id)
     return(
         <CardContainer>
             <div className='card__container'>
@@ -29,9 +31,9 @@ const Card = ({name, price_local, image, id}:CardType) =>{
                 </div>
                 <div className="card__sumaresta">         
                 <div className="card__buttons">
-                <button disabled={count === 0} onClick={()=> setCount(count - 1)} className='button__card'> - </button>
-                <h3>{count}</h3>
-                <button onClick={()=> setCount(count + 1)} className='button__card'> + </button>
+                <button disabled={ quantity === 0} onClick={() => decrementCartQuantity(id)} className='button__card'> - </button>
+                <h3>{quantity}</h3>
+                <button onClick={()=> incrementCartQuantity(id)} className='button__card'> + </button>
                 </div>  
                  </div> 
                 </div> 
@@ -199,4 +201,9 @@ const CardContainer = styled.div`
 `; 
 
 
+
+
+function formatCurrency(price_local: number): import("react").ReactNode {
+    throw new Error("Function not implemented.");
+}
 

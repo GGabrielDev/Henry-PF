@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { useShoppingCart } from "./context/SoppingCartContext";
 
 const Navbar = () => {
+  const {openCart, cartQuantity} =useShoppingCart();
+
   return (
     <NavbarContainer>
       <Header>
@@ -34,8 +37,8 @@ const Navbar = () => {
             </div>
 
             <div className="userinfo-item">
-              <button>
-                <BiShoppingBag /> Cart(0)
+              <button onClick={openCart}>
+                <BiShoppingBag /> {cartQuantity}
               </button>
             </div>
           </Userinfo>

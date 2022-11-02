@@ -18,6 +18,7 @@ function App() {
   const [user, dispatchUser]=useReducer(reducers, {}, init)
   return (
     <div className="App">
+      
       <Provider store={store}>
       <ShoppingCartProvider>
       <AuthContext.Provider value={{user, dispatchUser}}>
@@ -25,6 +26,7 @@ function App() {
       </AuthContext.Provider>
       </ShoppingCartProvider>
       </Provider>
+      
     </div>
 
   );

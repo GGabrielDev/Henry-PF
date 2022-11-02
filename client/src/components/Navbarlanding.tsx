@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { HiOutlineUserCircle } from "react-icons/hi";
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose, IoIosArrowForward } from "react-icons/io";
 import User from "../assets/imagenesSlider/49838.jpg";
 
 const Navbarlanding = () => {
@@ -36,9 +36,9 @@ const Navbarlanding = () => {
         </div>
 
         <div className="nav__sections-2">
-          <NavLink className="section button" to="#contact">
+          {/* <NavLink className="section button" to="#contact">
             <HiOutlineUserCircle />
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             onClick={handleChange}
@@ -61,17 +61,75 @@ const Navbarlanding = () => {
             <button className="edit">Editar Perfil</button>
           </div>
           <NavLink className="section-re" to="#home">
-            Home
+            <div className="section__cajita">
+              <span className="section__name">Home</span>
+              <span className="icon-re">
+                <IoIosArrowForward />
+              </span>
+            </div>
           </NavLink>
-          <NavLink className="section-re" to="#about">
-            About
+
+          <NavLink className="section-re" to="#home">
+            <div className="section__cajita">
+              <span className="section__name">Cuenta</span>
+              <span className="icon-re">
+                <IoIosArrowForward />
+              </span>
+            </div>
           </NavLink>
-          <NavLink className="section-re" to="#clients">
-            Clients
+
+          <NavLink className="section-re" to="#home">
+            <div className="section__cajita">
+              <span className="section__name">Logout</span>
+              <span className="icon-re">
+                <IoIosArrowForward />
+              </span>
+            </div>
           </NavLink>
-          <NavLink className="section-re" to="#contact">
-            Contact
-          </NavLink>
+
+          <div className="flex">
+            <div className="cajita__section__page">
+              <a className="section__page" href={"#home"}>
+                Home
+              </a>
+              <span className="icon-re">
+                <IoIosArrowForward />
+              </span>
+            </div>
+          </div>
+
+          <div className="flex">
+            <div className="cajita__section__page">
+              <a className="section__page" href={"#about"}>
+                About
+              </a>
+              <span className="icon-re">
+                <IoIosArrowForward />
+              </span>
+            </div>
+          </div>
+
+          <div className="flex">
+            <div className="cajita__section__page">
+              <a className="section__page" href={"#clients"}>
+                Clients
+              </a>
+              <span className="icon-re">
+                <IoIosArrowForward />
+              </span>
+            </div>
+          </div>
+
+          <div className="flex">
+            <div className="cajita__section__page">
+              <a className="section__page" href={"#contact"}>
+                Contact
+              </a>
+              <span className="icon-re">
+                <IoIosArrowForward />
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </Navbarlandings>
@@ -94,6 +152,12 @@ const Navbarlandings = styled.div`
     position: absolute;
     bottom: 0px;
     right: 0;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .whatsapp-img {
@@ -136,7 +200,7 @@ const Navbarlandings = styled.div`
 
   .nav__sections-2 {
     height: 100%;
-    width: 200px;
+    width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,9 +225,9 @@ const Navbarlandings = styled.div`
   }
 
   .menu {
-    position: absolute;
+    position: fixed;
     width: 400px;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #ffffff;
     right: 0px;
     top: 0;
@@ -205,6 +269,7 @@ const Navbarlandings = styled.div`
     color: ${({ theme }) => theme.white};
     cursor: pointer;
     transition: 0.4s;
+    margin-bottom: 10px;
     &:hover {
       border: 1px solid ${({ theme }) => theme.primary};
       background-color: ${({ theme }) => theme.white};
@@ -213,16 +278,70 @@ const Navbarlandings = styled.div`
   }
 
   .section-re {
-    display: block;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 10px;
-    border-bottom: 1px solid ${({ theme }) => theme.border};
-    color: ${({ theme }) => theme.primary};
-    transition: 0.4s;
+  }
 
-    &:hover {
-      color: ${({ theme }) => theme.secondary};
+  .section__name {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .section__page {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .cajita__section__page {
+    color: ${({ theme }) => theme.black};
+    a {
+      color: ${({ theme }) => theme.black};
     }
+    display: flex;
+    justify-content: center;
+    transition: 0.4s;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    display: none;
+    &:hover {
+      background-color: #005eff4e;
+      color: ${({ theme }) => theme.primary};
+    }
+  }
+
+  .section__cajita {
+    color: ${({ theme }) => theme.black};
+    transition: 0.4s;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    &:hover {
+      background-color: #005eff4e;
+      color: ${({ theme }) => theme.primary};
+    }
+  }
+
+  .icon-re {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
   }
 
   .x {
@@ -235,9 +354,17 @@ const Navbarlandings = styled.div`
     justify-content: end;
   }
 
+  AiFillSetting {
+    outline: none;
+    color: red;
+  }
+
   @media screen and (max-width: 700px) {
     .nav__sections-1 {
       display: none;
+    }
+    .cajita__section__page {
+      display: flex;
     }
   }
 

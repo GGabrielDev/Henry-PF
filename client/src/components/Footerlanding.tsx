@@ -47,11 +47,9 @@ const Footerlanding = () => {
               <li>
                 <a href=""> Recompensas </a>
               </li>
-              <Link to="">
-                <li>
-                  <a href=""> Terminos y condiciones </a>
-                </li>
-              </Link>
+              <li>
+                <a href=""> Terminos y condiciones </a>
+              </li>
               <li>
                 <a href=""> Privacidad</a>
               </li>

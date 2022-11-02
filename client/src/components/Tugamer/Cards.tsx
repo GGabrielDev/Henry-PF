@@ -13,7 +13,10 @@ export default function Cards(){
     useEffect(()=>{
         dispatch(getProducts())
     },[])
+    if(!products){
 
+        
+    }
   return (
     <>
         <DivCards>

@@ -16,15 +16,14 @@ const handleError: ErrorRequestHandler = (err, req, res, next) => {
   console.log(err);
 
   if (!(err instanceof HttpException)) {
-    if ((err.code = "credentials_required")) {
-      customError = new HttpException(err.status, err.inner.message);
-    } else {
+   
       customError = new HttpException(
         500,
-        "Oh no, this is embarrasing. We are having troubles my friend"
+        "Oh no, this is embarrasing. We are having troubles my friend",
+        err
       );
     }
-  }
+  
 
   // we are not using the next function to prvent from triggering
   // the default error-handler. However, make sure you are sending a

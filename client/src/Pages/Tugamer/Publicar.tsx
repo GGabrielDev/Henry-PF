@@ -27,7 +27,7 @@ const Publicar = () => {
     suspended: "",
     url:"",
   });
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const handleChange = (event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) => {
     setInput({ ...input, [event.target.name]: event.target.value });

@@ -10,38 +10,18 @@ type CreateProductResponse={
     suspended: string,
     url:string
 }
+const {DB_HOST} = process.env || 'localhost';
+const {API_PORT} = process.env || '3001';
 
-export const createProduct = (payload: object) => async () =>{
+export const createProduct = (payload: CreateProductResponse) => async () =>{
 
     try{
-        const res = await axios.post<CreateProductResponse>("http://localhost:3001/products", payload, {
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },},);
-        console.log(res)
-        return res
+        const res = await axios.post<CreateProductResponse>(`http://${DB_HOST}:${API_PORT}/products`, payload,);
+
+        console.log('1')
+        return res.data
 
     }catch (error){
         console.log(error)
-    }
-}
-export const getAllProducts = () => async (dispatch:any)=>{
-    try {
-        const res = await axios.get("http://localhost:3001/products");
-    console.log(res);
-    dispatch({
-      type: GET_PRODUCTS,
-      payload: res.data,
-    });
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-export const filtroPrecio=(payload:string)=>{
-    return{
-        type:FILTER_PRICE,
-        payload
     }
 }

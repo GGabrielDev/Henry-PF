@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { ThemesLanding } from "../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import WhatsApp from "../components/WhatsApp";
+import ContactContainer from "../components/Contact";
 
 const Landingpage = () => {
   return (
@@ -63,6 +64,8 @@ const Landingpage = () => {
 
           <h1 id="about">Our Clients</h1>
         </div>
+
+        <ContactContainer />
 
         <Footerlanding />
       </ThemeProvider>

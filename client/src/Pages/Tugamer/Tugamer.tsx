@@ -1,4 +1,4 @@
-import React from "react";
+
 import Navbar from "../../components/Tugamer/Navbar";
 import SliderContainer from "../../components/Tugamer/Home/Slider/SliderContainer";
 import Filtros from "../../components/Tugamer/Home/Filtros/Filtros";
@@ -11,9 +11,7 @@ const Tugamer = () => {
       <Navbar />
       <SliderContainer />
       <Filtros />
-
       <Cards />
-
       <div>
         <Flotantbutton />
       </div>

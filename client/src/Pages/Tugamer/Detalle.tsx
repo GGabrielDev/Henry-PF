@@ -11,14 +11,14 @@ const Detalle = () => {
   const [count, setCount] = useState(0);
   const dispatch= useAppDispatch();
   const detalle = useAppSelector(detailProduct) as ProductType;
-  const { id }  = useParams<{id?:string}>();
+  const { productId }  = useParams<{productId?:string}>();
   useEffect(()=>{
-    console.log(id)
-    dispatch(getProductId(id))
-  },[dispatch, id])
+    console.log(productId)
+    dispatch(getProductId(productId))
+  },[dispatch, productId])
   
   console.log(detalle)
-  if(id){
+  if(productId){
   return (
     <>
       <Navbar />

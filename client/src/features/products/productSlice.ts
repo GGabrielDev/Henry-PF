@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import * as API from "./productAPI";
-import { AxiosError } from "axios";
+import axios from "axios";
 export type ProductType = {
   id: string;
   name: string;
@@ -28,23 +27,21 @@ export const initialState: SliceState = {
 
 export const getProducts = createAsyncThunk("product/getProducts", async () => {
   try {
-      const res = await API.getAllProducts();
-      
-    if(res instanceof AxiosError){
-      throw new Error('Server error')
-    }else{
-      return res
-    }
+      const res = await axios.get("http://localhost:3001/products");
+      console.log(res.data.result)
+    
+      return res.data.result
+    
   } catch (error) {
     console.log(error);
   }
 });
 export const getProductId = createAsyncThunk(
   "product/getProductId",
-  async (id: string | undefined) => {
+  async (productId: string | undefined ) => {
     try {
-      if (!id) throw new Error("No ID was given");
-      return await API.getProductById(id);
+      const res = await axios.get(`http://localhost:3001/products/${productId}`)
+      return res.data
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +69,7 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(
+    .addCase(
         getProducts.fulfilled,
         (state, action: PayloadAction<ProductType[]>) => {
           state.products = action.payload;

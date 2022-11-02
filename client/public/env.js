@@ -1,3 +1,3 @@
 window.env = {
-  "API_KEY": "http://localhost:3001/"
+  "API_KEY": "http://localhost:3001"
 };

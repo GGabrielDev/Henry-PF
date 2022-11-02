@@ -20,7 +20,7 @@ const Router = () => {
 
       <Route path="/tugamer" element={<Tugamer />} />
       <Route path="/tugamer/publicar" element={<Publicar />} />
-      <Route path="/tugamer/detalle/:id" element={<Detalle />} />
+      <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
 
       {/* rutas usuario */}
       <Route path="/usuario/*" element={<UserGeneral />} />

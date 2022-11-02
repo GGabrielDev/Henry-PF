@@ -1,6 +1,6 @@
 export const ThemesLanding = {
   primary: "#0264fb" /* verde pastel */,
-  secondary: "#feae35" /* amarillo pastel*/,
+  secondary: "#6cffba" /* amarillo pastel*/,
   black: "#000" /* negro*/,
   white: "#fff" /* blanco */,
   tertiary: "#C8FFD4" /* azul claro */,

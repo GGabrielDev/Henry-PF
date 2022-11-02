@@ -6,7 +6,6 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import User from "../assets/imagenesSlider/49838.jpg";
-import Whatsapp from "../assets/imagenesSlider/iconoWTP.png";
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
@@ -17,29 +16,23 @@ const Navbarlanding = () => {
 
   return (
     <Navbarlandings>
-      <div className="whatsapp">
-        <div className="whatsapp-content">
-          <img className="whatsapp-img" src={Whatsapp} alt="" />
-        </div>
-      </div>
-
       <div className="nav-content">
         <div className="logo">
           <Logo>HenryShops</Logo>
         </div>
         <div className="nav__sections-1">
-          <NavLink className="section" to="#home">
+          <a className="section" href={"#home"}>
             Home
-          </NavLink>
-          <NavLink className="section" to="#about">
+          </a>
+          <a className="section" href={"#about"}>
             About
-          </NavLink>
-          <NavLink className="section" to="#clients">
+          </a>
+          <a className="section" href={"#clients"}>
             Clients
-          </NavLink>
-          <NavLink className="section" to="#contact">
+          </a>
+          <a className="section" href={"#contact"}>
             Contact
-          </NavLink>
+          </a>
         </div>
 
         <div className="nav__sections-2">
@@ -56,7 +49,7 @@ const Navbarlanding = () => {
           </NavLink>
         </div>
 
-        <div className={menu ? "menu" : "menu-dn"}>
+        <div className={menu ? "menu" : "menu menu-dn"}>
           <span className="x" onClick={handleChange}>
             <IoMdClose />
           </span>
@@ -95,7 +88,6 @@ const Navbarlandings = styled.div`
   color: ${({ theme }) => theme.primary};
   display: flex;
   justify-content: center;
-  background-color: ${({ theme }) => theme.primary};
 
   .whatsapp {
     width: fit-content;
@@ -176,13 +168,12 @@ const Navbarlandings = styled.div`
     right: 0px;
     top: 0;
     border: 1px solid ${({ theme }) => theme.border};
+    transition: 0.6s all ease-in-out;
   }
 
   .menu-dn {
-    right: -2000px;
-    top: 0;
-    transition: 1s;
-    display: none;
+    position: absolute;
+    top: -1000px;
   }
 
   .img__container {

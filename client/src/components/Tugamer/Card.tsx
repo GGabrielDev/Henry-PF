@@ -15,8 +15,9 @@ type CardType ={
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({name, price_local, image, id}:CardType) =>{
      
-    const {incrementCartQuantity, decrementCartQuantity, getItemQuantity}=useShoppingCart()
-    const quantity=getItemQuantity(id)
+    const { getItemQuantity, incrementCartQuantity, decrementCartQuantity} = useShoppingCart();
+    const quantity=getItemQuantity(id);
+    
     return(
         <CardContainer>
             <div className='card__container'>
@@ -33,7 +34,7 @@ const Card = ({name, price_local, image, id}:CardType) =>{
                 <div className="card__buttons">
                 <button disabled={ quantity === 0} onClick={() => decrementCartQuantity(id)} className='button__card'> - </button>
                 <h3>{quantity}</h3>
-                <button onClick={()=> incrementCartQuantity(id)} className='button__card'> + </button>
+                <button onClick={() => incrementCartQuantity(id)} className='button__card'> + </button>
                 </div>  
                  </div> 
                 </div> 
@@ -145,7 +146,7 @@ const CardContainer = styled.div`
     height:20px;
     border:none;  
     position: relative;    
-   
+    cursor: pointer;
 }
 .card_shop{      
     font-size: 35px;

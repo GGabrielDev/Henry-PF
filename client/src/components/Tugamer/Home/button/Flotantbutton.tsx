@@ -1,15 +1,21 @@
 import React from 'react'
 import styled from "styled-components";
 import {AiOutlineWhatsApp} from "react-icons/ai"
+import { useShoppingCart } from '../../context/SoppingCartContext';
+import { useAppSelector } from '../../../../app/hooks';
+import { selectProducts } from '../../../../features/products/productSlice';
 
 const Flotantbutton = () => {
+    const products = useAppSelector(selectProducts);
+    const { getItemQuantity, incrementCartQuantity, decrementCartQuantity} = useShoppingCart();
+    
   return (
     <Flotantbuttons>
         <div className='botonflotante'>
             <div className="flotantelogo">
             <AiOutlineWhatsApp/>
             </div>
-            <div className="fontantetexto">Realizar compra ()</div>
+            <div className="fontantetexto">Realizar compra </div>
         </div>
     </Flotantbuttons>
   )

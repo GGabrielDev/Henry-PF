@@ -6,12 +6,16 @@ import Navbar from "../../components/Tugamer/Navbar";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { detailProduct, getProductId, ProductType } from "../../features/products/productSlice";
+import { useShoppingCart } from "../../components/Tugamer/context/SoppingCartContext";
 
 const Detalle = () => {
-  const [count, setCount] = useState(0);
+  
   const dispatch= useAppDispatch();
   const detalle = useAppSelector(detailProduct) as ProductType;
   const { productId }  = useParams<{productId?:string}>();
+  const { getItemQuantity, incrementCartQuantity, decrementCartQuantity} = useShoppingCart();
+  const id=detalle.id
+    const quantity=getItemQuantity(id);
   useEffect(()=>{
     console.log(productId)
     dispatch(getProductId(productId))
@@ -42,16 +46,16 @@ const Detalle = () => {
               <div className="det__dec4">Cantidad que desea comprar:</div>
               <div className="botones">
                 <button
-                  disabled={count === 0}
-                  onClick={() => setCount(count - 1)}
+                  disabled={quantity === 0}
+                  onClick={() => decrementCartQuantity(id)}
                   className="button__card"
                 >
                   {" "}
                   -{" "}
                 </button>
-                <h3 className="count">{count}</h3>
+                <h3 className="count">{quantity}</h3>
                 <button
-                  onClick={() => setCount(count + 1)}
+                  onClick={() =>incrementCartQuantity(id)}
                   className="button__card"
                 >
                   {" "}

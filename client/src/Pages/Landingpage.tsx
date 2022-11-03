@@ -10,6 +10,7 @@ import { ThemesLanding } from "../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import WhatsApp from "../components/WhatsApp";
 import ContactContainer from "../components/Contact";
+import Ourclients from "../components/Ourclients";
 
 const Landingpage = () => {
   return (
@@ -62,10 +63,16 @@ const Landingpage = () => {
             </div>
           </div>
 
-          <h1 id="about">Our Clients</h1>
+          <h1 id="clients">Our Clients </h1>
+
+          <Ourclients />
+
+          <h1 id="contact">Contact</h1>
+
+          <ContactContainer />
         </div>
 
-        <ContactContainer />
+
 
         <Footerlanding />
       </ThemeProvider>
@@ -75,6 +82,7 @@ const Landingpage = () => {
 
 const Landingpages = styled.div`
   width: 100%;
+  
 
   .headersection {
     width: 100%;
@@ -156,6 +164,10 @@ const Landingpages = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    h1 {
+      font-size: 60px;
+    }
   }
 
   .aboutinfo {
@@ -187,7 +199,7 @@ const Landingpages = styled.div`
       line-height: 80px;
     }
     h2 {
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
 
     p {
@@ -217,6 +229,8 @@ const Landingpages = styled.div`
     }
   }
 
+
+
   @media screen and (min-width: 1400px) {
     .containerheader {
       max-width: 1400px;
@@ -241,6 +255,10 @@ const Landingpages = styled.div`
   @media screen and (max-width: 900px) {
     .aboutinfo {
       padding: 0;
+    }
+
+    .middlesection{
+      h1{ font-size: 30px; }
     }
 
     .text-info {

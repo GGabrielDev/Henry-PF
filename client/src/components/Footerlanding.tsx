@@ -105,7 +105,6 @@ export default Footerlanding;
 
 const FooterlandingContainer = styled.div`
   @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
-  height: 300px;
   background-image: url(${Footer});
   background-size: cover;
   background-repeat: no-repeat;
@@ -247,10 +246,10 @@ const FooterlandingContainer = styled.div`
   .footer-derechos {
     text-align: center;
     color: ${({ theme }) => theme.white};
-    background-color: ${({ theme }) => theme.primary};
+    /* background-color: ${({ theme }) => theme.primary}; */
   }
   @media (max-width: 1035px) {
-    background-color: ${({ theme }) => theme.primary};
+    /* background-color: ${({ theme }) => theme.primary}; */
     .footer-col {
       width: 50%;
       margin-bottom: 30px;
@@ -261,7 +260,7 @@ const FooterlandingContainer = styled.div`
 
     .footer-col {
       width: 100%;
-      background-color: ${({ theme }) => theme.primary};
+      /* background-color: ${({ theme }) => theme.primary}; */
     }
   }
 `;

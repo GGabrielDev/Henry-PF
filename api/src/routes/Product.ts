@@ -124,7 +124,7 @@ router.post(
           suspended,
           size,
         }) as Product_Type;
-        //result.addCategories(categories.map(value => value.id))
+        // result.addCategories(categories.map(value => value.id))
         return res.status(201).send(await Product.findByPk(result.id ));
       }
     } catch (error) {

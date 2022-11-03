@@ -18,7 +18,7 @@ export const createProduct = (payload: CreateProductResponse) => async () =>{
     try{
         const res = await axios.post<CreateProductResponse>(`http://localhost:3001/products`, payload,);
 
-        console.log('1')
+        console.log('Se posteó al http://localhost:3001/products un producto correctamente')
         return res.data
 
     }catch (error){

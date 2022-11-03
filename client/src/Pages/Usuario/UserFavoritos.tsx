@@ -1,39 +1,69 @@
 import React from "react";
 import MenuUsuario from "./MenuUsuario";
 import styled from "styled-components";
-import Perfil from "../../assets/imagenesSlider/profile.png";
-import Paisaje from "../../assets/imagenesSlider/49838.jpg";
+import Imagen from "../../assets/imagenesSlider/luis perfumes.jpg";
+import Imagen2 from "../../assets/imagenesSlider/5fa8fb32d99eb.jpeg";
+import Imagen3 from "../../assets/imagenesSlider/hamburguesas.jpg";
+import { MdFavorite } from "react-icons/md";
+import { AiOutlineClose } from "react-icons/ai";
 
 const General = () => {
   return (
     <GeneralContainer>
       <MenuUsuario />
       <GeneralContent>
-        <h1 className="general__perfil-title">Tu Pefil</h1>
-        <div className="general__info">
-          <h3 className="general__perfil-section">Tu Foto</h3>
-          <div className="general__img">
-            <div className="img__container">
-              <img src={Paisaje} alt="" />
-            </div>
-            <div className="botones">
-              <button className="subir__img">Subir Foto </button>
-              <button className="borrar__img">Borrar Foto</button>
-            </div>
+        <h1 className="general__perfil-title">Tus Productos Favoritos</h1>
+        <div className="compra__card">
+          <div className="img__compra__compra-container">
+            <img className="img__compra__compra" src={Imagen} alt="" />
           </div>
-          <h2 className="general__perfil-section">Información básica:</h2>
+          <div className="compra__card__info">
+            <p className="compra__card__title">Luis Perfumes</p>
 
-          <h3 className="general__perfil-section-item">Nombre/s</h3>
-          <input type="text" className="general__input" />
+            <p className="compra__card__info3">Perfume Antonio Banderas</p>
+          </div>
+          <div className="delete__container">
+            <a className="comprar">Comprar</a>
+            <h3 className="det_del">
+              <AiOutlineClose />
+            </h3>
+          </div>
+        </div>
 
-          <h3 className="general__perfil-section-item">Apellido/s</h3>
-          <input type="text" className="general__input" />
+        <div className="compra__card">
+          <div className="img__compra__compra-container">
+            <img className="img__compra__compra" src={Imagen2} alt="" />
+          </div>
+          <div className="compra__card__info">
+            <p className="compra__card__title">Jose Zapateria</p>
+            <p className="compra__card__info3">
+              Zapatillas replicas Nike Jordan
+            </p>
+          </div>
+          <div className="delete__container">
+            <a className="comprar">Comprar</a>
+            <h3 className="det_del">
+              <AiOutlineClose />
+            </h3>
+          </div>
+        </div>
 
-          <h3 className="general__perfil-section-item">Email</h3>
-          <input type="text" className="general__input" />
-
-          <h3 className="general__perfil-section-item">Número Telefonico</h3>
-          <input type="text" className="general__input" />
+        <div className="compra__card">
+          <div className="img__compra__compra-container">
+            <img className="img__compra__compra" src={Imagen3} alt="" />
+          </div>
+          <div className="compra__card__info">
+            <p className="compra__card__title">Andrés Hamburguesas</p>
+            <p className="compra__card__info3">
+              Hamburguesa colombiana con extra queso
+            </p>
+          </div>
+          <div className="delete__container">
+            <a className="comprar">Comprar</a>
+            <h3 className="det_del">
+              <AiOutlineClose />
+            </h3>
+          </div>
         </div>
       </GeneralContent>
     </GeneralContainer>
@@ -54,108 +84,118 @@ const GeneralContainer = styled.div`
 const GeneralContent = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px 100px;
-  border-left: 1px solid rgb(0, 0, 0, 0.1);
+  padding: 20px 20px;
+  border-left: 1px solid ${({ theme }) => theme.border};
 
   .general__perfil-title {
     font-size: 20px;
+    margin-bottom: 5px;
   }
 
-  .general__img {
+  .compra__card {
+    width: 100%;
+    background-color: ${({ theme }) => theme.cream2};
+    padding: 10px;
+    border-radius: 10px;
     display: flex;
-    align-items: center;
-    justify-content: start;
-    margin-top: 10px;
-    width: 300px;
-    height: fit-content;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    border: 1px solid ${({ theme }) => theme.border};
   }
 
-  .img__container {
-    background-color: ${({ theme }) => theme.border};
+  .img__compra__compra-container {
     width: 150px;
-    height: 150px;
-    border-radius: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-
-    img {
-      width: 250px;
+    .img__compra__compra {
+      width: 100%;
     }
   }
 
-  .botones {
-    height: 100px;
+  .compra__card__info {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 200px;
+  }
+
+  .compra__card__title {
+    color: ${({ theme }) => theme.primary};
+  }
+
+  .compra__card__info2 {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+
+  .compra__card__info3 {
+    text-align: center;
+    font-size: 12px;
+    border-bottom: 1px solid ${({ theme }) => theme.border};
+  }
+
+  .compra__card__info4 {
+    font-size: 10px;
+    border: 1px solid ${({ theme }) => theme.border};
+    padding: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.light};
+    transition: 0.5s;
+    &:hover {
+      background-color: ${({ theme }) => theme.light};
+      color: ${({ theme }) => theme.primary};
+      border: 1px solid ${({ theme }) => theme.primary};
+    }
+  }
+
+  .delete__container {
+    display: flex;
+    align-items: center;
     justify-content: space-around;
     flex-direction: column;
-    margin-left: 20px;
-  }
-
-  .subir__img {
-    background-color: ${({ theme }) => theme.secondary};
-    border: 1px solid ${({ theme }) => theme.border};
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer;
-    transition: 0.4s;
-    &:hover {
-      background-color: ${({ theme }) => theme.primary};
+    width: 100px;
+    h3 {
+      padding: 5px;
+      cursor: pointer;
+      color: ${({ theme }) => theme.tertiary};
+      transition: 0.4s;
+      &:hover {
+        color: ${({ theme }) => theme.error};
+      }
     }
+    transition: 0.5s;
   }
 
-  .borrar__img {
-    background-color: ${({ theme }) => theme.secondary};
-    border-radius: 5px;
-    padding: 5px;
-    border: 1px solid ${({ theme }) => theme.border};
+  .comprar {
+    font-size: 12px;
+    transition: 0.5s;
     cursor: pointer;
-    transition: 0.4s;
     &:hover {
-      background-color: ${({ theme }) => theme.primary};
-    }
-  }
-
-  .general__perfil-section {
-    font-size: 14px;
-    font-weight: 400px;
-    margin-top: 10px;
-  }
-
-  .general__perfil-section-item {
-    font-size: 11px;
-    color: ${({ theme }) => theme.details};
-    margin-top: 5px;
-  }
-
-  .general__input {
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid ${({ theme }) => theme.border};
-    width: 50%;
-    font-size: 11px;
-  }
-
-  @media screen and (max-width: 768px) {
-    padding: 10px 10px;
-    height: auto;
-    .general__input {
-      width: 100%;
+      text-decoration: underline;
     }
   }
 
   @media screen and (max-width: 576px) {
-    .general__img {
-      flex-direction: column;
-      width: 100%;
-    }
+    padding: 5px 5px;
+
     .general__perfil-title {
       text-align: center;
     }
-    .general__perfil-section {
+
+    .compra__card {
+      flex-direction: column;
       text-align: center;
+    }
+
+    .img__compra__compra-container {
+      width: 100%;
+      .img__compra__compra {
+        width: 50%;
+      }
     }
   }
 `;

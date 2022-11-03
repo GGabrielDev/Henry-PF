@@ -31,9 +31,6 @@ const MenuUsuario = () => {
           <NavLink to="/usuario/favoritos" className="menu__sections-name">
             <span>Favoritos</span>
           </NavLink>
-          <NavLink to="/usuario/editar" className="menu__sections-name">
-            <span className="name__ultimate">Editar perfil</span>
-          </NavLink>
         </div>
         <div className="menu__title">
           Medios de pago <AiFillCreditCard className="user__icon " />
@@ -77,7 +74,7 @@ const MenuUsuarioContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: start;
-    color: ${({theme})=>theme.dark};
+    color: ${({ theme }) => theme.dark};
   }
 
   .user__icon-arrow {
@@ -107,10 +104,10 @@ const MenuUsuarioContent = styled.div`
     cursor: pointer;
     font-weight: 500;
     &:hover {
-      background-color: ${({theme})=>theme.light};
+      background-color: ${({ theme }) => theme.light};
     }
     &.active {
-      background-color: ${({theme})=>theme.tertiary};
+      background-color: ${({ theme }) => theme.tertiary};
     }
   }
 

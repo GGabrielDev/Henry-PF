@@ -59,49 +59,6 @@ const General = () => {
             </Link>
           </div>
         </div>
-
-        {/* <div className="cuadro__compras__item">
-            <p className="cuadro__compras__item_title">ID</p>
-            <p className="cuadro__compras__item_title">Producto</p>
-            <p className="cuadro__compras__item_title">Total</p>
-            <p className="cuadro__compras__item_title">Vendedor</p>
-            <p className="cuadro__compras__item_title">Contacto</p>
-          </div>
-
-          <div className="cuadro__compras__item">
-            <p className="cuadro__compras__item_product">152525246</p>
-            <p className="cuadro__compras__item_product">Zapatillas</p>
-            <p className="cuadro__compras__item_product">200USD</p>
-            <p className="cuadro__compras__item_product">
-              Jaunita indumentaria
-            </p>
-            <p className="cuadro__compras__item_product">+54 11-6942-5647</p>
-          </div>
-
-          <div className="cuadro__compras__item">
-            <p className="cuadro__compras__item_product">152525246</p>
-            <p className="cuadro__compras__item_product">
-              Prefume antonio banderas{" "}
-            </p>
-            <p className="cuadro__compras__item_product">75USD</p>
-            <p className="cuadro__compras__item_product">Jose perfumes</p>
-            <p className="cuadro__compras__item_product">+54 11-2479-0000</p>
-          </div>
-
-          <div className="cuadro__compras__item">
-            <p className="cuadro__compras__item_product">152525246</p>
-            <p className="cuadro__compras__item_product">Zapatillas</p>
-            <p className="cuadro__compras__item_product">200USD</p>
-            <p className="cuadro__compras__item_product">Luis Proteinas</p>
-            <p className="cuadro__compras__item_product">+54 11-5623-2648</p>
-          </div>
-          <div className="cuadro__compras__item">
-            <p className="cuadro__compras__item_product">152525246</p>
-            <p className="cuadro__compras__item_product">Zapatillas</p>
-            <p className="cuadro__compras__item_product">200USD</p>
-            <p className="cuadro__compras__item_product">Andres Hamburguesas</p>
-            <p className="cuadro__compras__item_product">+54 11-2325-8924</p>
-          </div> */}
       </GeneralContent>
     </GeneralContainer>
   );

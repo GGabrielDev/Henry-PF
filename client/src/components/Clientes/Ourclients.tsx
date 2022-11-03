@@ -1,12 +1,36 @@
 import React from "react";
 import styled from "styled-components";
-import monito from "../assets/monito.jpg";
-import monitodos from "../assets/monito2.jpg";
-import monitotres from "../assets/monito3.jpg";
+import monito from "../../assets/monito.jpg";
+import monitodos from "../../assets/monito2.jpg";
+import monitotres from "../../assets/monito3.jpg";
 import { BiSearchAlt, BiFilterAlt, BiArchiveIn } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import { projectsData } from "./Data";
+import { projectsNav } from "./Data";
 
 const Ourclients = () => {
+  const [item, setItem] = useState({ name: "todas" });
+  const [projects, setProjects] = useState<any>([]);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (item.name === "todas") {
+      setProjects(projectsData);
+    } else {
+      const itemFiltered = projectsData.filter((project: any) => {
+        return project.Category.toLowerCase() === item.name;
+      });
+      setProjects(itemFiltered);
+    }
+  }, [item]);
+
+  const handleClick = (e: any, index: any) => {
+    setItem({ name: e.target.textContent.toLowerCase() });
+    setActive(index);
+  };
+
   return (
     <Ourclientss>
       <div className="sectioninputclients">
@@ -19,11 +43,13 @@ const Ourclients = () => {
         <div className="inputsearchclients">
           <div className="categoryclientinput">
             <select name="categoryclient" id="">
-              <option value="value1">Value 1</option>
+              <option value="value1">Todos</option>
               <option value="value2" selected>
-                Value 2
+                Entretenimiento
               </option>
-              <option value="value3">Value 3</option>
+              <option value="value3">Indumentaría</option>
+              <option value="value3">Gastronomía</option>
+              <option value="value3">Estilo y cuidado</option>
             </select>
           </div>
           <input type="text" />
@@ -33,65 +59,47 @@ const Ourclients = () => {
         </div>
       </div>
       <div className="sectionclientscards">
-        <div className="navbarclientsfilter">
-          <div className="lastestandpopular">
-            <div className="itemnavbarclient">Lastest</div>
-            <div className="itemnavbarclient">Popular</div>
-          </div>
-          <div className="filtericonclients">
-            <div className="itemnavbarclient">
-              <BiFilterAlt />
-            </div>
-            <div className="itemnavbarclient">
-              <BiArchiveIn />
-            </div>
-          </div>
+        <div className="filtros">
+          {projectsNav.map((item, index) => {
+            return (
+              <span
+                onClick={(e) => {
+                  handleClick(e, index);
+                }}
+                className={`${
+                  active === index ? "active-work" : ""
+                }  navbarclientsfilter`}
+                key={index}
+              >
+                {item.name}
+              </span>
+            );
+          })}
         </div>
+
         <div className="gridcards">
-          <div className="cardclient">
-            <div className="cardclientimg">
-              <img src={monito} alt="" />
-            </div>
-            <div className="cardinfoclients">
-              <div className="titleandsubtitlecardclient">
-                <h3>Tu Gamer</h3>
-                <h4>Gamer</h4>
+          {projects.map((item: any) => {
+            return (
+              <div className="cardclient" key={item.id}>
+                <div className="cardclientimg">
+                  <div className="img__container">
+                    <img src={item.image} alt="" />
+                  </div>
+                </div>
+                <div className="cardinfoclients">
+                  <div className="titleandsubtitlecardclient">
+                    <h3>{item.Title}</h3>
+                    <h4>{item.Category}</h4>
+                  </div>
+                  <div className="buttoncardclient">
+                    <Link to="/tugamer">
+                      <button>Visitar</button>
+                    </Link>
+                  </div>
+                </div>
               </div>
-              <div className="buttoncardclient">
-                <Link to="tugamer">
-                  <button>Visitar</button>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="cardclient">
-            <div className="cardclientimg">
-              <img src={monitodos} alt="" />
-            </div>
-            <div className="cardinfoclients">
-              <div className="titleandsubtitlecardclient">
-                <h3>Tu Pan</h3>
-                <h4>Panaderia</h4>
-              </div>
-              <div className="buttoncardclient">
-                <button>Visitar</button>
-              </div>
-            </div>
-          </div>
-          <div className="cardclient">
-            <div className="cardclientimg">
-              <img src={monitotres} alt="" />
-            </div>
-            <div className="cardinfoclients">
-              <div className="titleandsubtitlecardclient">
-                <h3>Tu Gamer</h3>
-                <h4>Gamer</h4>
-              </div>
-              <div className="buttoncardclient">
-                <button>Visitar</button>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </Ourclientss>
@@ -122,11 +130,14 @@ const Ourclientss = styled.div`
     justify-content: space-between;
     width: 100%;
     height: 50px;
-    background-color: #f1f1f1;
+    background-color: ${({ theme }) => theme.white};
+    border: 1px solid ${({ theme }) => theme.border};
+    border-radius: 10px;
 
     .categoryclientinput {
       padding: 5px;
       width: 150px;
+      border-right: 1px solid ${({ theme }) => theme.border};
     }
     select {
       height: 100%;
@@ -138,12 +149,14 @@ const Ourclientss = styled.div`
     input {
       height: 100%;
       width: 100%;
-      padding: 10px;
       border: none;
+      padding: 10px;
       background-color: transparent;
+      border-radius: 10px;
     }
 
     .iconinput {
+      border-left: 1px solid ${({ theme }) => theme.border};
       width: 100px;
       display: flex;
       align-items: center;
@@ -160,12 +173,15 @@ const Ourclientss = styled.div`
     width: 100%;
   }
 
-  .navbarclientsfilter {
-    padding: 0 30px;
-    width: 100%;
-    height: 45px;
+  .filtros {
     display: flex;
-    justify-content: space-between;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navbarclientsfilter {
+    cursor: pointer;
+    margin: 0px 30px 30px 30px;
   }
 
   .itemnavbarclient {
@@ -194,9 +210,12 @@ const Ourclientss = styled.div`
     }
   }
 
+  .active-work {
+    color: ${({ theme }) => theme.secondary};
+  }
+
   .gridcards {
     width: 100%;
-
     padding: 0 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -212,12 +231,13 @@ const Ourclientss = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
-    box-shadow: 2px 2px 15px #30303021;
+    box-shadow: 2px 2px 15px ${({ theme }) => theme.border};
     border-radius: 10px;
 
     h3 {
-      font-size: 30px;
+      font-size: 25px;
       line-height: 25px;
+      margin-bottom: 10px;
     }
 
     h4 {
@@ -236,25 +256,30 @@ const Ourclientss = styled.div`
       width: 150px;
       height: 40px;
       border: none;
-      background-color: #005cff;
-      color: white;
+      background-color: ${({ theme }) => theme.primary};
+      color: ${({ theme }) => theme.white};
       border-radius: 7px;
       cursor: pointer;
       transition: 0.2s;
     }
 
     button:hover {
-      background-color: #0048c4;
+      background-color: #${({ theme }) => theme.primary};
     }
   }
   .cardclientimg {
     width: 100%;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: 10px;
+    max-height: 200px;
+    min-height: 200px;
     margin-bottom: 10px;
+  }
+
+  .img__container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
     img {
       width: 100%;
       border-radius: 10px;
@@ -270,9 +295,17 @@ const Ourclientss = styled.div`
     .gridcards {
       grid-template-columns: repeat(2, 1fr);
     }
+  }
 
+  @media screen and (max-width: 840px) {
+    .filtros {
+      flex-direction: column;
+    }
     .navbarclientsfilter {
-      padding: 0;
+      margin: 0 0 10px 0;
+    }
+    .sectioninputclients {
+      padding: 10px;
     }
   }
 
@@ -282,9 +315,9 @@ const Ourclientss = styled.div`
       padding: 0;
     }
   }
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 600px) {
     .gridcards {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       padding: 0;
       overflow: auto;
     }

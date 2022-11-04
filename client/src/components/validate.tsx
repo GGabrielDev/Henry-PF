@@ -4,10 +4,11 @@ export type formType = {
   stock: number;
   description: string;
   suspended: string;
-  url: string;
+  image: string;
+  cloudinary: object;
 };
 export type errType = Record<
-  "name" | "price_local" | "stock" | "description" | "suspended" | "url",
+  "name" | "price_local" | "stock" | "description" | "suspended" | "image",
   string
 >;
 
@@ -18,7 +19,8 @@ function Validate(input: formType) {
     stock: "",
     description: "",
     suspended: "",
-    url: "",
+    image: "",
+    
   };
   let regExpSoloLetters = /[^a-zA-Z\s]/g;
 
@@ -47,8 +49,8 @@ function Validate(input: formType) {
   if (!input.suspended) {
     error.suspended = "Falta seleccionar el estado";
   }
-  if (!input.url) {
-    error.url = "Falta seleccionar una imagen";
+  if (!input.image) {
+    error.image = "Falta seleccionar una imagen";
   }
 
   return error;

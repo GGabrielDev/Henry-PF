@@ -14,6 +14,8 @@ const Ourclients = () => {
   const [item, setItem] = useState({ name: "todas" });
   const [projects, setProjects] = useState<any>([]);
   const [active, setActive] = useState(0);
+  const [category, setCategory] = useState("DEFAULT");
+  const [error, setError] = useState<any>([]);
 
   useEffect(() => {
     if (item.name === "todas") {
@@ -23,12 +25,63 @@ const Ourclients = () => {
         return project.Category.toLowerCase() === item.name;
       });
       setProjects(itemFiltered);
+      console.log(itemFiltered);
     }
   }, [item]);
 
   const handleClick = (e: any, index: any) => {
     setItem({ name: e.target.textContent.toLowerCase() });
     setActive(index);
+  };
+
+  const handleChange = (e: any) => {
+    const productos = [];
+    const errores = [];
+    const texto = e.target.value;
+    if (category !== "DEFAULT") {
+      for (let product of projectsData) {
+        let nombre = product.Title.toLowerCase();
+        let categoria = product.Category.toLowerCase();
+        if (
+          nombre.includes(texto.toLowerCase()) &&
+          categoria.includes(category)
+        ) {
+          productos.push(product);
+        }
+        setProjects(productos);
+        console.log(nombre.includes(texto.toLowerCase()));
+      }
+    } else {
+      for (let product of projectsData) {
+        let nombre = product.Title.toLowerCase();
+        if (nombre.includes(texto.toLowerCase())) {
+          productos.push(product);
+        } else {
+          errores.push("No");
+        }
+        setError(errores);
+        setProjects(productos);
+      }
+    }
+  };
+
+  const handleCategory = (e: any) => {
+    const productos = [];
+    const errores = [];
+    setCategory(e.target.value);
+    if (e.target.value !== "DEFAULT") {
+      for (let product of projectsData) {
+        let categoria = product.Category.toLowerCase();
+        if (categoria.includes(e.target.value)) {
+          productos.push(product);
+          errores.push(product);
+        }
+        setProjects(productos);
+        setError(errores);
+      }
+    } else {
+      setProjects(projectsData);
+    }
   };
 
   return (
@@ -42,17 +95,22 @@ const Ourclients = () => {
         </p>
         <div className="inputsearchclients">
           <div className="categoryclientinput">
-            <select name="categoryclient" id="">
-              <option value="value1">Todos</option>
-              <option value="value2" selected>
+            <select
+              name="categoryclient"
+              id=""
+              onChange={handleCategory}
+              defaultValue={"DEFAULT"}
+            >
+              <option value="DEFAULT">Todos</option>
+              <option value="entretenimiento" selected>
                 Entretenimiento
               </option>
-              <option value="value3">Indumentaría</option>
-              <option value="value3">Gastronomía</option>
-              <option value="value3">Estilo y cuidado</option>
+              <option value="indumentaria">Indumentaría</option>
+              <option value="gastronomia">Gastronomía</option>
+              <option value="estilo">Estilo y cuidado</option>
             </select>
           </div>
-          <input type="text" />
+          <input type="text" onChange={handleChange} />
           <div className="iconinput">
             <BiSearchAlt />
           </div>
@@ -78,28 +136,32 @@ const Ourclients = () => {
         </div>
 
         <div className="gridcards">
-          {projects.map((item: any) => {
-            return (
-              <div className="cardclient" key={item.id}>
-                <div className="cardclientimg">
-                  <div className="img__container">
-                    <img src={item.image} alt="" />
+          {error[5] == "No" ? (
+            <h4 className="NoHayData">No se encontraron resultados</h4>
+          ) : (
+            projects.map((item: any) => {
+              return (
+                <div className="cardclient" key={item.id}>
+                  <div className="cardclientimg">
+                    <div className="img__container">
+                      <img src={item.image} alt="" />
+                    </div>
+                  </div>
+                  <div className="cardinfoclients">
+                    <div className="titleandsubtitlecardclient">
+                      <h3>{item.Title}</h3>
+                      <h4>{item.Category}</h4>
+                    </div>
+                    <div className="buttoncardclient">
+                      <Link to={`${item.Demo}`}>
+                        <button>Visitar</button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-                <div className="cardinfoclients">
-                  <div className="titleandsubtitlecardclient">
-                    <h3>{item.Title}</h3>
-                    <h4>{item.Category}</h4>
-                  </div>
-                  <div className="buttoncardclient">
-                    <Link to="/tugamer">
-                      <button>Visitar</button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </Ourclientss>
@@ -216,11 +278,13 @@ const Ourclientss = styled.div`
 
   .gridcards {
     width: 100%;
+    min-height: 400px;
     padding: 0 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
     grid-auto-rows: minmax(100px, auto);
+    position: relative;
   }
 
   .cardclient {
@@ -284,6 +348,14 @@ const Ourclientss = styled.div`
       width: 100%;
       border-radius: 10px;
     }
+  }
+
+  .NoHayData {
+    position: absolute;
+    width: 100%;
+    color: ${({ theme }) => theme.primary};
+    font-size: 20px;
+    grid-template-columns: 1;
   }
 
   @media screen and (min-width: 1400px) {

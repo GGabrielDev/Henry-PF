@@ -3,39 +3,43 @@ import MenuUsuario from "./MenuUsuario";
 import styled from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";
 import Paisaje from "../../assets/imagenesSlider/49838.jpg";
+import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
 
 const General = () => {
   return (
     <GeneralContainer>
-      <MenuUsuario />
-      <GeneralContent>
-        <h1 className="general__perfil-title">Tu Pefil</h1>
-        <div className="general__info">
-          <h3 className="general__perfil-section">Tu Foto</h3>
-          <div className="general__img">
-            <div className="img__container">
-              <img src={Paisaje} alt="" />
+      <ThemeProvider theme={ThemesLanding}>
+        <MenuUsuario />
+        <GeneralContent>
+          <h1 className="general__perfil-title">Tu Pefil</h1>
+          <div className="general__info">
+            <h3 className="general__perfil-section">Tu Foto</h3>
+            <div className="general__img">
+              <div className="img__container">
+                <img src={Paisaje} alt="" />
+              </div>
+              <div className="botones">
+                <button className="subir__img">Subir Foto </button>
+                <button className="borrar__img">Borrar Foto</button>
+              </div>
             </div>
-            <div className="botones">
-              <button className="subir__img">Subir Foto </button>
-              <button className="borrar__img">Borrar Foto</button>
-            </div>
+            <h2 className="general__perfil-section">Información básica:</h2>
+
+            <h3 className="general__perfil-section-item">Nombre/s</h3>
+            <input type="text" className="general__input" />
+
+            <h3 className="general__perfil-section-item">Apellido/s</h3>
+            <input type="text" className="general__input" />
+
+            <h3 className="general__perfil-section-item">Email</h3>
+            <input type="text" className="general__input" />
+
+            <h3 className="general__perfil-section-item">Número Telefonico</h3>
+            <input type="text" className="general__input" />
           </div>
-          <h2 className="general__perfil-section">Información básica:</h2>
-
-          <h3 className="general__perfil-section-item">Nombre/s</h3>
-          <input type="text" className="general__input" />
-
-          <h3 className="general__perfil-section-item">Apellido/s</h3>
-          <input type="text" className="general__input" />
-
-          <h3 className="general__perfil-section-item">Email</h3>
-          <input type="text" className="general__input" />
-
-          <h3 className="general__perfil-section-item">Número Telefonico</h3>
-          <input type="text" className="general__input" />
-        </div>
-      </GeneralContent>
+        </GeneralContent>
+      </ThemeProvider>
     </GeneralContainer>
   );
 };
@@ -71,7 +75,7 @@ const GeneralContent = styled.div`
   }
 
   .img__container {
-    background-color: ${({theme})=>theme.border};
+    background-color: ${({ theme }) => theme.border};
     width: 150px;
     height: 150px;
     border-radius: 100%;
@@ -97,7 +101,7 @@ const GeneralContent = styled.div`
   .subir__img {
     background-color: ${({ theme }) => theme.primary};
     border: 1px solid ${({ theme }) => theme.border};
-    color:${({ theme }) => theme.light} ;
+    color: ${({ theme }) => theme.light};
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
@@ -111,7 +115,7 @@ const GeneralContent = styled.div`
 
   .borrar__img {
     background-color: ${({ theme }) => theme.primary};
-    color:${({ theme }) => theme.light} ;
+    color: ${({ theme }) => theme.light};
     border-radius: 5px;
     padding: 5px;
     border: 1px solid ${({ theme }) => theme.border};

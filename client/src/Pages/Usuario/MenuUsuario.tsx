@@ -1,53 +1,57 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  AiFillCreditCard,
   AiOutlineUser,
   AiOutlineArrowLeft,
+  AiOutlineForm,
 } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
+import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
 
 const MenuUsuario = () => {
   return (
-    <MenuUsuarioContainer>
-      <MenuUsuarioContent>
-        <NavLink to="/">
-          <div className="menu__back">
-            <AiOutlineArrowLeft className="user__icon-arrow" /> Volver
+    <ThemeProvider theme={ThemesLanding}>
+      <MenuUsuarioContainer>
+        <MenuUsuarioContent>
+          <NavLink to="/">
+            <div className="menu__back">
+              <AiOutlineArrowLeft className="user__icon-arrow" /> Volver
+            </div>
+          </NavLink>
+
+          <div className="menu__title">
+            Personal <AiOutlineUser className="user__icon " />
           </div>
-        </NavLink>
 
-        <div className="menu__title">
-          Personal <AiOutlineUser className="user__icon " />
-        </div>
-
-        <div className="menu__sections">
-          <NavLink to="/usuario/general" className="menu__sections-name">
-            <span>General</span>
-          </NavLink>
-          <NavLink to="/usuario/compras" className="menu__sections-name">
-            <span>Compras</span>
-          </NavLink>
-          <NavLink to="/usuario/favoritos" className="menu__sections-name">
-            <span>Favoritos</span>
-          </NavLink>
-        </div>
-        <div className="menu__title">
-          Medios de pago <AiFillCreditCard className="user__icon " />
-        </div>
-        <div className="menu__sections">
-          <NavLink to="/usuario/editar" className="menu__sections-name">
-            <span>Tarjeta</span>
-          </NavLink>
-          <NavLink to="/usuario/editar" className="menu__sections-name">
+          <div className="menu__sections">
+            <NavLink to="/usuario/general" className="menu__sections-name">
+              <span>General</span>
+            </NavLink>
+            <NavLink to="/usuario/compras" className="menu__sections-name">
+              <span>Compras</span>
+            </NavLink>
+            <NavLink to="/usuario/favoritos" className="menu__sections-name">
+              <span>Favoritos</span>
+            </NavLink>
+          </div>
+          <div className="menu__title">
+            Admin <AiOutlineForm className="user__icon " />
+          </div>
+          <div className="menu__sections">
+            <NavLink to="/usuario/editar" className="menu__sections-name">
+              <span>Mis Productos</span>
+            </NavLink>
+          </div>
+          {/* <NavLink to="/usuario/editar" className="menu__sections-name">
             <span>Mecador Pago</span>
-          </NavLink>
-          <NavLink to="/usuario/editar" className="menu__sections-name">
+            </NavLink>
+            <NavLink to="/usuario/editar" className="menu__sections-name">
             <span className="name__ultimate">Editar Métodos</span>
-          </NavLink>
-        </div>
-      </MenuUsuarioContent>
-    </MenuUsuarioContainer>
+          </NavLink> */}
+        </MenuUsuarioContent>
+      </MenuUsuarioContainer>
+    </ThemeProvider>
   );
 };
 

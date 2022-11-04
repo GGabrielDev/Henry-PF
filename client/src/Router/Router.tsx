@@ -23,6 +23,7 @@ const Router = () => {
       <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
 
       {/* rutas usuario */}
+
       <Route path="/usuario/*" element={<UserGeneral />} />
       <Route path="/usuario/compras" element={<UserCompras />} />
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />

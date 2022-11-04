@@ -2,100 +2,127 @@ import styled from "styled-components";
 import { useAppSelector } from "../../app/hooks";
 import { selectProducts } from "../../features/products/productSlice";
 import { CartItem } from "./CartItem";
-import {  useShoppingCart } from "./context/SoppingCartContext";
+import { useShoppingCart } from "./context/SoppingCartContext";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 type ShoppingCartProps = {
-    isOpen: boolean
-}
+  isOpen: boolean;
+};
 
-export default function SoppingCart({isOpen}: ShoppingCartProps){
-    const {closeCart, cartItems} = useShoppingCart()
-    const item = useAppSelector(selectProducts)
-    
-    
-    return (
-        <>
-        {isOpen?<ShoppingCart>
-            <ShoppingCartContainer >
-             
-            <div className="Header">
-                <h1>Cart</h1>
-                <span className="close" onClick={closeCart}>x</span>
-            </div>
-            <div className="info__carro">
-                {cartItems.map(item =>(
-                    <div className="info__carta">
+export default function SoppingCart({ isOpen }: ShoppingCartProps) {
+  const { closeCart, cartItems } = useShoppingCart();
+  const item = useAppSelector(selectProducts);
+
+  return (
+    <>
+      {isOpen ? (
+        <ShoppingCart>
+          <ShoppingCartContainer>
+            <div className="menu">
+              <div className="content" onClick={closeCart}>
+                <span className="close">
+                  <AiOutlineArrowLeft />
+                </span>
+                <h1 className="title__cart">Cart</h1>
+              </div>
+              <div className="info__carro">
+                {cartItems.map((item) => (
+                  <div className="info__carta">
                     <CartItem key={item.id} {...item} />
-                    </div>
-                ) )}
+                  </div>
+                ))}
+              </div>
+              <div className="info__total">
+                <div>Total:</div>
+                <div className="total">
+                  {cartItems.reduce((total, cartItem) => {
+                    const itemFind = item.find((e) => e.id === cartItem.id);
+                    return (
+                       total + (itemFind?.price_local || 0) * cartItem.quantity
+                    );
+                  }, 0)}
+                </div>
+              </div>
             </div>
-            <div className="info__total">
-                <div style={{fontSize:"40px", fontWeight:"600" }}>
-                    Total:
-                    </div>
-                    <div style={{fontSize:"35px", fontWeight:"600" }}>
-                     {cartItems.reduce((total, cartItem)=>{
-                        const itemFind = item.find(e => e.id === cartItem.id)
-                        return total + (itemFind?.price_local||0) * cartItem.quantity
-                    },0)}</div>
-            </div>
-            </ShoppingCartContainer>
-        </ShoppingCart>:''}
-        </>
-    ) 
+          </ShoppingCartContainer>
+        </ShoppingCart>
+      ) : (
+        ""
+      )}
+    </>
+  );
 }
 
 const ShoppingCart = styled.div`
-position:fixed;
-background-color: #111111bd;
-top:0;
-bottom: 0;
-left: 0;
-right: 0;
-display: flex;
+  display: flex;
+  z-index: 1000;
+`;
 
-
-`
 const ShoppingCartContainer = styled.div`
-    margin: auto;
-    width:900px;
-    border:rgba(0, 0, 0, 0.1);
-    height: auto;
-    background-color: white;
-    border-radius: 15px;
-    justify-content: space-evenly;
-    align-items: center;
-.Header{
-    display  :flex ;
-    justify-content: space-between;
-    font-size: 1.7rem;
-    padding: 8px;
+  z-index: 1000;
 
-  
-  
-}
-.info__carta{
-    display: flex;
-    justify-content: space-evenly;
-    margin-bottom: 10px;
-    align-items: center;
-}
-.info__carro{
-    display: flex;
-    flex-flow: column;
-    justify-content: space-evenly;
-}
+  .menu {
+    position: absolute;
+    width: 400px;
+    min-height: 100px;
+    background-color: #ffffff;
+    right: 0px;
+    top: 0;
+    border: 1px solid ${({ theme }) => theme.border};
+    transition: 0.6s all ease-in-out;
+    border-radius: 0 0 10px 10px;
+  }
 
-.close{
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-}
-.info__total{
-    border-radius: 5px;
-    align-items: center;
-    width: 80%;
-    background-color: rgba(0, 0, 0, 0.1);
-    height: auto;
+    transition: 0.4s;
+    padding: 5px;
+    &:hover {
+      color: ${({ theme }) => theme.primary};
+    }
+  }
+
+  .close {
     display: flex;
-    justify-content: space-evenly;
-}
-`
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-right: 5px;
+  }
+
+  .title__cart {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .info__carro {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .info__carta {
+    width: 95%;
+  }
+
+  .info__total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    color: ${({ theme }) => theme.primary};
+  }
+
+  .total {
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: 500px) {
+    .menu {
+      width: 100%;
+    }
+  }
+`;

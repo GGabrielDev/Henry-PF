@@ -36,7 +36,7 @@ const Ourclients = () => {
 
   const handleChange = (e: any) => {
     const productos = [];
-    const errores: [] = [];
+    const errores = [];
     const texto = e.target.value;
     if (category !== "DEFAULT") {
       for (let product of projectsData) {
@@ -57,7 +57,7 @@ const Ourclients = () => {
         if (nombre.includes(texto.toLowerCase())) {
           productos.push(product);
         } else {
-          productos.push("No");
+          errores.push("No");
         }
         setError(errores);
         setProjects(productos);
@@ -67,14 +67,17 @@ const Ourclients = () => {
 
   const handleCategory = (e: any) => {
     const productos = [];
+    const errores = [];
     setCategory(e.target.value);
     if (e.target.value !== "DEFAULT") {
       for (let product of projectsData) {
         let categoria = product.Category.toLowerCase();
         if (categoria.includes(e.target.value)) {
           productos.push(product);
+          errores.push(product);
         }
         setProjects(productos);
+        setError(errores);
       }
     } else {
       setProjects(projectsData);
@@ -133,8 +136,8 @@ const Ourclients = () => {
         </div>
 
         <div className="gridcards">
-          {error[0] == "No" ? (
-            <h1>No se encontro nada</h1>
+          {error[5] == "No" ? (
+            <h4 className="NoHayData">No se encontraron resultados</h4>
           ) : (
             projects.map((item: any) => {
               return (
@@ -281,6 +284,7 @@ const Ourclientss = styled.div`
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
     grid-auto-rows: minmax(100px, auto);
+    position: relative;
   }
 
   .cardclient {
@@ -344,6 +348,14 @@ const Ourclientss = styled.div`
       width: 100%;
       border-radius: 10px;
     }
+  }
+
+  .NoHayData {
+    position: absolute;
+    width: 100%;
+    color: ${({ theme }) => theme.primary};
+    font-size: 20px;
+    grid-template-columns: 1;
   }
 
   @media screen and (min-width: 1400px) {

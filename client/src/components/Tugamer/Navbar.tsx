@@ -3,19 +3,23 @@ import styled from "styled-components";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useShoppingCart } from "./context/SoppingCartContext";
+import {useAuth0} from "@auth0/auth0-react"
 
 const Navbar = () => {
   const {openCart, cartQuantity} =useShoppingCart();
-
+  const {loginWithRedirect, logout} = useAuth0();
+  const {isAuthenticated} = useAuth0();
+  
   return (
     <NavbarContainer>
       <Header>
         <Headertop>
           <Infotop>
             <div className="infotop-item">
-              <Link className="infotop-item-ini" to="/auth/login">
-                Iniciar sesion
-              </Link>
+            {isAuthenticated ? <div className= "is" onClick={() => logout()}> Salir de sesión </div>   
+            : 
+            <div className= "is" onClick={() => loginWithRedirect()}> Iniciar sesion </div>      
+            }
             </div>
             <div className="infotop-item">Client service</div>
             <div className="infotop-item">FAQ</div>
@@ -128,6 +132,9 @@ const Infotop = styled.div`
 
   .infotop-item-ini {
     color: ${({ theme }) => theme.dark};
+  }
+  .is{
+    cursor: pointer;
   }
 
   @media screen and (max-width: 500px) {

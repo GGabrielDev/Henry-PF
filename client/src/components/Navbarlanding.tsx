@@ -6,10 +6,11 @@ import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose, IoIosArrowForward } from "react-icons/io";
 import User from "../assets/imagenesSlider/49838.jpg";
+import {useAuth0} from "@auth0/auth0-react"
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
-
+  const {logout} = useAuth0();
   const handleChange = () => {
     setMenu(!menu);
   };
@@ -80,7 +81,7 @@ const Navbarlanding = () => {
 
           <NavLink className="section-re" to="#home">
             <div className="section__cajita">
-              <span className="section__name">Logout</span>
+              <span onClick={() => logout()} className="section__name">Logout</span>
               <span className="icon-re">
                 <IoIosArrowForward />
               </span>

@@ -10,7 +10,8 @@ import {useAuth0} from "@auth0/auth0-react"
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
-  const {logout} = useAuth0();
+  const {logout,isAuthenticated, loginWithRedirect} = useAuth0();
+  
   const handleChange = () => {
     setMenu(!menu);
   };
@@ -81,7 +82,10 @@ const Navbarlanding = () => {
 
           <NavLink className="section-re" to="#home">
             <div className="section__cajita">
-              <span onClick={() => logout()} className="section__name">Logout</span>
+            {isAuthenticated ? <span onClick={() => logout()} className="section__name">Logout</span>
+            :
+            <span onClick={() => loginWithRedirect()} className="section__name">Login</span>
+            }
               <span className="icon-re">
                 <IoIosArrowForward />
               </span>

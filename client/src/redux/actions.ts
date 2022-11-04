@@ -25,3 +25,4 @@ export const createProduct = (payload: CreateProductResponse) => async () =>{
         console.log(error)
     }
 }
+

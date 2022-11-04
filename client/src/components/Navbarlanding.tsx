@@ -10,7 +10,7 @@ import {useAuth0} from "@auth0/auth0-react"
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
-  const {logout,isAuthenticated, loginWithRedirect} = useAuth0();
+  const {user, logout,isAuthenticated, loginWithRedirect} = useAuth0();
   
   const handleChange = () => {
     setMenu(!menu);
@@ -58,7 +58,10 @@ const Navbarlanding = () => {
 
           <div className="img__container">
             <div className="img__circle">
-              <img src={User} alt="" />
+            {isAuthenticated ? <img src={user?.picture} alt="picture"/>           
+              :
+              <img src={User} alt=""/>
+              }
             </div>
             <button className="edit">Editar Perfil</button>
           </div>

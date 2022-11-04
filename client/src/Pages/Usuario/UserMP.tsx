@@ -1,10 +1,11 @@
 import React from "react";
 import MenuUsuario from "./MenuUsuario";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import Perfil from "../assets/imagenesSlider/profile.png";
 import Paisaje from "../assets/imagenesSlider/49838.jpg";
-
+import {useAuth0} from "@auth0/auth0-react"
 const General = () => {
+const {user, isAuthenticated} = useAuth0();
   return (
     <GeneralContainer>
       <MenuUsuario />
@@ -14,7 +15,10 @@ const General = () => {
           <h3 className="general__perfil-section">Tu Foto</h3>
           <div className="general__img">
             <div className="img__container">
-              <img src={Paisaje} alt="" />
+            {isAuthenticated ? <img src={user?.picture} alt="picture"/>           
+              :
+              <img src={Paisaje} alt=""/>
+              }
             </div>
             <div className="botones">
               <button className="subir__img">Subir Foto </button>
@@ -24,13 +28,13 @@ const General = () => {
           <h2 className="general__perfil-section">Información básica:</h2>
 
           <h3 className="general__perfil-section-item">Nombre/s</h3>
-          <input type="text" className="general__input" />
+          <input type="text" className="general__input" value={user?.given_name}/>
 
           <h3 className="general__perfil-section-item">Apellido/s</h3>
-          <input type="text" className="general__input" />
+          <input type="text" className="general__input" value={user?.given_name}/>
 
           <h3 className="general__perfil-section-item">Email</h3>
-          <input type="text" className="general__input" />
+          <input type="text" className="general__input" value={user?.email}/>
 
           <h3 className="general__perfil-section-item">Número Telefonico</h3>
           <input type="text" className="general__input" />

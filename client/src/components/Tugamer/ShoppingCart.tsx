@@ -35,7 +35,7 @@ export default function SoppingCart({isOpen}: ShoppingCartProps){
                     </div>
                     <div style={{fontSize:"35px", fontWeight:"600" }}>
                      {cartItems.reduce((total, cartItem)=>{
-                        const itemFind = item.find(e => e.id === cartItem.id)
+                        const itemFind = item?.find(e => e.id === cartItem.id)
                         return total + (itemFind?.price_local||0) * cartItem.quantity
                     },0)}</div>
             </div>

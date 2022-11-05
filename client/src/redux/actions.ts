@@ -1,6 +1,7 @@
 import axios from 'axios';
 export const GET_PRODUCTS='GET_PRODUCTS';
 export const FILTER_PRICE='FILTER_PRICE'
+export const SEARCH_PRODUCT='SEARCH_PRODUCT'
 
 type CreateProductResponse={
     name: string,
@@ -25,3 +26,11 @@ export const createProduct = (payload: CreateProductResponse) => async () =>{
         console.log(error)
     }
 }
+
+export const searchCountr = (name:any) => async (dispatch:any) => {
+    const res = await axios.get(`http://localhost:3001/products?name=${name}`);
+    dispatch({
+      type: SEARCH_PRODUCT,
+      payload: res.data,
+    });
+  };

@@ -12,7 +12,7 @@ type CartItemProps={
 export function CartItem({id, quantity}:CartItemProps){
     const {removeFromCart}=useShoppingCart()
     const item = useAppSelector(selectProducts)
-    const itemFind= item.find(e => e.id === id)
+    const itemFind= item?.find(e => e.id === id)
     if(itemFind == null) return null
 
     return(

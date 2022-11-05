@@ -2,46 +2,54 @@ import React from "react";
 import MenuUsuario from "./MenuUsuario";
 import styled, { useTheme } from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";
-import Paisaje from "../../assets/imagenesSlider/49838.jpg";
-import {useAuth0} from "@auth0/auth0-react"
+import UserDefault from "../../assets/imagenesSlider/defaultuser.jpg";
+import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
+import { useAuth0 } from "@auth0/auth0-react";
+
+
 
 const General = () => {
   const {user, isAuthenticated} = useAuth0();
+
+
   return (
     <GeneralContainer>
-      <MenuUsuario />
-      <GeneralContent>
-        <h1 className="general__perfil-title">Tu Pefil</h1>
-        <div className="general__info">
-          <h3 className="general__perfil-section">Tu Foto</h3>
-          <div className="general__img">
-            <div className="img__container">
+      <ThemeProvider theme={ThemesLanding}>
+        <MenuUsuario />
+        <GeneralContent>
+          <h1 className="general__perfil-title">Tu Pefil</h1>
+          <div className="general__info">
+            <h3 className="general__perfil-section">Tu Foto</h3>
+            <div className="general__img">
+              <div className="img__container">
               {isAuthenticated ? <img src={user?.picture} alt="picture"/>           
               :
-              <img src={Paisaje} alt=""/>
+              <img src={UserDefault} alt=""/>
               }
-              
+              </div>
+              <div className="botones">
+                <button className="subir__img">Subir Foto </button>
+                <button className="borrar__img">Borrar Foto</button>
+              </div>
             </div>
-            <div className="botones">
-              <button className="subir__img">Subir Foto </button>
-              <button className="borrar__img">Borrar Foto</button>
-            </div>
+            <h2 className="general__perfil-section">Información básica:</h2>
+
+            <h3 className="general__perfil-section-item">Nombre/s</h3>
+            <input type="text" className="general__input" value={user?.given_name}/>
+
+            <h3 className="general__perfil-section-item">Apellido/s</h3>
+            <input type="text" className="general__input" value={user?.family_name} />
+
+            <h3 className="general__perfil-section-item">Email</h3>
+            <input type="text" className="general__input" value={user?.email} />
+
+            <h3 className="general__perfil-section-item">Número Telefonico</h3>            
+            <input type="text" className="general__input"/>
+
           </div>
-          <h2 className="general__perfil-section">Información básica:</h2>
-
-          <h3 className="general__perfil-section-item">Nombre/s</h3>
-          <input type="text" className="general__input" value= {user?.given_name} />
-
-          <h3 className="general__perfil-section-item">Apellido/s</h3>
-          <input type="text" className="general__input" value={user?.family_name} />
-
-          <h3 className="general__perfil-section-item">Email</h3>
-          <input type="text" className="general__input" value={user?.email} />
-
-          <h3 className="general__perfil-section-item">Numero de Telefono</h3>
-          <input type="text" className="general__input" />
-        </div>
-      </GeneralContent>
+        </GeneralContent>
+      </ThemeProvider>
     </GeneralContainer>
   );
 };
@@ -77,7 +85,7 @@ const GeneralContent = styled.div`
   }
 
   .img__container {
-    background-color: ${({theme})=>theme.border};
+    background-color: ${({ theme }) => theme.border};
     width: 150px;
     height: 150px;
     border-radius: 100%;
@@ -103,7 +111,7 @@ const GeneralContent = styled.div`
   .subir__img {
     background-color: ${({ theme }) => theme.primary};
     border: 1px solid ${({ theme }) => theme.border};
-    color:${({ theme }) => theme.light} ;
+    color: ${({ theme }) => theme.light};
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
@@ -117,7 +125,7 @@ const GeneralContent = styled.div`
 
   .borrar__img {
     background-color: ${({ theme }) => theme.primary};
-    color:${({ theme }) => theme.light} ;
+    color: ${({ theme }) => theme.light};
     border-radius: 5px;
     padding: 5px;
     border: 1px solid ${({ theme }) => theme.border};

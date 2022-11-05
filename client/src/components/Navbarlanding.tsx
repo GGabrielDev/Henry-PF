@@ -6,7 +6,8 @@ import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose, IoIosArrowForward } from "react-icons/io";
 import User from "../assets/imagenesSlider/49838.jpg";
-import {useAuth0} from "@auth0/auth0-react"
+import UserDefault from "../assets/imagenesSlider/defaultuser.jpg"
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
@@ -38,9 +39,16 @@ const Navbarlanding = () => {
         </div>
 
         <div className="nav__sections-2">
-          {/* <NavLink className="section button" to="#contact">
-            <HiOutlineUserCircle />
-          </NavLink> */}
+          
+          {isAuthenticated ? <NavLink className="section button" to="/usuario"> 
+                                        <HiOutlineUserCircle />                            
+                             </NavLink>
+          :  
+          <NavLink className="section button"  to=""> 
+          <HiOutlineUserCircle onClick={() => loginWithRedirect()}/>                  
+          </NavLink>             
+          }
+         
 
           <NavLink
             onClick={handleChange}
@@ -60,7 +68,7 @@ const Navbarlanding = () => {
             <div className="img__circle">
             {isAuthenticated ? <img src={user?.picture} alt="picture"/>           
               :
-              <img src={User} alt=""/>
+              <img src={UserDefault} alt=""/>
               }
             </div>
             <button className="edit">Editar Perfil</button>
@@ -85,10 +93,18 @@ const Navbarlanding = () => {
 
           <NavLink className="section-re" to="#home">
             <div className="section__cajita">
-            {isAuthenticated ? <span onClick={() => logout()} className="section__name">Logout</span>
-            :
-            <span onClick={() => loginWithRedirect()} className="section__name">Login</span>
-            }
+              {isAuthenticated ? (
+                <span onClick={() => logout()} className="section__name">
+                  Logout
+                </span>
+              ) : (
+                <span
+                  onClick={() => loginWithRedirect()}
+                  className="section__name"
+                >
+                  Login
+                </span>
+              )}
               <span className="icon-re">
                 <IoIosArrowForward />
               </span>

@@ -7,6 +7,4 @@ export const ThemesLanding = {
   border: "rgba(0, 0, 0, 0.1)" /* COLOR CLARITO PARA LOS BORDES */,
   error: "#ff0000",
   Whatsapp: "#77b8a6",
-  title: "20px",
-  subtitle: "17px",
 };

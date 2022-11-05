@@ -12,13 +12,13 @@ type CartItemProps={
 export function CartItem({id, quantity}:CartItemProps){
     const {removeFromCart}=useShoppingCart()
     const item = useAppSelector(selectProducts)
-    const itemFind= item.find(e => e.id === id)
+    const itemFind= item?item.find(e => e.id === id):null
     if(itemFind == null) return null
 
     return(
-
+        
         <>
-            <img src={image} style={{width:"205px", height:"105px", objectFit:"cover", borderRadius:"7px", border:"0.5px solid rgba(0, 0, 0, 0.1)"}} alt=''/>
+            <img src={itemFind.image} style={{width:"205px", height:"105px", objectFit:"cover", borderRadius:"7px", border:"0.5px solid rgba(0, 0, 0, 0.1)"}} alt=''/>
             <div style={{fontSize:"20px", fontWeight:"500" }}>
                 {itemFind.name}{" "}
                 {quantity >1 && (

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
+import { useState, ChangeEvent, SyntheticEvent } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
 import Validate, { formType, errType } from "../../components/validate";
@@ -8,6 +8,7 @@ import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
 
 const Publicar = () => {
+  
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState('');
   
@@ -70,6 +71,7 @@ const Publicar = () => {
     } else {
       dispatch(createProduct(input))
     }
+
   };
 
 

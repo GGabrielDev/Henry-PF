@@ -1,56 +1,33 @@
-import React, { ChangeEvent,useState } from "react";
+import React, {ChangeEvent, useState} from "react";
 import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
-import { BsFilter, BsSortNumericDown } from "react-icons/bs";
+import {BsFilter,BsSortNumericDown} from "react-icons/bs"
 import { useAppDispatch } from "../../../../app/hooks";
 
-import { filterAsc } from "../../../../features/products/productSlice";
+import { filterAsc, searchProduct } from "../../../../features/products/productSlice";
 
 const Filtros = () => {
+  const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
-  const[search, setSearch] = useState('') 
-  const handleAsc = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    dispatch(filterAsc(e.target.value));
-
-
-  };
-
-  const handleInputChange = function (e: any) {
+  const handleAsc = (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>)=>{
+    dispatch(filterAsc(e.target.value))
+  }
+  const handleInputChange = function (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) {
+    e.preventDefault()
     setSearch(e.target.value);
     if (search) {
-      // dispatch(searchCountr(search));
+      dispatch(searchProduct(search));
     }
   };
   return (
     <FiltrosContainer>
-      <button className="buttonfilter">
-        <BsFilter />
-      </button>
+      <button className="buttonfilter"><BsFilter/></button>
       <div className="inputcontainerfilet">
-        {/* <select name="filtervalor" defaultValue={"DEFAULT"}>
-          <option value="DEFAULT" disabled hidden>
-            All
-          </option>
-          <option value="si">Motherboard</option>
-          <option value="no">Placa de video</option>
-          <option value="no">Monitores</option>
-        </select> */}
-        <input
-          type="text"
-          name="name"
-          placeholder="Producto "
-          onChange={handleInputChange}
-          value={search}
-          className="input"
-        />
+      <input placeholder="Productos" type='text' name='name'  value={search} className='search' onChange={handleInputChange}/>
       </div>
       <button className="buttonfilter">
-        <select onChange={(e) => handleAsc(e)} name="filtervalor" id="">
-          <option value="all" disabled hidden>
-            Sort by:
-          </option>
+        <select onChange={(e)=>handleAsc(e)} name="filtervalor" id="">
+          <option value="all"  disabled hidden>Sort by:</option>
           <option value="des">Mayor valor</option>
           <option value="asc">Menor valor</option>
         </select>
@@ -67,7 +44,7 @@ const FiltrosContainer = styled.div`
   justify-content: space-between;
   padding: 20px 100px;
 
-  .buttonfilter {
+  .buttonfilter{
     width: 130px;
     background-color: transparent;
     border: none;
@@ -76,52 +53,59 @@ const FiltrosContainer = styled.div`
 
     color: ${({ theme }) => theme.dark};
     font-size: 30px;
-    svg {
+    svg{
       cursor: pointer;
     }
+
   }
 
-  .inputcontainerfilet {
+  .inputcontainerfilet{
     display: flex;
     justify-content: center;
     align-items: center;
 
-    select {
+    select{
+      
       margin: 0 10px;
     }
   }
 
-  select {
-    background-color: ${({ theme }) => theme.tertiary};
-    border: 0px;
-    outline: none;
-    width: 200px;
-    height: 30px;
-    padding: 0 10px;
-  }
+  select{
+      background-color:${({ theme }) => theme.tertiary};
+      border: 0px;
+      outline: none;
+      width: 200px;
+      height: 30px;
+      padding: 0 10px;
+      
 
-  @media screen and (max-width: 925px) {
-    padding: 20px 20px;
-    .inputcontainerfilet {
-      width: 100%;
+    }
 
-      select {
+    @media screen and (max-width: 925px){
+      padding: 20px 20px;
+      .inputcontainerfilet{
         width: 100%;
+
+        select{
+          width: 100%;
+        }
+      }
+
+      .buttonfilter{
+        justify-content: center;
       }
     }
 
-    .buttonfilter {
-      justify-content: center;
-    }
-  }
+    @media screen and (max-width: 400px){
+      .buttonfilter{
 
-  @media screen and (max-width: 400px) {
-    .buttonfilter {
-      width: 120px;
+        width: 120px;
 
-      select {
-        width: 100%;
+        select{
+          width: 100%;
+        }
       }
     }
-  }
+
+
 `;

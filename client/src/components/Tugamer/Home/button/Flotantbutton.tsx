@@ -5,19 +5,45 @@ import { useShoppingCart } from '../../context/SoppingCartContext';
 import { useAppSelector } from '../../../../app/hooks';
 import { selectProducts } from '../../../../features/products/productSlice';
 
+
+const numero='+573053721294'
 const Flotantbutton = () => {
     const products = useAppSelector(selectProducts);
-    const { getItemQuantity, incrementCartQuantity, decrementCartQuantity} = useShoppingCart();
+    const item = useAppSelector(selectProducts);
+    const { cartQuantity, cartItems } = useShoppingCart();
+    const carro = [];
+    for (let i = 0; i < item?.length; i++) {
+      for (let j = 0; j < cartItems.length; j++) {
+        if(item[i].id===cartItems[j].id){
+          carro.push(item[i])
+        }
+        
+      }
+      
+    }
     
+    let productosParaWsp =carro? carro.map(
+        (producto) => `- ${producto.name}, $${producto.price_local}`
+      ):null;
+      //let datosCliente = user.map((e:any) => `-Nombre: ${e.nombre} \n -Apellido: ${e.apellido}`)
+      const productosConFormatoAmigable = productosParaWsp?.join("\n");
   return (
+    <a
+    href={
+      `https://api.whatsapp.com/send?phone=${numero}&text=Hola%E2%98%BA%0D%0A%F0%9F%93%82Me+llamo%3A%0D%0ACarlos%20Arturo%0D%0AEstoy+interesado+en+los+siguientes+productos+de+la+pagina%F0%9F%94%A5%3A` +
+      " " + 
+      productosConFormatoAmigable
+    }
+  >
     <Flotantbuttons>
         <div className='botonflotante'>
             <div className="flotantelogo">
             <AiOutlineWhatsApp/>
             </div>
-            <div className="fontantetexto">Realizar compra </div>
+            <div className="fontantetexto">Realizar compra {'('}{cartQuantity}{')'}</div>
         </div>
     </Flotantbuttons>
+    </a>
   )
 }
 

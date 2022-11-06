@@ -7,8 +7,8 @@ export type ProductType = {
   stock: number;
   price_local: number;
   description: string;
-  price_dolar: number | null | undefined;
-  image: string | null | undefined;
+  price_dolar: number | undefined;
+  image: string |  undefined;
   suspended: boolean;
   size: string | null | undefined;
 };
@@ -17,12 +17,14 @@ export interface SliceState {
   products: ProductType[];
   productsAll: ProductType[];
   details: ProductType | {};
+  search: ProductType[];
 }
 
 export const initialState: SliceState = {
   products: [],
   productsAll: [],
   details: {},
+  search:[]
 };
 
 export const getProducts = createAsyncThunk("product/getProducts", async () => {
@@ -41,7 +43,20 @@ export const getProductId = createAsyncThunk(
   async (productId: string | undefined ) => {
     try {
       const res = await axios.get(`http://localhost:3001/products/${productId}`)
+      
       return res.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+export const searchProduct = createAsyncThunk(
+  "product/searchProduct",
+  async (name: string | undefined ) => {
+    try {
+      const res = await axios.get(`http://localhost:3001/products?name=${name}`)
+      console.log(res.data)
+      return res.data.result
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +96,11 @@ export const productSlice = createSlice({
         (state, action: PayloadAction<ProductType>) => {
           state.details = action.payload;
         }
-      );
+      )
+      .addCase(searchProduct.fulfilled,
+        (state, action:PayloadAction<ProductType[]>)=>{
+          state.productsAll = action.payload
+        });
   },
 });
 

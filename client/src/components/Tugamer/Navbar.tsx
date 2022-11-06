@@ -3,23 +3,30 @@ import styled from "styled-components";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useShoppingCart } from "./context/SoppingCartContext";
-import {useAuth0} from "@auth0/auth0-react"
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
-  const {openCart, cartQuantity} =useShoppingCart();
-  const {loginWithRedirect, logout} = useAuth0();
-  const {isAuthenticated} = useAuth0();
-  
+  const { openCart, cartQuantity } = useShoppingCart();
+  const { loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated } = useAuth0();
+
   return (
     <NavbarContainer>
       <Header>
         <Headertop>
           <Infotop>
             <div className="infotop-item">
-            {isAuthenticated ? <div className= "is" onClick={() => logout()}> Salir de sesión </div>   
-            : 
-            <div className= "is" onClick={() => loginWithRedirect()}> Iniciar sesion </div>      
-            }
+              {isAuthenticated ? (
+                <div className="is" onClick={() => logout()}>
+                  {" "}
+                  Salir de sesión{" "}
+                </div>
+              ) : (
+                <div className="is" onClick={() => loginWithRedirect()}>
+                  {" "}
+                  Iniciar sesion{" "}
+                </div>
+              )}
             </div>
             <div className="infotop-item">Client service</div>
             <div className="infotop-item">FAQ</div>
@@ -27,7 +34,7 @@ const Navbar = () => {
           </Infotop>
         </Headertop>
         <Headermiddle>
-          <Link to="/">
+          <Link to="/tugamer">
             <Logo>TuGamer</Logo>
           </Link>
 
@@ -41,7 +48,7 @@ const Navbar = () => {
             </div>
 
             <div className="userinfo-item">
-              <button onClick={openCart}>
+              <button className="button__cart" onClick={openCart}>
                 <BiShoppingBag /> {cartQuantity}
               </button>
             </div>
@@ -65,6 +72,8 @@ export default Navbar;
 
 const NavbarContainer = styled.div`
   width: 100%;
+
+  position: relative;
 
   .userinfo-item {
     cursor: pointer;
@@ -130,10 +139,14 @@ const Infotop = styled.div`
     font-size: 12px;
   }
 
+  .button__cart {
+    position: relative;
+  }
+
   .infotop-item-ini {
     color: ${({ theme }) => theme.dark};
   }
-  .is{
+  .is {
     cursor: pointer;
   }
 

@@ -8,7 +8,7 @@ export type ProductType = {
   price_local: number;
   description: string;
   price_dolar: number | null | undefined;
-  image: string |  undefined;
+  image: string | undefined;
   suspended: boolean;
   size: string | null | undefined;
 };
@@ -24,27 +24,28 @@ export const initialState: SliceState = {
   products: [],
   productsAll: [],
   details: {},
-  search:[]
+  search: [],
 };
 
 export const getProducts = createAsyncThunk("product/getProducts", async () => {
   try {
-      const res = await axios.get("http://localhost:3001/products");
-      console.log(res.data.result)
-    
-      return res.data.result
-    
+    const res = await axios.get("http://localhost:3001/products");
+    console.log(res.data.result);
+
+    return res.data.result;
   } catch (error) {
     console.log(error);
   }
 });
 export const getProductId = createAsyncThunk(
   "product/getProductId",
-  async (productId: string | undefined ) => {
+  async (productId: string | undefined) => {
     try {
-      const res = await axios.get(`http://localhost:3001/products/${productId}`)
-      
-      return res.data
+      const res = await axios.get(
+        `http://localhost:3001/products/${productId}`
+      );
+
+      return res.data;
     } catch (error) {
       console.log(error);
     }
@@ -52,11 +53,13 @@ export const getProductId = createAsyncThunk(
 );
 export const searchProduct = createAsyncThunk(
   "product/searchProduct",
-  async (name: string | undefined ) => {
+  async (name: string | undefined) => {
     try {
-      const res = await axios.get(`http://localhost:3001/products?name=${name}`)
-      console.log(res.data)
-      return res.data.result
+      const res = await axios.get(
+        `http://localhost:3001/products?name=${name}`
+      );
+      console.log(res.data);
+      return res.data.result;
     } catch (error) {
       console.log(error);
     }
@@ -84,11 +87,11 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(
+      .addCase(
         getProducts.fulfilled,
         (state, action: PayloadAction<ProductType[]>) => {
-          state.products = action.payload;
-          state.productsAll = action.payload;
+          state.products = action.payload || [];
+          state.productsAll = action.payload || [];
         }
       )
       .addCase(
@@ -97,10 +100,12 @@ export const productSlice = createSlice({
           state.details = action.payload;
         }
       )
-      .addCase(searchProduct.fulfilled,
-        (state, action:PayloadAction<ProductType[]>)=>{
-          state.productsAll = action.payload
-        });
+      .addCase(
+        searchProduct.fulfilled,
+        (state, action: PayloadAction<ProductType[]>) => {
+          state.productsAll = action.payload || [];
+        }
+      );
   },
 });
 

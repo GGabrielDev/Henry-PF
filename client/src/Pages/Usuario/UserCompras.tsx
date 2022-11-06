@@ -5,61 +5,65 @@ import Imagen from "../../assets/imagenesSlider/luis perfumes.jpg";
 import Imagen2 from "../../assets/imagenesSlider/5fa8fb32d99eb.jpeg";
 import Imagen3 from "../../assets/imagenesSlider/hamburguesas.jpg";
 import { Link } from "react-router-dom";
+import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
 
 const General = () => {
   return (
     <GeneralContainer>
-      <MenuUsuario />
-      <GeneralContent>
-        <h1 className="general__perfil-title">Tus Compras</h1>
-        <div className="compra__card">
-          <div className="img__compra__compra-container">
-            <img className="img__compra__compra" src={Imagen} alt="" />
+      <ThemeProvider theme={ThemesLanding}>
+        <MenuUsuario />
+        <GeneralContent>
+          <h1 className="general__perfil-title">Tus Compras</h1>
+          <div className="compra__card">
+            <div className="img__compra__compra-container">
+              <img className="img__compra__compra" src={Imagen} alt="" />
+            </div>
+            <div className="compra__card__info">
+              <p className="compra__card__title">Luis Perfumes</p>
+              <p className="compra__card__info2">
+                13/07/2022 Pago por mercado pago
+              </p>
+              <p className="compra__card__info3">Perfume Antonio Banderas</p>
+              <Link to="/usuario/compras/detalle">
+                <button className="compra__card__info4">Ver mas</button>
+              </Link>
+            </div>
           </div>
-          <div className="compra__card__info">
-            <p className="compra__card__title">Luis Perfumes</p>
-            <p className="compra__card__info2">
-              13/07/2022 Pago por mercado pago
-            </p>
-            <p className="compra__card__info3">Perfume Antonio Banderas</p>
-            <Link to="/usuario/compras/detalle">
-              <button className="compra__card__info4">Ver mas</button>
-            </Link>
-          </div>
-        </div>
 
-        <div className="compra__card">
-          <div className="img__compra__compra-container">
-            <img className="img__compra__compra" src={Imagen2} alt="" />
+          <div className="compra__card">
+            <div className="img__compra__compra-container">
+              <img className="img__compra__compra" src={Imagen2} alt="" />
+            </div>
+            <div className="compra__card__info">
+              <p className="compra__card__title">Jose Zapateria</p>
+              <p className="compra__card__info2">06/11/2022 Pago en efectivo</p>
+              <p className="compra__card__info3">
+                Zapatillas replicas Nike Jordan
+              </p>
+              <Link to="/usuario/compras/detalle">
+                <button className="compra__card__info4">Ver mas</button>
+              </Link>
+            </div>
           </div>
-          <div className="compra__card__info">
-            <p className="compra__card__title">Jose Zapateria</p>
-            <p className="compra__card__info2">06/11/2022 Pago en efectivo</p>
-            <p className="compra__card__info3">
-              Zapatillas replicas Nike Jordan
-            </p>
-            <Link to="/usuario/compras/detalle">
-              <button className="compra__card__info4">Ver mas</button>
-            </Link>
-          </div>
-        </div>
 
-        <div className="compra__card">
-          <div className="img__compra__compra-container">
-            <img className="img__compra__compra" src={Imagen3} alt="" />
+          <div className="compra__card">
+            <div className="img__compra__compra-container">
+              <img className="img__compra__compra" src={Imagen3} alt="" />
+            </div>
+            <div className="compra__card__info">
+              <p className="compra__card__title">Andrés Hamburguesas</p>
+              <p className="compra__card__info2">21/05/2022 Pago con tarjeta</p>
+              <p className="compra__card__info3">
+                Hamburguesa colombiana con extra queso
+              </p>
+              <Link to="/usuario/compras/detalle">
+                <button className="compra__card__info4">Ver mas</button>
+              </Link>
+            </div>
           </div>
-          <div className="compra__card__info">
-            <p className="compra__card__title">Andrés Hamburguesas</p>
-            <p className="compra__card__info2">21/05/2022 Pago con tarjeta</p>
-            <p className="compra__card__info3">
-              Hamburguesa colombiana con extra queso
-            </p>
-            <Link to="/usuario/compras/detalle">
-              <button className="compra__card__info4">Ver mas</button>
-            </Link>
-          </div>
-        </div>
-      </GeneralContent>
+        </GeneralContent>
+      </ThemeProvider>
     </GeneralContainer>
   );
 };

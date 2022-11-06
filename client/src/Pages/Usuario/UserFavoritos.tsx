@@ -6,66 +6,70 @@ import Imagen2 from "../../assets/imagenesSlider/5fa8fb32d99eb.jpeg";
 import Imagen3 from "../../assets/imagenesSlider/hamburguesas.jpg";
 import { MdFavorite } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
+import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
 
 const General = () => {
   return (
     <GeneralContainer>
       <MenuUsuario />
-      <GeneralContent>
-        <h1 className="general__perfil-title">Tus Productos Favoritos</h1>
-        <div className="compra__card">
-          <div className="img__compra__compra-container">
-            <img className="img__compra__compra" src={Imagen} alt="" />
-          </div>
-          <div className="compra__card__info">
-            <p className="compra__card__title">Luis Perfumes</p>
+      <ThemeProvider theme={ThemesLanding}>
+        <GeneralContent>
+          <h1 className="general__perfil-title">Tus Productos Favoritos</h1>
+          <div className="compra__card">
+            <div className="img__compra__compra-container">
+              <img className="img__compra__compra" src={Imagen} alt="" />
+            </div>
+            <div className="compra__card__info">
+              <p className="compra__card__title">Luis Perfumes</p>
 
-            <p className="compra__card__info3">Perfume Antonio Banderas</p>
+              <p className="compra__card__info3">Perfume Antonio Banderas</p>
+            </div>
+            <div className="delete__container">
+              <a className="comprar">Comprar</a>
+              <h3 className="det_del">
+                <AiOutlineClose />
+              </h3>
+            </div>
           </div>
-          <div className="delete__container">
-            <a className="comprar">Comprar</a>
-            <h3 className="det_del">
-              <AiOutlineClose />
-            </h3>
-          </div>
-        </div>
 
-        <div className="compra__card">
-          <div className="img__compra__compra-container">
-            <img className="img__compra__compra" src={Imagen2} alt="" />
+          <div className="compra__card">
+            <div className="img__compra__compra-container">
+              <img className="img__compra__compra" src={Imagen2} alt="" />
+            </div>
+            <div className="compra__card__info">
+              <p className="compra__card__title">Jose Zapateria</p>
+              <p className="compra__card__info3">
+                Zapatillas replicas Nike Jordan
+              </p>
+            </div>
+            <div className="delete__container">
+              <a className="comprar">Comprar</a>
+              <h3 className="det_del">
+                <AiOutlineClose />
+              </h3>
+            </div>
           </div>
-          <div className="compra__card__info">
-            <p className="compra__card__title">Jose Zapateria</p>
-            <p className="compra__card__info3">
-              Zapatillas replicas Nike Jordan
-            </p>
-          </div>
-          <div className="delete__container">
-            <a className="comprar">Comprar</a>
-            <h3 className="det_del">
-              <AiOutlineClose />
-            </h3>
-          </div>
-        </div>
 
-        <div className="compra__card">
-          <div className="img__compra__compra-container">
-            <img className="img__compra__compra" src={Imagen3} alt="" />
+          <div className="compra__card">
+            <div className="img__compra__compra-container">
+              <img className="img__compra__compra" src={Imagen3} alt="" />
+            </div>
+            <div className="compra__card__info">
+              <p className="compra__card__title">Andrés Hamburguesas</p>
+              <p className="compra__card__info3">
+                Hamburguesa colombiana con extra queso
+              </p>
+            </div>
+            <div className="delete__container">
+              <a className="comprar">Comprar</a>
+              <h3 className="det_del">
+                <AiOutlineClose />
+              </h3>
+            </div>
           </div>
-          <div className="compra__card__info">
-            <p className="compra__card__title">Andrés Hamburguesas</p>
-            <p className="compra__card__info3">
-              Hamburguesa colombiana con extra queso
-            </p>
-          </div>
-          <div className="delete__container">
-            <a className="comprar">Comprar</a>
-            <h3 className="det_del">
-              <AiOutlineClose />
-            </h3>
-          </div>
-        </div>
-      </GeneralContent>
+        </GeneralContent>
+      </ThemeProvider>
     </GeneralContainer>
   );
 };

@@ -2,79 +2,85 @@ import styled from "styled-components";
 import Imagen3 from "../../assets/imagenesSlider/hamburguesas.jpg";
 import vendedor from "../../assets/imagenesSlider/vendedor.jpg";
 import { Logo } from "../../components/Tugamer/Navbar";
+import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
 
 const General = () => {
   return (
     <GeneralContainer>
-      <h1 className="general__perfil-title">Detalle</h1>
-      <h2 className="section">Vendedor</h2>
-      <div className="detail__card">
-        <div className="card__section1">
-          <div className="detail__img__container">
-            <img className="detail__img" src={vendedor} alt="" />
+      <ThemeProvider theme={ThemesLanding}>
+        <h1 className="general__perfil-title">Detalle</h1>
+        <h2 className="section">Vendedor</h2>
+        <div className="detail__card">
+          <div className="card__section1">
+            <div className="detail__img__container">
+              <img className="detail__img" src={vendedor} alt="" />
+            </div>
+            <h1 className="detail-product">Andrés hamburguesas</h1>
           </div>
-          <h1 className="detail-product">Andrés hamburguesas</h1>
+          <Logo>PedirYa</Logo>
         </div>
-        <Logo>PedirYa</Logo>
-      </div>
 
-      <h2 className="section">Compra</h2>
+        <h2 className="section">Compra</h2>
 
-      <div className="detail__card">
-        <div className="card__section1">
-          <div className="detail__img__container-product">
-            <img className="detail__img" src={Imagen3} alt="" />
+        <div className="detail__card">
+          <div className="card__section1">
+            <div className="detail__img__container-product">
+              <img className="detail__img" src={Imagen3} alt="" />
+            </div>
+            <div className="detail-product-container">
+              <p className="detail-product-item-n">1</p>
+              <div className="detail-products">
+                <p className="detail-product-item">
+                  Hamburguesa colombiana con extra queso
+                </p>
+                <p className="detail-product-item">
+                  Papas con cheddar ESPECIAL
+                </p>
+                <p className="detail-product-item">Agua mineral</p>
+                <p className="detail-product-item">Helado de 1kg</p>
+              </div>
+            </div>
           </div>
-          <div className="detail-product-container">
-            <p className="detail-product-item-n">1</p>
-            <div className="detail-products">
-              <p className="detail-product-item">
-                Hamburguesa colombiana con extra queso
-              </p>
-              <p className="detail-product-item">Papas con cheddar ESPECIAL</p>
-              <p className="detail-product-item">Agua mineral</p>
-              <p className="detail-product-item">Helado de 1kg</p>
+          <div className="detail__img__container-product">
+            <h1 className="detail__price">$70USD</h1>
+          </div>
+        </div>
+
+        <h2 className="section">Resumen</h2>
+
+        <div className="detail__card">
+          <div className="card__resumen">
+            <div className="card__resumen-item">
+              <p className="detail-product">Subtotal</p>
+              <p className="detail__value">$70USD</p>
+            </div>
+            <div className="card__resumen-item">
+              <p className="detail-product">Envio</p>
+              <p className="detail__value">$9.99USD</p>
+            </div>
+            <div className="card__resumen-item">
+              <p className="detail-product">Descuentos</p>
+              <p className="detail__value">9.99USD</p>
+            </div>
+            <div className="card__resumen-item">
+              <p className="detail-product">TOTAL</p>
+              <p className="detail__value">70USD</p>
             </div>
           </div>
         </div>
-        <div className="detail__img__container-product">
-          <h1 className="detail__price">$70USD</h1>
-        </div>
-      </div>
 
-      <h2 className="section">Resumen</h2>
+        <h2 className="section">Metodo de pago: </h2>
 
-      <div className="detail__card">
-        <div className="card__resumen">
-          <div className="card__resumen-item">
-            <p className="detail-product">Subtotal</p>
-            <p className="detail__value">$70USD</p>
-          </div>
-          <div className="card__resumen-item">
-            <p className="detail-product">Envio</p>
-            <p className="detail__value">$9.99USD</p>
-          </div>
-          <div className="card__resumen-item">
-            <p className="detail-product">Descuentos</p>
-            <p className="detail__value">9.99USD</p>
-          </div>
-          <div className="card__resumen-item">
-            <p className="detail-product">TOTAL</p>
-            <p className="detail__value">70USD</p>
+        <div className="detail__card">
+          <div className="card__resumen">
+            <div className="card__resumen-item">
+              <p className="detail-product">VISA</p>
+              <p className="detail__value">****4040</p>
+            </div>
           </div>
         </div>
-      </div>
-
-      <h2 className="section">Metodo de pago: </h2>
-
-      <div className="detail__card">
-        <div className="card__resumen">
-          <div className="card__resumen-item">
-            <p className="detail-product">VISA</p>
-            <p className="detail__value">****4040</p>
-          </div>
-        </div>
-      </div>
+      </ThemeProvider>
     </GeneralContainer>
   );
 };

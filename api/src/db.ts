@@ -61,6 +61,7 @@ const {
   Review,
   Seller,
   User,
+  MercadoPago,
 } = sequelize.models;
 
 // Aqui irian las declaraciones de las junction tables.
@@ -116,6 +117,9 @@ User.hasMany(Review, {
   Review.belongsTo(User, {
     targetKey: "id",
   });
+
+
+  MercadoPago
 
 export const Models = sequelize.models; // Para importar un objeto con solo los modelos: import { Models } from "./db.js"
 export default sequelize; // Para importar la conexión de Sequelize: import sequelize from './db.js';

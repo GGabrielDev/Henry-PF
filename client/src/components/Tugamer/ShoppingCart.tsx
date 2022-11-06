@@ -5,11 +5,12 @@ import { CartItem } from "./CartItem";
 import { useShoppingCart } from "./context/SoppingCartContext";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
+
 type ShoppingCartProps = {
   isOpen: boolean;
 };
 
-export default function SoppingCart({ isOpen }: ShoppingCartProps, {setCartItems}:any) {
+export default function SoppingCart({ isOpen }: ShoppingCartProps) {
   const { closeCart, cartItems } = useShoppingCart();
   const item = useAppSelector(selectProducts);
 
@@ -33,18 +34,21 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps, {setCartItems
                 ))}
               </div>
               <div className="info__total">
-                <div>Total:</div>
-                <div className="total">
-                  {cartItems.reduce((total, cartItem) => {
-                    const itemFind = item.find((e) => e.id === cartItem.id);
-                    return (
-                       total + (itemFind?.price_local || 0) * cartItem.quantity
-                    );
-                  }, 0)}
+                <div className="total__price">
+                  Total:
+                  <div className="total">
+                    {cartItems.reduce((total, cartItem) => {
+                      const itemFind = item.find((e) => e.id === cartItem.id);
+                      return (
+                        total + (itemFind?.price_local || 0) * cartItem.quantity
+                      );
+                    }, 0)}
+                  </div>
                 </div>
+                <button className="comprar__cart">Comprar</button>
               </div>
             </div>
-            <button onClick={setCartItems('')}>clickeame</button>
+           
           </ShoppingCartContainer>
         </ShoppingCart>
       ) : (
@@ -100,7 +104,7 @@ const ShoppingCartContainer = styled.div`
   }
 
   .info__carro {
-    display: flex;
+    /* display: flex; */
     width: 100%;
     flex-direction: column;
   }
@@ -112,13 +116,32 @@ const ShoppingCartContainer = styled.div`
   .info__total {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     margin-bottom: 10px;
     color: ${({ theme }) => theme.primary};
   }
 
   .total {
-    margin-left: 10px;
+    margin-left: 5px;
+  }
+
+  .total__price {
+    display: flex;
+  }
+
+  .comprar__cart {
+    padding: 5px;
+    border: 1px solid transparent;
+    transition: 0.4s;
+    background-color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.light};
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid ${({ theme }) => theme.primary};
+      color: ${({ theme }) => theme.primary};
+      background-color: ${({ theme }) => theme.light};
+    }
   }
 
   @media screen and (max-width: 500px) {

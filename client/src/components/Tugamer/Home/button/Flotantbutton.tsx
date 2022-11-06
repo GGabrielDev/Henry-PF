@@ -10,10 +10,19 @@ const numero='+573053721294'
 const Flotantbutton = () => {
     const products = useAppSelector(selectProducts);
     const item = useAppSelector(selectProducts);
-    const { getItemQuantity, cartQuantity, cartItems } = useShoppingCart();
+    const { cartQuantity, cartItems } = useShoppingCart();
+    const carro = [];
+    for (let i = 0; i < item.length; i++) {
+      for (let j = 0; j < cartItems.length; j++) {
+        if(item[i].id===cartItems[j].id){
+          carro.push(item[i])
+        }
+        
+      }
+      
+    }
     
-    
-    let productosParaWsp =item? item.map(
+    let productosParaWsp =carro? carro.map(
         (producto) => `- ${producto.name}, $${producto.price_local}`
       ):null;
       //let datosCliente = user.map((e:any) => `-Nombre: ${e.nombre} \n -Apellido: ${e.apellido}`)

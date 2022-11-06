@@ -38,7 +38,7 @@ const Publicar = () => {
     setErr(Validate({ ...input, [event.target.name]: event.target.value }));
   };
   const handleSubmit = (event: SyntheticEvent) => {
-    event.preventDefault();
+   
     setErr(Validate(input));
     setInput({
       name: "",

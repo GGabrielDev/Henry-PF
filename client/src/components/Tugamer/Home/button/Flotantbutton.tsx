@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from "styled-components";
 import {AiOutlineWhatsApp} from "react-icons/ai"
 import { useShoppingCart } from '../../context/SoppingCartContext';
@@ -28,6 +27,7 @@ const Flotantbutton = () => {
       //let datosCliente = user.map((e:any) => `-Nombre: ${e.nombre} \n -Apellido: ${e.apellido}`)
       const productosConFormatoAmigable = productosParaWsp?.join("\n");
   return (
+    
     <a
     href={
       `https://api.whatsapp.com/send?phone=${numero}&text=Hola%E2%98%BA%0D%0A%F0%9F%93%82Me+llamo%3A%0D%0ACarlos%20Arturo%0D%0AEstoy+interesado+en+los+siguientes+productos+de+la+pagina%F0%9F%94%A5%3A` +

@@ -12,7 +12,7 @@ const Flotantbutton = () => {
     const item = useAppSelector(selectProducts);
     const { cartQuantity, cartItems } = useShoppingCart();
     const carro = [];
-    for (let i = 0; i < item.length; i++) {
+    for (let i = 0; i < item?.length; i++) {
       for (let j = 0; j < cartItems.length; j++) {
         if(item[i].id===cartItems[j].id){
           carro.push(item[i])

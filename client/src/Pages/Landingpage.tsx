@@ -226,6 +226,12 @@ const Landingpages = styled.div`
     }
   }
 
+  @media screen and (min-width: 1666px) {
+    .headersection {
+      height: 650px;
+    }
+  }
+
   @media screen and (min-width: 1400px) {
     .containerheader {
       max-width: 1400px;

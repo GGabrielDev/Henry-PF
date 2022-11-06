@@ -1,7 +1,7 @@
-import { expressjwt, ExpressJwtRequest, GetVerificationKey } from "express-jwt";
+import { expressjwt, GetVerificationKey } from "express-jwt";
 import jwksRsa from "jwks-rsa";
 
-export const checkJwt = expressjwt({
+export const authorizeAccessToken = expressjwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,

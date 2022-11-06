@@ -2,8 +2,8 @@ import { Request, Response, Router, NextFunction } from "express";
 import { Op } from "sequelize";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
-import { Category_Product as Category_Product_Type } from "../models/Category_product"
-import { Product as Product_Type } from "../models/Product"
+import { Category_Product as Category_Product_Type } from "../models/Category_product";
+import { Product as Product_Type } from "../models/Product";
 
 const router = Router();
 const { Product, Category_Product } = Models;
@@ -39,10 +39,10 @@ router.get(
       const result = await Product.findAll({
         where: name
           ? {
-            name: {
-              [Op.iLike]: `%${name}%`,
-            },
-          }
+              name: {
+                [Op.iLike]: `%${name}%`,
+              },
+            }
           : {},
       });
 
@@ -107,14 +107,8 @@ router.post(
         categories,
       } = req.body;
 
-      if (
-        name ||
-        description ||
-        price_local ||
-        suspended ||
-        categories
-      ) {
-        const result = await Product.create({
+      if (name || description || price_local || suspended || categories) {
+        const result = (await Product.create({
           name,
           description,
           price_dollar,
@@ -123,9 +117,9 @@ router.post(
           image,
           suspended,
           size,
-        }) as Product_Type;
-        // result.addCategories(categories.map(value => value.id))
-        return res.status(201).send(await Product.findByPk(result.id ));
+        })) as Product_Type;
+        result.addCategories(categories.map((value) => value.id));
+        return res.status(201).send(await Product.findByPk(result.id));
       }
     } catch (error) {
       console.log(error);

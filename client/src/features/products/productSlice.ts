@@ -7,7 +7,7 @@ export type ProductType = {
   stock: number;
   price_local: number;
   description: string;
-  price_dolar: number | undefined;
+  price_dolar: number | null | undefined;
   image: string |  undefined;
   suspended: boolean;
   size: string | null | undefined;
@@ -112,4 +112,3 @@ export const selectFilterProducts = (state: RootState) =>
 export const detailProduct = (state: RootState) => state.products.details;
 
 export default productSlice.reducer;
-

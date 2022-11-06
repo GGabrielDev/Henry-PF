@@ -41,8 +41,4 @@ router.post("/", (req, res) => {
     });
 });
 
-// router.use("/tugamer", (req, res) => {
-//   res.send("todo salio bien");
-// });
-
 export default router;

@@ -55,6 +55,7 @@ const WhatsAppContainer = styled.div`
   position: fixed;
   bottom: 0px;
   right: 0;
+  z-index: 1;
 
   .whatsapp {
     width: 100%;

@@ -13,6 +13,7 @@ router.use("/sellers", sellerRouter);
 router.use("/productCategory", categoryProductRouter);
 router.use("/sellerCategory", categorySellerRouter);
 router.use("/comprar/:id", MercadoPago);
+
 router.get("/", (req, res) =>
   res.type("html").send(`
 <!DOCTYPE html>

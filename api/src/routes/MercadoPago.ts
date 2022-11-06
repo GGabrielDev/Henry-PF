@@ -1,7 +1,4 @@
-import { Request, Response, Router, NextFunction } from "express";
-import { appendFile } from "fs";
-import { Models } from "../db";
-const { MercadoPago } = Models;
+import { Request, Response, Router } from "express";
 
 const mercadopago = require("mercadopago");
 mercadopago.configure({
@@ -13,7 +10,7 @@ mercadopago.configure({
 
 const router = Router();
 
-router.post("/", (req, res) => {
+router.post("/", (req: Request, res: Response) => {
   let preference = {
     back_urls: {
       success: "https://localhost:3000/tugamer",

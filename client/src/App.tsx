@@ -5,6 +5,7 @@ import { reducers } from "./redux/reducer";
 import { ShoppingCartProvider } from "./components/Tugamer/context/SoppingCartContext";
 import { Provider } from "react-redux";
 import {store} from "./app/store"
+
 const init = ()=>{
   let sessionUser:any = sessionStorage.getItem('user');
   let user:any;
@@ -29,7 +30,7 @@ function App() {
       
     </div>
 
-  );
-}
+
+)};
 
 export default App;

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, SyntheticEvent } from "react";
+import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
 import Validate, { formType, errType } from "../../components/validate";
@@ -8,25 +8,31 @@ import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
 
 const Publicar = () => {
-  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState('');
+  
   const [err, setErr] = useState<errType>({
     name: "",
     price_local: "",
     stock: "",
     description: "",
     suspended: "",
-    url: "",
+    image: "",
   });
+
   const [input, setInput] = useState<formType>({
     name: "",
     price_local: -1,
     stock: -1,
     description: "",
     suspended: "",
-    url: '',
+    image: "",
+    cloudinary: {},
   });
+
+ 
+
+
   const dispatch = useAppDispatch();
 
   const handleChange = (
@@ -37,55 +43,57 @@ const Publicar = () => {
     setInput({ ...input, [event.target.name]: event.target.value });
     setErr(Validate({ ...input, [event.target.name]: event.target.value }));
   };
+
   const handleSubmit = (event: SyntheticEvent) => {
-    event.preventDefault();
     setErr(Validate(input));
-    setInput({
+
+      setInput({
       name: "",
       price_local: -1,
       stock: -1,
       description: "",
       suspended: "",
-      url: image,
+      image: "",
+      cloudinary: {},
     });
-
+  
     if (
       input.name === "" ||
       input.price_local === -1 ||
       input.stock === -1 ||
       err.price_local === "Tiene que ser un numero" ||
       input.description === "" ||
-      input.suspended === "" ||
-      input.url === ""
+      input.suspended === ""
     ) {
-      alert("faltan datos");
+      alert("Faltan datos");
     } else {
-      alert("vas bien");
+      alert("Producto agregado exitosamente!")
+      dispatch(createProduct(input))
     }
-
   };
-    
 
-     const upLoadImage = async (e:any)=> {
-      
-       const files = e.target.files;
-       const data = new FormData();
-       console.log(files)
-       data.append("file", files[0]);
-       data.append("upload_preset","henryleo");   // imagenes/ es la carpeta de Cloudinary
-       setLoading(true);
-       const res=await fetch(
-         "https://api.cloudinary.com/v1_1/minubeleo/image/upload",   //https://api.cloudinary.com/v1_1/:cloud_name/:action
-         {
-           method: "POST",
-           body: e,
-         }
-       )
-       const file=await res.json();
-       setImage(file.secure_url);
-       console.log(file.secure_url);
-       setLoading(false);
-     }
+
+
+  const upLoadImage = async (e: any) => {
+    console.log(e.target.files);
+    e.preventDefault();
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "henryleo");   // imagenes/ es la carpeta de Cloudinary
+    setLoading(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/minubeleo/image/upload",   //https://api.cloudinary.com/v1_1/:cloud_name/:action
+      {
+        method: "POST",
+        body: data,
+      }
+    )
+    const file = await res.json();
+    setLoading(false);
+    setInput({ ...input, [e.target.name]: file.secure_url })
+    //console.log(file.secure_url);
+  }
   return (
     <PublicarContainer>
       <Navbar />
@@ -154,18 +162,18 @@ const Publicar = () => {
             </div>
             <div className="productinfo__Right">
               <div className="imageupload">
-                <input type="file" name="url" onChange={upLoadImage}  onBlur={handleChange}/>
+                <input type="file" name="image" onChange={(e:any) =>upLoadImage(e)} />
               </div>
 
-              {err.url ? <p className="errortext"> {err.url} </p> : ""}
+              {err.image ? <p className="errortext"> {err.image} </p> : ""}
             </div>
           </div>
           <button
-            onClick={() => dispatch(createProduct(input))}
             className="submitproduct"
           >
             Submit
           </button>
+
         </form>
       </AddProduct>
     </PublicarContainer>

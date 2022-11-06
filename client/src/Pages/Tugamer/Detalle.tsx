@@ -29,7 +29,7 @@ const Detalle = () => {
       <DetalleContainer>
         <div className="imagen__caja">
           <div className="det_fot">
-            <img src={img} alt="producto" className="det__img1" />
+            <img src={detalle.image} alt="producto" className="det__img1" />
           </div>
         </div>
         <div className="det__container">

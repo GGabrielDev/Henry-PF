@@ -8,7 +8,7 @@ type CreateProductResponse={
     stock: number,
     description: string,
     suspended: string,
-    url:string
+    image:string
 }
 
 const {REACT_APP_API_KEY} = process.env || 'localhost:3001';
@@ -25,3 +25,4 @@ export const createProduct = (payload: CreateProductResponse) => async () =>{
         console.log(error)
     }
 }
+

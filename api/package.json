@@ -21,6 +21,7 @@
     "express-jwt": "^7.7.7",
     "express-oauth2-jwt-bearer": "^1.1.0",
     "jwks-rsa": "^2.1.5",
+    "mercadopago": "^1.5.14",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
     "sequelize": "^6.23.2"

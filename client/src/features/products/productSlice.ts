@@ -8,7 +8,7 @@ export type ProductType = {
   price_local: number;
   description: string;
   price_dolar: number | null | undefined;
-  image: string | undefined;
+  image: string |  undefined;
   suspended: boolean;
   size: string | null | undefined;
 };

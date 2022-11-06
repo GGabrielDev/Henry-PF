@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, SyntheticEvent } from "react";
+import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
 import Validate, { formType, errType } from "../../components/validate";
@@ -8,7 +8,6 @@ import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
 
 const Publicar = () => {
-  
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState('');
   
@@ -46,7 +45,6 @@ const Publicar = () => {
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
-    event.preventDefault();
     setErr(Validate(input));
 
       setInput({
@@ -69,9 +67,9 @@ const Publicar = () => {
     ) {
       alert("Faltan datos");
     } else {
+      alert("Producto agregado exitosamente!")
       dispatch(createProduct(input))
     }
-
   };
 
 

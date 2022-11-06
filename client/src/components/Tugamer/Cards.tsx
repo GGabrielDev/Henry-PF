@@ -9,7 +9,7 @@ import styled from "styled-components";
 export default function Cards(){
     const products = useAppSelector(selectProducts);
     const dispatch= useAppDispatch();
-
+    console.log(products)
     useEffect(()=>{
         dispatch(getProducts())
     },[])

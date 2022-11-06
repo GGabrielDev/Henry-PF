@@ -8,6 +8,9 @@ import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
 
 const Publicar = () => {
+  const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [previewSource, setPreviewSource] = useState('');
   const [err, setErr] = useState<errType>({
     name: "",
     price_local: "",
@@ -22,7 +25,7 @@ const Publicar = () => {
     stock: -1,
     description: "",
     suspended: "",
-    url: "",
+    url: '',
   });
   const dispatch = useAppDispatch();
 
@@ -43,7 +46,7 @@ const Publicar = () => {
       stock: -1,
       description: "",
       suspended: "",
-      url: "",
+      url: image,
     });
 
     if (
@@ -59,7 +62,30 @@ const Publicar = () => {
     } else {
       alert("vas bien");
     }
+
   };
+    
+
+     const upLoadImage = async (e:any)=> {
+      
+       const files = e.target.files;
+       const data = new FormData();
+       console.log(files)
+       data.append("file", files[0]);
+       data.append("upload_preset","henryleo");   // imagenes/ es la carpeta de Cloudinary
+       setLoading(true);
+       const res=await fetch(
+         "https://api.cloudinary.com/v1_1/minubeleo/image/upload",   //https://api.cloudinary.com/v1_1/:cloud_name/:action
+         {
+           method: "POST",
+           body: e,
+         }
+       )
+       const file=await res.json();
+       setImage(file.secure_url);
+       console.log(file.secure_url);
+       setLoading(false);
+     }
   return (
     <PublicarContainer>
       <Navbar />
@@ -128,7 +154,7 @@ const Publicar = () => {
             </div>
             <div className="productinfo__Right">
               <div className="imageupload">
-                <input type="file" name="url" onChange={handleChange} />
+                <input type="file" name="url" onChange={upLoadImage}  onBlur={handleChange}/>
               </div>
 
               {err.url ? <p className="errortext"> {err.url} </p> : ""}

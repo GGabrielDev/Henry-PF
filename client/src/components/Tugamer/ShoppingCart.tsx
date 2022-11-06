@@ -4,7 +4,7 @@ import { selectProducts } from "../../features/products/productSlice";
 import { CartItem } from "./CartItem";
 import { useShoppingCart } from "./context/SoppingCartContext";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useParams } from "react-router-dom";
+
 
 type ShoppingCartProps = {
   isOpen: boolean;
@@ -48,6 +48,7 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
                 <button className="comprar__cart">Comprar</button>
               </div>
             </div>
+           
           </ShoppingCartContainer>
         </ShoppingCart>
       ) : (

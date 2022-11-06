@@ -1,26 +1,29 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
 import {BsFilter,BsSortNumericDown} from "react-icons/bs"
 import { useAppDispatch } from "../../../../app/hooks";
 
-import { filterAsc } from "../../../../features/products/productSlice";
+import { filterAsc, searchProduct } from "../../../../features/products/productSlice";
 
 const Filtros = () => {
+  const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
   const handleAsc = (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>)=>{
     dispatch(filterAsc(e.target.value))
   }
+  const handleInputChange = function (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) {
+    e.preventDefault()
+    setSearch(e.target.value);
+    if (search) {
+      dispatch(searchProduct(search));
+    }
+  };
   return (
     <FiltrosContainer>
       <button className="buttonfilter"><BsFilter/></button>
       <div className="inputcontainerfilet">
-        <select name="filtervalor" defaultValue={'DEFAULT'}>
-          <option value="DEFAULT"  disabled hidden>All</option>
-          <option value="si">Motherboard</option>
-          <option value="no">Placa de video</option>
-          <option value="no">Monitores</option>
-        </select>
+      <input placeholder="Productos" type='text' name='name'  value={search} className='search' onChange={handleInputChange}/>
       </div>
       <button className="buttonfilter">
         <select onChange={(e)=>handleAsc(e)} name="filtervalor" id="">

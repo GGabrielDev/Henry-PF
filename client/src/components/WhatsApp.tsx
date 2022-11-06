@@ -20,7 +20,7 @@ const carrito = [
     Monto: 200.0,
   },
 ];
-const numero = "+573053721294";
+const numero='+573053721294'
 const WhatsApp = () => {
   let productosParaWsp = carrito.map(
     (producto) => `- ${producto.Nombre}, $${producto.Monto}`
@@ -34,7 +34,9 @@ const WhatsApp = () => {
       <a
         className="whatsapp"
         href={
-          `https://api.whatsapp.com/send?phone=${numero}&text=Hola%E2%98%BA%0D%0A%F0%9F%93%82Mis+datos+son%3A%0D%0A${datosCliente}%0D%0AEstoy+interesado+en+los+siguientes+productos+de+la+pagina%F0%9F%94%A5%3A` +
+          `https://api.whatsapp.com/send?phone=${numero}&text=Hola+%F0%9F%91%8B.%0D%0AMe+gustar%C3%ADa+saber+mas+acerca+de++%F0%9F%96%A5Henry+shops+y+de+su+propuesta+de+valor.
+         
+          ` +
           " " +
           productosConFormatoAmigable
         }

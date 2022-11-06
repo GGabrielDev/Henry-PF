@@ -10,7 +10,7 @@ type CardType ={
     id:string,
     name:string,
     price_local: number,
-    image:string|null|undefined
+    image:string|undefined
 }
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({name, price_local, image, id}:CardType) =>{
@@ -23,7 +23,7 @@ const Card = ({name, price_local, image, id}:CardType) =>{
             <div className='card__container'>
                
                 <div className="card__image">
-                <img src={img} alt='' className="card__image"/>
+                <img src={image} alt='' className="card__image"/>
                 </div>                                                     
                 <div className="card__info">                               
                 <div className="card_color_name">{name}</div>              

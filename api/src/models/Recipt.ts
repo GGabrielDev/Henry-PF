@@ -13,8 +13,8 @@ class Recipt extends Model<
   InferCreationAttributes<Recipt>
 > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  declare id: CreationOptional<number>
-	declare mercadopagoId: string
+  declare id: CreationOptional<number>;
+  declare mpOrderId: string;
 }
 
 // Exportamos una funcion que define el modelo
@@ -28,16 +28,22 @@ module.exports = (sequelize: Sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-			mercadopagoId: {
-				type: DataTypes.STRING,
-				allowNull: true,
-			}
+      mpOrderId: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,
-      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      name: {
+        singular: "Recipt",
+        plural: "Recipts",
+      },
+      tableName: path
+        .basename(__filename, path.extname(__filename))
+        .toLowerCase(),
       timestamps: false,
       paranoid: true,
-    },
+    }
   );
 };

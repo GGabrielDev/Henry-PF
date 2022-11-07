@@ -49,18 +49,7 @@ type GenerateRequestBody = {
   }[];
 };
 
-type NotificationRequestBody = {
-  action: string;
-  api_version: string;
-  data: {
-    id: string;
-  };
-  date_created: Date;
-  id: number;
-  live_mode: boolean;
-  type: string;
-  user_id: string;
-};
+type NotificationRequestQuery = Record<"id" | "topic", string>;
 
 const router = Router();
 
@@ -90,22 +79,14 @@ router.get(
         );
       }
 
-      const result = axios
-        .get(`https://api.mercadopago.com/v1/payments/${mercadopagoId}`)
-        .then((value) => value.data)
-        .catch((error) => {
-          console.log(error);
-          throw new HttpException(
-            500,
-            "An error has occured getting the Product",
-            error
-          );
-        });
+      const result = mercadopago.merchant_orders
+        .findById(mercadopagoId)
+        .then((res) => res.body);
 
       if (!result)
         throw new HttpException(
           404,
-          "The requested MercadoPago payment doesn't exist"
+          "The requested MercadoPago order doesn't exist"
         );
 
       return res.status(200).send(result);
@@ -151,7 +132,7 @@ router.post(
       };
 
       const payment = await mercadopago.preferences.create(preference);
-      return res.status(201).json(payment);
+      return res.status(201).json(payment.body);
     } catch (error) {
       console.log(error);
       if (error instanceof HttpException) {
@@ -170,12 +151,19 @@ router.post(
 
 router.post(
   "/notification",
-  async (req: Request<{}, {}, NotificationRequestBody>, res: Response) => {
-    if (req.body.type) {
-      switch (req.body.type) {
-        case "payment":
-          await Recipt.create({ mercadopagoId: req.body.data.id });
-          return res.status(201).send("Saved Payment ID");
+  async (
+    req: Request<{}, NotificationRequestQuery, {}>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    console.log(req.body);
+    if (req.query.topic === "payment") {
+      try {
+        await Recipt.create({ mpOrderId: req.query.id });
+        return res.status(201).send("Saved Order ID");
+      } catch (error) {
+        console.log(error);
+        next(error);
       }
     } else {
       return res.status(200).send("Ignored");

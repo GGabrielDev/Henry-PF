@@ -42,7 +42,7 @@ const Detalle = () => {
           </div>
           <div className="det_cant">
             <div className="det__cant2">
-              <div className="det__dec3">Cantidad en stock: {detalle.stock}</div>
+              <div className="det__dec3">Cantidad en stock: {detalle.stock - quantity}</div>
               <div className="det__dec4">Cantidad que desea comprar:</div>
               <div className="botones">
                 <button
@@ -54,13 +54,29 @@ const Detalle = () => {
                   -{" "}
                 </button>
                 <h3 className="count">{quantity}</h3>
+
+                {detalle.stock  - quantity > 0 ?  
                 <button
                   onClick={() =>incrementCartQuantity(id)}
                   className="button__card"
                 >
                   {" "}
                   +{" "}
+                </button> 
+                :              
+                  
+                <button
+                  disabled
+                  onClick={() =>incrementCartQuantity(id)}
+                  className="button__card"
+                >
+                  {" "}
+                  +{" "}
                 </button>
+                
+              }
+                
+                             
               </div>
             </div>
             <div className="fav">

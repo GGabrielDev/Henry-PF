@@ -31,6 +31,7 @@ module.exports = (sequelize: Sequelize) => {
       mpOrderId: {
         type: DataTypes.STRING,
         allowNull: true,
+        unique: true,
       },
     },
     {

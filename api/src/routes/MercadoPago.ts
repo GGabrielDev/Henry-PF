@@ -79,11 +79,11 @@ router.get(
         );
       }
 
-      const result = mercadopago.merchant_orders
+      const result = await mercadopago.merchant_orders
         .findById(mercadopagoId)
         .then((res) => res.body);
 
-      if (!result)
+      if (result.status === 404)
         throw new HttpException(
           404,
           "The requested MercadoPago order doesn't exist"
@@ -156,8 +156,7 @@ router.post(
     res: Response,
     next: NextFunction
   ) => {
-    console.log(req.body);
-    if (req.query.topic === "payment") {
+    if (req.query.topic === "merchant_order") {
       try {
         await Recipt.create({ mpOrderId: req.query.id });
         return res.status(201).send("Saved Order ID");

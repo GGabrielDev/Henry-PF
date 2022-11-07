@@ -1,8 +1,12 @@
-import { Request, Response, Router } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import mercadopago from "mercadopago";
 import { Currency } from "mercadopago/shared/currency";
+import axios from "axios";
+import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 import { Product as ProductClass } from "../models/Product";
+
+const { Recipt } = Models;
 
 // EL ACCESS TOKEN VA EN .ENV PERO SE HARDCODEA POR EL MOMENTO
 const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_SELLER_ID } = process.env;
@@ -38,37 +42,87 @@ Test user N°2:
 }
 */
 
-type GenerateRequestParams = {
+type GenerateRequestBody = {
   buyProducts: {
     product: ProductClass;
     amount: number;
   }[];
 };
 
-type NotificationRequestBody =
-  | {
-      resource: string;
-      topic: string;
-    }
-  | {
-      action: string;
-      api_version: string;
-      data: {
-        id: string;
-      };
-      date_created: Date;
-      id: number;
-      live_mode: boolean;
-      type: string;
-      user_id: string;
-    };
+type NotificationRequestBody = {
+  action: string;
+  api_version: string;
+  data: {
+    id: string;
+  };
+  date_created: Date;
+  id: number;
+  live_mode: boolean;
+  type: string;
+  user_id: string;
+};
 
 const router = Router();
 
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await Recipt.findAll();
+
+    if (result.length === 0) {
+      return res.status(204);
+    }
+    return res.status(200).send({ amount: result.length, result });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get(
+  "/:mercadopagoId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { mercadopagoId } = req.params;
+
+      if (!mercadopagoId) {
+        throw new HttpException(
+          400,
+          "The MercadoPago ID is missing in the request"
+        );
+      }
+
+      const result = axios
+        .get(`https://api.mercadopago.com/v1/payments/${mercadopagoId}`)
+        .then((value) => value.data)
+        .catch((error) => {
+          console.log(error);
+          throw new HttpException(
+            500,
+            "An error has occured getting the Product",
+            error
+          );
+        });
+
+      if (!result)
+        throw new HttpException(
+          404,
+          "The requested MercadoPago payment doesn't exist"
+        );
+
+      return res.status(200).send(result);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/generate",
-  async (req: Request<{}, {}, GenerateRequestParams>, res: Response) => {
-    console.log(req.body);
+  async (
+    req: Request<{}, {}, GenerateRequestBody>,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { buyProducts } = req.body;
 
     try {
@@ -100,20 +154,32 @@ router.post(
       return res.status(201).json(payment);
     } catch (error) {
       console.log(error);
-      throw new HttpException(
-        500,
-        "Something went wrong with MercadoPago",
-        error
-      );
+      if (error instanceof HttpException) {
+        next(error);
+      } else {
+        const newError = new HttpException(
+          500,
+          "Something went wrong with MercadoPago",
+          error
+        );
+        next(newError);
+      }
     }
   }
 );
 
 router.post(
   "/notification",
-  async (req: Request<{}, NotificationRequestBody, {}>, res: Response) => {
-    console.log(req.body);
-    return res.status(200).send("All OK");
+  async (req: Request<{}, {}, NotificationRequestBody>, res: Response) => {
+    if (req.body.type) {
+      switch (req.body.type) {
+        case "payment":
+          await Recipt.create({ mercadopagoId: req.body.data.id });
+          return res.status(201).send("Saved Payment ID");
+      }
+    } else {
+      return res.status(200).send("Ignored");
+    }
   }
 );
 

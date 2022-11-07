@@ -5,6 +5,8 @@ import img from './Utils/prueba.png';
 import img2 from './Utils/tipo.jpg';
 import { BsInfoCircle } from 'react-icons/bs';
 import { useShoppingCart } from "./context/SoppingCartContext";
+import { count } from "console";
+import Swal from "sweetalert2";
 
 type CardType ={
     id:string,
@@ -17,6 +19,14 @@ const Card = ({name, price_local, image, id}:CardType) =>{
      
     const { getItemQuantity, incrementCartQuantity, decrementCartQuantity} = useShoppingCart();
     const quantity=getItemQuantity(id);
+    const AlertaCorrecta = () => {
+        Swal.fire({
+          title: "Error",
+          text: "Debes tener algun producto en el carrito",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      };
     
     return(
         <CardContainer>
@@ -43,10 +53,14 @@ const Card = ({name, price_local, image, id}:CardType) =>{
                 <div className="info">
                 <BsInfoCircle/>
                 </div>
-               </Link>              
-                <button className="button">COMPRAR</button>         
+               </Link>   
+               {quantity > 0 ? <button className="button">COMPRAR</button>  :
+               
+               <button onClick={() =>AlertaCorrecta()} className="button">COMPRAR</button> 
+               }           
+                       
                        </div>      
-            </div>          
+            </div>        
             
         </CardContainer>
     )

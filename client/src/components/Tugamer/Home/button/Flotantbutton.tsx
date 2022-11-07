@@ -19,7 +19,7 @@ const Flotantbutton = () => {
     const carro = [];
     for (let i = 0; i < item?.length; i++) {
       for (let j = 0; j < cartItems.length; j++) {
-        if(item[i].id===cartItems[j].id){
+        if(item[i].id===cartItems[j].product.id){
           carro.push(item[i])
         }
         

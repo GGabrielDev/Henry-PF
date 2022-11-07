@@ -4,16 +4,17 @@ import { useShoppingCart } from "./context/SoppingCartContext";
 import image from "../../assets/imagenesSlider/49838.jpg";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
+import { ProductType } from "../../features/products/productSlice";
 
 type CartItemProps = {
-  id: string;
+  product: ProductType;
   quantity: number;
 };
 
-export function CartItem({ id, quantity }: CartItemProps) {
+export function CartItem({ product, quantity }: CartItemProps) {
   const { removeFromCart } = useShoppingCart();
   const item = useAppSelector(selectProducts);
-  const itemFind = item.find((e) => e.id === id);
+  const itemFind = item.find((e) => e.id === product.id);
   if (itemFind == null) return null;
 
   return (
@@ -33,7 +34,7 @@ export function CartItem({ id, quantity }: CartItemProps) {
       </div>
       <button
         className="button__remover"
-        onClick={() => removeFromCart(itemFind.id)}
+        onClick={() => removeFromCart(itemFind)}
       >
         <span className="delete">
           <IoMdClose />

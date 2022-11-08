@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../assets/fondo.svg";
-import Phone from "../assets/phone.svg";
+import Phone from "../assets/Phone.png";
 import Store from "../assets/store.png";
 import styled from "styled-components";
 import Navbarlanding from "../components/Navbarlanding";

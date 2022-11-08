@@ -30,7 +30,7 @@ export const initialState: SliceState = {
 export const getProducts = createAsyncThunk("product/getProducts", async () => {
   try {
     const res = await axios.get("http://localhost:3001/products");
-    console.log(res.data.result);
+  
 
     return res.data.result;
   } catch (error) {

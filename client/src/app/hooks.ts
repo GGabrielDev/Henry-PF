@@ -6,7 +6,7 @@ import type { RootState, AppDispatch } from './store';
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useLocalStorage = <T>(key:string, initialValue:T | (()=> T))=>{
-    const [value, setValue] = useState<T>(()=>{
+     const [value, setValue] = useState<T>(()=>{
         const jsonValue = localStorage.getItem(key)
         if(jsonValue != null) return JSON.parse(jsonValue)
         if(typeof initialValue === "function"){

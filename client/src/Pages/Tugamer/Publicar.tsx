@@ -2,7 +2,7 @@ import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
 import Validate, { formType, errType } from "../../components/validate";
-import { symlink } from "fs";
+
 
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";

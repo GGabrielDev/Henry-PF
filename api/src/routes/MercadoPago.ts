@@ -14,6 +14,9 @@ mercadopago.configure({
 const router = Router();
 
 router.post("/", (req, res) => {
+  const {price_local} =req.body
+  console.log(2)
+  console.log(price_local)
   let preference = {
     back_urls: {
       success: "https://localhost:3000/tugamer",
@@ -21,7 +24,7 @@ router.post("/", (req, res) => {
     items: [
       {
         title: "Placa Madre",
-        unit_price: 100,
+        unit_price: price_local,
         quantity: 1,
         id: "1",
       },
@@ -40,5 +43,13 @@ router.post("/", (req, res) => {
       console.log(error);
     });
 });
-
+router.get('/comprar', (req, res) => {
+  res.send('todo salio bien')});
+  
+  router.post('/notificar', (req,res) => {
+    console.log('notificar')
+    const {body, query} = req;
+    console.log({body,query})
+    res.send();
+  })
 export default router;

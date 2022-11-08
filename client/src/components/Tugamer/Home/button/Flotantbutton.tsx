@@ -3,34 +3,46 @@ import {AiOutlineWhatsApp} from "react-icons/ai"
 import { useShoppingCart } from '../../context/SoppingCartContext';
 import { useAppSelector } from '../../../../app/hooks';
 import { selectProducts } from '../../../../features/products/productSlice';
+import { useAuth0 } from "@auth0/auth0-react";
+import { isConstructorDeclaration } from 'typescript';
+import Swal from "sweetalert2";
+
 
 
 const numero='+573053721294'
 const Flotantbutton = () => {
+    const {user, isAuthenticated,loginWithRedirect} = useAuth0();
     const products = useAppSelector(selectProducts);
     const item = useAppSelector(selectProducts);
     const { cartQuantity, cartItems } = useShoppingCart();
     const carro = [];
     for (let i = 0; i < item?.length; i++) {
       for (let j = 0; j < cartItems.length; j++) {
-        if(item[i].id===cartItems[j].id){
+        if(item[i].id===cartItems[j].product.id){
           carro.push(item[i])
         }
         
       }
       
     }
+    const AlertaCorrecta = () => {
+      Swal.fire({
+        title: "Error",
+        text: "Debes tener algun producto en el carrito",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    };
     
     let productosParaWsp =carro? carro.map(
         (producto) => `- ${producto.name}, $${producto.price_local}`
       ):null;
       //let datosCliente = user.map((e:any) => `-Nombre: ${e.nombre} \n -Apellido: ${e.apellido}`)
       const productosConFormatoAmigable = productosParaWsp?.join("\n");
-  return (
-    
-    <a
+  return (       
+    isAuthenticated && carro.length  >= 1 ?  <a 
     href={
-      `https://api.whatsapp.com/send?phone=${numero}&text=Hola%E2%98%BA%0D%0A%F0%9F%93%82Me+llamo%3A%0D%0ACarlos%20Arturo%0D%0AEstoy+interesado+en+los+siguientes+productos+de+la+pagina%F0%9F%94%A5%3A` +
+      `https://api.whatsapp.com/send?phone=${numero}&text=Hola%E2%98%BA%0D%0A%F0%9F%93%82Me+llamo%3A%0D%0A${user?.given_name}%20${user?.family_name}%0D%0AEstoy+interesado+en+los+siguientes+productos+de+la+pagina%F0%9F%94%A5%3A` +
       " " + 
       productosConFormatoAmigable
     }
@@ -43,7 +55,37 @@ const Flotantbutton = () => {
             <div className="fontantetexto">Realizar compra {'('}{cartQuantity}{')'}</div>
         </div>
     </Flotantbuttons>
-    </a>
+    </a>     
+  
+  : 
+  isAuthenticated === null ?   
+  <a 
+  onClick={() =>loginWithRedirect()}
+>
+  <Flotantbuttons>
+      <div className='botonflotante'>
+          <div className="flotantelogo">
+          <AiOutlineWhatsApp/>
+          </div>
+          <div className="fontantetexto">Realizar compra {'('}{cartQuantity}{')'}</div>
+      </div>
+  </Flotantbuttons>
+  </a>  
+  :
+  isAuthenticated && carro.length  === 0 ?     
+  
+    <Flotantbuttons>
+      
+        <div className='botonflotante'>
+            <div className="flotantelogo">
+            <AiOutlineWhatsApp/>
+            </div>
+            <div onClick={() =>AlertaCorrecta()}className="fontantetexto">Realizar compra {'('}{cartQuantity}{')'}</div>
+        </div>
+    </Flotantbuttons>        
+   
+  :
+  null
   )
 }
 

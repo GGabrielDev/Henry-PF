@@ -8,15 +8,10 @@ import { useShoppingCart } from "../../components/Tugamer/context/SoppingCartCon
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import Swal from "sweetalert2";
+import { ProductType } from "../../features/products/productSlice";
 
-type CardType = {
-  id: string;
-  name: string;
-  price_local: number;
-  image: string | null | undefined;
-};
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
-const Card = ({ name, price_local, image, id }: CardType) => {
+const Card = ({ product }: { product: ProductType }) => {
   const { getItemQuantity, incrementCartQuantity, decrementCartQuantity } =
     useShoppingCart();
 
@@ -42,12 +37,12 @@ const Card = ({ name, price_local, image, id }: CardType) => {
             </span>
           </div>
           <div className="card__image">
-            <img src={img} alt="" className="card__image" />
+            <img src={product.image} alt="" className="card__image" />
           </div>
           <div className="card__info">
-            <div className="card_color_name">{name}</div>
+            <div className="card_color_name">{product.name}</div>
             <div className="card__name__price">
-              <h2 className="card_color_price">{price_local}</h2>
+              <h2 className="card_color_price">{product.price_local}</h2>
             </div>
           </div>
         </div>

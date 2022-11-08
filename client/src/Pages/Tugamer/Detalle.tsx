@@ -5,80 +5,96 @@ import { MdFavorite } from "react-icons/md";
 import Navbar from "../../components/Tugamer/Navbar";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { detailProduct, getProductId, ProductType } from "../../features/products/productSlice";
+import {
+  detailProduct,
+  getProductId,
+  ProductType,
+} from "../../features/products/productSlice";
 import { useShoppingCart } from "../../components/Tugamer/context/SoppingCartContext";
 
 const Detalle = () => {
-  
-  const dispatch= useAppDispatch();
+  const dispatch = useAppDispatch();
   const detalle = useAppSelector(detailProduct) as ProductType;
-  const { productId }  = useParams<{productId?:string}>();
-  const { getItemQuantity, incrementCartQuantity, decrementCartQuantity} = useShoppingCart();
-  const id=detalle.id
-    const quantity=getItemQuantity(id);
-  useEffect(()=>{
-    console.log(productId)
-    dispatch(getProductId(productId))
-  },[dispatch, productId])
-  
-  console.log(detalle)
-  if(productId){
-  return (
-    <>
-      <Navbar />
-      <DetalleContainer>
-        <div className="imagen__caja">
-          <div className="det_fot">
-            <img src={detalle.image} alt="producto" className="det__img1" />
-          </div>
-        </div>
-        <div className="det__container">
-          <div className="det_props">
-            <div className="det__dec">{detalle.name}</div>
-            <div className="det__dec0">{detalle.price_local}</div>
-            <div className="det__dec2">
-              {detalle.description}
+  const { productId } = useParams<{ productId?: string }>();
+  const { getItemQuantity, incrementCartQuantity, decrementCartQuantity } =
+    useShoppingCart();
+  const id = detalle.id;
+  const quantity = getItemQuantity(detalle);
+  useEffect(() => {
+    console.log(productId);
+    dispatch(getProductId(productId));
+  }, [dispatch, productId]);
+
+  console.log(detalle);
+  if (productId) {
+    return (
+      <>
+        <Navbar />
+        <DetalleContainer>
+          <div className="imagen__caja">
+            <div className="det_fot">
+              <img src={detalle.image} alt="producto" className="det__img1" />
             </div>
           </div>
-          <div className="det_cant">
-            <div className="det__cant2">
-              <div className="det__dec3">Cantidad en stock: {detalle.stock}</div>
-              <div className="det__dec4">Cantidad que desea comprar:</div>
-              <div className="botones">
-                <button
-                  disabled={quantity === 0}
-                  onClick={() => decrementCartQuantity(id)}
-                  className="button__card"
-                >
-                  {" "}
-                  -{" "}
-                </button>
-                <h3 className="count">{quantity}</h3>
-                <button
-                  onClick={() =>incrementCartQuantity(id)}
-                  className="button__card"
-                >
-                  {" "}
-                  +{" "}
-                </button>
+          <div className="det__container">
+            <div className="det_props">
+              <div className="det__dec">{detalle.name}</div>
+              <div className="det__dec0">{detalle.price_local}</div>
+              <div className="det__dec2">{detalle.description}</div>
+            </div>
+            <div className="det_cant">
+              <div className="det__cant2">
+                <div className="det__dec3">
+                  Cantidad en stock: {detalle.stock - quantity}
+                </div>
+                <div className="det__dec4">Cantidad que desea comprar:</div>
+                <div className="botones">
+                  <button
+                    disabled={quantity === 0}
+                    onClick={() => decrementCartQuantity(detalle)}
+                    className="button__card"
+                  >
+                    {" "}
+                    -{" "}
+                  </button>
+                  <h3 className="count">{quantity}</h3>
+
+                  {detalle.stock - quantity > 0 ? (
+                    <button
+                      onClick={() => incrementCartQuantity(detalle)}
+                      className="button__card"
+                    >
+                      {" "}
+                      +{" "}
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      onClick={() => incrementCartQuantity(detalle)}
+                      className="button__card"
+                    >
+                      {" "}
+                      +{" "}
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="fav">
+                <h3 className="det_fav">
+                  <MdFavorite />
+                </h3>
+              </div>
+              <div className="button__card__container">
+                <button className="button__card">COMPRAR AHORA</button>
               </div>
             </div>
-            <div className="fav">
-              <h3 className="det_fav">
-                <MdFavorite />
-              </h3>
-            </div>
-            <div className="button__card__container">
-              <button className="button__card">COMPRAR AHORA</button>
-            </div>
           </div>
-        </div>
-      </DetalleContainer>
-    </>
-  );
-}else{
-  return <div>Loading ...</div>;
-}
+        </DetalleContainer>
+      </>
+    );
+  } else {
+    return <div>Loading ...</div>;
+  }
 };
 export default Detalle;
 

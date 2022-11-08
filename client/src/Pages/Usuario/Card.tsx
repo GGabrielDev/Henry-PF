@@ -1,10 +1,5 @@
-import { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import img from "../../components/Tugamer/Utils/prueba.png";
-import { BsInfoCircle } from "react-icons/bs";
 import { AiFillEdit, AiOutlineClose } from "react-icons/ai";
-import { useShoppingCart } from "../../components/Tugamer/context/SoppingCartContext";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import Swal from "sweetalert2";
@@ -12,9 +7,6 @@ import { ProductType } from "../../features/products/productSlice";
 
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({ product }: { product: ProductType }) => {
-  const { getItemQuantity, incrementCartQuantity, decrementCartQuantity } =
-    useShoppingCart();
-
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Producto eliminado",

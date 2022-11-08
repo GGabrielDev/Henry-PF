@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import img from "../../components/Tugamer/Utils/prueba.png";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MdFavorite } from "react-icons/md";
 import Navbar from "../../components/Tugamer/Navbar";
 import { useParams } from "react-router-dom";
@@ -10,22 +9,20 @@ import {
   getProductId,
   ProductType,
 } from "../../features/products/productSlice";
-import { useShoppingCart } from "../../components/Tugamer/context/SoppingCartContext";
+import { actions, helpers } from "../../features/cart/cartSlice";
+
+const { getItemQuantity } = helpers;
+const { incrementItemQuantity, decrementItemQuantity } = actions;
 
 const Detalle = () => {
+  const { productId } = useParams<{ productId?: string }>();
   const dispatch = useAppDispatch();
   const detalle = useAppSelector(detailProduct) as ProductType;
-  const { productId } = useParams<{ productId?: string }>();
-  const { getItemQuantity, incrementCartQuantity, decrementCartQuantity } =
-    useShoppingCart();
-  const id = detalle.id;
-  const quantity = getItemQuantity(detalle);
+  const quantity = useAppSelector(getItemQuantity(detalle));
   useEffect(() => {
     console.log(productId);
     dispatch(getProductId(productId));
-  }, [dispatch, productId]);
-
-  console.log(detalle);
+  }, [productId]);
   if (productId) {
     return (
       <>
@@ -51,7 +48,7 @@ const Detalle = () => {
                 <div className="botones">
                   <button
                     disabled={quantity === 0}
-                    onClick={() => decrementCartQuantity(detalle)}
+                    onClick={() => dispatch(decrementItemQuantity(detalle))}
                     className="button__card"
                   >
                     {" "}
@@ -59,24 +56,14 @@ const Detalle = () => {
                   </button>
                   <h3 className="count">{quantity}</h3>
 
-                  {detalle.stock - quantity > 0 ? (
-                    <button
-                      onClick={() => incrementCartQuantity(detalle)}
-                      className="button__card"
-                    >
-                      {" "}
-                      +{" "}
-                    </button>
-                  ) : (
-                    <button
-                      disabled
-                      onClick={() => incrementCartQuantity(detalle)}
-                      className="button__card"
-                    >
-                      {" "}
-                      +{" "}
-                    </button>
-                  )}
+                  <button
+                    disabled={!(detalle.stock - quantity > 0)}
+                    onClick={() => dispatch(incrementItemQuantity(detalle))}
+                    className="button__card"
+                  >
+                    {" "}
+                    +{" "}
+                  </button>
                 </div>
               </div>
               <div className="fav">

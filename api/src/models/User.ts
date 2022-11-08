@@ -152,7 +152,7 @@ module.exports = (sequelize: Sequelize) => {
 
       imagenDePerfil: {
         type: DataTypes.STRING,
-        allowNull:true,
+        allowNull: true,
         validate: {
           isUrl: true,
         },
@@ -179,6 +179,10 @@ module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
+      name: {
+        singular: "User",
+        plural: "Users",
+      },
       tableName: path
         .basename(__filename, path.extname(__filename))
         .toLowerCase(),

@@ -117,6 +117,10 @@ module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
+      name: {
+        singular: "Country",
+        plural: "Countries",
+      },
       tableName: path
         .basename(__filename, path.extname(__filename))
         .toLowerCase(),

@@ -12,7 +12,8 @@ router.use("/users", UsersRouter);
 router.use("/sellers", sellerRouter);
 router.use("/productCategory", categoryProductRouter);
 router.use("/sellerCategory", categorySellerRouter);
-router.use("/comprar/:id", MercadoPago);
+router.use("/payment", MercadoPago);
+
 router.get("/", (req, res) =>
   res.type("html").send(`
 <!DOCTYPE html>

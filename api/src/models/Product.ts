@@ -175,7 +175,7 @@ module.exports = (sequelize: Sequelize) => {
 
       image: {
         type: DataTypes.STRING,
-        allowNull:true,
+        allowNull: true,
         // validate: {
         //   isUrl: true,
         // },
@@ -197,6 +197,10 @@ module.exports = (sequelize: Sequelize) => {
     },
     {
       sequelize,
+      name: {
+        singular: "Product",
+        plural: "Products",
+      },
       tableName: path
         .basename(__filename, path.extname(__filename))
         .toLowerCase(),

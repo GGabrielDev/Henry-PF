@@ -6,13 +6,13 @@ import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose, IoIosArrowForward } from "react-icons/io";
 import User from "../assets/imagenesSlider/49838.jpg";
-import UserDefault from "../assets/imagenesSlider/defaultuser.jpg"
+import UserDefault from "../assets/imagenesSlider/defaultuser.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
-  const {user, logout,isAuthenticated, loginWithRedirect} = useAuth0();
-  
+  const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
+
   const handleChange = () => {
     setMenu(!menu);
   };
@@ -39,16 +39,15 @@ const Navbarlanding = () => {
         </div>
 
         <div className="nav__sections-2">
-          
-          {isAuthenticated ? <NavLink className="section button" to="/usuario"> 
-                                        <HiOutlineUserCircle />                            
-                             </NavLink>
-          :  
-          <NavLink className="section button"  to=""> 
-          <HiOutlineUserCircle onClick={() => loginWithRedirect()}/>                  
-          </NavLink>             
-          }
-         
+          {isAuthenticated ? (
+            <NavLink className="section button" to="/usuario">
+              <HiOutlineUserCircle />
+            </NavLink>
+          ) : (
+            <NavLink className="section button" to="">
+              <HiOutlineUserCircle onClick={() => loginWithRedirect()} />
+            </NavLink>
+          )}
 
           <NavLink
             onClick={handleChange}
@@ -66,31 +65,38 @@ const Navbarlanding = () => {
 
           <div className="img__container">
             <div className="img__circle">
-            {isAuthenticated ? <img src={user?.picture} alt="picture"/>           
-              :
-              <img src={UserDefault} alt=""/>
-              }
+              {isAuthenticated ? (
+                <img src={user?.picture} alt="picture" />
+              ) : (
+                <img src={UserDefault} alt="" />
+              )}
             </div>
-            <button className="edit">Editar Perfil</button>
           </div>
-          <NavLink className="section-re" to="#home">
-            <div className="section__cajita">
-              <span className="section__name">Home</span>
-              <span className="icon-re">
-                <IoIosArrowForward />
-              </span>
-            </div>
-          </NavLink>
 
-          <NavLink className="section-re" to="#home">
-            <div className="section__cajita">
-              <span className="section__name">Cuenta</span>
-              <span className="icon-re">
-                <IoIosArrowForward />
-              </span>
-            </div>
-          </NavLink>
-
+          {isAuthenticated ? (
+            <NavLink className="section-re" to="/usuario">
+              <div className="section__cajita">
+                <span className="section__name">Cuenta</span>
+                <span className="icon-re">
+                  <IoIosArrowForward />
+                </span>
+              </div>
+            </NavLink>
+          ) : (
+            <NavLink className="section-re" to="#home">
+              <div className="section__cajita">
+                <span
+                  className="section__name"
+                  onClick={() => loginWithRedirect()}
+                >
+                  Registrate
+                </span>
+                <span className="icon-re">
+                  <IoIosArrowForward />
+                </span>
+              </div>
+            </NavLink>
+          )}
           <NavLink className="section-re" to="#home">
             <div className="section__cajita">
               {isAuthenticated ? (
@@ -261,7 +267,7 @@ const Navbarlandings = styled.div`
 
   .menu-dn {
     position: absolute;
-    top: -1000px;
+    top: -5000px;
   }
 
   .img__container {

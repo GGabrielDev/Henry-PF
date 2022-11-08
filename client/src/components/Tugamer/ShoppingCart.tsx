@@ -4,7 +4,8 @@ import { selectProducts } from "../../features/products/productSlice";
 import { CartItem } from "./CartItem";
 import { useShoppingCart } from "./context/SoppingCartContext";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-
+import { SyntheticEvent } from "react";
+import axios from "axios";
 
 type ShoppingCartProps = {
   isOpen: boolean;
@@ -13,6 +14,15 @@ type ShoppingCartProps = {
 export default function SoppingCart({ isOpen }: ShoppingCartProps) {
   const { closeCart, cartItems } = useShoppingCart();
   const item = useAppSelector(selectProducts);
+
+  const handleBuy = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const response = await axios.get("http://localhost:3001/payment/generate", {
+      data: { buyProducts: cartItems },
+    });
+
+    window.open(response.data.init_point, "_blank");
+  };
 
   return (
     <>
@@ -29,7 +39,7 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
               <div className="info__carro">
                 {cartItems.map((item) => (
                   <div className="info__carta">
-                    <CartItem key={item.id} {...item} />
+                    <CartItem key={item.product.id} {...item} />
                   </div>
                 ))}
               </div>
@@ -38,17 +48,20 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
                   Total:
                   <div className="total">
                     {cartItems.reduce((total, cartItem) => {
-                      const itemFind = item.find((e) => e.id === cartItem.id);
+                      const itemFind = item.find(
+                        (e) => e.id === cartItem.product.id
+                      );
                       return (
                         total + (itemFind?.price_local || 0) * cartItem.quantity
                       );
                     }, 0)}
                   </div>
                 </div>
-                <button className="comprar__cart">Comprar</button>
+                <button className="comprar__cart" onClick={handleBuy}>
+                  Comprar
+                </button>
               </div>
             </div>
-           
           </ShoppingCartContainer>
         </ShoppingCart>
       ) : (

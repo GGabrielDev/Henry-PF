@@ -9,9 +9,9 @@ import {
 import path from "path";
 
 class Customer_Orders extends Model<
-    InferAttributes<Customer_Orders>,
-    InferCreationAttributes<Customer_Orders>
-  > {
+  InferAttributes<Customer_Orders>,
+  InferCreationAttributes<Customer_Orders>
+> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<string>;
   declare destination: string;
@@ -51,14 +51,20 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
         validate: {
           isNumeric: true,
-        }
-      }
+        },
+      },
     },
     {
       sequelize,
-      tableName: path.basename(__filename, path.extname(__filename)).toLowerCase(),
+      name: {
+        singular: "Customer_Order",
+        plural: "Customer_Orders",
+      },
+      tableName: path
+        .basename(__filename, path.extname(__filename))
+        .toLowerCase(),
       timestamps: false,
       paranoid: true,
-    },
+    }
   );
 };

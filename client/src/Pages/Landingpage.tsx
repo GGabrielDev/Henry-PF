@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../assets/fondo.svg";
-import Phone from "../assets/phone.svg";
+import Phone from "../assets/Phone.png";
 import Store from "../assets/store.png";
 import styled from "styled-components";
 import Navbarlanding from "../components/Navbarlanding";
@@ -11,6 +11,7 @@ import { ThemeProvider } from "styled-components";
 import WhatsApp from "../components/WhatsApp";
 import ContactContainer from "../components/Contact";
 import Ourclients from "../components/Clientes/Ourclients";
+import Subcription from "../components/subcription";
 
 const Landingpage = () => {
   return (
@@ -66,6 +67,10 @@ const Landingpage = () => {
           <h1 id="clients">Nuestros Clientes </h1>
 
           <Ourclients />
+
+          <h1 id="plans"> Plans </h1>
+          <p>FlexiblePlns</p>
+          <Subcription />
 
           <h1 id="contact">Contactanos</h1>
 

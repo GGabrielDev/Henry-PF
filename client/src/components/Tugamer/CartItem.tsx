@@ -1,44 +1,49 @@
-import { useAppSelector } from "../../app/hooks";
-import { selectProducts } from "../../features/products/productSlice";
-import { useShoppingCart } from "./context/SoppingCartContext";
-import image from "../../assets/imagenesSlider/49838.jpg";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectProducts } from "../../features/products/productSlice";
+import image from "../../assets/imagenesSlider/49838.jpg";
+import { ProductType } from "../../features/products/productSlice";
+import { actions } from "../../features/cart/cartSlice";
 
 type CartItemProps = {
-  id: string;
+  product: ProductType;
   quantity: number;
 };
 
-export function CartItem({ id, quantity }: CartItemProps) {
-  const { removeFromCart } = useShoppingCart();
+const { removeFromCart } = actions;
+
+export function CartItem({ product, quantity }: CartItemProps) {
+  const dispatch = useAppDispatch();
   const item = useAppSelector(selectProducts);
-  const itemFind = item.find((e) => e.id === id);
+  const itemFind = item.find((e) => e.id === product.id);
   if (itemFind == null) return null;
 
-    return(
-
-        <>
-            <img src={image} style={{width:"205px", height:"105px", objectFit:"cover", borderRadius:"7px", border:"0.5px solid rgba(0, 0, 0, 0.1)"}} alt=''/>
-            <div style={{fontSize:"20px", fontWeight:"500" }}>
-                {itemFind.name}{" "}
-                {quantity >1 && (
-                    <span style={{fontSize:"12px", fontWeight:"400" }}>x {quantity}</span>
-                )}
-            </div>
-            <div style={{fontSize:"17px", fontWeight:"600" }}>
-                {itemFind.price_local}
-            </div>
-            <div style={{fontSize:"20px", fontWeight:"600" }}>
-               Sub total: {itemFind.price_local*quantity}
-            </div>
-            <button style={{width:"60px", height:"30px", backgroundColor:"#d90057", color:"white ", border:"none", borderRadius:"7px", cursor:"pointer"}} onClick={()=> removeFromCart(itemFind.id)}>Quitar</button>
-        </>
-    )
-}
-
-function formatCurrency(price_local: number): import("react").ReactNode {
-  throw new Error("Function not implemented.");
+  return (
+    <CardContainer>
+      <div className="img__container">
+        <img src={product.image} alt={product.name} />
+      </div>
+      <div className="">
+        {itemFind.name}
+        <div className="combinado">
+          <div>{itemFind.price_local}</div>
+          <div className="cantidad">
+            {quantity > 1 && <span>x {quantity}</span>}
+          </div>
+        </div>
+        <div>Sub total: {itemFind.price_local * quantity}</div>
+      </div>
+      <button
+        className="button__remover"
+        onClick={() => dispatch(removeFromCart(itemFind))}
+      >
+        <span className="delete">
+          <IoMdClose />
+        </span>
+      </button>
+    </CardContainer>
+  );
 }
 
 const CardContainer = styled.div`
@@ -61,7 +66,6 @@ const CardContainer = styled.div`
       width: 100%;
     }
   }
-
   .button__remover {
     padding: 5px;
     height: fit-content;
@@ -77,15 +81,12 @@ const CardContainer = styled.div`
       color: ${({ theme }) => theme.error};
     }
   }
-
   .combinado {
     display: flex;
   }
-
   .cantidad {
     margin-left: 10px;
   }
-
   .delete {
     display: flex;
     align-items: center;

@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
-import Validate, { formType, errType } from "../../components/validate";
+import Validate from "../../components/Tugamer/validate";
 import { symlink } from "fs";
 
 import { createProduct } from "../../redux/actions";
@@ -9,9 +9,9 @@ import { useAppDispatch } from "../../app/hooks";
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
-  const [previewSource, setPreviewSource] = useState('');
-  
-  const [err, setErr] = useState<errType>({
+  const [previewSource, setPreviewSource] = useState("");
+
+  const [err, setErr] = useState({
     name: "",
     price_local: "",
     stock: "",
@@ -20,7 +20,7 @@ const Publicar = () => {
     image: "",
   });
 
-  const [input, setInput] = useState<formType>({
+  const [input, setInput] = useState({
     name: "",
     price_local: -1,
     stock: -1,
@@ -29,9 +29,6 @@ const Publicar = () => {
     image: "",
     cloudinary: {},
   });
-
- 
-
 
   const dispatch = useAppDispatch();
 
@@ -47,7 +44,7 @@ const Publicar = () => {
   const handleSubmit = (event: SyntheticEvent) => {
     setErr(Validate(input));
 
-      setInput({
+    setInput({
       name: "",
       price_local: -1,
       stock: -1,
@@ -56,7 +53,7 @@ const Publicar = () => {
       image: "",
       cloudinary: {},
     });
-  
+
     if (
       input.name === "" ||
       input.price_local === -1 ||
@@ -67,41 +64,41 @@ const Publicar = () => {
     ) {
       alert("Faltan datos");
     } else {
-      alert("Producto agregado exitosamente!")
-      dispatch(createProduct(input))
+      alert("Producto agregado exitosamente!");
+      dispatch(createProduct(input));
     }
   };
 
-
-
   const upLoadImage = async (e: any) => {
-    console.log(e.target.files);
     e.preventDefault();
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "henryleo");   // imagenes/ es la carpeta de Cloudinary
+    data.append("upload_preset", "henryleo"); // imagenes/ es la carpeta de Cloudinary
     setLoading(true);
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/minubeleo/image/upload",   //https://api.cloudinary.com/v1_1/:cloud_name/:action
+      "https://api.cloudinary.com/v1_1/minubeleo/image/upload", //https://api.cloudinary.com/v1_1/:cloud_name/:action
       {
         method: "POST",
         body: data,
       }
-    )
+    );
     const file = await res.json();
     setLoading(false);
-    setInput({ ...input, [e.target.name]: file.secure_url })
-    //console.log(file.secure_url);
-  }
+    setInput({ ...input, [e.target.name]: file.secure_url });
+    setErr(Validate({ ...input, [e.target.name]: e.target.value }));
+  };
   return (
     <PublicarContainer>
       <Navbar />
       <AddProduct>
-        <h1 className="addproduct-title">Add Product</h1>
+        <h1 className="addproduct-title">Agrega un producto</h1>
         <form onSubmit={handleSubmit} action="" className="formularioproduct">
           <div className="productinfo">
             <div className="productinfo__left">
+              <h5 className="campo__obligatorio">
+                Todos los campos son obligatorios
+              </h5>
               <div className="inputinfo">
                 <label htmlFor="">Nombre del producto:</label>
                 <input name="name" type="text" onChange={handleChange} />
@@ -110,8 +107,9 @@ const Publicar = () => {
               <div className="inputinfo">
                 <label htmlFor="price_local">Precio:</label>
                 <input
+                  className="price_local__input"
                   name="price_local"
-                  type="number"
+                  type="text"
                   onChange={handleChange}
                 />
                 {err.price_local ? (
@@ -122,24 +120,19 @@ const Publicar = () => {
               </div>
               <div className="inputinfo">
                 <label htmlFor="stock">Stock:</label>
-                <input name="stock" type="number" onChange={handleChange} />
+                <input name="stock" type="text" onChange={handleChange} />
                 {err.stock ? <p className="errortext"> {err.stock} </p> : ""}
               </div>
               <div className="inputinfo">
                 <label htmlFor="description">Descripcion:</label>
-                <textarea
-                  name="description"
-                  rows={5}
-                  cols={33}
-                  onChange={handleChange}
-                />
+                <textarea name="description" onChange={handleChange} />
                 {err.description ? (
                   <p className="errortext"> {err.description} </p>
                 ) : (
                   ""
                 )}
               </div>
-              <div className="inputinfo">
+              <div className="inputinfo ultimo__select">
                 <label htmlFor="suspended">Estado:</label>
                 <select
                   defaultValue={"DEFAULT"}
@@ -162,18 +155,17 @@ const Publicar = () => {
             </div>
             <div className="productinfo__Right">
               <div className="imageupload">
-                <input type="file" name="image" onChange={(e:any) =>upLoadImage(e)} />
+                <input
+                  type="file"
+                  name="image"
+                  onChange={(e) => upLoadImage(e)}
+                />
               </div>
 
               {err.image ? <p className="errortext"> {err.image} </p> : ""}
             </div>
           </div>
-          <button
-            className="submitproduct"
-          >
-            Submit
-          </button>
-
+          <button className="submitproduct">Submit</button>
         </form>
       </AddProduct>
     </PublicarContainer>
@@ -204,6 +196,11 @@ const AddProduct = styled.div`
     align-items: center;
   }
 
+  .campo__obligatorio {
+    color: ${({ theme }) => theme.details};
+    margin-bottom: 5px;
+  }
+
   .productinfo {
     width: 100%;
     display: flex;
@@ -214,9 +211,14 @@ const AddProduct = styled.div`
     width: 60%;
   }
 
+  .price_local__input {
+    text-transform: uppercase;
+  }
+
   .errortext {
     font-size: 12px;
     color: ${({ theme }) => theme.error};
+    margin-bottom: 5px;
   }
 
   .inputinfo {
@@ -242,12 +244,16 @@ const AddProduct = styled.div`
 
     textarea {
       width: 500px;
+      min-height: 55px;
       resize: none;
       background-color: ${({ theme }) => theme.tertiary};
       border: none;
       border-radius: 4px;
-      margin-bottom: 10px;
+      margin-bottom: 3px;
       padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     select {
@@ -258,6 +264,10 @@ const AddProduct = styled.div`
       border-radius: 4px;
       margin-bottom: 10px;
     }
+  }
+
+  .ultimo__select {
+    margin-top: 20px;
   }
 
   .productinfo__Right {

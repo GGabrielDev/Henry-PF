@@ -20,7 +20,7 @@ const carrito = [
     Monto: 200.0,
   },
 ];
-const numero='+573053721294'
+const numero = "+573053721294";
 const WhatsApp = () => {
   let productosParaWsp = carrito.map(
     (producto) => `- ${producto.Nombre}, $${producto.Monto}`
@@ -33,13 +33,9 @@ const WhatsApp = () => {
     <WhatsAppContainer>
       <a
         className="whatsapp"
-        href={
-          `https://api.whatsapp.com/send?phone=${numero}&text=Hola+%F0%9F%91%8B.%0D%0AMe+gustar%C3%ADa+saber+mas+acerca+de++%F0%9F%96%A5Henry+shops+y+de+su+propuesta+de+valor.
+        href={`https://api.whatsapp.com/send?phone=${numero}&text=Hola+%F0%9F%91%8B.%0D%0AMe+gustar%C3%ADa+saber+mas+acerca+de++%F0%9F%96%A5Henry+shops+y+de+su+propuesta+de+valor.
          
-          ` +
-          " " +
-          productosConFormatoAmigable
-        }
+          `}
       >
         <div className="whatsapp-content">
           <img className="whatsapp-img" src={Whatsapp} alt="" />

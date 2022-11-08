@@ -54,8 +54,8 @@ const Navbar = () => {
             </div>
 
             <div className="userinfo-item">
-              <button className="button__cart" onClick={openCart}>
-                <BiShoppingBag /> {cartQuantity > 0 ? "" : ""}
+              <button className="button__cart">
+                <BiShoppingBag /> {cartQuantity}
               </button>
             </div>
           </Userinfo>

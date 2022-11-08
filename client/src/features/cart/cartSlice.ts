@@ -15,17 +15,17 @@ type SliceState = {
 
 export const initialStateCreator: () => SliceState = () => {
   let cartItems: CartItem[] = [];
-  let cartQuantity = cartItems.reduce(
-    (quantity, item) => item.quantity + quantity,
-    0
-  );
-  let isOpen = false;
-
   if (localStorage.getItem("cart/cartItems") === null) {
     localStorage.setItem("cart/cartItems", JSON.stringify(cartItems));
   } else {
     cartItems = JSON.parse(localStorage.getItem("cart/cartItems") as string);
   }
+
+  let cartQuantity = cartItems.reduce(
+    (quantity, item) => item.quantity + quantity,
+    0
+  );
+  let isOpen = false;
 
   return { cartQuantity, cartItems, isOpen };
 };
@@ -39,46 +39,52 @@ export const cartSlice = createSlice({
     },
     incrementItemQuantity: (state, action: PayloadAction<ProductType>) => {
       const product = action.payload;
+      let result = [];
       if (
         state.cartItems.find((item) => item.product.id === product.id) == null
       ) {
-        const result = [...state.cartItems, { product, quantity: 1 }];
-        state.cartItems = result;
-        localStorage.setItem("cart/cartItems", JSON.stringify(result));
+        result = [...state.cartItems, { product, quantity: 1 }];
       } else {
-        const result = state.cartItems.map((item) => {
+        result = state.cartItems.map((item) => {
           if (item.product.id === product.id) {
             return { ...item, quantity: item.quantity + 1 };
           } else {
             return item;
           }
         });
-        state.cartItems = result;
-        localStorage.setItem("cart/cartItems", JSON.stringify(result));
       }
+      state.cartItems = result;
+      state.cartQuantity = result.reduce(
+        (quantity, item) => item.quantity + quantity,
+        0
+      );
+      localStorage.setItem("cart/cartItems", JSON.stringify(result));
     },
     decrementItemQuantity: (state, action: PayloadAction<ProductType>) => {
       const product = action.payload;
+      let result = [];
       if (
         state.cartItems.find((item) => item.product.id === product.id)
           ?.quantity === 1
       ) {
-        const result = state.cartItems.filter(
+        result = state.cartItems.filter(
           (item) => item.product.id !== product.id
         );
-        state.cartItems = result;
-        localStorage.setItem("cart/cartItems", JSON.stringify(result));
       } else {
-        const result = state.cartItems.map((item) => {
+        result = state.cartItems.map((item) => {
           if (item.product.id === product.id) {
             return { ...item, quantity: item.quantity - 1 };
           } else {
             return item;
           }
         });
-        state.cartItems = result;
-        localStorage.setItem("cart/cartItems", JSON.stringify(result));
       }
+      state.cartItems = result;
+      state.cartQuantity = result.reduce(
+        (quantity, item) => item.quantity + quantity,
+        0
+      );
+      localStorage.setItem("cart/cartItems", JSON.stringify(result));
     },
     removeFromCart: (state, action: PayloadAction<ProductType>) => {
       const product = action.payload;
@@ -86,6 +92,10 @@ export const cartSlice = createSlice({
         (item) => item.product.id !== product.id
       );
       state.cartItems = result;
+      state.cartQuantity = result.reduce(
+        (quantity, item) => item.quantity + quantity,
+        0
+      );
       localStorage.setItem("cart/cartItems", JSON.stringify(result));
     },
   },

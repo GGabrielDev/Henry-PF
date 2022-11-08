@@ -1,21 +1,23 @@
-import React from "react";
 import styled from "styled-components";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { actions, selectors } from "../../features/cart/cartSlice";
+import ShoppingCart from "./ShoppingCart";
 
 const { toggleCart } = actions;
-const { selectCartQuantity } = selectors;
+const { selectCartQuantity, selectIsOpen } = selectors;
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const cartQuantity = useAppSelector(selectCartQuantity);
+  const isOpen = useAppSelector(selectIsOpen);
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
     <NavbarContainer>
+      <ShoppingCart isOpen={isOpen} />
       <Header>
         <Headertop>
           <Infotop>
@@ -54,7 +56,7 @@ const Navbar = () => {
             <div className="userinfo-item">
               <button
                 className="button__cart"
-                onClick={() => dispatch(toggleCart)}
+                onClick={() => dispatch(toggleCart())}
               >
                 <BiShoppingBag /> {cartQuantity}
               </button>

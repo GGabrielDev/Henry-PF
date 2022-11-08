@@ -22,7 +22,7 @@ export function CartItem({ product, quantity }: CartItemProps) {
   return (
     <CardContainer>
       <div className="img__container">
-        <img src={image} alt={image} />
+        <img src={product.image} alt={product.name} />
       </div>
       <div className="">
         {itemFind.name}

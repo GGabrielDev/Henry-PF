@@ -38,8 +38,8 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
               </div>
               <div className="info__carro">
                 {cartItems.map((item) => (
-                  <div className="info__carta">
-                    <CartItem key={item.product.id} {...item} />
+                  <div className="info__carta" key={item.product.id}>
+                    <CartItem {...item} />
                   </div>
                 ))}
               </div>

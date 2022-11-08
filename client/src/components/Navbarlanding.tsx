@@ -5,9 +5,11 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose, IoIosArrowForward } from "react-icons/io";
-import User from "../assets/imagenesSlider/49838.jpg";
 import UserDefault from "../assets/imagenesSlider/defaultuser.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
+import { ThemesLanding } from "../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
+import { Link } from "react-router-dom";
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
@@ -18,151 +20,157 @@ const Navbarlanding = () => {
   };
 
   return (
-    <Navbarlandings>
-      <div className="nav-content">
-        <div className="logo">
-          <Logo>HenryShops</Logo>
-        </div>
-        <div className="nav__sections-1">
-          <a className="section" href={"#home"}>
-            Home
-          </a>
-          <a className="section" href={"#about"}>
-            About
-          </a>
-          <a className="section" href={"#clients"}>
-            Clients
-          </a>
-          <a className="section" href={"#contact"}>
-            Contact
-          </a>
-        </div>
-
-        <div className="nav__sections-2">
-          {isAuthenticated ? (
-            <NavLink className="section button" to="/usuario">
-              <HiOutlineUserCircle />
-            </NavLink>
-          ) : (
-            <NavLink className="section button" to="">
-              <HiOutlineUserCircle onClick={() => loginWithRedirect()} />
-            </NavLink>
-          )}
-
-          <NavLink
-            onClick={handleChange}
-            className="section button"
-            to="#contact"
-          >
-            <AiOutlineMenu />
-          </NavLink>
-        </div>
-
-        <div className={menu ? "menu" : "menu menu-dn"}>
-          <span className="x" onClick={handleChange}>
-            <IoMdClose />
-          </span>
-
-          <div className="img__container">
-            <div className="img__circle">
-              {isAuthenticated ? (
-                <img src={user?.picture} alt="picture" />
-              ) : (
-                <img src={UserDefault} alt="" />
-              )}
-            </div>
-          </div>
-
-          {isAuthenticated ? (
-            <NavLink className="section-re" to="/usuario">
-              <div className="section__cajita">
-                <span className="section__name">Cuenta</span>
-                <span className="icon-re">
-                  <IoIosArrowForward />
-                </span>
+    <>
+      <ThemeProvider theme={ThemesLanding}>
+        <Navbarlandings>
+          <div className="nav-content">
+            <Link to="/">
+              <div className="logo">
+                <Logo>HenryShops</Logo>
               </div>
-            </NavLink>
-          ) : (
-            <NavLink className="section-re" to="#home">
-              <div className="section__cajita">
-                <span
-                  className="section__name"
-                  onClick={() => loginWithRedirect()}
-                >
-                  Registrate
-                </span>
-                <span className="icon-re">
-                  <IoIosArrowForward />
-                </span>
-              </div>
-            </NavLink>
-          )}
-          <NavLink className="section-re" to="#home">
-            <div className="section__cajita">
-              {isAuthenticated ? (
-                <span onClick={() => logout()} className="section__name">
-                  Logout
-                </span>
-              ) : (
-                <span
-                  onClick={() => loginWithRedirect()}
-                  className="section__name"
-                >
-                  Login
-                </span>
-              )}
-              <span className="icon-re">
-                <IoIosArrowForward />
-              </span>
-            </div>
-          </NavLink>
-
-          <div className="flex">
-            <div className="cajita__section__page">
-              <a className="section__page" href={"#home"}>
+            </Link>
+            <div className="nav__sections-1">
+              <a className="section" href={"#home"}>
                 Home
               </a>
-              <span className="icon-re">
-                <IoIosArrowForward />
-              </span>
-            </div>
-          </div>
-
-          <div className="flex">
-            <div className="cajita__section__page">
-              <a className="section__page" href={"#about"}>
+              <a className="section" href={"#about"}>
                 About
               </a>
-              <span className="icon-re">
-                <IoIosArrowForward />
-              </span>
-            </div>
-          </div>
-
-          <div className="flex">
-            <div className="cajita__section__page">
-              <a className="section__page" href={"#clients"}>
+              <a className="section" href={"#clients"}>
                 Clients
               </a>
-              <span className="icon-re">
-                <IoIosArrowForward />
-              </span>
-            </div>
-          </div>
-
-          <div className="flex">
-            <div className="cajita__section__page">
-              <a className="section__page" href={"#contact"}>
+              <a className="section" href={"#contact"}>
                 Contact
               </a>
-              <span className="icon-re">
-                <IoIosArrowForward />
+            </div>
+
+            <div className="nav__sections-2">
+              {isAuthenticated ? (
+                <NavLink className="section button" to="/usuario">
+                  <HiOutlineUserCircle />
+                </NavLink>
+              ) : (
+                <NavLink className="section button" to="">
+                  <HiOutlineUserCircle onClick={() => loginWithRedirect()} />
+                </NavLink>
+              )}
+
+              <NavLink
+                onClick={handleChange}
+                className="section button"
+                to="#contact"
+              >
+                <AiOutlineMenu />
+              </NavLink>
+            </div>
+
+            <div className={menu ? "menu" : "menu menu-dn"}>
+              <span className="x" onClick={handleChange}>
+                <IoMdClose />
               </span>
+
+              <div className="img__container">
+                <div className="img__circle">
+                  {isAuthenticated ? (
+                    <img src={user?.picture} alt="picture" />
+                  ) : (
+                    <img src={UserDefault} alt="" />
+                  )}
+                </div>
+              </div>
+
+              {isAuthenticated ? (
+                <NavLink className="section-re" to="/usuario">
+                  <div className="section__cajita">
+                    <span className="section__name">Cuenta</span>
+                    <span className="icon-re">
+                      <IoIosArrowForward />
+                    </span>
+                  </div>
+                </NavLink>
+              ) : (
+                <NavLink className="section-re" to="#home">
+                  <div className="section__cajita">
+                    <span
+                      className="section__name"
+                      onClick={() => loginWithRedirect()}
+                    >
+                      Registrate
+                    </span>
+                    <span className="icon-re">
+                      <IoIosArrowForward />
+                    </span>
+                  </div>
+                </NavLink>
+              )}
+              <NavLink className="section-re" to="#home">
+                <div className="section__cajita">
+                  {isAuthenticated ? (
+                    <span onClick={() => logout()} className="section__name">
+                      Logout
+                    </span>
+                  ) : (
+                    <span
+                      onClick={() => loginWithRedirect()}
+                      className="section__name"
+                    >
+                      Login
+                    </span>
+                  )}
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
+              </NavLink>
+
+              <div className="flex">
+                <div className="cajita__section__page">
+                  <a className="section__page" href={"#home"}>
+                    Home
+                  </a>
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex">
+                <div className="cajita__section__page">
+                  <a className="section__page" href={"#about"}>
+                    About
+                  </a>
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex">
+                <div className="cajita__section__page">
+                  <a className="section__page" href={"#clients"}>
+                    Clients
+                  </a>
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex">
+                <div className="cajita__section__page">
+                  <a className="section__page" href={"#contact"}>
+                    Contact
+                  </a>
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </Navbarlandings>
+        </Navbarlandings>
+      </ThemeProvider>
+    </>
   );
 };
 
@@ -174,6 +182,7 @@ const Navbarlandings = styled.div`
   height: 30px;
   position: absolute;
   color: ${({ theme }) => theme.primary};
+  background-color: ${({ theme }) => theme.primary};
   display: flex;
   justify-content: center;
 

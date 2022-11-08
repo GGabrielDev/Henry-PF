@@ -25,7 +25,7 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <div className="is" onClick={() => logout()}>
                   {" "}
-                  Salir de sesión{" "}
+                  Salir de sesiÃ³n{" "}
                 </div>
               ) : (
                 <div className="is" onClick={() => loginWithRedirect()}>

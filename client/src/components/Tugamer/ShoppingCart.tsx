@@ -37,7 +37,7 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
                 <h1 className="title__cart">Cart</h1>
               </div>
               <div className="info__carro">
-                {cartItems.map((item) => (
+                {cartItems.map((item: any) => (
                   <div className="info__carta" key={item.product.id}>
                     <CartItem {...item} />
                   </div>
@@ -47,7 +47,7 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
                 <div className="total__price">
                   Total:
                   <div className="total">
-                    {cartItems.reduce((total, cartItem) => {
+                    {cartItems.reduce((total: any, cartItem: any) => {
                       const itemFind = item.find(
                         (e) => e.id === cartItem.product.id
                       );

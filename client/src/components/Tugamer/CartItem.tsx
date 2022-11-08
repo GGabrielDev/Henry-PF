@@ -46,10 +46,6 @@ export function CartItem({ product, quantity }: CartItemProps) {
   );
 }
 
-// function formatCurrency(price_local: number): import("react").ReactNode {
-//	throw new Error("Function not implemented.");
-// }
-
 const CardContainer = styled.div`
   margin: 10px;
   width: 100%;

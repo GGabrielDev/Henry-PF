@@ -12,3 +12,7 @@ export const Themes = {
   Whatsapp: "#77b8a6",
   info: "rgb(0, 0, 255)",
 };
+
+
+
+

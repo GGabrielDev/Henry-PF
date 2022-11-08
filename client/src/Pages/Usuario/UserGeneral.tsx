@@ -7,11 +7,8 @@ import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
-
-
 const General = () => {
-  const {user, isAuthenticated} = useAuth0();
-
+  const { user, isAuthenticated } = useAuth0();
 
   return (
     <GeneralContainer>
@@ -23,10 +20,11 @@ const General = () => {
             <h3 className="general__perfil-section">Tu Foto</h3>
             <div className="general__img">
               <div className="img__container">
-              {isAuthenticated ? <img src={user?.picture} alt="picture"/>           
-              :
-              <img src={UserDefault} alt=""/>
-              }
+                {isAuthenticated ? (
+                  <img src={user?.picture} alt="picture" />
+                ) : (
+                  <img src={UserDefault} alt="" />
+                )}
               </div>
               <div className="botones">
                 <button className="subir__img">Subir Foto </button>
@@ -36,17 +34,13 @@ const General = () => {
             <h2 className="general__perfil-section">Información básica:</h2>
 
             <h3 className="general__perfil-section-item">Nombre/s</h3>
-            <input type="text" className="general__input" value={user?.given_name}/>
+            <p className="general__input">{user?.given_name}</p>
 
             <h3 className="general__perfil-section-item">Apellido/s</h3>
-            <input type="text" className="general__input" value={user?.family_name} />
+            <p className="general__input">{user?.family_name}</p>
 
             <h3 className="general__perfil-section-item">Email</h3>
-            <input type="text" className="general__input" value={user?.email} />
-
-            <h3 className="general__perfil-section-item">Número Telefonico</h3>            
-            <input type="text" className="general__input"/>
-
+            <p className="general__input">{user?.email}</p>
           </div>
         </GeneralContent>
       </ThemeProvider>
@@ -93,9 +87,8 @@ const GeneralContent = styled.div`
     align-items: center;
     justify-content: center;
     overflow: hidden;
-
     img {
-      width: 250px;
+      width: 100%;
     }
   }
 
@@ -142,20 +135,21 @@ const GeneralContent = styled.div`
     font-size: 14px;
     font-weight: 400px;
     margin-top: 10px;
+    margin-bottom: 5px;
   }
 
   .general__perfil-section-item {
-    font-size: 11px;
+    font-size: 12px;
     color: ${({ theme }) => theme.details};
     margin-top: 5px;
   }
 
   .general__input {
-    padding: 10px;
+    padding: 5px 0;
     border-radius: 10px;
-    border: 1px solid ${({ theme }) => theme.border};
     width: 50%;
-    font-size: 11px;
+    font-size: 12px;
+    color: ${({ theme }) => theme.primary};
   }
 
   @media screen and (max-width: 768px) {

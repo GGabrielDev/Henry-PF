@@ -37,7 +37,7 @@ const Card = ({ product }: { product: ProductType }) => {
             </span>
           </div>
           <div className="card__image">
-            <img src={product.image} alt="" className="card__image" />
+            <img src={product.image} alt="" />
           </div>
           <div className="card__info">
             <div className="card_color_name">{product.name}</div>
@@ -84,10 +84,12 @@ const CardContainer = styled.div`
     max-height: 100%;
     box-shadow: 2px 2px 15px #30303021;
     border-radius: 13px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     justify-content: space-evenly;
     transition: 0.3s;
-
     &:hover {
       box-shadow: 2px 2px 15px #3030304c;
     }
@@ -96,6 +98,8 @@ const CardContainer = styled.div`
   .edit__container {
     display: flex;
     align-items: center;
+    width: 100%;
+    padding-bottom: 5px;
     justify-content: space-between;
     span {
       display: flex;
@@ -104,6 +108,7 @@ const CardContainer = styled.div`
       transition: 0.4s;
       color: ${({ theme }) => theme.border};
       cursor: pointer;
+      padding: 0 5px;
     }
     .edit {
       &:hover {
@@ -126,13 +131,20 @@ const CardContainer = styled.div`
   }
 
   .card__image {
-    position: relative;
-    max-width: 200px;
-    max-height: 100%;
-    border-radius: 15px;
-
+    overflow: hidden;
+    width: 180px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
     img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
+      height: auto;
     }
   }
 

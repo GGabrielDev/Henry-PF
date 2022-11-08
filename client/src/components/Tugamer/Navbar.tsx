@@ -49,7 +49,7 @@ const Navbar = () => {
 
             <div className="userinfo-item">
               <button className="button__cart" onClick={openCart}>
-                <BiShoppingBag /> {cartQuantity}
+                <BiShoppingBag /> {cartQuantity > 0 ? "" : ""}
               </button>
             </div>
           </Userinfo>

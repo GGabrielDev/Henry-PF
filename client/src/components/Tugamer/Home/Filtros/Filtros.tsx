@@ -29,8 +29,8 @@ const Filtros = () => {
   };
   return (
     <FiltrosContainer>
-      <Link to="publicar">
-        <button className="buttonfilter">Agregar producto</button>
+      <Link to="publicar" className="buttonfilter-container">
+        <button className="buttonfilter">+</button>
       </Link>
       <div className="inputcontainerfilet">
         <input
@@ -75,18 +75,27 @@ const FiltrosContainer = styled.div`
     }
   }
 
+  .buttonfilter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .buttonfilter {
     background-color: ${({ theme }) => theme.primary};
     font-size: 15px;
     border: 1px solid transparent;
     color: ${({ theme }) => theme.light};
-    padding: 5px;
+    height: 100%;
+    width: 150px;
     border-radius: 5px;
     transition: 0.4s;
     cursor: pointer;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     &:hover {
+      color: ${({ theme }) => theme.dark};
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      background-color: ${({ theme }) => theme.light};
+      border: 1px solid ${({ theme }) => theme.primary};
     }
   }
 
@@ -94,7 +103,6 @@ const FiltrosContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     select {
       margin: 0 10px;
     }
@@ -104,9 +112,15 @@ const FiltrosContainer = styled.div`
     background-color: ${({ theme }) => theme.tertiary};
     border: 0px;
     outline: none;
-    width: 200px;
+    width: 100%;
     height: 30px;
     padding: 0 10px;
+  }
+
+  .search {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid ${({ theme }) => theme.details};
   }
 
   @media screen and (max-width: 925px) {
@@ -120,17 +134,38 @@ const FiltrosContainer = styled.div`
     }
 
     .buttonfilter {
-      justify-content: center;
+      width: 100px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .buttonfilter {
+      width: 25px;
     }
   }
 
   @media screen and (max-width: 400px) {
+    position: relative;
+    margin-bottom: 20px;
+    justify-content: space-between;
     .buttonfilter {
       width: 120px;
-
       select {
         width: 100%;
       }
+    }
+    .button__select {
+      border-radius: 5px;
+    }
+
+    .buttonfilter {
+      width: 25px;
+    }
+
+    .inputcontainerfilet {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
     }
   }
 `;

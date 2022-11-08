@@ -11,6 +11,7 @@ import { ThemeProvider } from "styled-components";
 import WhatsApp from "../components/WhatsApp";
 import ContactContainer from "../components/Contact";
 import Ourclients from "../components/Clientes/Ourclients";
+import Subcription from "../components/subcription";
 
 const Landingpage = () => {
   return (
@@ -66,6 +67,10 @@ const Landingpage = () => {
           <h1 id="clients">Nuestros Clientes </h1>
 
           <Ourclients />
+
+          <h1 id="plans"> Plans </h1>
+          <p>FlexiblePlns</p>
+          <Subcription />
 
           <h1 id="contact">Contactanos</h1>
 

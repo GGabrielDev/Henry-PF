@@ -1,18 +1,20 @@
-import { useAppSelector } from "../../app/hooks";
-import { selectProducts } from "../../features/products/productSlice";
-import { useShoppingCart } from "./context/SoppingCartContext";
-import image from "../../assets/imagenesSlider/49838.jpg";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectProducts } from "../../features/products/productSlice";
+import image from "../../assets/imagenesSlider/49838.jpg";
 import { ProductType } from "../../features/products/productSlice";
+import { actions } from "../../features/cart/cartSlice";
 
 type CartItemProps = {
   product: ProductType;
   quantity: number;
 };
 
+const { removeFromCart } = actions;
+
 export function CartItem({ product, quantity }: CartItemProps) {
-  const { removeFromCart } = useShoppingCart();
+  const dispatch = useAppDispatch();
   const item = useAppSelector(selectProducts);
   const itemFind = item.find((e) => e.id === product.id);
   if (itemFind == null) return null;
@@ -34,7 +36,7 @@ export function CartItem({ product, quantity }: CartItemProps) {
       </div>
       <button
         className="button__remover"
-        onClick={() => removeFromCart(itemFind)}
+        onClick={() => dispatch(removeFromCart(itemFind))}
       >
         <span className="delete">
           <IoMdClose />
@@ -44,9 +46,9 @@ export function CartItem({ product, quantity }: CartItemProps) {
   );
 }
 
-function formatCurrency(price_local: number): import("react").ReactNode {
-  throw new Error("Function not implemented.");
-}
+// function formatCurrency(price_local: number): import("react").ReactNode {
+//	throw new Error("Function not implemented.");
+// }
 
 const CardContainer = styled.div`
   margin: 10px;

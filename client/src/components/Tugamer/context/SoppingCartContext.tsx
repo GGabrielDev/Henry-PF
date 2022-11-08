@@ -6,6 +6,7 @@ import { ProductType } from "../../../features/products/productSlice";
 type ShoppingCartProviderProps = {
   children: ReactNode;
 };
+
 type CartItem = {
   product: ProductType;
   quantity: number;

@@ -1,19 +1,18 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import img from "./Utils/prueba.png";
-import img2 from "./Utils/tipo.jpg";
 import { BsInfoCircle } from "react-icons/bs";
-import { useShoppingCart } from "./context/SoppingCartContext";
-import { count } from "console";
 import Swal from "sweetalert2";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ProductType } from "../../features/products/productSlice";
+import { actions, helpers } from "../../features/cart/cartSlice";
+
+const { incrementItemQuantity, decrementItemQuantity } = actions;
+const { getItemQuantity } = helpers;
 
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({ product }: { product: ProductType }) => {
-  const { getItemQuantity, incrementCartQuantity, decrementCartQuantity } =
-    useShoppingCart();
-  const quantity = getItemQuantity(product);
+  const dispatch = useAppDispatch();
+  const quantity = useAppSelector(getItemQuantity(product));
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Error",
@@ -38,7 +37,7 @@ const Card = ({ product }: { product: ProductType }) => {
             <div className="card__buttons">
               <button
                 disabled={quantity === 0}
-                onClick={() => decrementCartQuantity(product)}
+                onClick={() => dispatch(decrementItemQuantity(product))}
                 className="button__card"
               >
                 {" "}
@@ -46,7 +45,7 @@ const Card = ({ product }: { product: ProductType }) => {
               </button>
               <h3>{quantity}</h3>
               <button
-                onClick={() => incrementCartQuantity(product)}
+                onClick={() => dispatch(incrementItemQuantity(product))}
                 className="button__card"
               >
                 {" "}

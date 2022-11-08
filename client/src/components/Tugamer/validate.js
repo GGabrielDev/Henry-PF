@@ -1,5 +1,3 @@
-
-
 function Validate(input) {
   let error = {};
 

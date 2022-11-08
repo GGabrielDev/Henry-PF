@@ -39,6 +39,9 @@ const Navbarlanding = () => {
               <a className="section" href={"#clients"}>
                 Clients
               </a>
+              <a className="section" href={"#plans"}>
+                Plans
+              </a>
               <a className="section" href={"#contact"}>
                 Contact
               </a>
@@ -79,15 +82,36 @@ const Navbarlanding = () => {
                 </div>
               </div>
 
-              {isAuthenticated ? (
-                <NavLink className="section-re" to="/usuario">
-                  <div className="section__cajita">
-                    <span className="section__name">Cuenta</span>
-                    <span className="icon-re">
-                      <IoIosArrowForward />
+              {isAuthenticated ? (             
+                <  >
+                <div className="section-re">
+                  <div className="section__cajita2">
+                    <span className="section__name">{user?.name}</span>
+                    <span className="icon-re">                      
                     </span>
                   </div>
+                </div> 
+                
+                <NavLink className="section-re" to="/usuario">
+                <div className="section__cajita">
+                  <span className="section__name">Tu Perfil</span>
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
                 </NavLink>
+                <NavLink className="section-re" to="#home">
+                <div className="section__cajita">                 
+                    <span onClick={() => logout()} className="section__name">
+                      Logout
+                    </span>                  
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
+              </NavLink>
+              </>          
+
               ) : (
                 <NavLink className="section-re" to="#home">
                   <div className="section__cajita">
@@ -95,7 +119,7 @@ const Navbarlanding = () => {
                       className="section__name"
                       onClick={() => loginWithRedirect()}
                     >
-                      Registrate
+                      Login
                     </span>
                     <span className="icon-re">
                       <IoIosArrowForward />
@@ -103,25 +127,7 @@ const Navbarlanding = () => {
                   </div>
                 </NavLink>
               )}
-              <NavLink className="section-re" to="#home">
-                <div className="section__cajita">
-                  {isAuthenticated ? (
-                    <span onClick={() => logout()} className="section__name">
-                      Logout
-                    </span>
-                  ) : (
-                    <span
-                      onClick={() => loginWithRedirect()}
-                      className="section__name"
-                    >
-                      Login
-                    </span>
-                  )}
-                  <span className="icon-re">
-                    <IoIosArrowForward />
-                  </span>
-                </div>
-              </NavLink>
+              
 
               <div className="flex">
                 <div className="cajita__section__page">
@@ -149,6 +155,16 @@ const Navbarlanding = () => {
                 <div className="cajita__section__page">
                   <a className="section__page" href={"#clients"}>
                     Clients
+                  </a>
+                  <span className="icon-re">
+                    <IoIosArrowForward />
+                  </span>
+                </div>
+              </div>
+              <div className="flex">
+                <div className="cajita__section__page">
+                  <a className="section__page" href={"#plans"}>
+                    Plans
                   </a>
                   <span className="icon-re">
                     <IoIosArrowForward />
@@ -375,6 +391,16 @@ const Navbarlandings = styled.div`
       color: ${({ theme }) => theme.primary};
     }
   }
+  .section__cajita2 {
+    color: ${({ theme }) => theme.dark};    
+    transition: 0.4s;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: center; 
+  }
 
   .icon-re {
     display: flex;
@@ -424,4 +450,4 @@ const Logo = styled.span`
   &:hover {
     color: ${({ theme }) => theme.secondary};
   }
-`;
+  `;

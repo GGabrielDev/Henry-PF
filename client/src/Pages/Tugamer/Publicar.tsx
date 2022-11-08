@@ -17,7 +17,7 @@ const Publicar = () => {
     stock: "",
     description: "",
     suspended: "",
-    image: "",
+    image: "Si no se agrega imagen, se pondra una por default",
   });
 
   const [input, setInput] = useState({
@@ -26,7 +26,7 @@ const Publicar = () => {
     stock: -1,
     description: "",
     suspended: "",
-    image: "",
+    image: "https://definicion.de/wp-content/uploads/2009/06/producto.png",
     cloudinary: {},
   });
 
@@ -71,6 +71,7 @@ const Publicar = () => {
 
   const upLoadImage = async (e: any) => {
     e.preventDefault();
+
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);

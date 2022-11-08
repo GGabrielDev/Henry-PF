@@ -52,8 +52,6 @@ type GenerateRequestBody = {
 type NotificationRequestQuery = Record<"id" | "topic", string>;
 
 const router = Router();
-
-<<<<<<< HEAD
 router.post("/", (req, res) => {
   const {price_local} =req.body
   console.log(2)
@@ -72,11 +70,10 @@ router.post("/", (req, res) => {
     ],
     notification_url: "https://localhost:3000/tugamer",
   };
-=======
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+})
+  router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await Recipt.findAll();
->>>>>>> c3a469abd2735187c946d5a3c5a90769733fc199
 
     if (result.length === 0) {
       return res.status(204);
@@ -86,7 +83,6 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 });
-<<<<<<< HEAD
 router.get('/comprar', (req, res) => {
   res.send('todo salio bien')});
   
@@ -96,9 +92,7 @@ router.get('/comprar', (req, res) => {
     console.log({body,query})
     res.send();
   })
-=======
-
-router.get(
+  router.get(
   "/:mercadopagoId",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -202,5 +196,4 @@ router.post(
   }
 );
 
->>>>>>> c3a469abd2735187c946d5a3c5a90769733fc199
 export default router;

@@ -25,7 +25,7 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <div className="is" onClick={() => logout()}>
                   {" "}
-                  Salir de sesión{" "}
+                  Salir de sesiÃ³n{" "}
                 </div>
               ) : (
                 <div className="is" onClick={() => loginWithRedirect()}>
@@ -54,7 +54,10 @@ const Navbar = () => {
             </div>
 
             <div className="userinfo-item">
-              <button className="button__cart">
+              <button
+                className="button__cart"
+                onClick={() => dispatch(toggleCart())}
+              >
                 <BiShoppingBag /> {cartQuantity}
               </button>
             </div>

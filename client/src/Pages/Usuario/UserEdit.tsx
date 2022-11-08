@@ -31,12 +31,7 @@ const General = () => {
             {products?.map((e: any) => {
               return (
                 <div className="gridcard" key={e.id}>
-                  <Card
-                    name={e.name}
-                    price_local={e.price_local}
-                    image={e.image}
-                    id={e.id}
-                  />
+                  <Card product={e} />
                 </div>
               );
             })}

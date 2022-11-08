@@ -1,5 +1,5 @@
 export const Themes = {
-  primary: "#d90057" /* VIOLETA PASTEL */,
+  primary: "#d90057" /* rojo */,
   secondary: "#f1deff" /* VIOLETA PASTEL CLARO*/,
   dark: "#1a1833" /* NEGRO*/,
   details: "#77767c" /* GRIS */,

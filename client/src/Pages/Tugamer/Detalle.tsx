@@ -4,6 +4,7 @@ import { MdFavorite } from "react-icons/md";
 import Navbar from "../../components/Tugamer/Navbar";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import Comentarios from "../../components/Tugamer/Comentarios";
 import {
   detailProduct,
   getProductId,
@@ -77,6 +78,7 @@ const Detalle = () => {
             </div>
           </div>
         </DetalleContainer>
+        <Comentarios />
       </>
     );
   } else {

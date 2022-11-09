@@ -1,19 +1,18 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import img from "./Utils/prueba.png";
-import img2 from "./Utils/tipo.jpg";
 import { BsInfoCircle } from "react-icons/bs";
-import { useShoppingCart } from "./context/SoppingCartContext";
-import { count } from "console";
 import Swal from "sweetalert2";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { ProductType } from "../../features/products/productSlice";
+import { actions, helpers } from "../../features/cart/cartSlice";
+
+const { incrementItemQuantity, decrementItemQuantity } = actions;
+const { getItemQuantity } = helpers;
 
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({ product }: { product: ProductType }) => {
-  const { getItemQuantity, incrementCartQuantity, decrementCartQuantity } =
-    useShoppingCart();
-  const quantity = getItemQuantity(product);
+  const dispatch = useAppDispatch();
+  const quantity = useAppSelector(getItemQuantity(product));
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Error",
@@ -38,7 +37,7 @@ const Card = ({ product }: { product: ProductType }) => {
             <div className="card__buttons">
               <button
                 disabled={quantity === 0}
-                onClick={() => decrementCartQuantity(product)}
+                onClick={() => dispatch(decrementItemQuantity(product))}
                 className="button__card"
               >
                 {" "}
@@ -46,7 +45,7 @@ const Card = ({ product }: { product: ProductType }) => {
               </button>
               <h3>{quantity}</h3>
               <button
-                onClick={() => incrementCartQuantity(product)}
+                onClick={() => dispatch(incrementItemQuantity(product))}
                 className="button__card"
               >
                 {" "}
@@ -80,8 +79,10 @@ const CardContainer = styled.div`
   margin: 15px;
   background-color: white;
   width: 200px;
+  height: 400px;
 
   .div__comprar {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -101,19 +102,30 @@ const CardContainer = styled.div`
     left: 5px;
     bottom: 20px;
   }
+
+  .card__info {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
   .card__container {
     padding: 10px;
     max-width: 200px;
     max-height: 100%;
     box-shadow: 2px 2px 15px #30303021;
     border-radius: 13px;
-
     justify-content: space-evenly;
     transition: 0.3s;
-
+    overflow: hidden;
     &:hover {
       box-shadow: 2px 2px 15px #3030304c;
     }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   .card__sumaresta {
@@ -125,13 +137,17 @@ const CardContainer = styled.div`
   }
 
   .card__image {
-    position: relative;
-    max-width: 200px;
-    max-height: 100%;
-    border-radius: 15px;
-
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
     img {
       width: 100%;
+      height: auto;
     }
   }
 
@@ -148,15 +164,16 @@ const CardContainer = styled.div`
     border-radius: 50px;
     align-items: center;
     justify-content: end;
-    padding-right: 10px;
     gap: 15px;
   }
 
   .card__name__price {
     display: flex;
     font-size: 12px;
-    justify-content: space-between;
+    justify-content: center;
+    width: 100px;
   }
+
   .button__card {
     background: none;
     border-radius: 50px;
@@ -176,23 +193,23 @@ const CardContainer = styled.div`
 
   .card_color_name {
     font-size: 17px;
+    width: 100%;
     color: ${({ theme }) => theme.dark};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
+    text-align: center;
   }
+
   .card_color_price {
-    position: relative;
     color: ${({ theme }) => theme.primary};
-    top: 5px;
   }
 
   .button {
     position: relative;
     height: 30px;
     padding: 10px;
-    margin-right: 10px;
     border-radius: 7px;
     background-color: ${({ theme }) => theme.primary};
     color: ${({ theme }) => theme.light};

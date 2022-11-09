@@ -1,27 +1,27 @@
-import styled from "styled-components";
-import { useAppSelector } from "../../app/hooks";
-import { selectProducts } from "../../features/products/productSlice";
-import { CartItem } from "./CartItem";
-import { useShoppingCart } from "./context/SoppingCartContext";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import { SyntheticEvent } from "react";
-import axios from "axios";
+import styled from "styled-components";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectProducts } from "../../features/products/productSlice";
+import { actions, selectors } from "../../features/cart/cartSlice";
+import { CartItem } from "./CartItem";
 
 type ShoppingCartProps = {
   isOpen: boolean;
 };
 
+const { toggleCart } = actions;
+const { selectCartItems } = selectors;
+
 export default function SoppingCart({ isOpen }: ShoppingCartProps) {
-  const { closeCart, cartItems } = useShoppingCart();
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(selectCartItems);
   const item = useAppSelector(selectProducts);
 
   const handleBuy = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const response = await axios.get("http://localhost:3001/payment/generate", {
-      data: { buyProducts: cartItems },
-    });
 
-    window.open(response.data.init_point, "_blank");
+    alert("Coming soon");
   };
 
   return (
@@ -30,16 +30,16 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
         <ShoppingCart>
           <ShoppingCartContainer>
             <div className="menu">
-              <div className="content" onClick={closeCart}>
+              <div className="content" onClick={() => dispatch(toggleCart())}>
                 <span className="close">
                   <AiOutlineArrowLeft />
                 </span>
                 <h1 className="title__cart">Cart</h1>
               </div>
               <div className="info__carro">
-                {cartItems.map((item) => (
-                  <div className="info__carta">
-                    <CartItem key={item.product.id} {...item} />
+                {cartItems.map((item: any) => (
+                  <div className="info__carta" key={item.product.id}>
+                    <CartItem {...item} />
                   </div>
                 ))}
               </div>
@@ -47,7 +47,7 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
                 <div className="total__price">
                   Total:
                   <div className="total">
-                    {cartItems.reduce((total, cartItem) => {
+                    {cartItems.reduce((total: any, cartItem: any) => {
                       const itemFind = item.find(
                         (e) => e.id === cartItem.product.id
                       );

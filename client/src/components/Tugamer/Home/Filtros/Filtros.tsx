@@ -1,19 +1,27 @@
-import React, {ChangeEvent, useState} from "react";
+import React, { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
-import {BsFilter,BsSortNumericDown} from "react-icons/bs"
+import { BsFilter, BsSortNumericDown } from "react-icons/bs";
 import { useAppDispatch } from "../../../../app/hooks";
 
-import { filterAsc, searchProduct } from "../../../../features/products/productSlice";
+import {
+  filterAsc,
+  searchProduct,
+} from "../../../../features/products/productSlice";
+import { Link } from "react-router-dom";
 
 const Filtros = () => {
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
-  const handleAsc = (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>)=>{
-    dispatch(filterAsc(e.target.value))
-  }
-  const handleInputChange = function (e:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>) {
-    e.preventDefault()
+  const handleAsc = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    dispatch(filterAsc(e.target.value));
+  };
+  const handleInputChange = function (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) {
+    e.preventDefault();
     setSearch(e.target.value);
     if (search) {
       dispatch(searchProduct(search));
@@ -21,13 +29,24 @@ const Filtros = () => {
   };
   return (
     <FiltrosContainer>
-      <button className="buttonfilter"><BsFilter/></button>
+      <Link to="publicar" className="buttonfilter-container">
+        <button className="buttonfilter">+</button>
+      </Link>
       <div className="inputcontainerfilet">
-      <input placeholder="Productos" type='text' name='name'  value={search} className='search' onChange={handleInputChange}/>
+        <input
+          placeholder="Productos"
+          type="text"
+          name="name"
+          value={search}
+          className="search"
+          onChange={handleInputChange}
+        />
       </div>
-      <button className="buttonfilter">
-        <select onChange={(e)=>handleAsc(e)} name="filtervalor" id="">
-          <option value="all"  disabled hidden>Sort by:</option>
+      <button className="button__select">
+        <select onChange={(e) => handleAsc(e)} name="filtervalor" id="">
+          <option value="all" disabled hidden>
+            Sort by:
+          </option>
           <option value="des">Mayor valor</option>
           <option value="asc">Menor valor</option>
         </select>
@@ -43,69 +62,110 @@ const FiltrosContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 100px;
-
-  .buttonfilter{
+  .button__select {
     width: 130px;
     background-color: transparent;
     border: none;
     display: flex;
     align-items: center;
-
     color: ${({ theme }) => theme.dark};
     font-size: 30px;
-    svg{
+    svg {
       cursor: pointer;
     }
-
   }
 
-  .inputcontainerfilet{
+  .buttonfilter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .buttonfilter {
+    background-color: ${({ theme }) => theme.primary};
+    font-size: 15px;
+    border: 1px solid transparent;
+    color: ${({ theme }) => theme.light};
+    height: 100%;
+    width: 150px;
+    border-radius: 5px;
+    transition: 0.4s;
+    cursor: pointer;
+    &:hover {
+      color: ${({ theme }) => theme.dark};
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      background-color: ${({ theme }) => theme.light};
+      border: 1px solid ${({ theme }) => theme.primary};
+    }
+  }
+
+  .inputcontainerfilet {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    select{
-      
+    select {
       margin: 0 10px;
     }
   }
 
-  select{
-      background-color:${({ theme }) => theme.tertiary};
-      border: 0px;
-      outline: none;
-      width: 200px;
-      height: 30px;
-      padding: 0 10px;
-      
+  select {
+    background-color: ${({ theme }) => theme.tertiary};
+    border: 0px;
+    outline: none;
+    width: 100%;
+    height: 30px;
+    padding: 0 10px;
+  }
 
-    }
+  .search {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid ${({ theme }) => theme.details};
+  }
 
-    @media screen and (max-width: 925px){
-      padding: 20px 20px;
-      .inputcontainerfilet{
+  @media screen and (max-width: 925px) {
+    padding: 20px 20px;
+    .inputcontainerfilet {
+      width: 100%;
+
+      select {
         width: 100%;
-
-        select{
-          width: 100%;
-        }
-      }
-
-      .buttonfilter{
-        justify-content: center;
       }
     }
 
-    @media screen and (max-width: 400px){
-      .buttonfilter{
+    .buttonfilter {
+      width: 100px;
+    }
+  }
 
-        width: 120px;
+  @media screen and (max-width: 600px) {
+    .buttonfilter {
+      width: 25px;
+    }
+  }
 
-        select{
-          width: 100%;
-        }
+  @media screen and (max-width: 400px) {
+    position: relative;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    .buttonfilter {
+      width: 120px;
+      select {
+        width: 100%;
       }
     }
+    .button__select {
+      border-radius: 5px;
+    }
 
+    .buttonfilter {
+      width: 25px;
+    }
 
+    .inputcontainerfilet {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+    }
+  }
 `;

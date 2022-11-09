@@ -21,19 +21,13 @@ const Footerlanding = () => {
             <h4>Ayuda</h4>
             <ul>
               <li>
-                <a href="#">Pagos</a>
+                <a href="#plans">Pagos</a>
               </li>
               <li>
-                <a href="#">Cuentas</a>
-              </li>
+                <a href="#clients">Cuentas</a>
+              </li>                          
               <li>
-                <a href="#">Hacer una solicitud</a>
-              </li>
-              <li>
-                <a href="#">Status de solicitud</a>
-              </li>
-              <li>
-                <a href="contact">Contactanos</a>
+                <a href="#contact">Contactanos</a>
               </li>
             </ul>
           </div>

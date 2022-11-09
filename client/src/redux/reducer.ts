@@ -1,11 +1,11 @@
 import { ProductType } from "../features/products/productSlice";
 import { GET_PRODUCTS, FILTER_PRICE } from "./actions";
+import { PUT_WORKER_PREMIUM, PAY } from "./actions";
+
 export interface Action {
   type: string;
   payload: any;
 }
-
-import { PAY } from "./variables";
 
 const initialState = {
   loggedIn: false,

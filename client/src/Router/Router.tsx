@@ -17,6 +17,7 @@ import Error404H from "../Pages/TuHamburguesa/Error404";
 import DetalleH from "../Pages/TuHamburguesa/Detalle";
 import PublicarH from "../Pages/TuHamburguesa/Publicar";
 import TuHamburguesa from "../Pages/TuHamburguesa/TuHamburguesa";
+import Pago from "../components/Compra/Pago";
 
 const Router = () => {
   return (
@@ -53,6 +54,10 @@ const Router = () => {
       <Route path="auth/recover" element={<Recover />} />
       <Route path="auth/register" element={<Register />} />
       <Route path="/auth/login" element={<Login />} />
+
+      {/* PAGO */}
+
+      <Route path="/pago" element={<Pago />} />
     </Routes>
   );
 };

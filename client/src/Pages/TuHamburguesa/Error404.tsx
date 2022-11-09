@@ -1,15 +1,19 @@
 import React from "react";
 import styled, { ThemeContext } from "styled-components";
 import Navbar from "../../components/TuHamburguesa/Navbar";
+import { ThemeProvider } from "styled-components";
+import { Themes } from "../../components/TuHamburguesa/Theme/Theme";
 
 const Error404 = () => {
   return (
     <>
-      <Navbar />
-      <ErrorContainer>
-        <Error>Error 404</Error>
-        <ErrorTecto>La pagína que buscas no esta disponible</ErrorTecto>
-      </ErrorContainer>
+      <ThemeProvider theme={Themes}>
+        <Navbar />
+        <ErrorContainer>
+          <Error>Error 404</Error>
+          <ErrorTecto>La pagína que buscas no esta disponible</ErrorTecto>
+        </ErrorContainer>
+      </ThemeProvider>
     </>
   );
 };
@@ -26,7 +30,7 @@ const ErrorContainer = styled.div`
 `;
 
 const Error = styled.h1`
-  color: ${({ theme }) => theme.error};
+  color: ${({ theme }) => theme.primary};
   font-size: 20px;
   @media screen and (max-width: 350px) {
     font-size: 15px;

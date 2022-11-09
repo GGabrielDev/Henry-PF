@@ -1,7 +1,9 @@
 import axios from "axios";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const FILTER_PRICE = "FILTER_PRICE";
-import { PUT_WORKER_PREMIUM, PAY } from "./variables";
+export const PUT_WORKER_PREMIUM = "PUT_WORKER_PREMIUM";
+export const PAY = "PAY";
+
 
 type CreateProductResponse = {
   name: string;

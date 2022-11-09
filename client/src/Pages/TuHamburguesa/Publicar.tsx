@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Navbar from "../../components/TuHamburguesa/Navbar";
 import Validate from "../../components/TuHamburguesa/validate";
 import { symlink } from "fs";
+import { ThemeProvider } from "styled-components";
+import { Themes } from "../../components/TuHamburguesa/Theme/Theme";
 
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
@@ -26,7 +28,8 @@ const Publicar = () => {
     stock: -1,
     description: "",
     suspended: "",
-    image: "https://definicion.de/wp-content/uploads/2009/06/producto.png",
+    image:
+      "https://www.pexels.com/es-es/foto/foto-de-primer-plano-de-la-hamburguesa-1639562/",
     cloudinary: {},
   });
 
@@ -90,86 +93,98 @@ const Publicar = () => {
     setErr(Validate({ ...input, [e.target.name]: e.target.value }));
   };
   return (
-    <PublicarContainer>
-      <Navbar />
-      <AddProduct>
-        <h1 className="addproduct-title">Agrega un producto</h1>
-        <form onSubmit={handleSubmit} action="" className="formularioproduct">
-          <div className="productinfo">
-            <div className="productinfo__left">
-              <h5 className="campo__obligatorio">
-                Todos los campos son obligatorios
-              </h5>
-              <div className="inputinfo">
-                <label htmlFor="">Nombre del producto:</label>
-                <input name="name" type="text" onChange={handleChange} />
-                {err.name ? <p className="errortext"> {err.name} </p> : ""}
-              </div>
-              <div className="inputinfo">
-                <label htmlFor="price_local">Precio:</label>
-                <input
-                  className="price_local__input"
-                  name="price_local"
-                  type="text"
-                  onChange={handleChange}
-                />
-                {err.price_local ? (
-                  <p className="errortext"> {err.price_local} </p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="inputinfo">
-                <label htmlFor="stock">Stock:</label>
-                <input name="stock" type="text" onChange={handleChange} />
-                {err.stock ? <p className="errortext"> {err.stock} </p> : ""}
-              </div>
-              <div className="inputinfo">
-                <label htmlFor="description">Descripcion:</label>
-                <textarea name="description" onChange={handleChange} />
-                {err.description ? (
-                  <p className="errortext"> {err.description} </p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="inputinfo ultimo__select">
-                <label htmlFor="suspended">Estado:</label>
-                <select
-                  defaultValue={"DEFAULT"}
-                  name="suspended"
-                  id=""
-                  onChange={handleChange}
-                >
-                  <option value="DEFAULT" disabled>
-                    Elige Uno
-                  </option>
-                  <option value="false">Activo</option>
-                  <option value="true">Suspendido</option>
-                </select>
-                {err.suspended ? (
-                  <p className="errortext"> {err.suspended} </p>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-            <div className="productinfo__Right">
-              <div className="imageupload">
-                <input
-                  type="file"
-                  name="image"
-                  onChange={(e) => upLoadImage(e)}
-                />
-              </div>
+    <>
+      <ThemeProvider theme={Themes}>
+        <PublicarContainer>
+          <Navbar />
+          <AddProduct>
+            <h1 className="addproduct-title">Agrega un producto</h1>
+            <form
+              onSubmit={handleSubmit}
+              action=""
+              className="formularioproduct"
+            >
+              <div className="productinfo">
+                <div className="productinfo__left">
+                  <h5 className="campo__obligatorio">
+                    Todos los campos son obligatorios
+                  </h5>
+                  <div className="inputinfo">
+                    <label htmlFor="">Nombre del producto:</label>
+                    <input name="name" type="text" onChange={handleChange} />
+                    {err.name ? <p className="errortext"> {err.name} </p> : ""}
+                  </div>
+                  <div className="inputinfo">
+                    <label htmlFor="price_local">Precio:</label>
+                    <input
+                      className="price_local__input"
+                      name="price_local"
+                      type="text"
+                      onChange={handleChange}
+                    />
+                    {err.price_local ? (
+                      <p className="errortext"> {err.price_local} </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="inputinfo">
+                    <label htmlFor="stock">Stock:</label>
+                    <input name="stock" type="text" onChange={handleChange} />
+                    {err.stock ? (
+                      <p className="errortext"> {err.stock} </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="inputinfo">
+                    <label htmlFor="description">Descripcion:</label>
+                    <textarea name="description" onChange={handleChange} />
+                    {err.description ? (
+                      <p className="errortext"> {err.description} </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="inputinfo ultimo__select">
+                    <label htmlFor="suspended">Estado:</label>
+                    <select
+                      defaultValue={"DEFAULT"}
+                      name="suspended"
+                      id=""
+                      onChange={handleChange}
+                    >
+                      <option value="DEFAULT" disabled>
+                        Elige Uno
+                      </option>
+                      <option value="false">Activo</option>
+                      <option value="true">Suspendido</option>
+                    </select>
+                    {err.suspended ? (
+                      <p className="errortext"> {err.suspended} </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="productinfo__Right">
+                  <div className="imageupload">
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={(e) => upLoadImage(e)}
+                    />
+                  </div>
 
-              {err.image ? <p className="errortext"> {err.image} </p> : ""}
-            </div>
-          </div>
-          <button className="submitproduct">Submit</button>
-        </form>
-      </AddProduct>
-    </PublicarContainer>
+                  {err.image ? <p className="errortext"> {err.image} </p> : ""}
+                </div>
+              </div>
+              <button className="submitproduct">Submit</button>
+            </form>
+          </AddProduct>
+        </PublicarContainer>
+      </ThemeProvider>
+    </>
   );
 };
 

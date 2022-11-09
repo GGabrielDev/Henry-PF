@@ -5,13 +5,34 @@ import Validate from "../../components/TuHamburguesa/validate";
 import { symlink } from "fs";
 import { ThemeProvider } from "styled-components";
 import { Themes } from "../../components/TuHamburguesa/Theme/Theme";
-
+import Swal from "sweetalert2";
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
+
+  // ALERTA PARA CUANDO ESTA TODO OK
+
+  const AlertaCorrecta = () => {
+    Swal.fire({
+      title: "Producto creado",
+      text: "Se ha creado un producto de manera exitosa",
+      icon: "success",
+      confirmButtonText: "Perfecto",
+    });
+  };
+
+  const AlertaIncorrecta = () => {
+    Swal.fire({
+      title: "Error",
+      text: "Faltan datos",
+      icon: "success",
+      confirmButtonText: "Perfecto",
+    });
+  };
+  // ALERTA PARA CUANDO FALTAN DATOS
 
   const [err, setErr] = useState({
     name: "",
@@ -65,9 +86,9 @@ const Publicar = () => {
       input.description === "" ||
       input.suspended === ""
     ) {
-      alert("Faltan datos");
+      AlertaIncorrecta();
     } else {
-      alert("Producto agregado exitosamente!");
+      AlertaCorrecta();
       dispatch(createProduct(input));
     }
   };

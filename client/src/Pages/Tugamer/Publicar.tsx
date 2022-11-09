@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
 import Validate from "../../components/Tugamer/validate";
 import { symlink } from "fs";
-
+import Swal from "sweetalert2";
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
 

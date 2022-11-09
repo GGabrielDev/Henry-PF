@@ -52,8 +52,26 @@ type GenerateRequestBody = {
 type NotificationRequestQuery = Record<"id" | "topic", string>;
 
 const router = Router();
-
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/", (req, res) => {
+  const {price_local} =req.body
+  console.log(2)
+  console.log(price_local)
+  let preference = {
+    back_urls: {
+      success: "https://localhost:3000/tugamer",
+    },
+    items: [
+      {
+        title: "Placa Madre",
+        unit_price: price_local,
+        quantity: 1,
+        id: "1",
+      },
+    ],
+    notification_url: "https://localhost:3000/tugamer",
+  };
+})
+  router.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await Recipt.findAll();
 
@@ -65,8 +83,16 @@ router.get("/", async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 });
-
-router.get(
+router.get('/comprar', (req, res) => {
+  res.send('todo salio bien')});
+  
+  router.post('/notificar', (req,res) => {
+    console.log('notificar')
+    const {body, query} = req;
+    console.log({body,query})
+    res.send();
+  })
+  router.get(
   "/:mercadopagoId",
   async (req: Request, res: Response, next: NextFunction) => {
     try {

@@ -4,9 +4,14 @@ import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import Swal from "sweetalert2";
 import { ProductType } from "../../features/products/productSlice";
+import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import { deleteProduct } from "../../redux/actions";
 
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({ product }: { product: ProductType }) => {
+  const dispatch = useAppDispatch();
+
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Producto eliminado",
@@ -14,6 +19,10 @@ const Card = ({ product }: { product: ProductType }) => {
       icon: "success",
       confirmButtonText: "Perfecto",
     });
+    dispatch(deleteProduct(product.id));
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   return (
@@ -24,9 +33,11 @@ const Card = ({ product }: { product: ProductType }) => {
             <span className="delete" onClick={AlertaCorrecta}>
               <AiOutlineClose />
             </span>
-            <span className="edit">
-              <AiFillEdit />
-            </span>
+            <Link to={`/usuario/editar/producto/${product.id}`}>
+              <span className="edit">
+                <AiFillEdit />
+              </span>
+            </Link>
           </div>
           <div className="card__image">
             <img src={product.image} alt="" />

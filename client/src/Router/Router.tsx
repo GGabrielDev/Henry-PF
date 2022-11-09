@@ -13,6 +13,7 @@ import Error404 from "../Pages/Tugamer/Error404";
 import Detalle from "../Pages/Tugamer/Detalle";
 import Landingpage from "../Pages/Landingpage";
 import Error from "../Pages/Error";
+import EditProduct from "../Pages/Usuario/EditProduct";
 
 const Router = () => {
   return (
@@ -31,6 +32,10 @@ const Router = () => {
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
       <Route path="/usuario/favoritos" element={<UserFavoritos />} />
       <Route path="/usuario/editar" element={<UserEdit />} />
+      <Route
+        path="/usuario/editar/producto/:productId"
+        element={<EditProduct />}
+      />
 
       {/* <Route path="/usuario" element={<Usuario />} /> */}
       {/* rutas autenticacion usuario */}

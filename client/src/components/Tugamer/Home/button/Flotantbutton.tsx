@@ -133,4 +133,3 @@ const Flotantbuttons = styled.div`
 `;
 
 export default Flotantbutton;
-

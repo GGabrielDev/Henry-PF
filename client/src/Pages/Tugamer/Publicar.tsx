@@ -173,11 +173,11 @@ const Publicar = () => {
   );
 };
 
-const PublicarContainer = styled.div`
+export const PublicarContainer = styled.div`
   width: 100%;
   background-color: #ffffff;
 `;
-const AddProduct = styled.div`
+export const AddProduct = styled.div`
   width: 100%;
   padding-top: 131px;
 

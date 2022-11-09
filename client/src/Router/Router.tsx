@@ -32,10 +32,6 @@ const Router = () => {
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
       <Route path="/usuario/favoritos" element={<UserFavoritos />} />
       <Route path="/usuario/editar" element={<UserEdit />} />
-      <Route
-        path="/usuario/editar/producto/:productId"
-        element={<EditProduct />}
-      />
 
       {/* <Route path="/usuario" element={<Usuario />} /> */}
       {/* rutas autenticacion usuario */}

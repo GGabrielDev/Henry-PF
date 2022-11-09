@@ -1,9 +1,6 @@
 import { ProductType } from "../features/products/productSlice";
 import { GET_PRODUCTS, FILTER_PRICE } from "./actions";
 
-
-
-
 const initialState = {
   loggedIn: false,
   products: [],
@@ -53,28 +50,6 @@ export function reducers(state = initialState, action) {
         ...state,
         products: ordenamiento,
       };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     default:
       return state;

@@ -10,7 +10,7 @@ import {
   getProductId,
   ProductType,
 } from "../../features/products/productSlice";
-import { productEdit } from "../../redux/actions";
+import { productEdit } from "../../redux/actions.js";
 import { AddProduct, PublicarContainer } from "../Tugamer/Publicar";
 export default function EditProduct() {
   const { productId } = useParams<{ productId?: string | undefined }>();

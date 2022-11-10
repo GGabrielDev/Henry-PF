@@ -3,10 +3,11 @@ import { Op } from "sequelize";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 import { Category_Product as Category_Product_Type } from "../models/Category_product";
+import { Review as Reviews_Type } from "../models/Review";
 import { Product as Product_Type } from "../models/Product";
 
 const router = Router();
-const { Product, Category_Product } = Models;
+const { Product, Review, User } = Models;
 
 type ProductParams = {
   productId: string;
@@ -26,6 +27,7 @@ type ProductBody = {
   suspended: boolean;
   size: string | null;
   categories: Category_Product_Type[];
+  reviews: Reviews_Type[];
 };
 
 type RouteRequest = Request<ProductParams, ProductQuery, ProductBody>;
@@ -44,11 +46,16 @@ router.get(
               },
             }
           : {},
+        include: [
+          Product.associations.categories,
+          Product.associations.reviews,
+        ],
       });
 
       if (result.length === 0) {
         return res.status(204).send("No entries have been found.");
       }
+
       return res.status(200).send({ amount: result.length, result });
     } catch (error) {
       next(error);
@@ -69,10 +76,13 @@ router.get(
         );
       }
 
-      const result = await Product.findByPk(productId, {
-        include: Product.associations.categories,
+      let result = await Product.findByPk(productId, {
+        include: [
+          Product.associations.categories,
+          Product.associations.reviews,
+        ],
       })
-        .then((value) => value)
+        .then((value) => value as Product_Type)
         .catch((error) => {
           console.log(error);
           throw new HttpException(
@@ -84,6 +94,22 @@ router.get(
       if (!result)
         throw new HttpException(404, "The requested Product doesn't exist");
 
+      if (result.reviews !== undefined && result.reviews.length > 0) {
+        const newReviews = await Review.findAll({
+          attributes: { exclude: ["productId", "userId"] },
+          where: {
+            id: result.reviews.map((review) => review.id),
+          },
+          include: [User],
+        });
+
+        const newProduct = {
+          ...result.toJSON(),
+          reviews: newReviews,
+        };
+
+        result = newProduct as Product_Type;
+      }
       return res.status(200).send(result);
     } catch (error) {
       next(error);
@@ -119,7 +145,14 @@ router.post(
           size,
         })) as Product_Type;
         result.addCategories(categories.map((value) => value.id));
-        return res.status(201).send(await Product.findByPk(result.id));
+        return res.status(201).send(
+          await Product.findByPk(result.id, {
+            include: [
+              Product.associations.categories,
+              Product.associations.reviews,
+            ],
+          })
+        );
       }
     } catch (error) {
       console.log(error);

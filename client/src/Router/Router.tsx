@@ -18,6 +18,7 @@ import DetalleH from "../Pages/TuHamburguesa/Detalle";
 import PublicarH from "../Pages/TuHamburguesa/Publicar";
 import TuHamburguesa from "../Pages/TuHamburguesa/TuHamburguesa";
 import Pago from "../components/Compra/Pago";
+import EditProduct from "../Pages/Usuario/EditProduct";
 
 const Router = () => {
   return (
@@ -48,6 +49,10 @@ const Router = () => {
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
       <Route path="/usuario/favoritos" element={<UserFavoritos />} />
       <Route path="/usuario/editar" element={<UserEdit />} />
+      <Route
+        path="/usuario/editar/producto/:productId"
+        element={<EditProduct />}
+      />
 
       {/* <Route path="/usuario" element={<Usuario />} /> */}
       {/* rutas autenticacion usuario */}

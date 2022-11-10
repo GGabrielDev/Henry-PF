@@ -127,8 +127,8 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       name: {
-        singular: "Seller",
-        plural: "Sellers",
+        singular: "seller",
+        plural: "sellers",
       },
       tableName: path
         .basename(__filename, path.extname(__filename))

@@ -2,6 +2,7 @@ import { Router } from "express";
 import ProductRouter from "./Product";
 import UsersRouter from "./User";
 import sellerRouter from "./Seller";
+import reviewRouter from "./Review"
 import categorySellerRouter from "./Category_Seller";
 import categoryProductRouter from "./Category_Product";
 import MercadoPago from "./MercadoPago";
@@ -10,6 +11,7 @@ const router = Router();
 router.use("/products", ProductRouter);
 router.use("/users", UsersRouter);
 router.use("/sellers", sellerRouter);
+router.use("/reviews", reviewRouter)
 router.use("/productCategory", categoryProductRouter);
 router.use("/sellerCategory", categorySellerRouter);
 router.use("/payment", MercadoPago);

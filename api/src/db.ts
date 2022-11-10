@@ -69,7 +69,7 @@ const {
 
 // Aca vendrian las declaraciones de las relaciones
 // Ejemplo: Product.hasMany(Reviews);
-User.hasOne(Seller, { sourceKey: "id" });
+User.hasOne(Seller, { sourceKey: "id", foreignKey: "userId" });
 Seller.belongsTo(User, { targetKey: "id" });
 Product.belongsToMany(Category_Product, {
   through: "category_product_join",
@@ -87,7 +87,7 @@ Category_Product.belongsToMany(Product, {
 // });
 Product.hasMany(Review, {
   sourceKey: "id",
-  foreignKey: "reviewId",
+  foreignKey: "productId",
   as: "reviews",
 });
 Review.belongsTo(Product, {
@@ -95,7 +95,7 @@ Review.belongsTo(Product, {
 });
 Countries.hasMany(User, {
   sourceKey: "id",
-  foreignKey: "userId",
+  foreignKey: "countryId",
   as: "users",
 });
 User.belongsTo(Countries, {
@@ -119,14 +119,12 @@ Product.belongsTo(Seller, {
 });
 User.hasMany(Review, {
   sourceKey: "id",
-  foreignKey: "reviewId",
+  foreignKey: "userId",
   as: "reviews",
 }),
   Review.belongsTo(User, {
     targetKey: "id",
   });
-
-MercadoPago;
 
 export const Models = sequelize.models; // Para importar un objeto con solo los modelos: import { Models } from "./db.js"
 export default sequelize; // Para importar la conexión de Sequelize: import sequelize from './db.js';

@@ -214,8 +214,8 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       name: {
-        singular: "Product",
-        plural: "Products",
+        singular: "product",
+        plural: "products",
       },
       tableName: path
         .basename(__filename, path.extname(__filename))

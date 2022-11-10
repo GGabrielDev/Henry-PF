@@ -39,7 +39,7 @@ export const projectsData = [
     image: Work5,
     Title: "Tu Hamburguesa",
     Category: "Gastronomia",
-    Demo: "/tugamer",
+    Demo: "/tuhamburguesa",
   },
   {
     id: 6,

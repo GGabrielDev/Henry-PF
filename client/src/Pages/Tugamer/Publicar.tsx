@@ -11,6 +11,26 @@ const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
 
+  // const AlertaCorrecta = () => {
+  //   Swal.fire({
+  //     title: "Producto creado",
+  //     text: "Se ha creado un producto de manera exitosa",
+  //     icon: "success",
+  //     confirmButtonText: "Perfecto",
+  //   });
+  // };
+
+  // // ALERTA PARA CUANDO FALTAN DATOS
+
+  // const AlertaIncorrecta = () => {
+  //   Swal.fire({
+  //     title: "Error",
+  //     text: "Faltan datos",
+  //     icon: "error",
+  //     confirmButtonText: "Ok!",
+  //   });
+  // };
+
   const [err, setErr] = useState({
     name: "",
     price_local: "",
@@ -62,12 +82,19 @@ const Publicar = () => {
       input.description === "" ||
       input.suspended === ""
     ) {
-      alert("Faltan datos");
+      alert("Faltan agregar datos");
     } else {
       alert("Producto agregado exitosamente!");
       dispatch(createProduct(input));
     }
   };
+  //   ) {
+  //     AlertaIncorrecta();
+  //   } else {
+  //     AlertaCorrecta();
+  //     dispatch(createProduct(input));
+  //   }
+  // };
 
   const upLoadImage = async (e: any) => {
     e.preventDefault();

@@ -13,6 +13,10 @@ const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
 
+  const Reinicio = setTimeout(function () {
+    window.location.reload();
+  }, 2000);
+
   // ALERTA PARA CUANDO ESTA TODO OK
 
   const AlertaCorrecta = () => {
@@ -20,19 +24,20 @@ const Publicar = () => {
       title: "Producto creado",
       text: "Se ha creado un producto de manera exitosa",
       icon: "success",
-      confirmButtonText: "Perfecto",
+      confirmButtonText: "Ok!",
     });
   };
+
+  // ALERTA PARA CUANDO FALTAN DATOS
 
   const AlertaIncorrecta = () => {
     Swal.fire({
       title: "Error",
       text: "Faltan datos",
-      icon: "success",
-      confirmButtonText: "Perfecto",
+      icon: "error",
+      confirmButtonText: "Ok!",
     });
   };
-  // ALERTA PARA CUANDO FALTAN DATOS
 
   const [err, setErr] = useState({
     name: "",
@@ -77,6 +82,7 @@ const Publicar = () => {
       image: "",
       cloudinary: {},
     });
+    event.preventDefault();
 
     if (
       input.name === "" ||
@@ -86,12 +92,21 @@ const Publicar = () => {
       input.description === "" ||
       input.suspended === ""
     ) {
+      Reinicio();
       AlertaIncorrecta();
     } else {
       AlertaCorrecta();
       dispatch(createProduct(input));
     }
   };
+
+  //   ) {
+  //     AlertaIncorrecta();
+  //   } else {
+  //     AlertaCorrecta();
+  //     dispatch(createProduct(input));
+  //   }
+  // };
 
   const upLoadImage = async (e: any) => {
     e.preventDefault();

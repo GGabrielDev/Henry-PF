@@ -5,9 +5,14 @@ import HttpException from "../exceptions/HttpException";
 import { Category_Product as Category_Product_Type } from "../models/Category_product";
 import { Review as Reviews_Type } from "../models/Review";
 import { Product as Product_Type } from "../models/Product";
+import { User as User_Type } from "../models/User";
 
 const router = Router();
+<<<<<<< HEAD
+const { Product, Category_Product, User } = Models;
+=======
 const { Product, Review, User } = Models;
+>>>>>>> 5358644f511f57f1e0c254fdbafcbc1c14b408fa
 
 type ProductParams = {
   productId: string;
@@ -144,6 +149,8 @@ router.post(
           suspended,
           size,
         })) as Product_Type;
+
+        console.log(result);
         result.addCategories(categories.map((value) => value.id));
         return res.status(201).send(
           await Product.findByPk(result.id, {
@@ -252,6 +259,37 @@ router.delete(
       await result.destroy();
 
       res.status(200).send("The chosen Product was deleted successfully");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/favorites",
+  async (
+    req: Request<{}, { userId: string; productId: string }, {}>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { userId, productId } = req.query;
+      if (!userId || !productId) {
+        throw new HttpException(400, "faltan querys");
+      }
+
+      const user = (await User.findByPk(userId as string)) as User_Type | null;
+      const product = (await Product.findByPk(
+        productId as string
+      )) as Product_Type | null;
+
+      if (user === null || product === null) {
+        throw new HttpException(404, "Usuario o producto no encontrado");
+      } else {
+        user.addFavoriteProduct(product);
+      }
+
+      //    return res.status(200).send(result);
     } catch (error) {
       next(error);
     }

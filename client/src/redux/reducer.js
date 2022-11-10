@@ -1,18 +1,12 @@
 import { ProductType } from "../features/products/productSlice";
 import { GET_PRODUCTS, FILTER_PRICE } from "./actions";
-import { PUT_WORKER_PREMIUM, PAY } from "./actions";
-
-export interface Action {
-  type: string;
-  payload: any;
-}
 
 const initialState = {
   loggedIn: false,
   products: [],
   productsAll: [],
 };
-export function reducers(state = initialState, action: Action) {
+export function reducers(state = initialState, action) {
   switch (action.type) {
     case "LOGIN":
       return {
@@ -33,7 +27,7 @@ export function reducers(state = initialState, action: Action) {
       const allproducts = state.products;
       const ordenamiento =
         action.payload === "asc"
-          ? allproducts.sort(function (a: ProductType, b: ProductType) {
+          ? allproducts.sort(function (a, b) {
               if (a.price_local > b.price_local) {
                 return 1;
               } else if (b.price_local > a.price_local) {
@@ -42,7 +36,7 @@ export function reducers(state = initialState, action: Action) {
               return 0;
             })
           : action.payload === "des"
-          ? allproducts.sort(function (a: ProductType, b: ProductType) {
+          ? allproducts.sort(function (a, b) {
               if (a.price_local > b.price_local) {
                 return -1;
               }
@@ -56,11 +50,7 @@ export function reducers(state = initialState, action: Action) {
         ...state,
         products: ordenamiento,
       };
-    case PAY: {
-      return {
-        ...state,
-      };
-    }
+
     default:
       return state;
   }

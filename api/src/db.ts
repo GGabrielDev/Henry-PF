@@ -77,14 +77,14 @@ Product.belongsToMany(Category_Product, {
 Category_Product.belongsToMany(Product, {
   through: "category_product_join",
 });
-Product.belongsToMany(User, {
-  through: "favorites",
-  as: "favoriteProduct",
-});
-User.belongsToMany(Product, {
-  through: "favorites",
-  as: "favoriteUser",
-});
+// Product.belongsToMany(User, {
+//   through: "favorites",
+//   as: "favoriteProduct",
+// });
+// User.belongsToMany(Product, {
+//   through: "favorites",
+//   as: "favoriteUser",
+// });
 Product.hasMany(Review, {
   sourceKey: "id",
   foreignKey: "reviewId",

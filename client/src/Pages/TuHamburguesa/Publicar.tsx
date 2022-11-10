@@ -13,10 +13,6 @@ const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
 
-  const Reinicio = setTimeout(function () {
-    window.location.reload();
-  }, 2000);
-
   // ALERTA PARA CUANDO ESTA TODO OK
 
   const AlertaCorrecta = () => {
@@ -24,7 +20,7 @@ const Publicar = () => {
       title: "Producto creado",
       text: "Se ha creado un producto de manera exitosa",
       icon: "success",
-      confirmButtonText: "Ok!",
+      confirmButtonText: "Perfecto",
     });
   };
 
@@ -92,10 +88,12 @@ const Publicar = () => {
       input.description === "" ||
       input.suspended === ""
     ) {
-      // Reinicio();
       AlertaIncorrecta();
     } else {
       AlertaCorrecta();
+      // event.target.reset()
+      // var resetForm = document.getElementById("");
+      // resetForm.reset();
       dispatch(createProduct(input));
     }
   };

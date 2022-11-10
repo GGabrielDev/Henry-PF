@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent, SyntheticEvent } from "react";
 import { MdFavorite } from "react-icons/md";
 import Navbar from "../../components/TuHamburguesa/Navbar";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { agregarFavorito } from "../../redux/actions";
 import {
   detailProduct,
   getProductId,
@@ -19,17 +20,22 @@ const { incrementItemQuantity, decrementItemQuantity } = actions;
 const Detalle = () => {
   const [active, setActive] = useState(false);
 
-  const handleActive = () => {
-    setActive(!active);
-  };
+  const handleActive = () => {};
   const { productId } = useParams<{ productId?: string }>();
   const dispatch = useAppDispatch();
   const detalle = useAppSelector(detailProduct) as ProductType;
   const quantity = useAppSelector(getItemQuantity(detalle));
+
   useEffect(() => {
     console.log(productId);
     dispatch(getProductId(productId));
   }, [productId]);
+
+  const handleSubmit = (event: SyntheticEvent) => {
+    setActive(!active);
+    dispatch(agregarFavorito);
+  };
+
   if (productId) {
     return (
       <>
@@ -49,50 +55,58 @@ const Detalle = () => {
               <div className="det__container">
                 <div className="fav">
                   <h3
-                    onClick={handleActive}
+                    onClick={handleSubmit}
                     className={active ? "det_fav active" : "det_fav"}
                   >
                     <MdFavorite />
                   </h3>
                 </div>
                 <div className="det_props">
-                  <div className="det__dec">{detalle.name}</div>
-                  <div className="det__dec0">
-                    valor de: {detalle.price_local} $
-                  </div>
-                  <div className="det__dec2">
-                    Descripción: {detalle.description}
-                  </div>
-                </div>
-                <div className="det_cant">
-                  <div className="det__cant2">
-                    <div className="det__dec3">
-                      Cantidad en stock: {detalle.stock - quantity}
+                  <div>
+                    <div className="det__dec">{detalle.name}</div>
+                    <div className="det__dec0">
+                      valor de: {detalle.price_local} $
                     </div>
-                    <div className="det__dec4">Cantidad que desea comprar:</div>
-                    <div className="botones">
-                      <button
-                        disabled={quantity === 0}
-                        onClick={() => dispatch(decrementItemQuantity(detalle))}
-                        className="button__card"
-                      >
-                        {" "}
-                        -{" "}
-                      </button>
-                      <h3 className="count">{quantity}</h3>
+                    <div className="det__dec2">
+                      Descripción: {detalle.description}
+                    </div>
+                  </div>
+                  <div className="det_cant">
+                    <div className="det__cant2">
+                      <div className="det__dec3">
+                        Cantidad en stock: {detalle.stock - quantity}
+                      </div>
+                      <div className="det__dec4">
+                        Cantidad que desea comprar:
+                      </div>
+                      <div className="botones">
+                        <button
+                          disabled={quantity === 0}
+                          onClick={() =>
+                            dispatch(decrementItemQuantity(detalle))
+                          }
+                          className="button__card"
+                        >
+                          {" "}
+                          -{" "}
+                        </button>
+                        <h3 className="count">{quantity}</h3>
 
-                      <button
-                        disabled={!(detalle.stock - quantity > 0)}
-                        onClick={() => dispatch(incrementItemQuantity(detalle))}
-                        className="button__card"
-                      >
-                        {" "}
-                        +{" "}
-                      </button>
+                        <button
+                          disabled={!(detalle.stock - quantity > 0)}
+                          onClick={() =>
+                            dispatch(incrementItemQuantity(detalle))
+                          }
+                          className="button__card"
+                        >
+                          {" "}
+                          +{" "}
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="button__card__container">
-                    <button className="button__card">COMPRAR AHORA</button>
+                    <div className="button__card__container">
+                      <button className="button__card">COMPRAR AHORA</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -113,15 +127,12 @@ const DetalleContainer = styled.div`
   height: 100vh;
   align-items: center;
   justify-content: center;
-  padding-top: 100px;
 
   .cajita__maxima {
+    padding-top: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid ${({ theme }) => theme.border}; */
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border-radius: 20px;
   }
 
   .imagen__caja {
@@ -148,7 +159,7 @@ const DetalleContainer = styled.div`
   }
 
   .det_fot {
-    width: 200px;
+    width: 300px;
     border-radius: 10px;
     margin: 10px;
 
@@ -161,6 +172,10 @@ const DetalleContainer = styled.div`
     }
   }
 
+  .det_cant {
+    height: 400px;
+  }
+
   .det__dec {
     text-align: start;
     font-size: 30px;
@@ -171,6 +186,7 @@ const DetalleContainer = styled.div`
   .det__dec2,
   .det__dec3,
   .det__dec4 {
+    text-align: center;
     margin-bottom: 10px;
   }
 
@@ -180,7 +196,10 @@ const DetalleContainer = styled.div`
   }
 
   .det_props {
-    width: 500px;
+    width: 600px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 
   .count {
@@ -191,7 +210,6 @@ const DetalleContainer = styled.div`
   }
 
   .botones {
-    width: 500px;
     display: flex;
     margin-bottom: 10px;
     justify-content: space-around;
@@ -255,10 +273,8 @@ const DetalleContainer = styled.div`
 
     .det_props {
       width: 100%;
-    }
-
-    .det_cant {
-      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
     }
 
     .botones {

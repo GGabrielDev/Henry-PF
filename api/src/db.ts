@@ -77,6 +77,14 @@ Product.belongsToMany(Category_Product, {
 Category_Product.belongsToMany(Product, {
   through: "category_product_join",
 });
+Product.belongsToMany(User, {
+  through: "favorites",
+  as: "favoriteProduct",
+});
+User.belongsToMany(Product, {
+  through: "favorites",
+  as: "favoriteUser",
+});
 Product.hasMany(Review, {
   sourceKey: "id",
   foreignKey: "reviewId",
@@ -118,8 +126,7 @@ User.hasMany(Review, {
     targetKey: "id",
   });
 
-
-  MercadoPago
+MercadoPago;
 
 export const Models = sequelize.models; // Para importar un objeto con solo los modelos: import { Models } from "./db.js"
 export default sequelize; // Para importar la conexión de Sequelize: import sequelize from './db.js';

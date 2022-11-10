@@ -1,10 +1,11 @@
 import { ProductType } from "../features/products/productSlice";
-import { GET_PRODUCTS, FILTER_PRICE } from "./actions";
+import { GET_PRODUCTS, FILTER_PRICE, POST_FAVORITE } from "./actions";
 
 const initialState = {
   loggedIn: false,
   products: [],
   productsAll: [],
+  productsFavorites: [],
 };
 export function reducers(state = initialState, action) {
   switch (action.type) {
@@ -50,7 +51,11 @@ export function reducers(state = initialState, action) {
         ...state,
         products: ordenamiento,
       };
-
+    case POST_FAVORITE:
+      return {
+        ...state,
+        productsFavorites: action.payload,
+      };
     default:
       return state;
   }

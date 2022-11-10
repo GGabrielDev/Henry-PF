@@ -92,7 +92,7 @@ const Publicar = () => {
       input.description === "" ||
       input.suspended === ""
     ) {
-      Reinicio();
+      // Reinicio();
       AlertaIncorrecta();
     } else {
       AlertaCorrecta();

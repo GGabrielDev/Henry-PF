@@ -3,12 +3,15 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import routes from "./routes";
 import errorHandler from "./middleware/error.middleware";
+import cors from "cors"
+
+
 
 require("./db.js");
 
 express.json({ limit: "50mb" });
 const server = express();
-
+server.use(cors())
 server.use(express.json());
 server.use(cookieParser());
 server.use(morgan("dev"));

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
 import { BsFilter, BsSortNumericDown } from "react-icons/bs";
@@ -27,6 +27,9 @@ const Filtros = () => {
       dispatch(searchProduct(search));
     }
   };
+  useEffect(() => {
+    dispatch(searchProduct(search));
+  }, [search, dispatch]);
   return (
     <FiltrosContainer>
       <Link to="publicar" className="buttonfilter-container">

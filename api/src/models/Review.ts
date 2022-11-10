@@ -57,15 +57,10 @@ module.exports = (sequelize: Sequelize) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-
       body: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          isAlphanumeric: true,
-        },
       },
-
       score: {
         type: DataTypes.ENUM("1", "2", "3", "4", "5"),
         allowNull: false,
@@ -73,15 +68,14 @@ module.exports = (sequelize: Sequelize) => {
           isNumeric: true,
         },
       },
-
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },
     {
       sequelize,
       name: {
-        singular: "Review",
-        plural: "Reviews",
+        singular: "review",
+        plural: "reviews",
       },
       tableName: path
         .basename(__filename, path.extname(__filename))

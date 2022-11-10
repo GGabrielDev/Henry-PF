@@ -71,15 +71,13 @@ router.post(
       } = req.body;
 
       if (
-        firstName ||
-        lastName ||
-        username ||
-        gender ||
-        email ||
-        mobile ||
-        address ||
-        userType ||
-        suspended
+        firstName &&
+        lastName &&
+        username &&
+        gender &&
+        email &&
+        mobile &&
+        address
       ) {
         const result = await User.create({
           firstName,
@@ -203,4 +201,3 @@ router.delete(
 );
 
 export default router;
-

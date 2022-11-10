@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import axios from "axios";
+
 export type ProductType = {
   id: string;
   name: string;
@@ -13,10 +14,24 @@ export type ProductType = {
   size: string | null | undefined;
 };
 
+export type ReviewType = {
+  id: string;
+  body: string;
+  score: number;
+  user: {
+    username: string;
+    imagenDePerfil: string;
+  };
+};
+
+export type ProductDetail = ProductType & {
+  reviews: ReviewType[];
+};
+
 export interface SliceState {
   products: ProductType[];
   productsAll: ProductType[];
-  details: ProductType | {};
+  details: ProductDetail | {};
   search: ProductType[];
 }
 
@@ -30,7 +45,6 @@ export const initialState: SliceState = {
 export const getProducts = createAsyncThunk("product/getProducts", async () => {
   try {
     const res = await axios.get("http://localhost:3001/products");
-  
 
     return res.data.result;
   } catch (error) {

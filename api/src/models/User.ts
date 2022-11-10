@@ -101,7 +101,7 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlpha: true,
+          is: /^[A-Za-z0-9\s]*$/,
         },
       },
 
@@ -109,7 +109,7 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isAlpha: true,
+          is: /^[A-Za-z0-9\s]*$/,
         },
       },
 
@@ -180,8 +180,8 @@ module.exports = (sequelize: Sequelize) => {
     {
       sequelize,
       name: {
-        singular: "User",
-        plural: "Users",
+        singular: "user",
+        plural: "users",
       },
       tableName: path
         .basename(__filename, path.extname(__filename))

@@ -126,7 +126,7 @@ module.exports = (sequelize: Sequelize) => {
 
       firstName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -134,7 +134,7 @@ module.exports = (sequelize: Sequelize) => {
 
       lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -142,7 +142,7 @@ module.exports = (sequelize: Sequelize) => {
 
       username: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         unique: true,
         validate: {
           isAlphanumeric: true,
@@ -165,7 +165,7 @@ module.exports = (sequelize: Sequelize) => {
 
       mobile: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: false,
         validate: {
           is: /^[0-9]+(-[0-9]+)+$/i,
@@ -174,7 +174,7 @@ module.exports = (sequelize: Sequelize) => {
 
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       imagenDePerfil: {

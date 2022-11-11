@@ -27,32 +27,24 @@ type UserBody = {
 
 type RouteRequest = Request<UserParams, UserQuery, UserBody>;
 
-router.get(
-  "/:userId",
+router.get("/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
-
-      const result = await User.findByPk(userId)
-        .then((value) => value)
-        .catch((error) => {
-          if (error.parent.code === "22P02") {
-            throw new HttpException(
-              400,
-              "The format of the request is not UUID"
-            );
-          }
-        });
-
-      if (!result) {
-        throw new HttpException(404, "No User belongs to this ID");
+      const result = await User.findAll()
+        
+      if (result.length === 0) {
+        return res.status(204).send("No entries have been found.");
       }
-      return res.status(200).send(result);
+
+      return res.status(200).send({ amount: result.length, result });
     } catch (error) {
       next(error);
     }
   }
 );
+
+
+
 
 router.get(
   "/:email",
@@ -81,40 +73,9 @@ router.post(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const {
-        firstName,
-        lastName,
-        username,
-        gender,
-        email,
-        mobile,
-        address,
-        imagenDePerfil,
-        userType,
-        suspended,
-      } = req.body;
-
-      if (
-        firstName &&
-        lastName &&
-        username &&
-        gender &&
-        email &&
-        mobile &&
-        address
-      ) {
-        const result = await User.create({
-          firstName,
-          lastName,
-          username,
-          gender,
-          email,
-          mobile,
-          address,
-          imagenDePerfil,
-          userType,
-          suspended,
-        });
+      console.log(req.body)
+      if ( req.body.email !== undefined ) {
+        const result = await User.create(req.body);
 
         return res.status(201).send(result);
       } else {

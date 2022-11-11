@@ -31,7 +31,7 @@ const Router = () => {
     const dispatch = useAppDispatch();
     const error = useAppSelector(selectError);
     const {isAuthenticated, user} = useAuth0(); 
-    useEffect(() => {if(isAuthenticated === true && user && user.email){
+    useEffect(() => {if(isAuthenticated === true && user && user.email && !error.message){
       dispatch(getUserByEmail(user.email))
     } else {if(error.message && error.message === "User not found" && user)
       dispatch(createUser(user))

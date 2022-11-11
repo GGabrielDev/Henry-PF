@@ -21,13 +21,14 @@ import Pago from "../Pages/Compra/Pago";
 import EditProduct from "../Pages/Usuario/EditProduct";
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 const Router = () => {
     const {isAuthenticated,user} = useAuth0();  
+   
   return (
     <Routes>
-      <>
-      {isAuthenticated === false ? 
-      <>      
+      <>    
+           
       <Route path="/" element={<Landingpage />} />
       <Route path="/*" element={<Error />} />
       <Route path="/tugamer" element={<Tugamer />} />
@@ -38,24 +39,12 @@ const Router = () => {
       <Route path="/tuhamburguesa/*" element={<Error404H />} />
       <Route path="auth/recover" element={<Recover />} />
       <Route path="auth/register" element={<Register />} />
-      <Route path="/auth/login" element={<Login />} />
-      </>
-      :
-      null    
-      } 
+      <Route path="/auth/login" element={<Login />} />      
+     
+      
+
       {isAuthenticated ?  
-      <>
-      <Route path="/" element={<Landingpage />} />
-      <Route path="/*" element={<Error />} />
-      <Route path="/tugamer" element={<Tugamer />} />
-      <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
-      <Route path="/tugamer/*" element={<Error404 />} />
-      <Route path="/tuhamburguesa" element={<TuHamburguesa />} />
-      <Route path="/tuhamburguesa/detalle/:productId" element={<DetalleH />} />
-      <Route path="/tuhamburguesa/*" element={<Error404H />} />
-      <Route path="auth/recover" element={<Recover />} />
-      <Route path="auth/register" element={<Register />} />
-      <Route path="/auth/login" element={<Login />} />
+      <>      
       <Route path="/usuario/*" element={<UserGeneral />} />
       <Route path="/usuario/compras" element={<UserCompras />} />
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
@@ -63,26 +52,10 @@ const Router = () => {
       <Route path="/pago" element={<Pago />} />
       </>
       :
-      null    
+      null
       }
-      {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */  ?  
-      <>
-      <Route path="/" element={<Landingpage />} />
-      <Route path="/*" element={<Error />} />
-      <Route path="/tugamer" element={<Tugamer />} />
-      <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
-      <Route path="/tugamer/*" element={<Error404 />} />
-      <Route path="/tuhamburguesa" element={<TuHamburguesa />} />
-      <Route path="/tuhamburguesa/detalle/:productId" element={<DetalleH />} />
-      <Route path="/tuhamburguesa/*" element={<Error404H />} />
-      <Route path="auth/recover" element={<Recover />} />
-      <Route path="auth/register" element={<Register />} />
-      <Route path="/auth/login" element={<Login />} />
-      <Route path="/usuario/*" element={<UserGeneral />} />
-      <Route path="/usuario/compras" element={<UserCompras />} />
-      <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
-      <Route path="/usuario/favoritos" element={<UserFavoritos />} />      
-      <Route path="/pago" element={<Pago />} />
+
+      {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */  ?        <>      
       <Route path="/tugamer/publicar" element={<Publicar />} /> 
       <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
       <Route path="/usuario/editar/producto/:productId" element={<EditProduct />} />
@@ -93,26 +66,7 @@ const Router = () => {
       }
       {isAuthenticated && user?.email === "Henryfygrup@gmail.com"?  
       <>
-      <Route path="/" element={<Landingpage />} />
-      <Route path="/*" element={<Error />} />
-      <Route path="/tugamer" element={<Tugamer />} />
-      <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
-      <Route path="/tugamer/*" element={<Error404 />} />
-      <Route path="/tuhamburguesa" element={<TuHamburguesa />} />
-      <Route path="/tuhamburguesa/detalle/:productId" element={<DetalleH />} />
-      <Route path="/tuhamburguesa/*" element={<Error404H />} />
-      <Route path="auth/recover" element={<Recover />} />
-      <Route path="auth/register" element={<Register />} />
-      <Route path="/auth/login" element={<Login />} />
-      <Route path="/usuario/*" element={<UserGeneral />} />
-      <Route path="/usuario/compras" element={<UserCompras />} />
-      <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
-      <Route path="/usuario/favoritos" element={<UserFavoritos />} />
-      <Route path="/usuario/editar" element={<UserEdit />} />
-      <Route path="/pago" element={<Pago />} />
-      <Route path="/tugamer/publicar" element={<Publicar />} /> 
-      <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
-      <Route path="/usuario/editar/producto/:productId" element={<EditProduct />} />
+      {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
       </>
       :
       null    

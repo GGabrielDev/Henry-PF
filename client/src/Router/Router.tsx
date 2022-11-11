@@ -17,7 +17,7 @@ import Error404H from "../Pages/TuHamburguesa/Error404";
 import DetalleH from "../Pages/TuHamburguesa/Detalle";
 import PublicarH from "../Pages/TuHamburguesa/Publicar";
 import TuHamburguesa from "../Pages/TuHamburguesa/TuHamburguesa";
-import Pago from "../components/Compra/Pago";
+import Pago from "../Pages/Compra/Pago";
 import EditProduct from "../Pages/Usuario/EditProduct";
 import { useAuth0 } from "@auth0/auth0-react";
 

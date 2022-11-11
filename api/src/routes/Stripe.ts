@@ -22,6 +22,7 @@ router.post("/api/checkout", async (req,res)=>{
         })
         console.log(payment)
         res.send({message: "Succes"})
+        
     } catch (error) {
         console.log(error)
         res.json({message:error})

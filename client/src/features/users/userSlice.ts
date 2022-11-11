@@ -42,7 +42,12 @@ const getUserByEmail = createAsyncThunk("user/getUserByEmail", async (email:stri
 
 
 const createUser = createAsyncThunk("user/createUser", async (user: User) => {
-  const res = await axios.post(`http://localhost:3001/users`, {email:user.email})
+  const res = await axios.post(`http://localhost:3001/users`, {
+    email:user.email,
+    firstName:user.given_name,
+    lastName:user.family_name,
+    phoneNumber:user.phone_number,
+  })
 })
 export const userSlice = createSlice({
   name: "user",

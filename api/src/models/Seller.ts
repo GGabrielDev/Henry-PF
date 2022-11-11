@@ -37,6 +37,7 @@ export class Seller extends Model<
   declare nombreNegocio: string;
   declare pay_Money: string;
   declare imageLogo: string | null;
+  declare categorias: string;
   declare template_page: string;
   // timestamps!
   // createdAt can be undefined during creation
@@ -116,10 +117,14 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      template_page: {
-        type: DataTypes.ENUM("1", "2", "3"),
+      categorias: {
+        type: DataTypes.ENUM("Gastronomia", "Entretenimiento", "Servicios", "Tecnologia", "Vestimenta", "Educacion"),
       },
 
+      template_page:{
+        type:DataTypes.ENUM("1","2","3")
+      },
+      
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

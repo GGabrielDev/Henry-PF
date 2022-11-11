@@ -52,7 +52,7 @@ export class User extends Model<
   declare mobile: string;
   declare address: string;
   declare imagenDePerfil: string | null;
-  declare userType: string;
+  declare isPremium: string;
   declare suspended: boolean;
   // timestamps!
   // createdAt can be undefined during creation
@@ -134,14 +134,14 @@ module.exports = (sequelize: Sequelize) => {
   User.init(
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.NUMBER,
+        autoIncrement:true,
         primaryKey: true,
       },
 
       firstName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -149,7 +149,7 @@ module.exports = (sequelize: Sequelize) => {
 
       lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull:true,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -157,7 +157,7 @@ module.exports = (sequelize: Sequelize) => {
 
       username: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         unique: true,
         validate: {
           isAlphanumeric: true,
@@ -171,7 +171,7 @@ module.exports = (sequelize: Sequelize) => {
 
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: false,
         validate: {
           isEmail: true,
@@ -180,7 +180,7 @@ module.exports = (sequelize: Sequelize) => {
 
       mobile: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: false,
         validate: {
           is: /^[0-9]+(-[0-9]+)+$/i,
@@ -200,13 +200,9 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      userType: {
-        type: DataTypes.ENUM(
-          "Administrador General",
-          "Administrador",
-          "Usuario"
-        ),
-        defaultValue: "Usuario",
+      isPremium: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
         allowNull: false,
       },
 

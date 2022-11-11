@@ -3,7 +3,7 @@ import Landingpage from "../Pages/Landingpage";
 import Error from "../Pages/Error";
 import UserGeneral from "../Pages/Usuario/UserGeneral";
 import UserCompras from "../Pages/Usuario/UserCompras";
-import UserCompraDetalle from "../Pages/Usuario/UserComprasDetalle";https://github.com/GGabrielDev/Henry-PF/blob/feature/ft-95/client/src/Router/Router.tsx
+import UserCompraDetalle from "../Pages/Usuario/UserComprasDetalle"; /*https://github.com/GGabrielDev/Henry-PF/blob/feature/ft-95/client/src/Router/Router.tsx*/
 import UserEdit from "../Pages/Usuario/UserEdit";
 import UserFavoritos from "../Pages/Usuario/UserFavoritos";
 import Error404 from "../Pages/Tugamer/Error404";
@@ -65,7 +65,7 @@ const Router = () => {
       :
       null    
       }
-      {isAuthenticated && /*usuario.isPremium === true ACA DEBERIA Ir && user.isPremium */  ?  
+      {isAuthenticated /*usuario.isPremium === true ACA DEBERIA Ir && user.isPremium */  ?  
       <>
       <Route path="/" element={<Landingpage />} />
       <Route path="/*" element={<Error />} />

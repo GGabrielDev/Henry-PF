@@ -65,7 +65,7 @@ const Router = () => {
       :
       null    
       }
-      {isAuthenticated && /*usuario.isPremium === true ACA DEBERIA Ir && user.isPremium */  ?  
+      {isAuthenticated /*usuario.isPremium === true ACA DEBERIA Ir && user.isPremium */  ?  
       <>
       <Route path="/" element={<Landingpage />} />
       <Route path="/*" element={<Error />} />

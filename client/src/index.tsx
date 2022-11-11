@@ -4,11 +4,12 @@ import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
 import { store } from "./app/store";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useHref } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "styled-components";
 import { Themes } from "./components/Tugamer/Theme/Theme";
 import {Auth0Provider} from "@auth0/auth0-react"
+
 
 const GlobalStyles = createGlobalStyle`
 	* {

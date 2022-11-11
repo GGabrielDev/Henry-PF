@@ -43,6 +43,7 @@ export const productEdit = (productId, payload) => async () => {
     console.log(error);
   }
 };
+
 export const deleteProduct = (productId) => async () => {
   try {
     const res = await axios.delete(
@@ -66,3 +67,48 @@ export const agregarFavorito = (payload) => async () => {
     console.log(error);
   }
 };
+
+//Agregado por Felipe
+/*
+export const getUsers = (payload) => async () => {
+ try {
+  const res = await axios.get(`http://localhost:3001/users`, payload)
+  console.log("Se trajo los usuers correctamente desde http://localhost:3001/users")
+  return res.data;
+ } catch(error){
+  console.log(error)
+ }
+};
+
+
+export const getUserId = (userId) => async () => {
+  try{
+    const res = await axios.get(`http://localhost:3001/user/${userId}`)
+    console.log("Se trajo la informacion del usuario especifico correctamente")
+    return res.data;
+  } catch(error){
+    console.log(error)
+   }
+  };
+
+  export const createUser = (payload) => async () =>{
+    try{
+      const res = await axios.post(`http://localhost:3001/users`, payload)
+      console.log("Se creo un usuario a http://localhost:3001/users correctamente");
+      return res.data;
+    } catch (error){
+      console.log(error)
+    }
+  };
+
+  export const userEdit = (userId, payload) => async () => {
+    try {
+      const res = await axios.put(`http://localhost:3001/users/${userId}`, payload);
+      console.log("Se edito correctamente el usuario");
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+*/
+ 

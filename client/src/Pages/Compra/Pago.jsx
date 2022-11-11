@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import styled from "styled-components";
 import {
@@ -13,41 +13,103 @@ import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
 import imgtop2 from "../../assets/top2.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
+import Swal from "sweetalert2";
+import emailjs from "@emailjs/browser";
 
 const stripePromise = loadStripe(
   "pk_test_51LbWG6CISvGskgcJQ1tAlsYcaFsZYI2XridI8464CZNO17EXAUdRbehJsxs8VA3CUjRwz10bwuThVq8GtBLxFsN900VthEmx1m "
 );
 
 const CheckoutForm = () => {
+  const form = useRef();
   const stripe = useStripe();
   const elements = useElements();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
-    });
+    const AlertaError = () => {
+      Swal.fire({
+        title: "Error!",
+        text: "Control que todos los campos esten completos",
+        icon: "error",
+        confirmButtonText: "Ok!",
+      });
+    };
 
-    if (!error) {
-      const { id } = paymentMethod;
+    const TarjetaInvalida = (e) => {
+      Swal.fire({
+        title: "Error!",
+        text: e,
+        icon: "error",
+        confirmButtonText: "Ok!",
+      });
+    };
 
-      try {
-        const { data } = await axios.post(
-          `http://localhost:3001/stripe/api/checkout`,
-          {
-            id,
-            amount: 1000000,
+    const AlertaCorrecta = () => {
+      Swal.fire({
+        title: "Tu pago se realizó correctamente",
+        text: "Has recibido un mensaje en tu bandeja de email",
+        icon: "success",
+        confirmButtonText: "Continuar",
+      });
+    };
+    if (
+      e.target.name.value.length === 0 ||
+      e.target.email.value.length === 0 ||
+      e.target.celular.value.length === 0 ||
+      e.target.celular.value < 0
+    ) {
+      AlertaError();
+    } else {
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+
+      if (!error) {
+        const { id } = paymentMethod;
+
+        try {
+          const { data } = await axios.post(
+            `http://localhost:3001/stripe/api/checkout`,
+            {
+              id,
+              amount: 1000000,
+            }
+          );
+
+          if (data.message == "Succes") {
+            emailjs.sendForm(
+              "service_zeb79a1",
+              "template_zdwmfkk",
+              "#Myform",
+              "lXAeyoLMc8mPQLFnK"
+            );
+            AlertaCorrecta();
+          } else {
+            TarjetaInvalida(data.message.decline_code);
           }
-        );
-
-        console.log(data);
-      } catch (error) {
-        console.log(error);
+          e.target.reset();
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
+
   return (
-    <form onSubmit={handleSubmit} className="formpaycard">
+    <form onSubmit={handleSubmit} id="Myform" className="formpaycard">
+      <div className="checkout__nombre">
+        <p className="nombre__checkout">Nombre Completo: </p>
+        <input className="input__nombre__checkout" name="name" type="text" />
+        <p className="nombre__checkout">Email: </p>
+        <input className="input__nombre__checkout" name="email" type="email" />
+        <p className="nombre__checkout">Celular: </p>
+        <input
+          className="input__nombre__checkout"
+          name="celular"
+          type="number"
+        />
+      </div>
       <CardElement className="inputpay" />
       <button type="submit" className="pago__boton">
         Pagar
@@ -67,12 +129,7 @@ export default function Payment() {
                 <h2 className="logo">Henry Shops</h2>
               </Link>
               <h3 className="logo">Checkout</h3>
-              <div className="checkout__nombre">
-                <p className="nombre__checkout">Nombre Completo: </p>
-                <input className="input__nombre__checkout" type="text" />
-                <p className="nombre__checkout">Email: </p>
-                <input className="input__nombre__checkout" type="text" />
-              </div>
+
               <CheckoutForm />
             </div>
 
@@ -211,7 +268,6 @@ const SectionPago = styled.div`
   }
 
   .cardsubcription {
-    box-shadow: 2px 2px 15px ${({ theme }) => theme.border};
     border-radius: 10px;
     padding: 15px;
     display: flex;

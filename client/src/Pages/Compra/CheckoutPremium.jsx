@@ -15,6 +15,7 @@ import imgtop2 from "../../assets/top2.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
+import Navbarlanding from "../../components/Navbarlanding";
 
 const stripePromise = loadStripe(
   "pk_test_51LbWG6CISvGskgcJQ1tAlsYcaFsZYI2XridI8464CZNO17EXAUdRbehJsxs8VA3CUjRwz10bwuThVq8GtBLxFsN900VthEmx1m "
@@ -144,6 +145,7 @@ export default function Payment() {
     <Elements stripe={stripePromise}>
       <ThemeProvider theme={ThemesLanding}>
         <SectionPago>
+          <Navbarlanding/>
           <div className="formulario__pago">
             <div className="formcontent">
               <Link to="/">

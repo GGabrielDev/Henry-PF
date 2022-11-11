@@ -16,7 +16,7 @@ router.post("/api/checkout", async (req,res)=>{
         const payment = await stripe.paymentIntents.create({
             amount,
             currency:"USD",
-            description:"Gaming key",
+            description:"Premium pack",
             payment_method: id,
             confirm: true,
         })

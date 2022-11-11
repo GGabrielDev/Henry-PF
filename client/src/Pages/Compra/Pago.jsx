@@ -21,7 +21,6 @@ const stripePromise = loadStripe(
 );
 
 const CheckoutForm = () => {
-  const form = useRef();
   const stripe = useStripe();
   const elements = useElements();
   const handleSubmit = async (e) => {
@@ -100,14 +99,25 @@ const CheckoutForm = () => {
     <form onSubmit={handleSubmit} id="Myform" className="formpaycard">
       <div className="checkout__nombre">
         <p className="nombre__checkout">Nombre Completo: </p>
-        <input className="input__nombre__checkout" name="name" type="text" />
+        <input
+          className="input__nombre__checkout"
+          name="name"
+          type="text"
+          required
+        />
         <p className="nombre__checkout">Email: </p>
-        <input className="input__nombre__checkout" name="email" type="email" />
+        <input
+          className="input__nombre__checkout"
+          name="email"
+          type="email"
+          required
+        />
         <p className="nombre__checkout">Celular: </p>
         <input
           className="input__nombre__checkout"
           name="celular"
           type="number"
+          required
         />
       </div>
       <CardElement className="inputpay" />

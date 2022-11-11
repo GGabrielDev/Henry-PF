@@ -8,11 +8,7 @@ import { Product as Product_Type } from "../models/Product";
 import { User as User_Type } from "../models/User";
 
 const router = Router();
-<<<<<<< HEAD
-const { Product, Category_Product, User } = Models;
-=======
-const { Product, Review, User } = Models;
->>>>>>> 5358644f511f57f1e0c254fdbafcbc1c14b408fa
+const { Product, Category_Product, User, Review } = Models;
 
 type ProductParams = {
   productId: string;

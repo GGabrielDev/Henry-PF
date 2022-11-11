@@ -20,9 +20,24 @@ import TuHamburguesa from "../Pages/TuHamburguesa/TuHamburguesa";
 import Pago from "../Pages/Compra/Pago";
 import EditProduct from "../Pages/Usuario/EditProduct";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { actions, selectors } from "../features/users/userSlice";
+
+const { getUserByEmail, createUser } = actions;
+const { selectError } = selectors;
 
 const Router = () => {
-    const {isAuthenticated,user} = useAuth0();  
+    const dispatch = useAppDispatch();
+    const error = useAppSelector(selectError);
+    const {isAuthenticated, user} = useAuth0(); 
+    useEffect(() => {if(isAuthenticated === true && user && user.email){
+      dispatch(getUserByEmail(user.email))
+    } else {if(error.message && error.message === "User not found" && user)
+      dispatch(createUser(user))
+    }
+
+    },[isAuthenticated, user, error]) 
   return (
     <Routes>
       <>

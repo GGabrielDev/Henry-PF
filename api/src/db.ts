@@ -55,7 +55,6 @@ modelDefiners.forEach((model) => {
 // Para relacionarlos hacemos un destructuring
 const {
   Category_Product,
-  Category_Seller,
   Countries,
   Product,
   Review,
@@ -101,14 +100,7 @@ Countries.hasMany(User, {
 User.belongsTo(Countries, {
   targetKey: "id",
 });
-Category_Seller.hasMany(Seller, {
-  sourceKey: "id",
-  foreignKey: "categoryId",
-  as: "categories",
-});
-Seller.belongsTo(Category_Seller, {
-  targetKey: "id",
-});
+
 Seller.hasMany(Product, {
   sourceKey: "id",
   foreignKey: "sellerId",

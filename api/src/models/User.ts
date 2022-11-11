@@ -44,7 +44,7 @@ export class User extends Model<
 > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<string>;
-  declare firstName: string;
+  declare firstName: string | null;
   declare lastName: string;
   declare username: string;
   declare gender: string;
@@ -93,27 +93,12 @@ export class User extends Model<
   declare getFavoriteProduct: BelongsToManyGetAssociationsMixin<Product>;
   declare countFavoriteProducts: BelongsToManyCountAssociationsMixin;
   declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<Product, Product["id"]>;
-  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
-  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
+  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<Product, Product["id"]>;
+  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<Product, Product["id"]>;
   declare addFavoriteProduct: BelongsToManyAddAssociationMixin<Product, Product["id"]>;
-  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
-  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<
-    Product,
-    Product["id"]
-  >;
-  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
+  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<Product, Product["id"]>;
+  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<Product,Product["id"]>;
+  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<Product, Product["id"]>;
   declare createFavoriteProduct: BelongsToManyCreateAssociationMixin<Product>;
 
   // You can also pre-declare possible inclusions, these will only be populated if you
@@ -134,14 +119,14 @@ module.exports = (sequelize: Sequelize) => {
   User.init(
     {
       id: {
-        type: DataTypes.NUMBER,
-        autoIncrement:true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
 
       firstName: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -149,7 +134,7 @@ module.exports = (sequelize: Sequelize) => {
 
       lastName: {
         type: DataTypes.STRING,
-        allowNull:true,
+        allowNull: false,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -157,7 +142,7 @@ module.exports = (sequelize: Sequelize) => {
 
       username: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: false,
         unique: true,
         validate: {
           isAlphanumeric: true,
@@ -171,7 +156,7 @@ module.exports = (sequelize: Sequelize) => {
 
       email: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: false,
         validate: {
           isEmail: true,
@@ -180,7 +165,7 @@ module.exports = (sequelize: Sequelize) => {
 
       mobile: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: false,
         validate: {
           is: /^[0-9]+(-[0-9]+)+$/i,

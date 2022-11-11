@@ -69,7 +69,7 @@ export const agregarFavorito = (payload) => async () => {
 };
 
 //Agregado por Felipe
-/*
+
 export const getUsers = (payload) => async () => {
  try {
   const res = await axios.get(`http://localhost:3001/users`, payload)
@@ -110,5 +110,5 @@ export const getUserId = (userId) => async () => {
       console.log(error);
     }
   };
-*/
+
  

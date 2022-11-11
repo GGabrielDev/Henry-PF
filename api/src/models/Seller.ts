@@ -23,7 +23,6 @@ import {
   Sequelize,
 } from "sequelize";
 import path from "path";
-import { Category_Seller } from "./Category_Seller";
 import { Product } from "./Product";
 import { Review } from "./Review";
 import { User } from "./User";
@@ -46,20 +45,12 @@ export class Seller extends Model<
   declare updatedAt: CreationOptional<Date>;
   // foreign keys are automatically added by associations methods (like Project.belongsTo)
   declare userId: ForeignKey<User["id"]>;
-  declare categoryId: ForeignKey<Category_Seller["id"]>;
   // Since TS cannot determine model association at compile time
   // we have to declare them here purely virtually
   // these will not exist until `Model.init` was called.
   declare setUser: BelongsToSetAssociationMixin<User, User["id"]>;
   declare getUser: BelongsToGetAssociationMixin<User>;
   declare createUser: BelongsToCreateAssociationMixin<User>;
-
-  declare setCategory: BelongsToSetAssociationMixin<
-    Category_Seller,
-    Category_Seller["id"]
-  >;
-  declare getCategory: BelongsToGetAssociationMixin<Category_Seller>;
-  declare createCategory: BelongsToCreateAssociationMixin<Category_Seller>;
 
   declare getProduct: HasManyGetAssociationsMixin<Product>;
   declare countProducts: HasManyCountAssociationsMixin;
@@ -69,10 +60,7 @@ export class Seller extends Model<
   declare addProduct: HasManyAddAssociationMixin<Product, Product["id"]>;
   declare addProducts: HasManyAddAssociationsMixin<Product, Product["id"]>;
   declare removeProduct: HasManyRemoveAssociationMixin<Product, Product["id"]>;
-  declare removeProducts: HasManyRemoveAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
+  declare removeProducts: HasManyRemoveAssociationsMixin<Product, Product["id"]>;
   declare createProduct: HasManyCreateAssociationMixin<Product>;
 
   // You can also pre-declare possible inclusions, these will only be populated if you
@@ -124,7 +112,7 @@ module.exports = (sequelize: Sequelize) => {
       template_page:{
         type:DataTypes.ENUM("1","2","3")
       },
-      
+
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

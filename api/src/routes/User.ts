@@ -1,6 +1,7 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
+import { User as User_Type }  from "../models/User";
 
 const router = Router();
 const { User } = Models;
@@ -45,6 +46,29 @@ router.get(
 
       if (!result) {
         throw new HttpException(404, "No User belongs to this ID");
+      }
+      return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/:email",
+  async (req: Request<{email:string},{},{}>, res: Response, next: NextFunction) => {
+    try {
+      const { email } = req.params;
+
+      const result = await User.findOne({
+        where: {
+          email 
+        }
+
+      }) as User_Type | null
+
+      if (!result) {
+        throw new HttpException(404, "No User belongs to this email");
       }
       return res.status(200).send(result);
     } catch (error) {
@@ -199,5 +223,7 @@ router.delete(
     }
   }
 );
+
+
 
 export default router;

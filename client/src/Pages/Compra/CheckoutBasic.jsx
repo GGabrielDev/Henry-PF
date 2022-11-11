@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import styled from "styled-components";
 import {
@@ -11,7 +11,7 @@ import axios from "axios";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
-import imgtop2 from "../../assets/top2.jpg";
+import imgtop3 from "../../assets/top3.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
@@ -23,6 +23,7 @@ const stripePromise = loadStripe(
 const CheckoutForm = () => {
   const form = useRef();
   const stripe = useStripe();
+  const [loader, setLoader] = useState(false);
   const elements = useElements();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +65,7 @@ const CheckoutForm = () => {
         type: "card",
         card: elements.getElement(CardElement),
       });
+      setLoader(true);
 
       if (!error) {
         const { id } = paymentMethod;
@@ -73,7 +75,8 @@ const CheckoutForm = () => {
             `http://localhost:3001/stripe/api/checkout`,
             {
               id,
-              amount: 1000000,
+              amount: 1500,
+              description: "basic pack",
             }
           );
 
@@ -92,6 +95,7 @@ const CheckoutForm = () => {
         } catch (error) {
           console.log(error);
         }
+        setLoader(false);
       }
     }
   };
@@ -111,9 +115,15 @@ const CheckoutForm = () => {
         />
       </div>
       <CardElement className="inputpay" />
-      <button type="submit" className="pago__boton">
-        Pagar
-      </button>
+      {loader ? (
+        <button className="pago__boton" disabled>
+          <span>Cargando...</span>
+        </button>
+      ) : (
+        <button type="submit" className="pago__boton">
+          <span>Comprar</span>
+        </button>
+      )}
     </form>
   );
 };
@@ -137,37 +147,40 @@ export default function Payment() {
               <div className="cardsubcription cardblack">
                 <div className="topsectioncadsub">
                   <div className="imgcontainercarsub">
-                    <img src={imgtop2} alt="" />
+                    <img src={imgtop3} alt="" />
                   </div>
                   <div className="divtitlecardsub">
-                    <h3>Premium</h3>
+                    <h3>Basic</h3>
                     <p>
-                      $ <span>27</span>/Mes{" "}
+                      $ <span>15</span>/Mes{" "}
                     </p>
                   </div>
                 </div>
                 <div className="detailsectioncardsub">
                   <div className="lineinfosub">
                     <AiOutlineCheck />
-                    <div className="textlineinfo">
-                      Crea hasta 20 categorias.
-                    </div>
+                    <div className="textlineinfo">Crea hasta 4 categorias.</div>
                   </div>
                   <div className="lineinfosub">
                     <AiOutlineCheck />
                     <div className="textlineinfo">
-                      Agrega productos ilimitados
+                      Agrega hasta 12 productos
                     </div>
                   </div>
                   <div className="lineinfosub">
                     <AiOutlineCheck />
                     <div className="textlineinfo">Atencion 24/7 </div>
                   </div>
+                  <div className="lineinfosub">
+                    <AiOutlineCheck />
+                    <div className="textlineinfo">Una cuenta admin </div>
+                  </div>
                 </div>
+
                 <div className="">
-                  <p className="totales">Subtotal: 21,33</p>
-                  <p className="totales">Impuesto IVA: 5,67</p>
-                  <p className="totales">Total: 27</p>
+                  <p className="totales">Subtotal: 11,85</p>
+                  <p className="totales">Impuesto IVA: 3,15</p>
+                  <p className="totales">Total: 15</p>
                 </div>
               </div>
             </div>
@@ -401,6 +414,8 @@ const SectionPago = styled.div`
 
   .totales {
     text-align: center;
+    margin-bottom: 10px;
+    font-size: 15px;
   }
 
   @media screen and (max-width: 420px) {

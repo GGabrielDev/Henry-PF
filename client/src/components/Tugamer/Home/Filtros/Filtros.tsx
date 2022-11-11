@@ -29,14 +29,7 @@ const Filtros = () => {
   useEffect(() => {
     dispatch(searchProduct(search));
   }, [search, dispatch]);
-  const AlertaCorrecta = () => {
-    Swal.fire({
-      title: "Error",
-      text: "Debes Iniciar Sesión para utilizar esta función",
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-  };
+  
   return (
     <FiltrosContainer>
       {isAuthenticated  /*ACA DEBERIA IR SI ES PREMIUM*/?

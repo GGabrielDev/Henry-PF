@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { BiUser, BiShoppingBag } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { actions, selectors } from "../../features/cart/cartSlice";
 import ShoppingCart from "./ShoppingCart";
+import { url } from "inspector";
 
 const { toggleCart } = actions;
 const { selectCartQuantity, selectIsOpen } = selectors;
@@ -28,7 +29,7 @@ const Navbar = () => {
                   Salir de sesión{" "}
                 </div>
               ) : (
-                <div className="is" onClick={() => loginWithRedirect()}>
+                <div className="is" onClick={() => loginWithRedirect()} >                  
                   {" "}
                   Iniciar sesion{" "}
                 </div>

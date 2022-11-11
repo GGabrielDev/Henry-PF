@@ -31,19 +31,19 @@ const Navbarlanding = () => {
             </Link>
             <div className="nav__sections-1">
               <a className="section" href={"#home"}>
-                Home
+                Inicio
               </a>
               <a className="section" href={"#about"}>
-                About
+                Nosotros
               </a>
               <a className="section" href={"#clients"}>
-                Clients
+                Clientes
               </a>
               <a className="section" href={"#plans"}>
-                Plans
+                Planes
               </a>
               <a className="section" href={"#contact"}>
-                Contact
+                Contacto
               </a>
             </div>
 
@@ -103,7 +103,7 @@ const Navbarlanding = () => {
                 <NavLink className="section-re" to="#home">
                 <div className="section__cajita">                 
                     <span onClick={() => logout()} className="section__name">
-                      Logout
+                      Salir
                     </span>                  
                   <span className="icon-re">
                     <IoIosArrowForward />
@@ -119,7 +119,7 @@ const Navbarlanding = () => {
                       className="section__name"
                       onClick={() => loginWithRedirect()}
                     >
-                      Login
+                      Entrar
                     </span>
                     <span className="icon-re">
                       <IoIosArrowForward />

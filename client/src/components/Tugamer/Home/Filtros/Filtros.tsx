@@ -3,16 +3,15 @@ import styled from "styled-components";
 import { Themes } from "../../Theme/Theme";
 import { BsFilter, BsSortNumericDown } from "react-icons/bs";
 import { useAppDispatch } from "../../../../app/hooks";
-
-import {
-  filterAsc,
-  searchProduct,
-} from "../../../../features/products/productSlice";
+import { useAuth0 } from "@auth0/auth0-react";
+import {  filterAsc,  searchProduct,} from "../../../../features/products/productSlice";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Filtros = () => {
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
+  const {isAuthenticated} = useAuth0(); 
   const handleAsc = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
@@ -30,11 +29,18 @@ const Filtros = () => {
   useEffect(() => {
     dispatch(searchProduct(search));
   }, [search, dispatch]);
+  
   return (
     <FiltrosContainer>
+      {isAuthenticated  /*ACA DEBERIA IR SI ES PREMIUM*/?
       <Link to="publicar" className="buttonfilter-container">
         <button className="buttonfilter">+</button>
-      </Link>
+      </Link> 
+      : 
+      <div>
+        
+      </div> 
+      }
       <div className="inputcontainerfilet">
         <input
           placeholder="Productos"

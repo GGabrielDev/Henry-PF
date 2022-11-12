@@ -7,6 +7,7 @@ const { User } = Models;
 
 type UserParams = {
   userId: string;
+  email:string;
 };
 
 type UserQuery = {};
@@ -20,31 +21,20 @@ type UserBody = {
   mobile: string;
   address: string;
   imagenDePerfil: string | null;
-  userType: string;
   suspended: boolean;
 };
 
 type RouteRequest = Request<UserParams, UserQuery, UserBody>;
 
 router.get(
-  "/:userId",
+  "/:email",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { email } = req.params;
 
-      const result = await User.findByPk(userId)
-        .then((value) => value)
-        .catch((error) => {
-          if (error.parent.code === "22P02") {
-            throw new HttpException(
-              400,
-              "The format of the request is not UUID"
-            );
-          }
-        });
-
+      const result = await User.findOne({where: {email}})
       if (!result) {
-        throw new HttpException(404, "No User belongs to this ID");
+        throw new HttpException(404, "No User belongs to this email");
       }
       return res.status(200).send(result);
     } catch (error) {
@@ -66,18 +56,11 @@ router.post(
         mobile,
         address,
         imagenDePerfil,
-        userType,
         suspended,
       } = req.body;
 
       if (
-        firstName &&
-        lastName &&
-        username &&
-        gender &&
-        email &&
-        mobile &&
-        address
+        email 
       ) {
         const result = await User.create({
           firstName,
@@ -88,7 +71,6 @@ router.post(
           mobile,
           address,
           imagenDePerfil,
-          userType,
           suspended,
         });
 

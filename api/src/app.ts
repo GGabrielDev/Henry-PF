@@ -1,4 +1,3 @@
-
 import express, { NextFunction, Response } from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
@@ -17,6 +16,7 @@ const config = {
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.DOMAIN
 };
+
 
 const corsOptions ={
   origin:'http://localhost:3000', 

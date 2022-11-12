@@ -28,10 +28,13 @@ const Landingpage = () => {
                 <span> WhatsApp </span>
               </h1>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Alias
-                repellat labore accusantium delectus.
+                Crea tu negocio y manejalo desde el dashboard de HenryShops.
+                Núnca habia sido tan fácil crear una tienda online y gestionar
+                tus ventas a traves de Whatsapp.
               </p>
-              <button>Empezar</button>
+              <Link to="/usuario">
+                <button>Empezar</button>
+              </Link>
             </div>
             <div className="imgheader">
               <img src={Store} alt="" />
@@ -46,15 +49,14 @@ const Landingpage = () => {
             </div>
             <div id="home" className="text-info">
               <h1>Vende tus productos</h1>
-              <h2>¡La forma mas sencilla de llegar a tus clientes.!</h2>
+              <h2>¡La forma mas sencilla de llegar a tus clientes!</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia
-                incidunt vero dolore laudantium, sapiente ipsam accusantium,
-                dignissimos, perspiciatis veniam odit fugiat voluptas esse
-                tempora cupiditate minus neque adipisci! Fuga doloribus,
-                assumenda delectus numquam totam optio, quibusdam, fugiat
-                consequatur dolore exercitationem similique! Distinctio
-                doloremque et esse optio, saepe quidem sunt non!
+                Con HenryShops, tus clientes se contactarán directamente contigo
+                a traves de formularios de Whatsapp pre-elaborados que harán
+                mucho mas sencillos los procesos de compra y venta, y además de
+                generar esa conección tienda-usuario que ayuda a crear ese
+                vínculo y a transmitir confianza. ¿Que estas esperando para
+                iniciar tu negocio online?
               </p>
               <div className="buttoninfo">
                 <Link to={"/"}>

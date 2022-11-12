@@ -1,22 +1,32 @@
+
 import express, { NextFunction, Response } from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import routes from "./routes";
 import errorHandler from "./middleware/error.middleware";
-import cors from "cors"
-
-
+import cors from "cors";
+import { auth } from 'express-openid-connect';
 
 require("./db.js");
 
-express.json({ limit: "50mb" });
-const server = express();
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.SECRET,
+  baseURL: process.env.BASE_URL,
+  clientID: process.env.CLIENT_ID,
+  issuerBaseURL: process.env.DOMAIN
+};
 
 const corsOptions ={
   origin:'http://localhost:3000', 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
+express.json({ limit: "50mb" });
+const server = express();
+
+server.use(auth(config));
 server.use(cors(corsOptions));
 server.use(express.json());
 server.use(cookieParser());

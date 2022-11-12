@@ -20,7 +20,6 @@ type UserBody = {
   mobile: string;
   address: string;
   imagenDePerfil: string | null;
-  userType: string;
   suspended: boolean;
 };
 
@@ -66,18 +65,11 @@ router.post(
         mobile,
         address,
         imagenDePerfil,
-        userType,
         suspended,
       } = req.body;
 
       if (
-        firstName &&
-        lastName &&
-        username &&
-        gender &&
-        email &&
-        mobile &&
-        address
+        email 
       ) {
         const result = await User.create({
           firstName,
@@ -88,7 +80,6 @@ router.post(
           mobile,
           address,
           imagenDePerfil,
-          userType,
           suspended,
         });
 

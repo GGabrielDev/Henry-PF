@@ -48,6 +48,7 @@ const Publicar = () => {
     suspended: "",
     image: "https://definicion.de/wp-content/uploads/2009/06/producto.png",
     cloudinary: {},
+    categories: "",
   });
 
   const dispatch = useAppDispatch();
@@ -72,6 +73,7 @@ const Publicar = () => {
       suspended: "",
       image: "",
       cloudinary: {},
+      categories: "",
     });
 
     if (
@@ -80,7 +82,8 @@ const Publicar = () => {
       input.stock === -1 ||
       err.price_local === "Tiene que ser un numero" ||
       input.description === "" ||
-      input.suspended === ""
+      input.suspended === "" ||
+      input.categories === null
       //   ) {
       //     alert("Faltan agregar datos");
       //   } else {
@@ -138,6 +141,10 @@ const Publicar = () => {
                 <label htmlFor="">Nombre del producto:</label>
                 <input name="name" type="text" onChange={handleChange} />
                 {err.name ? <p className="errortext"> {err.name} </p> : ""}
+              </div>
+              <div className="inputinfo">
+                <label htmlFor="">Categoria:</label>
+                <input name="categories" type="text" onChange={handleChange} />
               </div>
               <div className="inputinfo">
                 <label htmlFor="price_local">Precio:</label>

@@ -17,15 +17,18 @@ import Error404H from "../Pages/TuHamburguesa/Error404";
 import DetalleH from "../Pages/TuHamburguesa/Detalle";
 import PublicarH from "../Pages/TuHamburguesa/Publicar";
 import TuHamburguesa from "../Pages/TuHamburguesa/TuHamburguesa";
-import Pago from "../Pages/Compra/Pago";
 import EditProduct from "../Pages/Usuario/EditProduct";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { actions, selectors } from "../features/users/userSlice";
+import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
+import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
+import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError } = selectors;
+
 
 
 const Router = () => {
@@ -63,7 +66,9 @@ const Router = () => {
       <Route path="/usuario/compras" element={<UserCompras />} />
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
       <Route path="/usuario/favoritos" element={<UserFavoritos />} />      
-      <Route path="/pago" element={<Pago />} />
+      <Route path="/checkout/premium" element={<CheckoutPremium />} />
+      <Route path="/checkout/medium" element={<CheckoutMedium />} />
+      <Route path="/checkout/basic" element={<CheckoutBasic />} />
       </>
       :
       null
@@ -85,9 +90,12 @@ const Router = () => {
       :
       null    
       }
-
+      </>
+    </Routes>
+  );
+};
       
-      </> 
+
       {/*
       
       PORTAFOLIO  
@@ -128,12 +136,9 @@ const Router = () => {
       <Route path="/auth/login" element={<Login />} />
 
        PAGO 
-
-      <Route path="/pago" element={<Pago />} /> 
+      <Route path="/checkout/premium" element={<CheckoutPremium />} />
+      <Route path="/checkout/medium" element={<CheckoutMedium />} />
+      <Route path="/checkout/basic" element={<CheckoutBasic />} />
       */}
-     
-    </Routes>
-  );
-};
 
 export default Router;

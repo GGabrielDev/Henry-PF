@@ -12,6 +12,7 @@ export type ProductType = {
   image: string | undefined;
   suspended: boolean;
   size: string | null | undefined;
+  categories:string;
 };
 
 export type ReviewType = {

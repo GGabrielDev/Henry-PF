@@ -19,7 +19,7 @@ const Landingpage = () => {
       <ThemeProvider theme={ThemesLanding}>
         <Navbarlanding />
         <WhatsApp />
-        <div className="headersection">
+        <div id="about" className="headersection">
           {/* <img className='imgtopheader' src={Header} alt="" />  */}
           <div className="containerheader">
             <div className="titleheader">

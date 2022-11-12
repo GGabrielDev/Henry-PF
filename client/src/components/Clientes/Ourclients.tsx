@@ -88,10 +88,11 @@ const Ourclients = () => {
     <Ourclientss>
       <div className="sectioninputclients">
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-          aliquam reiciendis animi qui praesentium deserunt repudiandae atque,
-          ut error amet quibusdam, accusamus id repellat dignissimos, corporis
-          quasi aperiam libero hic.
+          En este apartado, podemos ver todos los vendedores locales que han
+          depositado su confianza en HenryShops. Mira en cada uno de sus sitios
+          el trabajo realizado por nuestra startup y de paso checkea lo que
+          estan vendiendo nuestros clientes. Te dejamos para que navegues en las
+          opciones que decidieron depositar su voto de confianza en HenryShops.
         </p>
         <div className="inputsearchclients">
           <div className="categoryclientinput">

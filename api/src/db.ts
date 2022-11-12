@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 const { DB_USER } = process.env || "postgres";
-const { DB_PASSWORD } = process.env || "postgres";
+const { DB_PASSWORD } = process.env || "25412";
 const { DB_HOST } = process.env || "localhost";
 const { DB_PORT } = process.env || "5432";
 const { DB_NAME } = process.env || "henry_pf";

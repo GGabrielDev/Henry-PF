@@ -25,7 +25,7 @@
     "mercadopago": "^1.5.14",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
-    "sequelize": "^6.23.2"
+    "sequelize": "^6.25.5"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",

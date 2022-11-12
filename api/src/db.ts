@@ -60,7 +60,6 @@ const {
   Review,
   Seller,
   User,
-  MercadoPago,
 } = sequelize.models;
 
 // Aqui irian las declaraciones de las junction tables.
@@ -68,8 +67,9 @@ const {
 
 // Aca vendrian las declaraciones de las relaciones
 // Ejemplo: Product.hasMany(Reviews);
-User.hasOne(Seller, { sourceKey: "id", foreignKey: "userId" });
-Seller.belongsTo(User, { targetKey: "id" });
+Seller.hasOne(User, { sourceKey: "id", foreignKey: "sellerId" });
+User.belongsTo(Seller, { targetKey: "id" });
+
 Product.belongsToMany(Category_Product, {
   through: "category_product_join",
 });
@@ -92,14 +92,16 @@ Product.hasMany(Review, {
 Review.belongsTo(Product, {
   targetKey: "id",
 });
-Countries.hasMany(User, {
+
+/*Countries.hasMany(User, {
   sourceKey: "id",
   foreignKey: "countryId",
   as: "users",
 });
+
 User.belongsTo(Countries, {
   targetKey: "id",
-});
+});*/
 
 Seller.hasMany(Product, {
   sourceKey: "id",

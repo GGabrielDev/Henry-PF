@@ -13,9 +13,9 @@ import {
   HasManySetAssociationsMixin,
   HasManyRemoveAssociationMixin,
   HasManyRemoveAssociationsMixin,
-  HasOneGetAssociationMixin,
-  HasOneSetAssociationMixin,
-  HasOneCreateAssociationMixin,
+//  HasOneGetAssociationMixin,
+//  HasOneSetAssociationMixin,
+//  HasOneCreateAssociationMixin,
   InferAttributes,
   InferCreationAttributes,
   Model,
@@ -31,10 +31,13 @@ import {
   BelongsToManySetAssociationsMixin,
   BelongsToManyRemoveAssociationMixin,
   BelongsToManyRemoveAssociationsMixin,
+  BelongsToGetAssociationMixin,
+  BelongsToSetAssociationMixin,
+  BelongsToCreateAssociationMixin,
 } from "sequelize";
 import path from "path";
 import { Seller } from "./Seller";
-import { Countries } from "./Countries";
+//import { Countries } from "./Countries";
 import { Review } from "./Review";
 import { Product } from "./Product";
 
@@ -52,7 +55,6 @@ export class User extends Model<
   declare mobile: string;
   declare address: string;
   declare imagenDePerfil: string | null;
-  declare isPremium: string;
   declare suspended: boolean;
   // timestamps!
   // createdAt can be undefined during creation
@@ -61,21 +63,21 @@ export class User extends Model<
   declare updatedAt: CreationOptional<Date>;
   // foreign keys are automatically added by associations methods (like Project.belongsTo)
   declare sellerId: ForeignKey<Seller["id"]>;
-  declare countryId: ForeignKey<Countries["id"]>;
+  //declare countryId: ForeignKey<Countries["id"]>;
   // `seller` is an eagerly-loaded association.
   // We tag it as `NonAttribute`
   declare seller?: NonAttribute<Seller>;
-  declare country?: NonAttribute<Countries>;
+  //declare country?: NonAttribute<Countries>;
   // Since TS cannot determine model association at compile time
   // we have to declare them here purely virtually
   // these will not exist until `Model.init` was called.
-  declare getSeller: HasOneGetAssociationMixin<Seller>;
-  declare setSeller: HasOneSetAssociationMixin<Seller, Seller["id"]>;
-  declare createSeller: HasOneCreateAssociationMixin<Seller>;
+  declare getSeller: BelongsToGetAssociationMixin<Seller>;
+  declare setSeller: BelongsToSetAssociationMixin<Seller, Seller["id"]>;
+  declare createSeller: BelongsToCreateAssociationMixin<Seller>;
 
-  declare getCountry: HasOneGetAssociationMixin<Countries>;
-  declare setCountry: HasOneSetAssociationMixin<Countries, Countries["id"]>;
-  declare createCountry: HasOneCreateAssociationMixin<Countries>;
+//  declare getCountry: HasOneGetAssociationMixin<Countries>;
+//  declare setCountry: HasOneSetAssociationMixin<Countries, Countries["id"]>;
+//  declare createCountry: HasOneCreateAssociationMixin<Countries>;
 
   declare getReview: HasManyGetAssociationsMixin<Review>;
   declare countReviews: HasManyCountAssociationsMixin;
@@ -157,7 +159,7 @@ module.exports = (sequelize: Sequelize) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: false,
+        unique: true,
         validate: {
           isEmail: true,
         },
@@ -183,12 +185,6 @@ module.exports = (sequelize: Sequelize) => {
         validate: {
           isUrl: true,
         },
-      },
-
-      isPremium: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-        allowNull: false,
       },
 
       suspended: {

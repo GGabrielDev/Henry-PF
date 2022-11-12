@@ -51,6 +51,7 @@ export const getProducts = createAsyncThunk("product/getProducts", async () => {
     console.log(error);
   }
 });
+
 export const getProductId = createAsyncThunk(
   "product/getProductId",
   async (productId: string | undefined) => {
@@ -65,6 +66,7 @@ export const getProductId = createAsyncThunk(
     }
   }
 );
+
 export const searchProduct = createAsyncThunk(
   "product/searchProduct",
   async (name: string | undefined) => {
@@ -79,6 +81,14 @@ export const searchProduct = createAsyncThunk(
     }
   }
 );
+
+const editProduct = createAsyncThunk("product/editProduct", async (product: ProductType) => {
+  const { id, ...rest } = product;
+  const res = await axios.put(`http://localhost:3001/products/${product.id}`,{
+    ...rest
+  })
+  return res.data
+  });
 
 export const productSlice = createSlice({
   name: "product",
@@ -119,7 +129,17 @@ export const productSlice = createSlice({
         (state, action: PayloadAction<ProductType[]>) => {
           state.productsAll = action.payload || [];
         }
-      );
+      )
+      .addCase(
+        editProduct.fulfilled,
+        (state, action: PayloadAction<ProductType>) => {
+          state.products.forEach((product, index) => {
+            if(product.id === action.payload.id){
+              state.products[index] = action.payload;
+            }
+          })
+        }
+      )
   },
 });
 

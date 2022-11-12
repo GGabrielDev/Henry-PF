@@ -1,8 +1,8 @@
 import {
   Association,
-  BelongsToGetAssociationMixin,
-  BelongsToSetAssociationMixin,
-  BelongsToCreateAssociationMixin,
+//  BelongsToGetAssociationMixin,
+//  BelongsToSetAssociationMixin,
+//  BelongsToCreateAssociationMixin,
   CreationOptional,
   DataTypes,
   ForeignKey,
@@ -21,10 +21,12 @@ import {
   Model,
   NonAttribute,
   Sequelize,
+  HasOneSetAssociationMixin,
+  HasOneGetAssociationMixin,
+  HasOneCreateAssociationMixin,
 } from "sequelize";
 import path from "path";
 import { Product } from "./Product";
-import { Review } from "./Review";
 import { User } from "./User";
 
 export class Seller extends Model<
@@ -34,7 +36,7 @@ export class Seller extends Model<
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<number>;
   declare nombreNegocio: string;
-  declare pay_Money: string;
+  declare paysMoney: string;
   declare imageLogo: string | null;
   declare categorias: string;
   declare template_page: string;
@@ -43,14 +45,12 @@ export class Seller extends Model<
   declare createdAt: CreationOptional<Date>;
   // updatedAt can be undefined during creation
   declare updatedAt: CreationOptional<Date>;
-  // foreign keys are automatically added by associations methods (like Project.belongsTo)
-  declare userId: ForeignKey<User["id"]>;
   // Since TS cannot determine model association at compile time
   // we have to declare them here purely virtually
   // these will not exist until `Model.init` was called.
-  declare setUser: BelongsToSetAssociationMixin<User, User["id"]>;
-  declare getUser: BelongsToGetAssociationMixin<User>;
-  declare createUser: BelongsToCreateAssociationMixin<User>;
+  declare setUser: HasOneSetAssociationMixin<User, User["id"]>;
+  declare getUser: HasOneGetAssociationMixin<User>;
+  declare createUser: HasOneCreateAssociationMixin<User>;
 
   declare getProduct: HasManyGetAssociationsMixin<Product>;
   declare countProducts: HasManyCountAssociationsMixin;
@@ -92,7 +92,7 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      pay_Money: {
+      paysMoney: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },

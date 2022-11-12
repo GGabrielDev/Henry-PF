@@ -86,7 +86,7 @@ module.exports = (sequelize: Sequelize) => {
 
       nombreNegocio: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           isAlpha: true,
         },
@@ -106,7 +106,8 @@ module.exports = (sequelize: Sequelize) => {
       },
 
       categorias: {
-        type: DataTypes.ENUM("Gastronomia", "Entretenimiento", "Servicios", "Tecnologia", "Vestimenta", "Educacion"),
+        type: DataTypes.ENUM("Gastronomia", "Entretenimiento", "Servicios", "Tecnologia", "Vestimenta", "Educacion", "No esta especificado"),
+        defaultValue: "No esta especificado",
       },
 
       template_page:{

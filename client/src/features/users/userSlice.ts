@@ -119,12 +119,12 @@ export const userSlice = createSlice({
 });
 
 const selectError = (state: RootState) => state.user.error
-
+const selectUser = (state: RootState) => state.user.user
 const {
 
 } = userSlice.actions;
 
-export const selectors = { selectError };
+export const selectors = { selectError, selectUser};
 export const actions = {
   getUserByEmail, createUser, editUser
 };

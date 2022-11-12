@@ -21,11 +21,22 @@ import {
   Model,
   NonAttribute,
   Sequelize,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyCountAssociationsMixin,
+  BelongsToManyCreateAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManyHasAssociationMixin,
+  BelongsToManyHasAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+  BelongsToManyRemoveAssociationMixin,
+  BelongsToManyRemoveAssociationsMixin,
 } from "sequelize";
 import path from "path";
 import { Seller } from "./Seller";
 import { Countries } from "./Countries";
 import { Review } from "./Review";
+import { Product } from "./Product";
 
 export class User extends Model<
   InferAttributes<User>,
@@ -76,12 +87,43 @@ export class User extends Model<
   declare removeReview: HasManyRemoveAssociationMixin<Review, Review["id"]>;
   declare removeReviews: HasManyRemoveAssociationsMixin<Review, Review["id"]>;
   declare createReview: HasManyCreateAssociationMixin<Review>;
+
+  // FAVORITE
+
+  declare getFavoriteProduct: BelongsToManyGetAssociationsMixin<Product>;
+  declare countFavoriteProducts: BelongsToManyCountAssociationsMixin;
+  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<Product, Product["id"]>;
+  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<Product, Product["id"]>;
+  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare createFavoriteProduct: BelongsToManyCreateAssociationMixin<Product>;
+
   // You can also pre-declare possible inclusions, these will only be populated if you
   // actively include a relation.
   declare reviews?: NonAttribute<Review[]>; // Note this is optional since it's only populated when explicitly requested in code
+  declare favorites?: NonAttribute<Product[]>; // Note this is optional since it's only populated when explicitly requested in code
 
   declare static associations: {
     reviews: Association<User, Review>;
+    favorites: Association<User, Product>;
   };
 }
 

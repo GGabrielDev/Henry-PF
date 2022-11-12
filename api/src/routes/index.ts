@@ -6,6 +6,7 @@ import reviewRouter from "./Review"
 import categorySellerRouter from "./Category_Seller";
 import categoryProductRouter from "./Category_Product";
 import MercadoPago from "./MercadoPago";
+import Stripe from "./Stripe"
 const router = Router();
 
 router.use("/products", ProductRouter);
@@ -15,6 +16,7 @@ router.use("/reviews", reviewRouter)
 router.use("/productCategory", categoryProductRouter);
 router.use("/sellerCategory", categorySellerRouter);
 router.use("/payment", MercadoPago);
+router.use("/stripe", Stripe);
 
 router.get("/", (req, res) =>
   res.type("html").send(`

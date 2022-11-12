@@ -4,6 +4,7 @@ import imgtop3 from "../assets/top3.jpg";
 import imgtop2 from "../assets/top2.jpg";
 import imgtop1 from "../assets/top1.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const subcription = () => {
   return (
@@ -34,11 +35,18 @@ const subcription = () => {
               <AiOutlineCheck />
               <div className="textlineinfo">Atencion 24/7 </div>
             </div>
+            <div className="lineinfosub">
+              <AiOutlineCheck />
+              <div className="textlineinfo">Una cuenta admin </div>
+            </div>
           </div>
           <div className="buttoncardsub">
-            <button>Adquirir</button>
+            <Link to="/checkout/basic">
+              <button>Adquirir</button>
+            </Link>
           </div>
         </div>
+
         <div className="cardsubcription cardblack">
           <div className="topsectioncadsub">
             <div className="imgcontainercarsub">
@@ -64,9 +72,15 @@ const subcription = () => {
               <AiOutlineCheck />
               <div className="textlineinfo">Atencion 24/7 </div>
             </div>
+            <div className="lineinfosub">
+              <AiOutlineCheck />
+              <div className="textlineinfo">Hasta siete cuentas admin </div>
+            </div>
           </div>
           <div className="buttoncardsub">
-            <button>Adquirir</button>
+            <Link to="/checkout/premium">
+              <button>Adquirir</button>
+            </Link>
           </div>
         </div>
         <div className="cardsubcription cardwhite">
@@ -94,9 +108,15 @@ const subcription = () => {
               <AiOutlineCheck />
               <div className="textlineinfo">Atencion 24/7 </div>
             </div>
+            <div className="lineinfosub">
+              <AiOutlineCheck />
+              <div className="textlineinfo">Hasta tres cuentas admin </div>
+            </div>
           </div>
           <div className="buttoncardsub">
-            <button>Adquirir</button>
+            <Link to="/checkout/medium">
+              <button>Adquirir</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -106,7 +126,7 @@ const subcription = () => {
 
 const Sectionplans = styled.div`
   width: 100%;
-    margin-bottom: 40px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
   padding: 10px;
@@ -183,7 +203,7 @@ const Sectionplans = styled.div`
   }
 
   .textlineinfo {
-    padding: 0 20px;
+    padding: 0 17px;
     color: #7e7e7e;
     text-align: start;
 
@@ -251,32 +271,31 @@ const Sectionplans = styled.div`
     }
   }
 
-  @media screen and (max-width: 1040px){
-        padding: 0;
-    .cardscontainersubs{
-
-        flex-direction: column;
+  @media screen and (max-width: 1040px) {
+    padding: 0;
+    .cardscontainersubs {
+      flex-direction: column;
     }
 
     .cardsubcription {
-        width: 100%;
-        border-radius: 0px;
-        box-shadow: none;
+      width: 100%;
+      border-radius: 0px;
+      box-shadow: none;
     }
   }
 
-  @media screen and (max-width: 420px){
+  @media screen and (max-width: 420px) {
     padding: 0;
-    .cardsubcription{
-        width: 100%;
-        margin-bottom: 0px;
-        border-radius: 0px;
+    .cardsubcription {
+      width: 100%;
+      margin-bottom: 0px;
+      border-radius: 0px;
     }
 
-    .buttoncardsub{
-        button{
-            width: 100%;
-        }
+    .buttoncardsub {
+      button {
+        width: 100%;
+      }
     }
   }
 `;

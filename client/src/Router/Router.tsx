@@ -17,8 +17,10 @@ import Error404H from "../Pages/TuHamburguesa/Error404";
 import DetalleH from "../Pages/TuHamburguesa/Detalle";
 import PublicarH from "../Pages/TuHamburguesa/Publicar";
 import TuHamburguesa from "../Pages/TuHamburguesa/TuHamburguesa";
-import Pago from "../components/Compra/Pago";
 import EditProduct from "../Pages/Usuario/EditProduct";
+import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
+import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
+import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 
 const Router = () => {
   return (
@@ -62,7 +64,9 @@ const Router = () => {
 
       {/* PAGO */}
 
-      <Route path="/pago" element={<Pago />} />
+      <Route path="/checkout/premium" element={<CheckoutPremium />} />
+      <Route path="/checkout/medium" element={<CheckoutMedium />} />
+      <Route path="/checkout/basic" element={<CheckoutBasic />} />
     </Routes>
   );
 };

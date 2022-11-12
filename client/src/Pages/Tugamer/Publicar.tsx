@@ -3,13 +3,33 @@ import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
 import Validate from "../../components/Tugamer/validate";
 import { symlink } from "fs";
-
+import Swal from "sweetalert2";
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
+
+  const AlertaCorrecta = () => {
+    Swal.fire({
+      title: "Producto creado",
+      text: "Se ha creado un producto de manera exitosa",
+      icon: "success",
+      confirmButtonText: "Perfecto",
+    });
+  };
+
+  // ALERTA PARA CUANDO FALTAN DATOS
+
+  const AlertaIncorrecta = () => {
+    Swal.fire({
+      title: "Error",
+      text: "Faltan datos",
+      icon: "error",
+      confirmButtonText: "Ok!",
+    });
+  };
 
   const [err, setErr] = useState({
     name: "",
@@ -43,7 +63,7 @@ const Publicar = () => {
 
   const handleSubmit = (event: SyntheticEvent) => {
     setErr(Validate(input));
-
+    event.preventDefault();
     setInput({
       name: "",
       price_local: -1,
@@ -61,10 +81,19 @@ const Publicar = () => {
       err.price_local === "Tiene que ser un numero" ||
       input.description === "" ||
       input.suspended === ""
+      //   ) {
+      //     alert("Faltan agregar datos");
+      //   } else {
+      //     alert("Producto agregado exitosamente!");
+      //     dispatch(createProduct(input));
+      //   }
+      // };
     ) {
-      alert("Faltan datos");
+      AlertaIncorrecta();
     } else {
-      alert("Producto agregado exitosamente!");
+      AlertaCorrecta();
+      // event.target.reset()
+      // document.getElementById("form-public").reset();
       dispatch(createProduct(input));
     }
   };
@@ -94,7 +123,12 @@ const Publicar = () => {
       <Navbar />
       <AddProduct>
         <h1 className="addproduct-title">Agrega un producto</h1>
-        <form onSubmit={handleSubmit} action="" className="formularioproduct">
+        <form
+          onSubmit={handleSubmit}
+          action=""
+          id="form-public"
+          className="formularioproduct"
+        >
           <div className="productinfo">
             <div className="productinfo__left">
               <h5 className="campo__obligatorio">

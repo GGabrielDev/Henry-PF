@@ -3,12 +3,15 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import routes from "./routes";
 import errorHandler from "./middleware/error.middleware";
+import cors from "cors"
+
+
 
 require("./db.js");
 
 express.json({ limit: "50mb" });
 const server = express();
-const cors = require('cors');
+
 const corsOptions ={
   origin:'http://localhost:3000', 
   credentials:true,            //access-control-allow-credentials:true

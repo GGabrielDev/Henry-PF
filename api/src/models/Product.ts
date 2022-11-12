@@ -36,6 +36,7 @@ import path from "path";
 import { Category_Product } from "./Category_product";
 import { Review } from "./Review";
 import { Seller } from "./Seller";
+import { User } from "./User";
 
 export class Product extends Model<
   InferAttributes<Product>,
@@ -96,6 +97,22 @@ export class Product extends Model<
   >;
   declare createCategory: BelongsToManyCreateAssociationMixin<Category_Product>;
 
+  // FAVORITES PRODUCT FROM USER
+
+  declare getFavoriteUser: BelongsToManyGetAssociationsMixin<User>;
+  declare countFavoriteUsers: BelongsToManyCountAssociationsMixin;
+  declare hasFavoriteUser: BelongsToManyHasAssociationMixin<User, User["id"]>;
+  declare hasFavoriteUsers: BelongsToManyHasAssociationsMixin<User, User["id"]>;
+  declare setFavoriteUser: BelongsToManySetAssociationsMixin<User, User["id"]>;
+  declare addFavoriteUser: BelongsToManyAddAssociationMixin<User, User["id"]>;
+  declare addFavoriteUsers: BelongsToManyAddAssociationsMixin<User, User["id"]>;
+  declare removeFavoriteUser: BelongsToManyRemoveAssociationMixin<User, User["id"]>;
+  declare removeFavoriteUsers: BelongsToManyRemoveAssociationsMixin<
+    User,
+    User["id"]
+  >;
+  declare createFavorite: BelongsToManyCreateAssociationMixin<User>;
+
   declare getReview: HasManyGetAssociationsMixin<Review>;
   declare countReviews: HasManyCountAssociationsMixin;
   declare hasReview: HasManyHasAssociationMixin<Review, Review["id"]>;
@@ -114,10 +131,12 @@ export class Product extends Model<
   // actively include a relation.
   declare categories?: NonAttribute<Category_Product[]>; // Note this is optional since it's only populated when explicitly requested in code
   declare reviews?: NonAttribute<Review[]>;
+  declare favorites?: NonAttribute<User[]>;
 
   declare static associations: {
     categories: Association<Product, Category_Product>;
     reviews: Association<Product, Review>;
+    favorites: Association<Product, User>;
   };
 }
 

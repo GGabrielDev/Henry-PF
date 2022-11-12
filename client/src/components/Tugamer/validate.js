@@ -1,5 +1,18 @@
+import Swal from "sweetalert2";
+
 function Validate(input) {
   let error = {};
+
+  // ALERTA PARA CUANDO FALTAN DATOS
+
+  const AlertaIncorrecta = () => {
+    Swal.fire({
+      title: "Error",
+      text: "Faltan datos",
+      icon: "success",
+      confirmButtonText: "Perfecto",
+    });
+  };
 
   if (!input.name.trim()) {
     error.name = "Se requiere un nombre";

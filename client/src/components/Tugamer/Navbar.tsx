@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { actions, selectors } from "../../features/cart/cartSlice";
 import ShoppingCart from "./ShoppingCart";
+import { selectProducts } from "../../features/products/productSlice";
 
 const { toggleCart } = actions;
 const { selectCartQuantity, selectIsOpen } = selectors;
@@ -14,6 +15,8 @@ const Navbar = () => {
   const cartQuantity = useAppSelector(selectCartQuantity);
   const isOpen = useAppSelector(selectIsOpen);
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const categorias = useAppSelector(selectProducts);
+  console.log(categorias);
 
   return (
     <NavbarContainer>
@@ -65,11 +68,11 @@ const Navbar = () => {
         </Headermiddle>
         <Headerbottom>
           <Infocategories>
-            <div className="infocategories-item">Monitor</div>
-            <div className="infocategories-item">Ram</div>
-            <div className="infocategories-item">SSD</div>
-            <div className="infocategories-item">Grafica</div>
-            <div className="infocategories-item">Procesador</div>
+            {categorias
+              ? categorias.map((e) => {
+                  return <div>{e.categories}</div>;
+                })
+              : null}
           </Infocategories>
         </Headerbottom>
       </Header>

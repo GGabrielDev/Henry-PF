@@ -36,7 +36,6 @@ export class Seller extends Model<
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<number>;
   declare nombreNegocio: string;
-  declare paysMoney: string;
   declare imageLogo: string | null;
   declare categorias: string;
   declare template_page: string;
@@ -92,11 +91,6 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      paysMoney: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
-      },
-
       imageLogo: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -111,7 +105,8 @@ module.exports = (sequelize: Sequelize) => {
       },
 
       template_page:{
-        type:DataTypes.ENUM("1","2","3")
+        type:DataTypes.ENUM("1","2","3"),
+        defaultValue:"1",
       },
 
       createdAt: DataTypes.DATE,

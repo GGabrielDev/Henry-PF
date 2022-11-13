@@ -43,6 +43,10 @@ const getUserByEmail = createAsyncThunk("user/getUserByEmail", async (email: str
   return res.data
 })
 
+const getUserById = createAsyncThunk("user/getUserById", async (id: string) => {
+  const res = await axios.get(`http://localhost:3001/users/${id}`)
+  return res.data
+})
 
 const createUser = createAsyncThunk("user/createUser", async (user: User) => {
   const res = await axios.post(`http://localhost:3001/users`, {
@@ -77,8 +81,26 @@ export const userSlice = createSlice({
           state.user = action.payload
         }
       )
+      
     .addCase(
       getUserByEmail.rejected,
+      (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 404,
+          message: "User not found"
+        }
+      }
+    )
+
+    .addCase(
+      getUserById.fulfilled,
+      (state, action: PayloadAction<UserType>) => {
+        state.user = action.payload
+      }
+    )
+
+    .addCase(
+      getUserById.rejected,
       (state, action: PayloadAction<any>) => {
         state.error = {
           code: 404,
@@ -127,7 +149,7 @@ const {
 
 export const selectors = { selectError, selectUser};
 export const actions = {
-  getUserByEmail, createUser, editUser
+  getUserByEmail, createUser, editUser, getUserById
 };
 export const helpers = {};
 

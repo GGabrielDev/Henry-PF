@@ -16,6 +16,7 @@ type SellerBody = {
   pay_Money: string;
   imageLogo: string | null;
   template_page: string;
+  suspended: boolean;
 };
 
 type RouteRequest = Request<SellerParams, SellerQuery, SellerBody>;
@@ -51,7 +52,7 @@ router.post(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { nombreNegocio, pay_Money, imageLogo, template_page } = req.body;
+      const { nombreNegocio, pay_Money, imageLogo, template_page, suspended } = req.body;
 
       if (nombreNegocio || pay_Money || template_page) {
         const result = await Seller.create({
@@ -59,6 +60,7 @@ router.post(
           pay_Money,
           imageLogo,
           template_page,
+          suspended,
         });
 
         return res.status(201).send(result);
@@ -80,6 +82,7 @@ router.put(
         "pay_Money",
         "imageLogo",
         "template_page",
+        "suspended",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
         possibleValues.find((possibleValue) => possibleValue === value[0])

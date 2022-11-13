@@ -10,10 +10,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ThemesLanding } from "../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../app/hooks";
+import { selectors, UserType } from "../features/users/userSlice"
+
+const { selectUser } = selectors;
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
+  const usuario = useAppSelector(selectUser) as UserType
 
   const handleChange = () => {
     setMenu(!menu);
@@ -74,19 +79,19 @@ const Navbarlanding = () => {
 
               <div className="img__container">
                 <div className="img__circle">
-                  {isAuthenticated ? (
-                    <img src={user?.picture} alt="picture" />
+                  {usuario.imagenDePerfil ? (
+                    <img referrerPolicy="no-referrer" src={usuario.imagenDePerfil} alt="picture" />
                   ) : (
                     <img src={UserDefault} alt="" />
                   )}
                 </div>
               </div>
 
-              {isAuthenticated ? (             
+              {usuario.firstName ? (             
                 <  >
                 <div className="section-re">
                   <div className="section__cajita2">
-                    <span className="section__name">{user?.name}</span>
+                    <span className="section__name">{usuario.firstName + " " + usuario.lastName}</span>
                     <span className="icon-re">                      
                     </span>
                   </div>

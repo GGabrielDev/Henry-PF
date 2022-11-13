@@ -21,7 +21,7 @@ type UserBody = {
   mobile: string;
   address: string;
   imagenDePerfil: string | null;
-  suspended: boolean;
+  
 };
 
 type RouteRequest = Request<UserParams, UserQuery, UserBody>;
@@ -56,7 +56,6 @@ router.post(
         mobile,
         address,
         imagenDePerfil,
-        suspended,
       } = req.body;
 
       if (
@@ -71,7 +70,6 @@ router.post(
           mobile,
           address,
           imagenDePerfil,
-          suspended,
         });
 
         return res.status(201).send(result);
@@ -101,9 +99,7 @@ router.put(
         "email",
         "mobile",
         "address",
-        "imagenDePerfil",
-        "userType",
-        "suspended",
+        "imagenDePerfil"
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
         possibleValues.find((possibleValue) => possibleValue === value[0])

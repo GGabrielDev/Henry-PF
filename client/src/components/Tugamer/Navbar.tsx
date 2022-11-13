@@ -16,7 +16,6 @@ const Navbar = () => {
   const isOpen = useAppSelector(selectIsOpen);
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const categorias = useAppSelector(selectProducts);
-  console.log(categorias);
 
   return (
     <NavbarContainer>

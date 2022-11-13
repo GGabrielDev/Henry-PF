@@ -24,6 +24,7 @@ export type UserType = {
 
 type SliceState = {
   user: UserType | {};
+  status: "loggedIn" | "loggedOut";
   error: {
     code: number | null
     message: string | null
@@ -32,35 +33,35 @@ type SliceState = {
 
 const initialState: SliceState = {
   user: {},
+  status: "loggedOut",
   error: {
     code: null,
     message: null
   }
 }
 
-const getUserByEmail = createAsyncThunk("user/getUserByEmail", async (email: string) => {
+export const getUserByEmail = createAsyncThunk("user/getUserByEmail", async (email: string) => {
   const res = await axios.get(`http://localhost:3001/users/${email}`)
   return res.data
 })
 
-const getUserById = createAsyncThunk("user/getUserById", async (id: string) => {
+export const getUserById = createAsyncThunk("user/getUserById", async (id: string) => {
   const res = await axios.get(`http://localhost:3001/users/${id}`)
   return res.data
 })
 
-const createUser = createAsyncThunk("user/createUser", async (user: User) => {
+export const createUser = createAsyncThunk("user/createUser", async (user: User) => {
   const res = await axios.post(`http://localhost:3001/users`, {
     email: user.email,
     firstName: user.given_name,
     lastName: user.family_name,
     mobile: user.phone_number,
-    username: user.nickname,
     imagenDePerfil: user.picture
   })
   return res.data
 })
 
-const editUser = createAsyncThunk("user/editUser", async (user: UserType) => {
+export const editUser = createAsyncThunk("user/editUser", async (user: UserType) => {
   const { id, email, isPremium, ...rest } = user;
   const res = await axios.put(`http://localhost:3001/users/`, {
     ...rest
@@ -80,6 +81,7 @@ export const userSlice = createSlice({
         (state, action: PayloadAction<UserType>) => {
           state.user = action.payload
           state.error = {code: null, message:null}
+          state.status = "loggedIn"
         }
       )
       
@@ -96,7 +98,7 @@ export const userSlice = createSlice({
     .addCase(
       getUserById.fulfilled,
       (state, action: PayloadAction<UserType>) => {
-        state.user = action.payload
+        state.user = action.payload;
         state.error = {code: null, message:null}
       }
     )
@@ -113,7 +115,7 @@ export const userSlice = createSlice({
     .addCase(
       createUser.fulfilled,
       (state, action: PayloadAction<UserType>) => {
-        state.user = action.payload,
+        state.user = action.payload;
         state.error = {code: null, message:null}
       }
     )
@@ -129,7 +131,7 @@ export const userSlice = createSlice({
     .addCase(
       editUser.fulfilled,
       (state, action: PayloadAction<UserType>) => {
-        state.user = action.payload,
+        state.user = action.payload;
         state.error = {code: null, message:null}
       }
     )
@@ -147,11 +149,10 @@ export const userSlice = createSlice({
 
 const selectError = (state: RootState) => state.user.error
 const selectUser = (state: RootState) => state.user.user
-const {
+const selectStatus = (state: RootState) => state.user.status
+const {} = userSlice.actions;
 
-} = userSlice.actions;
-
-export const selectors = { selectError, selectUser};
+export const selectors = { selectError, selectUser, selectStatus};
 export const actions = {
   getUserByEmail, createUser, editUser, getUserById
 };

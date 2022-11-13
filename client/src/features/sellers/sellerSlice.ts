@@ -66,6 +66,7 @@ export const userSlice = createSlice({
         getSellerByName.fulfilled,
         (state, action: PayloadAction<SellerType>) => {
           state.seller = action.payload
+          state.error = {code: null, message:null}
         }
       )
     .addCase(
@@ -81,6 +82,7 @@ export const userSlice = createSlice({
         getSellerById.fulfilled,
         (state, action: PayloadAction<SellerType>) => {
           state.seller = action.payload
+          state.error = {code: null, message:null}
         }
       )
     .addCase(
@@ -97,6 +99,7 @@ export const userSlice = createSlice({
         createSeller.fulfilled,
       (state, action: PayloadAction<SellerType>) => {
         state.seller = action.payload
+        state.error = {code: null, message:null}
       }
     )
     .addCase(
@@ -112,6 +115,7 @@ export const userSlice = createSlice({
         editSeller.fulfilled,
       (state, action: PayloadAction<SellerType>) => {
         state.seller = action.payload
+        state.error = {code: null, message:null}
       }
     )
     .addCase(

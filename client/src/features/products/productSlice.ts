@@ -43,6 +43,12 @@ export const initialState: SliceState = {
   search: [],
 };
 
+export const createProduct = createAsyncThunk("product/createProduct" , async (product: ProductType) => {
+  const res = await axios.post(`http://localhost:3001/products`,{
+    product
+  })
+})
+
 export const getProducts = createAsyncThunk("product/getProducts", async () => {
   try {
     const res = await axios.get("http://localhost:3001/products");

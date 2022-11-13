@@ -79,6 +79,7 @@ export const userSlice = createSlice({
         getUserByEmail.fulfilled,
         (state, action: PayloadAction<UserType>) => {
           state.user = action.payload
+          state.error = {code: null, message:null}
         }
       )
       
@@ -96,6 +97,7 @@ export const userSlice = createSlice({
       getUserById.fulfilled,
       (state, action: PayloadAction<UserType>) => {
         state.user = action.payload
+        state.error = {code: null, message:null}
       }
     )
 
@@ -111,7 +113,8 @@ export const userSlice = createSlice({
     .addCase(
       createUser.fulfilled,
       (state, action: PayloadAction<UserType>) => {
-        state.user = action.payload
+        state.user = action.payload,
+        state.error = {code: null, message:null}
       }
     )
     .addCase(
@@ -126,7 +129,8 @@ export const userSlice = createSlice({
     .addCase(
       editUser.fulfilled,
       (state, action: PayloadAction<UserType>) => {
-        state.user = action.payload
+        state.user = action.payload,
+        state.error = {code: null, message:null}
       }
     )
     .addCase(

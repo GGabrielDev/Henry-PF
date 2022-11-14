@@ -61,101 +61,100 @@ export default function EditarUsuario() {
 
   return (
     <>
-      <ThemeProvider theme={ThemesLanding}>
-        <PublicarContainer>
-          <Navbarlanding />
-          {detalleUsuario.id ? (
-            <AddProduct>
-              <h1 className="addproduct-title">Editar Perfil</h1>
-              <form className="formularioproduct">
-                <div className="productinfo">
-                  <div className="productinfo__left">
-                    <div className="inputinfo">
-                      <label htmlFor="firstName">Nombre:</label>
-                      <input
-                        name="firstName"
-                        type="text"
-                        placeholder={"" + detalleUsuario.firstName + ""}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="inputinfo">
-                      <label htmlFor="lastName">Apellido:</label>
-                      <input
-                        className="price_local__input"
-                        name="lastName"
-                        type="text"
-                        placeholder={"" + detalleUsuario.lastName + ""}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="inputinfo">
-                      <label htmlFor="phonenumber">Numero de Telefono:</label>
-                      <textarea
-                        name="phoneNumber"
-                        placeholder={"" + detalleUsuario.phoneNumber + ""}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="inputinfo ultimo__select">
-                      <label htmlFor="gender">Genero:</label>
-                      <select
-                        defaultValue={"No quiero decir"}
-                        name="gender"
-                        id=""
-                        onChange={handleChange}
-                      >
-                        <option value="No quiero decir">Elige Uno</option>
-                        <option value="M"> Hombre </option>
-                        <option value="F"> Mujer </option>
-                        <option value="No binario"> No Binario </option>
-                        <option value="No quiero decir">
-                          {" "}
-                          No quiero decir{" "}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="productinfo__Right">
-                    <div className="imageupload">
-                      <input
-                        type="file"
-                        name="image"
-                        onChange={(e) => upLoadImage(e)}
-                        alt={"" + detalleUsuario.imagenDePerfil + ""}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="inputinfo">
-                  <label htmlFor="address">Direccion:</label>
-                  <input
-                    name="address"
-                    type="text"
-                    placeholder={"" + detalleUsuario.address + ""}
-                    onChange={handleChange}
-                  />
-                </div>
-                <Link to="/usuario/general">
-                  {detalleUsuario.id ? (
-                    <button
-                      className="submitproduct"
-                      onClick={() => dispatch(editUser({ user, id }))}
-                    >
-                      Cambiar
-                    </button>
-                  ) : null}
-                </Link>
-              </form>
-            </AddProduct>
-          ) : (
-            <></>
-          )}
-        </PublicarContainer>
-      </ThemeProvider>
-    </>
-  );
-}
+    <PublicarContainer>
+    <Navbarlanding />
+    {detalleUsuario.id ? (
+    <AddProduct>
+      <h1 className="addproduct-title">Editar producto</h1>
+      <form className="formularioproduct">
+        <div className="productinfo">
+          <div className="productinfo__left">
+            <div className="inputinfo">
+              <label htmlFor="firstName">Nombre:</label>
+              <input
+                name="firstName"
+                type="text"
+                placeholder={"" + detalleUsuario.firstName + ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="inputinfo">
+              <label htmlFor="lastName">Apellido:</label>
+              <input
+                className="price_local__input"
+                name="lastName"
+                type="text"
+                placeholder={"" + detalleUsuario.lastName + ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="inputinfo">
+              <label htmlFor="phonenumber">Numero de Telefono:</label>
+              <textarea
+                name="phoneNumber"
+                placeholder={"" + detalleUsuario.phoneNumber + ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="inputinfo ultimo__select">
+              <label htmlFor="gender">Genero:</label>
+              <select
+                defaultValue={"No quiero decir"}
+                name="gender"
+                id=""
+                onChange={handleChange}
+              >
+                <option value="No quiero decir">
+                  Elige Uno
+                </option>
+                <option value="M"> Hombre </option>
+                <option value="F"> Mujer </option>
+                <option value="No binario"> No Binario </option>
+                <option value="No quiero decir"> No quiero decir </option>
+              </select>
+            </div>
+          </div>
+          <div className="productinfo__Right">
+            <div className="imageupload">
+              <input
+                type="file"
+                name="imagenDePerfil"
+                onChange={(e) => upLoadImage(e)}
+                alt={"" + detalleUsuario.imagenDePerfil + ""}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="inputinfo">
+              <label htmlFor="address">Direccion:</label>
+              <input
+                name="address"
+                type="text"
+                placeholder={"" + detalleUsuario.address + ""}
+                onChange={handleChange}
+              />
+            </div>
+        <Link to="/usuario/general">
+          {detalleUsuario.id? 
+          <button
+            className="submitproduct"
+            onClick={() => dispatch(editUser({user, id}))} >
+            Cambiar
+          </button> 
+          : 
+          null
+          }
+        </Link>
+      </form>
+    </AddProduct>)
+   : 
+   <>
+   </> }
+   </PublicarContainer>    
+   </>
+  )
+}; 
+ 
 
 const FormEdit = styled.div`
   display: flex;

@@ -1,15 +1,21 @@
-import React from "react";
+import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
 import MenuUsuario from "./MenuUsuario";
 import styled, { useTheme } from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";
 import UserDefault from "../../assets/imagenesSlider/defaultuser.jpg";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
-import { useAuth0 } from "@auth0/auth0-react";
+import { actions, selectors, UserType } from "../../features/users/userSlice"
+import { useAppSelector } from "../../app/hooks";
+import { uploadToCloudinary } from "../../helpers/Cloudinary";
+
+const { selectUser } = selectors;
+
 
 const General = () => {
-  const { user, isAuthenticated } = useAuth0();
+  const user = useAppSelector(selectUser) as UserType
 
+  
   return (
     <GeneralContainer>
       <ThemeProvider theme={ThemesLanding}>
@@ -20,27 +26,29 @@ const General = () => {
             <h3 className="general__perfil-section">Tu Foto</h3>
             <div className="general__img">
               <div className="img__container">
-                {isAuthenticated ? (
-                  <img src={user?.picture} alt="picture" />
-                ) : (
-                  <img src={UserDefault} alt="" />
-                )}
-              </div>
-              <div className="botones">
-                <button className="subir__img">Subir Foto </button>
-                <button className="borrar__img">Borrar Foto</button>
+                {user.imagenDePerfil ? (<img referrerPolicy="no-referrer" src={user.imagenDePerfil} alt="picture" />) :
+                  (<img src={UserDefault} alt="" />)}
               </div>
             </div>
             <h2 className="general__perfil-section">Información básica:</h2>
 
             <h3 className="general__perfil-section-item">Nombre/s</h3>
-            <p className="general__input">{user?.given_name}</p>
+            <p className="general__input">{user.firstName}</p>
 
             <h3 className="general__perfil-section-item">Apellido/s</h3>
-            <p className="general__input">{user?.family_name}</p>
+            <p className="general__input">{user.lastName}</p>
 
             <h3 className="general__perfil-section-item">Email</h3>
-            <p className="general__input">{user?.email}</p>
+            <p className="general__input">{user.email}</p>
+
+            <h3 className="general__perfil-section-item">Numero de Telefono</h3>
+            <p className="general__input">{user.phoneNumber}</p>
+
+            <h3 className="general__perfil-section-item">Direccion</h3>
+            <p className="general__input">{user.address}</p>
+
+            <h3 className="general__perfil-section-item">Genero</h3>
+            <p className="general__input">{user.gender}</p>
           </div>
         </GeneralContent>
       </ThemeProvider>

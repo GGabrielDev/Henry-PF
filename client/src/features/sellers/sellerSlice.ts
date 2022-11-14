@@ -17,7 +17,7 @@ template_page: "1"|"2"|"3"|null;
 }
 
 type SliceState = {
-  user: SellerType | {};
+  seller: SellerType | {};
   error: {
     code: number | null
     message: string | null
@@ -25,7 +25,7 @@ type SliceState = {
 }
 
 const initialState: SliceState = {
-  user: {},
+  seller: {},
   error: {
     code: null,
     message: null
@@ -65,7 +65,8 @@ export const userSlice = createSlice({
       .addCase(
         getSellerByName.fulfilled,
         (state, action: PayloadAction<SellerType>) => {
-          state.user = action.payload
+          state.seller = action.payload
+          state.error = {code: null, message:null}
         }
       )
     .addCase(
@@ -80,7 +81,8 @@ export const userSlice = createSlice({
     .addCase(
         getSellerById.fulfilled,
         (state, action: PayloadAction<SellerType>) => {
-          state.user = action.payload
+          state.seller = action.payload
+          state.error = {code: null, message:null}
         }
       )
     .addCase(
@@ -96,7 +98,8 @@ export const userSlice = createSlice({
     .addCase(
         createSeller.fulfilled,
       (state, action: PayloadAction<SellerType>) => {
-        state.user = action.payload
+        state.seller = action.payload
+        state.error = {code: null, message:null}
       }
     )
     .addCase(
@@ -104,14 +107,15 @@ export const userSlice = createSlice({
       (state, action: PayloadAction<any>) => {
         state.error = {
           code: 500,
-          message: "Hubo un error al crear el usuario"
+          message: "An error ocurred while creating the seller"
         }
       }
     )
     .addCase(
         editSeller.fulfilled,
       (state, action: PayloadAction<SellerType>) => {
-        state.user = action.payload
+        state.seller = action.payload
+        state.error = {code: null, message:null}
       }
     )
     .addCase(
@@ -119,7 +123,7 @@ export const userSlice = createSlice({
       (state, action: PayloadAction<any>) => {
         state.error = {
           code: 500,
-          message: "Hubo un error al editar el usuario"
+          message: "An error ocurred while editing the seller"
         }
       }
     )

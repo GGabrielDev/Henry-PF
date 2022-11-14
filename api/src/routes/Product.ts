@@ -121,6 +121,7 @@ router.get(
 router.post(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
+    console.log(req.body)
     try {
       const {
         name,

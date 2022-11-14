@@ -39,6 +39,7 @@ export class Seller extends Model<
   declare imageLogo: string | null;
   declare categorias: string;
   declare template_page: string;
+  declare suspended: boolean;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -107,6 +108,12 @@ module.exports = (sequelize: Sequelize) => {
       template_page:{
         type:DataTypes.ENUM("1","2","3"),
         defaultValue:"1",
+      },
+
+      suspended: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
       },
 
       createdAt: DataTypes.DATE,

@@ -28,15 +28,16 @@ import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 
 const { getUserByEmail, createUser } = actions;
-const { selectError } = selectors;
+const { selectError, selectStatus } = selectors;
 
 
 
 const Router = () => {
     const dispatch = useAppDispatch();
     const error = useAppSelector(selectError);
+    const status = useAppSelector(selectStatus)
     const {isAuthenticated, user} = useAuth0(); 
-    useEffect(() => {if(isAuthenticated === true && user && user.email && !error.message){
+    useEffect(() => {if(isAuthenticated && user && user.email && !error.message && status === "loggedOut"){
       dispatch(getUserByEmail(user.email))
     } else {if(error.message && error.message === "User not found" && user)
       dispatch(createUser(user))

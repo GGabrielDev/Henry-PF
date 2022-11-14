@@ -52,7 +52,7 @@ export class User extends Model<
   declare username: string;
   declare gender: string;
   declare email: string;
-  declare mobile: string;
+  declare phoneNumber: string;
   declare address: string;
   declare imagenDePerfil: string | null;
   declare suspended: boolean;
@@ -165,7 +165,7 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      mobile: {
+      phoneNumber: {
         type: DataTypes.STRING,
         allowNull: true,
         unique: false,

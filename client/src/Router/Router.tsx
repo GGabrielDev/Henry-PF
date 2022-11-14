@@ -1,11 +1,9 @@
-
 import { Route, Routes, Outlet } from "react-router-dom";
 import Landingpage from "../Pages/Landingpage";
 import Error from "../Pages/Error";
 import UserGeneral from "../Pages/Usuario/UserGeneral";
 import UserCompras from "../Pages/Usuario/UserCompras";
 import UserCompraDetalle from "../Pages/Usuario/UserComprasDetalle";
-import UserEdit from "../Pages/Usuario/UserEdit";
 import UserFavoritos from "../Pages/Usuario/UserFavoritos";
 import Error404 from "../Pages/Tugamer/Error404";
 import { Register } from "../Pages/Tugamer/Register";
@@ -26,6 +24,7 @@ import { actions, selectors } from "../features/users/userSlice";
 import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
+import EditarUsuario from "../Pages/Usuario/editarUsuario"
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus } = selectors;
@@ -71,6 +70,9 @@ const Router = () => {
       <Route path="/checkout/premium" element={<CheckoutPremium />} />
       <Route path="/checkout/medium" element={<CheckoutMedium />} />
       <Route path="/checkout/basic" element={<CheckoutBasic />} />
+      <Route path="/usuario/editUser" element={<EditarUsuario/>}/>
+      
+      
       </>
       :
       null
@@ -80,7 +82,7 @@ const Router = () => {
       <Route path="/tugamer/publicar" element={<Publicar />} /> 
       <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
       <Route path="/usuario/editar/producto/:productId" element={<EditProduct />} />
-      <Route path="/usuario/editar" element={<UserEdit />} />
+      
       </>
       :
       null    

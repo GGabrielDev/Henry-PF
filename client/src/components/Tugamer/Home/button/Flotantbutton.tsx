@@ -43,7 +43,9 @@ const Flotantbutton = () => {
     cartItems[index].quantity * producto.price_local
   )
 
-  let total =`%0D%0A *TOTAL: ${totalporahora.reduce((a, b) => a + b, 0)}*`;
+  let total =`%0D%0A *TOTAL: $${totalporahora.reduce((a, b) => a + b, 0)}*`;
+
+  let linkmp = `%0D%0A Link de pago: https://link.mercadopago.com.ar/codemmerce`
 
   console.log(total)
   //let datosCliente = user.map((e:any) => `-Nombre: ${e.nombre} \n -Apellido: ${e.apellido}`)
@@ -59,7 +61,7 @@ const Flotantbutton = () => {
         //  " " +
          `https://wa.me/${numero}?text=Hola%2C+soy%0D%0A${user?.given_name}%0D%0A%0D%0ALa+direccion+del+envio+es+a%3A+%0D%0ACalifornia+1232%0D%0A%0D%0AQuiero+llevar%0D%0A+%0D%0A` + 
         productosConFormatoAmigable 
-        + total
+        + total + linkmp
       }
     >
       <Flotantbuttons>

@@ -29,13 +29,11 @@ import EditarUsuario from "../Pages/Usuario/editarUsuario"
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus } = selectors;
 
-
-
 const Router = () => {
     const dispatch = useAppDispatch();
     const error = useAppSelector(selectError);
     const status = useAppSelector(selectStatus)
-    const {isAuthenticated, user} = useAuth0(); 
+    const {isAuthenticated, user, loginWithRedirect} = useAuth0(); 
     useEffect(() => {if(isAuthenticated && user && user.email && !error.message && status === "loggedOut"){
       dispatch(getUserByEmail(user.email))
     } else {if(error.message && error.message === "User not found" && user)
@@ -58,24 +56,21 @@ const Router = () => {
       <Route path="auth/recover" element={<Recover />} />
       <Route path="auth/register" element={<Register />} />
       <Route path="/auth/login" element={<Login />} />      
-     
+      <Route path="/checkout/premium" element={<CheckoutPremium />} />
+      <Route path="/checkout/medium" element={<CheckoutMedium />} />
+      <Route path="/checkout/basic" element={<CheckoutBasic />} />
+
       
 
-      {isAuthenticated ?  
+      {isAuthenticated ? 
       <>      
       <Route path="/usuario/*" element={<UserGeneral />} />
       <Route path="/usuario/compras" element={<UserCompras />} />
       <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
       <Route path="/usuario/favoritos" element={<UserFavoritos />} />      
-      <Route path="/checkout/premium" element={<CheckoutPremium />} />
-      <Route path="/checkout/medium" element={<CheckoutMedium />} />
-      <Route path="/checkout/basic" element={<CheckoutBasic />} />
       <Route path="/usuario/editUser" element={<EditarUsuario/>}/>
-      
-      
       </>
-      :
-      null
+      : null
       }
 
       {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */  ?        <>      

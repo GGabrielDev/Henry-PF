@@ -5,8 +5,9 @@ import imgtop2 from "../assets/top2.jpg";
 import imgtop1 from "../assets/top1.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import { Link } from "react-router-dom";
-
+import { useAuth0 } from "@auth0/auth0-react";
 const subcription = () => {
+  const { isAuthenticated, loginWithRedirect} = useAuth0();
   return (
     <Sectionplans>
       <div className="cardscontainersubs">

@@ -43,7 +43,7 @@ const Flotantbutton = () => {
     cartItems[index].quantity * producto.price_local
   )
 
-  let total =`%0D%0A *TOTAL: ${totalporahora.reduce((a, b) => a + b, 0)}*`;
+  let total =`%0D%0A *TOTAL: $${totalporahora.reduce((a, b) => a + b, 0)}*`;
 
   let linkmp = `%0D%0A Link de pago: https://link.mercadopago.com.ar/codemmerce`
 

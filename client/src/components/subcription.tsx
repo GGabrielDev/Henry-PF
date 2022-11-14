@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 const subcription = () => {
   const { isAuthenticated, loginWithRedirect} = useAuth0();
+  //cambios aca para poder hacer el push
   return (
     <Sectionplans>
       <div className="cardscontainersubs">

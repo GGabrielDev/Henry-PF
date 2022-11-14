@@ -113,7 +113,7 @@ export default function EditarUsuario() {
             <div className="imageupload">
               <input
                 type="file"
-                name="image"
+                name="imagenDePerfil"
                 onChange={(e) => upLoadImage(e)}
                 alt={"" + detalleUsuario.imagenDePerfil + ""}
               />

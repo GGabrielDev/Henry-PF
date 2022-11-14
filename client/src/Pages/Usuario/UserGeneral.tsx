@@ -2,12 +2,12 @@ import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
 import MenuUsuario from "./MenuUsuario";
 import styled, { useTheme } from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";
-import UserDefault from "../../assets/imagenesSlider/defaultuser.jpg";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { actions, selectors, UserType } from "../../features/users/userSlice"
 import { useAppSelector } from "../../app/hooks";
-import { uploadToCloudinary } from "../../helpers/Cloudinary";
+import { Link } from "react-router-dom";
+
 
 const { selectUser } = selectors;
 
@@ -27,28 +27,32 @@ const General = () => {
             <div className="general__img">
               <div className="img__container">
                 {user.imagenDePerfil ? (<img referrerPolicy="no-referrer" src={user.imagenDePerfil} alt="picture" />) :
-                  (<img src={UserDefault} alt="" />)}
+                  (<img src={Perfil} alt="" />)}
               </div>
+              <Link to= "/usuario/editUser">
+              <button className="botones" >Editar Usuario</button>
+              </Link>
             </div>
             <h2 className="general__perfil-section">Información básica:</h2>
 
             <h3 className="general__perfil-section-item">Nombre/s</h3>
-            <p className="general__input">{user.firstName}</p>
+            <p className="general__input" >{user.firstName}</p>
 
             <h3 className="general__perfil-section-item">Apellido/s</h3>
-            <p className="general__input">{user.lastName}</p>
+            <p className="general__input" >{user.lastName}</p>
 
             <h3 className="general__perfil-section-item">Email</h3>
-            <p className="general__input">{user.email}</p>
+            <p className="general__input" >{user.email}</p>
 
             <h3 className="general__perfil-section-item">Numero de Telefono</h3>
-            <p className="general__input">{user.phoneNumber}</p>
+            <p className="general__input" >{user.phoneNumber}</p>
 
             <h3 className="general__perfil-section-item">Direccion</h3>
-            <p className="general__input">{user.address}</p>
+            <p className="general__input" defaultValue={"No hay datos al momento"}>{user.address}</p>
 
             <h3 className="general__perfil-section-item">Genero</h3>
-            <p className="general__input">{user.gender}</p>
+            <p className="general__input" >{user.gender} </p>
+            
           </div>
         </GeneralContent>
       </ThemeProvider>

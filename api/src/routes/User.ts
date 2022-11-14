@@ -1,4 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
+import { resourceLimits } from "worker_threads";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
@@ -102,7 +103,7 @@ router.put(
         "imagenDePerfil"
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
-        possibleValues.find((possibleValue) => possibleValue === value[0])
+        possibleValues.find((possibleValue) => possibleValue === value[0] && value[1])
       );
 
       if (arrayBody.length === 0) {
@@ -113,7 +114,7 @@ router.put(
       }
 
       const body = Object.fromEntries(arrayBody);
-
+      console.log(body)
       if (!userId) {
         throw new HttpException(400, "The User ID is missing in the request");
       }
@@ -141,6 +142,7 @@ router.put(
       console.log(error);
       next(error);
     }
+    
   }
 );
 

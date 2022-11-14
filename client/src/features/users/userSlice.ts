@@ -10,7 +10,7 @@ export type UserType = {
   firstName: string | null;
   lastName: string | null;
   email: string;
-  phoneNumber: number | null;
+  phoneNumber: string | null;
   isPremium: boolean;
   suspended: boolean;
   gender: "M" | "F" | "No binario" | "No quiero decir" | null;
@@ -45,10 +45,12 @@ export const getUserByEmail = createAsyncThunk("user/getUserByEmail", async (ema
   return res.data
 })
 
-export const getUserById = createAsyncThunk("user/getUserById", async (id: string) => {
+export const getUserById = createAsyncThunk(
+  "user/getUserById", async (id: string) => {
   const res = await axios.get(`http://localhost:3001/users/${id}`)
   return res.data
 })
+
 
 export const createUser = createAsyncThunk("user/createUser", async (user: User) => {
   const res = await axios.post(`http://localhost:3001/users`, {
@@ -61,10 +63,10 @@ export const createUser = createAsyncThunk("user/createUser", async (user: User)
   return res.data
 })
 
-export const editUser = createAsyncThunk("user/editUser", async (user: UserType) => {
-  const { id, email, isPremium, ...rest } = user;
-  const res = await axios.put(`http://localhost:3001/users/`, {
-    ...rest
+export const editUser = createAsyncThunk("user/editUser", async ({user, id}:{user: Partial<UserType>, id:string}) => {
+  console.log(user)
+  const res = await axios.put(`http://localhost:3001/users/${id}`, {
+    ...user
   })
   return res.data
 })
@@ -148,7 +150,7 @@ export const userSlice = createSlice({
 });
 
 const selectError = (state: RootState) => state.user.error
-const selectUser = (state: RootState) => state.user.user
+export const selectUser = (state: RootState) => state.user.user
 const selectStatus = (state: RootState) => state.user.status
 const {} = userSlice.actions;
 

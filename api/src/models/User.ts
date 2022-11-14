@@ -169,9 +169,6 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
         unique: false,
-        validate: {
-          is: /^[0-9]+(-[0-9]+)+$/i,
-        },
       },
 
       address: {

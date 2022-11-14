@@ -55,7 +55,7 @@ export const createUser = createAsyncThunk("user/createUser", async (user: User)
     email: user.email,
     firstName: user.given_name,
     lastName: user.family_name,
-    mobile: user.phone_number,
+    phoneNumber: user.phone_number,
     imagenDePerfil: user.picture
   })
   return res.data

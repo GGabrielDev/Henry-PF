@@ -18,7 +18,7 @@ type UserBody = {
   username: string;
   gender: string;
   email: string;
-  mobile: string;
+  phoneNumber: string;
   address: string;
   imagenDePerfil: string | null;
   
@@ -53,7 +53,7 @@ router.post(
         username,
         gender,
         email,
-        mobile,
+        phoneNumber,
         address,
         imagenDePerfil,
       } = req.body;
@@ -67,7 +67,7 @@ router.post(
           username,
           gender,
           email,
-          mobile,
+          phoneNumber,
           address,
           imagenDePerfil,
         });
@@ -97,7 +97,7 @@ router.put(
         "username",
         "gender",
         "email",
-        "mobile",
+        "phoneNumber",
         "address",
         "imagenDePerfil"
       ];

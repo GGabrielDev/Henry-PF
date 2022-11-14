@@ -8,8 +8,9 @@ import { selectors } from "../../../../features/cart/cartSlice";
 
 const { selectCartItems, selectCartQuantity } = selectors;
 
-const numero = "+573053721294";
+const numero = "+543816100078";
 const Flotantbutton = () => {
+  const espaciado= ["%3A+%24100.000%0D%0A%0D%0A%2A2x%2A+"]
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const item = useAppSelector(selectProducts);
   const cartItems = useAppSelector(selectCartItems);
@@ -22,6 +23,8 @@ const Flotantbutton = () => {
       }
     }
   }
+  console.log(carro)
+  console.log(cartItems)
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Error",
@@ -32,16 +35,31 @@ const Flotantbutton = () => {
   };
 
   let productosParaWsp = carro
-    ? carro.map((producto) => `- ${producto.name}, $${producto.price_local}`)
+    ? carro.map((producto, index) => `${cartItems[index].quantity}x - ${producto.name}, %0D%0ASubtotal: $${producto.price_local * cartItems[index].quantity} %0D%0A+`)
     : null;
+
+  let totalporahora = carro.map((producto,index)=>
+
+    cartItems[index].quantity * producto.price_local
+  )
+
+  let total =`%0D%0A *TOTAL: ${totalporahora.reduce((a, b) => a + b, 0)}*`;
+
+  console.log(total)
   //let datosCliente = user.map((e:any) => `-Nombre: ${e.nombre} \n -Apellido: ${e.apellido}`)
-  const productosConFormatoAmigable = productosParaWsp?.join("\n");
+  // console.log(productosParaWsp)
+
+
+  // console.log(carro)
+  const productosConFormatoAmigable = productosParaWsp?.join("%0D%0A+");
   return isAuthenticated && carro.length >= 1 ? (
     <a
       href={
-        `https://api.whatsapp.com/send?phone=${numero}&text=Hola%E2%98%BA%0D%0A%F0%9F%93%82Me+llamo%3A%0D%0A${user?.given_name}%20${user?.family_name}%0D%0AEstoy+interesado+en+los+siguientes+productos+de+la+pagina%F0%9F%94%A5%3A` +
-        " " +
-        productosConFormatoAmigable
+        //  `https://api.whatsapp.com/send?phone=${numero}&text=Hola%E2%98%BA%0D%0A%F0%9F%93%82Me+llamo%3A%0D%0A${user?.given_name}%20${user?.family_name}%0D%0AEstoy+interesado+en+los+siguientes+productos+de+la+pagina%F0%9F%94%A5%3A` +
+        //  " " +
+         `https://wa.me/${numero}?text=Hola%2C+soy%0D%0A${user?.given_name}%0D%0A%0D%0ALa+direccion+del+envio+es+a%3A+%0D%0ACalifornia+1232%0D%0A%0D%0AQuiero+llevar%0D%0A+%0D%0A` + 
+        productosConFormatoAmigable 
+        + total
       }
     >
       <Flotantbuttons>

@@ -6,8 +6,7 @@ import { symlink } from "fs";
 import Swal from "sweetalert2";
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
-import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary"
-
+import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
@@ -43,7 +42,7 @@ const Publicar = () => {
 
   const [input, setInput] = useState<InputState>({
     name: "",
-    price_local:0,
+    price_local: 0,
     stock: 0,
     description: "",
     suspended: "DEFAULT",
@@ -118,7 +117,12 @@ const Publicar = () => {
               </h5>
               <div className="inputinfo">
                 <label htmlFor="">Nombre del producto:</label>
-                <input value= {input.name} name="name" type="text" onChange={handleChange} />
+                <input
+                  value={input.name}
+                  name="name"
+                  type="text"
+                  onChange={handleChange}
+                />
                 {err.name ? <p className="errortext"> {err.name} </p> : ""}
               </div>
               {/*<div className="inputinfo">
@@ -142,12 +146,21 @@ const Publicar = () => {
               </div>
               <div className="inputinfo">
                 <label htmlFor="stock">Stock:</label>
-                <input value={input.stock} name="stock" type="text" onChange={handleChange} />
+                <input
+                  value={input.stock}
+                  name="stock"
+                  type="text"
+                  onChange={handleChange}
+                />
                 {err.stock ? <p className="errortext"> {err.stock} </p> : ""}
               </div>
               <div className="inputinfo">
                 <label htmlFor="description">Descripcion:</label>
-                <textarea value={input.description} name="description" onChange={handleChange} />
+                <textarea
+                  value={input.description}
+                  name="description"
+                  onChange={handleChange}
+                />
                 {err.description ? (
                   <p className="errortext"> {err.description} </p>
                 ) : (
@@ -157,7 +170,7 @@ const Publicar = () => {
               <div className="inputinfo ultimo__select">
                 <label htmlFor="suspended">Estado:</label>
                 <select
-                  value = {input.suspended}
+                  value={input.suspended}
                   name="suspended"
                   id=""
                   onChange={handleChange}
@@ -259,7 +272,7 @@ export const AddProduct = styled.div`
       width: 500px;
       height: 40px;
       padding: 10px;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
     }

@@ -4,9 +4,15 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Navbarlanding from "../../components/Navbarlanding";
-import {getUserById, UserType, selectUser, editUser } from "../../features/users/userSlice";
+import {
+  getUserById,
+  UserType,
+  selectUser,
+  editUser,
+} from "../../features/users/userSlice";
 import { AddProduct, PublicarContainer } from "../Tugamer/Publicar";
-
+import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
 
 export default function EditarUsuario() {
   const [user, setChange] = useState({
@@ -15,24 +21,24 @@ export default function EditarUsuario() {
     phoneNumber: "",
     imagenDePerfil: "",
     gender: null,
-    address: ""
+    address: "",
   });
   const dispatch = useAppDispatch();
-  
+
   const detalleUsuario = useAppSelector(selectUser) as UserType;
-  const { id } = detalleUsuario
+  const { id } = detalleUsuario;
   useEffect(() => {
     console.log(detalleUsuario.id);
-    if(detalleUsuario.id){      
-      dispatch(getUserById(detalleUsuario.id));     
+    if (detalleUsuario.id) {
+      dispatch(getUserById(detalleUsuario.id));
     }
-  }, [detalleUsuario.id])
+  }, [detalleUsuario.id]);
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setChange({ ...user, [e.target.name]: e.target.value })
+    setChange({ ...user, [e.target.name]: e.target.value });
   };
-  
+
   const upLoadImage = async (e: any) => {
     e.preventDefault();
 
@@ -51,105 +57,105 @@ export default function EditarUsuario() {
     const file = await res.json();
 
     setChange({ ...user, [e.target.name]: file.secure_url });
-  }
-  
-  
-  return(
+  };
+
+  return (
     <>
-    <PublicarContainer>
-    <Navbarlanding />
-    {detalleUsuario.id ? (
-    <AddProduct>
-      <h1 className="addproduct-title">Editar producto</h1>
-      <form className="formularioproduct">
-        <div className="productinfo">
-          <div className="productinfo__left">
-            <div className="inputinfo">
-              <label htmlFor="firstName">Nombre:</label>
-              <input
-                name="firstName"
-                type="text"
-                placeholder={"" + detalleUsuario.firstName + ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="inputinfo">
-              <label htmlFor="lastName">Apellido:</label>
-              <input
-                className="price_local__input"
-                name="lastName"
-                type="text"
-                placeholder={"" + detalleUsuario.lastName + ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="inputinfo">
-              <label htmlFor="phonenumber">Numero de Telefono:</label>
-              <textarea
-                name="phoneNumber"
-                placeholder={"" + detalleUsuario.phoneNumber + ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="inputinfo ultimo__select">
-              <label htmlFor="gender">Genero:</label>
-              <select
-                defaultValue={"No quiero decir"}
-                name="gender"
-                id=""
-                onChange={handleChange}
-              >
-                <option value="No quiero decir">
-                  Elige Uno
-                </option>
-                <option value="M"> Hombre </option>
-                <option value="F"> Mujer </option>
-                <option value="No binario"> No Binario </option>
-                <option value="No quiero decir"> No quiero decir </option>
-              </select>
-            </div>
-          </div>
-          <div className="productinfo__Right">
-            <div className="imageupload">
-              <input
-                type="file"
-                name="image"
-                onChange={(e) => upLoadImage(e)}
-                alt={"" + detalleUsuario.imagenDePerfil + ""}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="inputinfo">
-              <label htmlFor="address">Direccion:</label>
-              <input
-                name="address"
-                type="text"
-                placeholder={"" + detalleUsuario.address + ""}
-                onChange={handleChange}
-              />
-            </div>
-        <Link to="/usuario/general">
-          {detalleUsuario.id? 
-          <button
-            className="submitproduct"
-            onClick={() => dispatch(editUser({user, id}))} >
-            Cambiar
-          </button> 
-          : 
-          null
-          }
-        </Link>
-      </form>
-    </AddProduct>)
-   : 
-   <>
-   </> }
-   </PublicarContainer>    
-   </>
-  )
-}; 
- 
+      <ThemeProvider theme={ThemesLanding}>
+        <PublicarContainer>
+          <Navbarlanding />
+          {detalleUsuario.id ? (
+            <AddProduct>
+              <h1 className="addproduct-title">Editar Perfil</h1>
+              <form className="formularioproduct">
+                <div className="productinfo">
+                  <div className="productinfo__left">
+                    <div className="inputinfo">
+                      <label htmlFor="firstName">Nombre:</label>
+                      <input
+                        name="firstName"
+                        type="text"
+                        placeholder={"" + detalleUsuario.firstName + ""}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="inputinfo">
+                      <label htmlFor="lastName">Apellido:</label>
+                      <input
+                        className="price_local__input"
+                        name="lastName"
+                        type="text"
+                        placeholder={"" + detalleUsuario.lastName + ""}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="inputinfo">
+                      <label htmlFor="phonenumber">Numero de Telefono:</label>
+                      <textarea
+                        name="phoneNumber"
+                        placeholder={"" + detalleUsuario.phoneNumber + ""}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="inputinfo ultimo__select">
+                      <label htmlFor="gender">Genero:</label>
+                      <select
+                        defaultValue={"No quiero decir"}
+                        name="gender"
+                        id=""
+                        onChange={handleChange}
+                      >
+                        <option value="No quiero decir">Elige Uno</option>
+                        <option value="M"> Hombre </option>
+                        <option value="F"> Mujer </option>
+                        <option value="No binario"> No Binario </option>
+                        <option value="No quiero decir">
+                          {" "}
+                          No quiero decir{" "}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="productinfo__Right">
+                    <div className="imageupload">
+                      <input
+                        type="file"
+                        name="image"
+                        onChange={(e) => upLoadImage(e)}
+                        alt={"" + detalleUsuario.imagenDePerfil + ""}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="inputinfo">
+                  <label htmlFor="address">Direccion:</label>
+                  <input
+                    name="address"
+                    type="text"
+                    placeholder={"" + detalleUsuario.address + ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <Link to="/usuario/general">
+                  {detalleUsuario.id ? (
+                    <button
+                      className="submitproduct"
+                      onClick={() => dispatch(editUser({ user, id }))}
+                    >
+                      Cambiar
+                    </button>
+                  ) : null}
+                </Link>
+              </form>
+            </AddProduct>
+          ) : (
+            <></>
+          )}
+        </PublicarContainer>
+      </ThemeProvider>
+    </>
+  );
+}
 
 const FormEdit = styled.div`
   display: flex;
@@ -159,4 +165,4 @@ const FormEdit = styled.div`
   width: 600px;
   height: 800px;
   align-content: center;
-`; 
+`;

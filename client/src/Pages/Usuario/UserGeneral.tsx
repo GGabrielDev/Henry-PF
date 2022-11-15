@@ -1,4 +1,3 @@
-import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
 import MenuUsuario from "./MenuUsuario";
 import styled, { useTheme } from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";

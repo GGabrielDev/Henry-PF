@@ -11,14 +11,14 @@ import { ThemesLanding } from "../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
-import { selectors, UserType } from "../features/users/userSlice"
+import { selectors, UserType } from "../features/users/userSlice";
 
 const { selectUser } = selectors;
 
 const Navbarlanding = () => {
   const [menu, setMenu] = useState(false);
   const { user, logout, isAuthenticated, loginWithRedirect } = useAuth0();
-  const usuario = useAppSelector(selectUser) as UserType
+  const usuario = useAppSelector(selectUser) as UserType;
 
   const handleChange = () => {
     setMenu(!menu);
@@ -59,7 +59,14 @@ const Navbarlanding = () => {
                 </NavLink>
               ) : (
                 <NavLink className="section button" to="">
-                  <HiOutlineUserCircle onClick={() => loginWithRedirect()} />
+                  <HiOutlineUserCircle
+                    onClick={() =>
+                      loginWithRedirect({
+                        returnTo:
+                          window.location.origin + window.location.pathname,
+                      })
+                    }
+                  />
                 </NavLink>
               )}
 
@@ -80,49 +87,66 @@ const Navbarlanding = () => {
               <div className="img__container">
                 <div className="img__circle">
                   {usuario.imagenDePerfil ? (
-                    <img referrerPolicy="no-referrer" src={usuario.imagenDePerfil} alt="picture" />
+                    <img
+                      referrerPolicy="no-referrer"
+                      src={usuario.imagenDePerfil}
+                      alt="picture"
+                    />
                   ) : (
                     <img src={UserDefault} alt="" />
                   )}
                 </div>
               </div>
 
-              {usuario.firstName ? (             
-                <  >
-                <div className="section-re">
-                  <div className="section__cajita2">
-                    <span className="section__name">{usuario.firstName + " " + usuario.lastName}</span>
-                    <span className="icon-re">                      
-                    </span>
+              {usuario.firstName ? (
+                <>
+                  <div className="section-re">
+                    <div className="section__cajita2">
+                      <span className="section__name">
+                        {usuario.firstName + " " + usuario.lastName}
+                      </span>
+                      <span className="icon-re"></span>
+                    </div>
                   </div>
-                </div> 
-                
-                <NavLink className="section-re" to="/usuario">
-                <div className="section__cajita">
-                  <span className="section__name">Tu Perfil</span>
-                  <span className="icon-re">
-                    <IoIosArrowForward />
-                  </span>
-                </div>
-                </NavLink>
-                <NavLink className="section-re" to="#home">
-                <div className="section__cajita">                 
-                    <span onClick={() => logout()} className="section__name">
-                      Logout
-                    </span>                  
-                  <span className="icon-re">
-                    <IoIosArrowForward />
-                  </span>
-                </div>
-              </NavLink>
-              </>          
 
+                  <NavLink className="section-re" to="/usuario">
+                    <div className="section__cajita">
+                      <span className="section__name">Tu Perfil</span>
+                      <span className="icon-re">
+                        <IoIosArrowForward />
+                      </span>
+                    </div>
+                  </NavLink>
+                  <NavLink className="section-re" to="#home">
+                    <div className="section__cajita">
+                      <span
+                        onClick={() =>
+                          logout({
+                            returnTo:
+                              window.location.origin + window.location.pathname,
+                          })
+                        }
+                        className="section__name"
+                      >
+                        Logout
+                      </span>
+                      <span className="icon-re">
+                        <IoIosArrowForward />
+                      </span>
+                    </div>
+                  </NavLink>
+                </>
               ) : (
                 <NavLink className="section-re" to="#home">
                   <div className="section__cajita">
                     <span
                       className="section__name"
-                      onClick={() => loginWithRedirect()}
+                      onClick={() =>
+                        loginWithRedirect({
+                          returnTo:
+                            window.location.origin + window.location.pathname,
+                        })
+                      }
                     >
                       Login
                     </span>
@@ -132,7 +156,6 @@ const Navbarlanding = () => {
                   </div>
                 </NavLink>
               )}
-              
 
               <div className="flex">
                 <div className="cajita__section__page">
@@ -397,14 +420,14 @@ const Navbarlandings = styled.div`
     }
   }
   .section__cajita2 {
-    color: ${({ theme }) => theme.dark};    
+    color: ${({ theme }) => theme.dark};
     transition: 0.4s;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
     width: 200px;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
   }
 
   .icon-re {
@@ -455,4 +478,4 @@ const Logo = styled.span`
   &:hover {
     color: ${({ theme }) => theme.secondary};
   }
-  `;
+`;

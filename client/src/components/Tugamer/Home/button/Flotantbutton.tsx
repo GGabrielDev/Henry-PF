@@ -23,8 +23,6 @@ const Flotantbutton = () => {
       }
     }
   }
-  console.log(carro)
-  console.log(cartItems)
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Error",
@@ -47,12 +45,12 @@ const Flotantbutton = () => {
 
   let linkmp = `%0D%0A Link de pago: https://link.mercadopago.com.ar/codemmerce`
 
-  console.log(total)
+
   //let datosCliente = user.map((e:any) => `-Nombre: ${e.nombre} \n -Apellido: ${e.apellido}`)
   // console.log(productosParaWsp)
 
 
-  // console.log(carro)
+
   const productosConFormatoAmigable = productosParaWsp?.join("%0D%0A+");
   return isAuthenticated && carro.length >= 1 ? (
     <a

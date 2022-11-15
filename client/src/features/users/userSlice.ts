@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { create } from "domain";
 import { RootState } from "../../app/store";
 import { User } from "@auth0/auth0-react";
 
 export type UserType = {
   id: string;
+  username: string | null;
   firstName: string | null;
   lastName: string | null;
   email: string;
@@ -47,7 +47,6 @@ export const getUserByEmail = createAsyncThunk(
   }
 );
 
-
 export const getUserById = createAsyncThunk(
   "user/getUserById",
   async (id: string) => {
@@ -80,7 +79,6 @@ export const editUser = createAsyncThunk(
     return res.data;
   }
 );
-
 
 export const userSlice = createSlice({
   name: "user",

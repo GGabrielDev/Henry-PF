@@ -1,53 +1,176 @@
+import {
+  ChangeEvent,
+  MouseEventHandler,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { MdFavorite, MdStar, MdStarOutline } from "react-icons/md";
-import Navbar from "../../components/Tugamer/Navbar";
 import { useParams } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { MdFavorite, MdStar, MdStarOutline, MdEdit } from "react-icons/md";
+import Swal from "sweetalert2";
+import UserDefault from "../../assets/imagenesSlider/defaultuser.jpg";
+import Navbar from "../../components/Tugamer/Navbar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
+  createReview,
   detailProduct,
+  editReview,
   getProductId,
   ProductDetail,
   ReviewType,
 } from "../../features/products/productSlice";
-import { actions, helpers } from "../../features/cart/cartSlice";
+import {
+  selectors as userSelectors,
+  UserType,
+} from "../../features/users/userSlice";
+import {
+  actions as cartActions,
+  helpers as cartHelpers,
+} from "../../features/cart/cartSlice";
 
-const { getItemQuantity } = helpers;
-const { incrementItemQuantity, decrementItemQuantity } = actions;
+const { getItemQuantity } = cartHelpers;
+const { incrementItemQuantity, decrementItemQuantity } = cartActions;
+const { selectUser } = userSelectors;
 
 const Detalle = () => {
   const [active, setActive] = useState(false);
-  const [reviewsOpen, setReviewsOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [review, setReview] = useState({
+    id: "",
+    score: 0,
+    body: "",
+  });
   const { productId } = useParams<{ productId?: string }>();
+  const { isAuthenticated } = useAuth0();
   const dispatch = useAppDispatch();
   const detalle = useAppSelector(detailProduct) as ProductDetail;
   const quantity = useAppSelector(getItemQuantity(detalle));
+  const user = useAppSelector(selectUser) as UserType;
+
+  const successAlert = () => {
+    Swal.fire({
+      title: "Review Creada",
+      text: "Se ha creado la review con exito.",
+      icon: "success",
+      confirmButtonText: "Volver",
+    });
+  };
+
+  const errorAlert = () => {
+    Swal.fire({
+      title: "Error",
+      text: "Faltan datos",
+      icon: "error",
+      confirmButtonText: "Ok!",
+    });
+  };
 
   const handleActive = () => {
     setActive(!active);
   };
 
-  const handleIsOpen = () => {
-    setReviewsOpen(!reviewsOpen);
+  const handleScore = (score: number) => {
+    setReview({ ...review, score });
   };
 
-  const reviewCards = (reviews: ReviewType[]) =>
-    reviews.map((review) => (
-      <ReviewCard>
-        <ReviewInfo>
-          <ReviewUserInfo>
-            <ReviewImage src={detalle.image} alt={review.user.username} />
-            <h4>{review.user.username}</h4>
-          </ReviewUserInfo>
-          <ReviewRate>
-            {[...Array(5)].map((_, index) =>
-              index + 1 <= review.score ? <MdStar /> : <MdStarOutline />
-            )}
-          </ReviewRate>
-        </ReviewInfo>
-        <p>{review.body}</p>
-      </ReviewCard>
-    ));
+  const handleBody = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    setReview({ ...review, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmitReview = (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    if (review.score === 0 || review.body === "") {
+      errorAlert();
+    } else if (user.id && productId) {
+      dispatch(createReview({ userId: user.id, productId, review }));
+      successAlert();
+    }
+  };
+
+  const handleEdit =
+    (review: ReviewType): MouseEventHandler<HTMLDivElement> =>
+    () => {
+      if (edit) {
+        setReview({
+          id: "",
+          score: 0,
+          body: "",
+        });
+        setEdit(false);
+      } else {
+        setReview({
+          id: review.id,
+          score: review.score,
+          body: review.body,
+        });
+        setEdit(true);
+      }
+    };
+
+  const handleSubmitEdit = (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    if (review.score === 0 || review.body === "") {
+      errorAlert();
+    } else if (user.id && productId) {
+      dispatch(editReview(review));
+      successAlert();
+      setEdit(false);
+      dispatch(getProductId(productId));
+    }
+  };
+
+  const reviewCard = (reviewCard: ReviewType) => (
+    <ReviewCard
+      key={reviewCard.id}
+      isHidden={isAuthenticated && reviewCard.user.id === user?.id && edit}
+    >
+      <ReviewInfo>
+        <ReviewUserInfo>
+          <ReviewImage
+            referrerPolicy="no-referrer"
+            src={reviewCard.user.imagenDePerfil || UserDefault}
+            alt={reviewCard.user.username || ""}
+          />
+          <ReviewUserText>
+            <h4>{reviewCard.user.username || reviewCard.user.firstName}</h4>
+            <h4 style={{ fontWeight: 500, color: "gray" }}>
+              {reviewCard.user.email}
+            </h4>
+          </ReviewUserText>
+        </ReviewUserInfo>
+        {isAuthenticated && reviewCard.user.id === user.id ? (
+          <ReviewEditWrapper onClick={handleEdit(reviewCard)}>
+            <MdEdit />
+          </ReviewEditWrapper>
+        ) : null}
+        <ReviewRate>
+          {[...Array(5)].map((_, index) =>
+            index + 1 <= reviewCard.score ? <MdStar /> : <MdStarOutline />
+          )}
+        </ReviewRate>
+      </ReviewInfo>
+      <p>{reviewCard.body}</p>
+    </ReviewCard>
+  );
+
+  const reviewCards = (reviews: ReviewType[]) => {
+    if (reviews.findIndex((rev) => rev.user.id === user.id) > -1) {
+      const shiftedArray = [...reviews];
+      const userReviewIndex = reviews.findIndex(
+        (rev) => rev.user.id === user.id
+      );
+      shiftedArray.unshift(shiftedArray.splice(userReviewIndex, 1)[0]);
+      return shiftedArray.map((rev) => reviewCard(rev));
+    } else {
+      return reviews.map((rev) => reviewCard(rev));
+    }
+  };
 
   useEffect(() => {
     dispatch(getProductId(productId));
@@ -111,17 +234,62 @@ const Detalle = () => {
                 </div>
                 <div className="button__card__container">
                   <button className="button__card">COMPRAR AHORA</button>
-                  {detalle.reviews !== undefined ? (
-                    <button className="button__card" onClick={handleIsOpen}>
-                      VER REVIEWS ({detalle.reviews.length})
-                    </button>
-                  ) : null}
                 </div>
               </div>
             </div>
           </div>
-        </DetalleContainer>
-        <ReviewsContainer isOpen={reviewsOpen} onClick={handleIsOpen}>
+          {(isAuthenticated &&
+            detalle.reviews.findIndex((rev) => rev.user.id === user.id) ===
+              -1) ||
+          edit ? (
+            <ReviewCard>
+              <h3 style={{ alignSelf: "center" }}>
+                {edit ? "Editar Review" : "Crear una nueva Review"}
+              </h3>
+              <ReviewInfo>
+                <ReviewUserInfo>
+                  <ReviewImage
+                    referrerPolicy="no-referrer"
+                    src={user.imagenDePerfil || UserDefault}
+                    alt={user.username || ""}
+                  />
+                  <ReviewUserText>
+                    <h4>{user.username || user.firstName}</h4>
+                    <h4 style={{ fontWeight: 500, color: "gray" }}>
+                      {user.email}
+                    </h4>
+                  </ReviewUserText>
+                </ReviewUserInfo>
+                <ReviewRate>
+                  {[...Array(5)].map((_, index) =>
+                    index + 1 <= review.score ? (
+                      <MdStar
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleScore(index + 1)}
+                      />
+                    ) : (
+                      <MdStarOutline
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleScore(index + 1)}
+                      />
+                    )
+                  )}
+                </ReviewRate>
+              </ReviewInfo>
+              <ReviewInput
+                name="body"
+                value={review.body}
+                onChange={handleBody}
+              />
+              <button
+                className="button__card"
+                style={{ alignSelf: "flex-end" }}
+                onClick={edit ? handleSubmitEdit : handleSubmitReview}
+              >
+                {edit ? "EDITAR" : "CREAR REVIEW"}
+              </button>
+            </ReviewCard>
+          ) : null}
           {detalle.reviews === undefined ? (
             <ReviewCard>
               <h2>Cargando</h2>
@@ -133,7 +301,7 @@ const Detalle = () => {
               <h2>No hay reviews para este producto</h2>
             </ReviewCard>
           )}
-        </ReviewsContainer>
+        </DetalleContainer>
       </>
     );
   } else {
@@ -145,6 +313,8 @@ export default Detalle;
 const DetalleContainer = styled.div`
   width: 100%;
   display: flex;
+  flex-flow: column wrap;
+  gap: 32px;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
@@ -325,27 +495,12 @@ const DetalleContainer = styled.div`
   }
 `;
 
-interface ReviewsContainerProps {
-  readonly isOpen: boolean;
-}
+type ReviewCardProps = {
+  readonly isHidden?: boolean;
+};
 
-const ReviewsContainer = styled.div<ReviewsContainerProps>`
-  display: ${(props) => (props.isOpen ? "flex" : "none")};
-  flex-flow: column wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  width: 100vw;
-  min-height: 100%;
-  background: #25252660;
-`;
-
-const ReviewCard = styled.div`
-  display: flex;
+const ReviewCard = styled.div<ReviewCardProps>`
+  display: ${({ isHidden }) => (isHidden ? "none" : "flex")};
   flex-flow: column wrap;
   justify-content: center;
   gap: 16px;
@@ -375,6 +530,14 @@ const ReviewUserInfo = styled.div`
   height: 100%;
 `;
 
+const ReviewUserText = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  gap: 4px;
+  height: fit-content;
+  width: fit-content;
+`;
+
 const ReviewImage = styled.img`
   width: 64px;
   height: 64px;
@@ -389,4 +552,23 @@ const ReviewRate = styled.div`
   gap: 4px;
   color: yellow;
   font-size: 24px;
+`;
+
+const ReviewEditWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 100%;
+  color: lightgray;
+  font-size: 32px;
+  cursor: pointer;
+`;
+
+const ReviewInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  background: #fafafa;
+  border: none;
+  border-radius: 5px;
 `;

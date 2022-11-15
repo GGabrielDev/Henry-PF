@@ -24,14 +24,15 @@ import { actions, selectors, UserType } from "../features/users/userSlice";
 import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
-import EditarUsuario from "../Pages/Usuario/editarUsuario"
-import EditSeller from "../Pages/Usuario/editarSeller"
-import UserEdit from "../Pages/Usuario/UserEdit"
+import EditarUsuario from "../Pages/Usuario/editarUsuario";
+import EditSeller from "../Pages/Usuario/editarSeller";
+import UserEdit from "../Pages/Usuario/UserEdit";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
 
 const Router = () => {
+
     const dispatch = useAppDispatch();
     const error = useAppSelector(selectError);
     const status = useAppSelector(selectStatus);
@@ -42,8 +43,7 @@ const Router = () => {
     } else {if(error.message && error.message === "User not found" && user)
       dispatch(createUser(user))
     }
-
-    },[isAuthenticated, user, error]) 
+  }, [isAuthenticated, user, error]);
   return (
     <Routes>
       <>    
@@ -102,9 +102,8 @@ const Router = () => {
     </Routes>
   );
 };
-      
 
-      {/*
+/*
       
       PORTAFOLIO  
 
@@ -147,6 +146,6 @@ const Router = () => {
       <Route path="/checkout/premium" element={<CheckoutPremium />} />
       <Route path="/checkout/medium" element={<CheckoutMedium />} />
       <Route path="/checkout/basic" element={<CheckoutBasic />} />
-      */}
+      */
 
 export default Router;

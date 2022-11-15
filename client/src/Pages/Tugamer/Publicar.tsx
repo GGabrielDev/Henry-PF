@@ -46,7 +46,7 @@ const Publicar = () => {
     stock: 0,
     description: "",
     suspended: "DEFAULT",
-    image: "https://definicion.de/wp-content/uploads/2009/06/producto.png",
+    image: "",
     cloudinary: {},
     categories: [],
   });
@@ -83,6 +83,7 @@ const Publicar = () => {
       err.price_local === "Tiene que ser un numero" ||
       input.description === "" ||
       input.suspended === "DEFAULT"
+
       //   ) {
       //     alert("Faltan agregar datos");
       //   } else {
@@ -96,7 +97,14 @@ const Publicar = () => {
       AlertaCorrecta();
       // event.target.reset()
       // document.getElementById("form-public").reset();
-      dispatch(createProduct(input));
+      dispatch(
+        createProduct({
+          ...input,
+          image: !input.image
+            ? "https://definicion.de/wp-content/uploads/2009/06/producto.png"
+            : input.image,
+        })
+      );
     }
   };
   return (
@@ -281,7 +289,7 @@ export const AddProduct = styled.div`
       width: 500px;
       min-height: 55px;
       resize: none;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
       margin-bottom: 3px;
@@ -294,10 +302,12 @@ export const AddProduct = styled.div`
     select {
       width: 500px;
       resize: none;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
       margin-bottom: 10px;
+      height: 40px;
+      padding: 10px;
     }
   }
 
@@ -315,7 +325,7 @@ export const AddProduct = styled.div`
   .imageupload {
     width: 270px;
     height: 270px;
-    background-color: ${({ theme }) => theme.tertiary};
+    background-color: ${({ theme }) => theme.gray};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -371,6 +381,9 @@ export const AddProduct = styled.div`
         width: 100%;
       }
       textarea {
+        width: 100%;
+      }
+      select {
         width: 100%;
       }
     }

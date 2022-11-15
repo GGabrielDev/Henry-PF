@@ -5,8 +5,11 @@ import imgtop2 from "../assets/top2.jpg";
 import imgtop1 from "../assets/top1.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const subcription = () => {
+const Suscription = () => {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
   return (
     <Sectionplans>
       <div className="cardscontainersubs">
@@ -40,13 +43,19 @@ const subcription = () => {
               <div className="textlineinfo">Una cuenta admin </div>
             </div>
           </div>
-          <div className="buttoncardsub">
-            <Link to="/checkout/basic">
-              <button>Adquirir</button>
-            </Link>
-          </div>
-        </div>
 
+          {isAuthenticated ? (
+            <div className="buttoncardsub">
+              <Link to="/checkout/basic">
+                <button>Adquirir</button>
+              </Link>
+            </div>
+          ) : (
+            <div className="buttoncardsub">
+              <button onClick={() => loginWithRedirect()}>Adquirir</button>
+            </div>
+          )}
+        </div>
         <div className="cardsubcription cardblack">
           <div className="topsectioncadsub">
             <div className="imgcontainercarsub">
@@ -77,11 +86,17 @@ const subcription = () => {
               <div className="textlineinfo">Hasta siete cuentas admin </div>
             </div>
           </div>
-          <div className="buttoncardsub">
-            <Link to="/checkout/premium">
-              <button>Adquirir</button>
-            </Link>
-          </div>
+          {isAuthenticated ? (
+            <div className="buttoncardsub">
+              <Link to="/checkout/premium">
+                <button>Adquirir</button>
+              </Link>
+            </div>
+          ) : (
+            <div className="buttoncardsub">
+              <button onClick={() => loginWithRedirect()}>Adquirir</button>
+            </div>
+          )}
         </div>
         <div className="cardsubcription cardwhite">
           <div className="topsectioncadsub">
@@ -113,11 +128,18 @@ const subcription = () => {
               <div className="textlineinfo">Hasta tres cuentas admin </div>
             </div>
           </div>
-          <div className="buttoncardsub">
-            <Link to="/checkout/medium">
-              <button>Adquirir</button>
-            </Link>
-          </div>
+
+          {isAuthenticated ? (
+            <div className="buttoncardsub">
+              <Link to="/checkout/medium">
+                <button>Adquirir</button>
+              </Link>
+            </div>
+          ) : (
+            <div className="buttoncardsub">
+              <button onClick={() => loginWithRedirect()}>Adquirir</button>
+            </div>
+          )}
         </div>
       </div>
     </Sectionplans>
@@ -300,4 +322,4 @@ const Sectionplans = styled.div`
   }
 `;
 
-export default subcription;
+export default Suscription;

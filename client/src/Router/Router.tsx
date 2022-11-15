@@ -20,7 +20,7 @@ import EditProduct from "../Pages/Usuario/EditProduct";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { actions, selectors } from "../features/users/userSlice";
+import { actions, selectors, UserType } from "../features/users/userSlice";
 import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
@@ -29,13 +29,14 @@ import EditSeller from "../Pages/Usuario/editarSeller"
 import UserEdit from "../Pages/Usuario/UserEdit"
 
 const { getUserByEmail, createUser } = actions;
-const { selectError, selectStatus } = selectors;
+const { selectError, selectStatus, selectUser } = selectors;
 
 const Router = () => {
     const dispatch = useAppDispatch();
     const error = useAppSelector(selectError);
-    const status = useAppSelector(selectStatus)
-    const {isAuthenticated, user, loginWithRedirect} = useAuth0(); 
+    const status = useAppSelector(selectStatus);
+    const usuario = useAppSelector(selectUser) as UserType;
+    const {isAuthenticated, user} = useAuth0(); 
     useEffect(() => {if(isAuthenticated && user && user.email && !error.message && status === "loggedOut"){
       dispatch(getUserByEmail(user.email))
     } else {if(error.message && error.message === "User not found" && user)
@@ -75,7 +76,7 @@ const Router = () => {
       : null
       }
 
-      {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */  ? <>      
+      {isAuthenticated && usuario.sellerId  ? <>      
       <Route path="/tugamer/publicar" element={<Publicar />} /> 
       <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
       <Route path="/usuario/editar/producto/" element={<UserEdit />} />
@@ -87,6 +88,7 @@ const Router = () => {
       }
       {isAuthenticated && user?.email === "Henryfygrup@gmail.com"?  
       <>
+
       {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
       </>
       :

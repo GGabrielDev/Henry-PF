@@ -17,7 +17,6 @@ import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
 import Navbarlanding from "./NavbarLanding";
 
-
 const stripePromise = loadStripe(
   "pk_test_51LbWG6CISvGskgcJQ1tAlsYcaFsZYI2XridI8464CZNO17EXAUdRbehJsxs8VA3CUjRwz10bwuThVq8GtBLxFsN900VthEmx1m "
 );
@@ -82,8 +81,8 @@ const CheckoutForm = () => {
               description: "basic pack",
             }
           );
-
           if (data.message == "Succes") {
+           
             emailjs.sendForm(
               "service_zeb79a1",
               "template_zdwmfkk",

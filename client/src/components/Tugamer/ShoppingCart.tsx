@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectProducts } from "../../features/products/productSlice";
 import { actions, selectors } from "../../features/cart/cartSlice";
 import { CartItem } from "./CartItem";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type ShoppingCartProps = {
   isOpen: boolean;
@@ -23,6 +24,7 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
 
     alert("Coming soon");
   };
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   return (
     <>
@@ -57,9 +59,18 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
                     }, 0)}
                   </div>
                 </div>
-                <button className="comprar__cart" onClick={handleBuy}>
-                  Comprar
-                </button>
+                {isAuthenticated ? (
+                  <button className="comprar__cart" onClick={handleBuy}>
+                    Comprar
+                  </button>
+                ) : (
+                  <button
+                    className="comprar__cart"
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Loguea y compra!
+                  </button>
+                )}
               </div>
             </div>
           </ShoppingCartContainer>

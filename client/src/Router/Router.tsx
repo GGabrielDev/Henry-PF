@@ -25,6 +25,7 @@ import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario"
+import EditSeller from "../Pages/Usuario/editarSeller"
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus } = selectors;
@@ -77,7 +78,7 @@ const Router = () => {
       <Route path="/tugamer/publicar" element={<Publicar />} /> 
       <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
       <Route path="/usuario/editar/producto/:productId" element={<EditProduct />} />
-      
+      <Route path="/usuario/editSeller" element={<EditSeller/>}/>
       </>
       :
       null    

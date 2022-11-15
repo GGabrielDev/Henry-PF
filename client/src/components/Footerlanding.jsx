@@ -105,22 +105,22 @@ const Footerlanding = () => {
             </div>
 
             <div className="medias-socias">
-              <a href="#">
+              <a href="https://discord.gg/33RTZpYhre">
                 <i>
                   <BsDiscord />
                 </i>
               </a>
-              <a href="#">
+              <a href="mailto:Henryfygrup@gmail.com">
                 <i>
                   <AiFillMail />
                 </i>
               </a>
-              <a href="#">
+              <a href="https://www.linkedin.com/in/henry-fy-19a729256">
                 <i>
                   <AiFillLinkedin />
                 </i>
               </a>
-              <a href="#">
+              <a href="https://www.instagram.com/henryshoplatam/">
                 <i>
                   <AiFillInstagram />
                 </i>

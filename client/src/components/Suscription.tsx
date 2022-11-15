@@ -6,16 +6,10 @@ import imgtop1 from "../assets/top1.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-<<<<<<< HEAD:client/src/components/subcription.tsx
-const subcription = () => {
-  const { isAuthenticated, loginWithRedirect} = useAuth0();
-  //cambios aca para poder hacer el push
-=======
 
 const Suscription = () => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
->>>>>>> 0588355a0e9ce5865472da529f7461c2a2ae1e18:client/src/components/Suscription.tsx
   return (
     <Sectionplans>
       <div className="cardscontainersubs">

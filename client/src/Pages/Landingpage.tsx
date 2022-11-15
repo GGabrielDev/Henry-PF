@@ -33,10 +33,7 @@ const Landingpage = () => {
                 Crea tu negocio y manejalo desde el dashboard de HenryShops.
                 Núnca habia sido tan fácil crear una tienda online y gestionar
                 tus ventas a traves de Whatsapp.
-              </p>
-              <Link to="/usuario">
-                <button>Empezar</button>
-              </Link>
+              </p>              
             </div>
             <div className="imgheader">
               <img src={Store} alt="" />
@@ -61,9 +58,9 @@ const Landingpage = () => {
                 iniciar tu negocio online?
               </p>
               <div className="buttoninfo">
-                <Link to={"/"}>
+                <a href = "#plans">
                   <button>Obtener</button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>

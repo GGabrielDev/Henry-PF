@@ -76,6 +76,7 @@ const CheckoutForm = () => {
             `http://localhost:3001/stripe/api/checkout`,
             {
               id,
+              mode: "subscription",
               amount: 2000,
               description: "medium pack",
             }

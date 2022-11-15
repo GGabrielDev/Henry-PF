@@ -10,10 +10,13 @@ export type SellerType = BaseSellerType & {
 };
 
 export type BaseSellerType = {
-nombreNegocio: string;
+nombreNegocio: string | null;
 imageLogo: string | null;
 categorias: "Gastronomia" | "Entretenimiento" | "Servicios" | "Tecnologia" | "Vestimenta" | "Educacion" | "No esta especificado"|null;
 template_page: "1"|"2"|"3"|null;
+paymentId:string | null;
+description: string | null;
+
 }
 
 type SliceState = {
@@ -32,22 +35,22 @@ const initialState: SliceState = {
   }
 }
 
-const getSellerByName = createAsyncThunk("seller/getSellerByName", async (nombreNegocio: string) => {
+export const getSellerByName = createAsyncThunk("seller/getSellerByName", async (nombreNegocio: string) => {
   const res = await axios.get(`http://localhost:3001/sellers/${nombreNegocio}`)
   return res.data
 })
 
-const getSellerById = createAsyncThunk("seller/getSellerById", async (id: number) => {
+export const getSellerById = createAsyncThunk("seller/getSellerById", async (id: number) => {
     const res = await axios.get(`http://localhost:3001/sellers/${id}`)
     return res.data
   })
 
-const createSeller = createAsyncThunk("seller/createSeller", async (seller: BaseSellerType) => {
+export const createSeller = createAsyncThunk("seller/createSeller", async (seller: BaseSellerType) => {
   const res = await axios.post(`http://localhost:3001/sellers`, seller)
   return res.data
 })
 
-const editSeller = createAsyncThunk("seller/editSeller", async (seller: SellerType) => {
+export const editSeller = createAsyncThunk("seller/editSeller", async (seller: SellerType) => {
   const { id,  ...rest } = seller;
   const res = await axios.put(`http://localhost:3001/sellers/${id}`, {
     ...rest

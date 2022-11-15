@@ -26,7 +26,7 @@ import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario"
 
-const { getUserByEmail, createUser } = actions;
+const { getUserByEmail, createUser, getUserById } = actions;
 const { selectError, selectStatus } = selectors;
 
 const Router = () => {
@@ -73,7 +73,7 @@ const Router = () => {
       : null
       }
 
-      {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */  ?        <>      
+      {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */  ? <>      
       <Route path="/tugamer/publicar" element={<Publicar />} /> 
       <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
       <Route path="/usuario/editar/producto/:productId" element={<EditProduct />} />

@@ -6,8 +6,7 @@ import { symlink } from "fs";
 import Swal from "sweetalert2";
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
-import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary"
-
+import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
@@ -43,11 +42,11 @@ const Publicar = () => {
 
   const [input, setInput] = useState<InputState>({
     name: "",
-    price_local:0,
+    price_local: 0,
     stock: 0,
     description: "",
     suspended: "DEFAULT",
-    image: "https://definicion.de/wp-content/uploads/2009/06/producto.png",
+    image: "",
     cloudinary: {},
     categories: [],
   });
@@ -84,6 +83,7 @@ const Publicar = () => {
       err.price_local === "Tiene que ser un numero" ||
       input.description === "" ||
       input.suspended === "DEFAULT"
+
       //   ) {
       //     alert("Faltan agregar datos");
       //   } else {
@@ -97,7 +97,14 @@ const Publicar = () => {
       AlertaCorrecta();
       // event.target.reset()
       // document.getElementById("form-public").reset();
-      dispatch(createProduct(input));
+      dispatch(
+        createProduct({
+          ...input,
+          image: !input.image
+            ? "https://definicion.de/wp-content/uploads/2009/06/producto.png"
+            : input.image,
+        })
+      );
     }
   };
   return (
@@ -118,7 +125,12 @@ const Publicar = () => {
               </h5>
               <div className="inputinfo">
                 <label htmlFor="">Nombre del producto:</label>
-                <input value= {input.name} name="name" type="text" onChange={handleChange} />
+                <input
+                  value={input.name}
+                  name="name"
+                  type="text"
+                  onChange={handleChange}
+                />
                 {err.name ? <p className="errortext"> {err.name} </p> : ""}
               </div>
               {/*<div className="inputinfo">
@@ -142,12 +154,21 @@ const Publicar = () => {
               </div>
               <div className="inputinfo">
                 <label htmlFor="stock">Stock:</label>
-                <input value={input.stock} name="stock" type="text" onChange={handleChange} />
+                <input
+                  value={input.stock}
+                  name="stock"
+                  type="text"
+                  onChange={handleChange}
+                />
                 {err.stock ? <p className="errortext"> {err.stock} </p> : ""}
               </div>
               <div className="inputinfo">
                 <label htmlFor="description">Descripcion:</label>
-                <textarea value={input.description} name="description" onChange={handleChange} />
+                <textarea
+                  value={input.description}
+                  name="description"
+                  onChange={handleChange}
+                />
                 {err.description ? (
                   <p className="errortext"> {err.description} </p>
                 ) : (
@@ -157,7 +178,7 @@ const Publicar = () => {
               <div className="inputinfo ultimo__select">
                 <label htmlFor="suspended">Estado:</label>
                 <select
-                  value = {input.suspended}
+                  value={input.suspended}
                   name="suspended"
                   id=""
                   onChange={handleChange}
@@ -259,7 +280,7 @@ export const AddProduct = styled.div`
       width: 500px;
       height: 40px;
       padding: 10px;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
     }
@@ -268,7 +289,7 @@ export const AddProduct = styled.div`
       width: 500px;
       min-height: 55px;
       resize: none;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
       margin-bottom: 3px;
@@ -281,10 +302,12 @@ export const AddProduct = styled.div`
     select {
       width: 500px;
       resize: none;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
       margin-bottom: 10px;
+      height: 40px;
+      padding: 10px;
     }
   }
 
@@ -302,7 +325,7 @@ export const AddProduct = styled.div`
   .imageupload {
     width: 270px;
     height: 270px;
-    background-color: ${({ theme }) => theme.tertiary};
+    background-color: ${({ theme }) => theme.gray};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -358,6 +381,9 @@ export const AddProduct = styled.div`
         width: 100%;
       }
       textarea {
+        width: 100%;
+      }
+      select {
         width: 100%;
       }
     }

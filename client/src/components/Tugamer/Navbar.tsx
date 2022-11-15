@@ -16,7 +16,6 @@ const Navbar = () => {
   const isOpen = useAppSelector(selectIsOpen);
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
   const categorias = useAppSelector(selectProducts);
-  console.log(categorias);
 
   return (
     <NavbarContainer>
@@ -26,20 +25,45 @@ const Navbar = () => {
           <Infotop>
             <div className="infotop-item">
               {isAuthenticated ? (
-                <div className="is" onClick={() => logout()}>
+                <div
+                  className="is"
+                  onClick={() =>
+                    logout({
+                      returnTo:
+                        window.location.origin + window.location.pathname,
+                    })
+                  }
+                >
                   {" "}
                   Salir de sesión{" "}
                 </div>
               ) : (
-                <div className="is" onClick={() => loginWithRedirect()}>
+                <div
+                  className="is"
+                  onClick={() =>
+                    loginWithRedirect({
+                      returnTo:
+                        window.location.origin + window.location.pathname,
+                    })
+                  }
+                >
                   {" "}
                   Iniciar sesion{" "}
                 </div>
               )}
             </div>
-            <div className="infotop-item">Client service</div>
-            <div className="infotop-item">FAQ</div>
-            <div className="infotop-item">About</div>
+            <div className="infotop-item">
+              {" "}
+              <Link to="/usuario" className="infotop-item-link">
+                Perfil
+              </Link>{" "}
+            </div>
+            <div className="infotop-item">
+              <Link className="infotop-item-link" to="/">
+                {" "}
+                Henry Shops
+              </Link>
+            </div>
           </Infotop>
         </Headertop>
         <Headermiddle>
@@ -114,6 +138,18 @@ const NavbarContainer = styled.div`
     &:hover {
       color: ${({ theme }) => theme.primary};
     }
+  }
+
+  .infotop-item {
+    font-size: 12px;
+    span {
+      cursor: poniter;
+    }
+  }
+
+  .infotop-item-link {
+    color: ${({ theme }) => theme.dark};
+    text-decoration: none;
   }
 
   @media screen and (max-width: 1000px) {

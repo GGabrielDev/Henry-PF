@@ -50,8 +50,7 @@ const Publicar = () => {
     stock: -1,
     description: "",
     suspended: "",
-    image:
-      "https://www.pexels.com/es-es/foto/foto-de-primer-plano-de-la-hamburguesa-1639562/",
+    image: "",
     cloudinary: {},
   });
 
@@ -94,7 +93,14 @@ const Publicar = () => {
       // event.target.reset()
       // var resetForm = document.getElementById("");
       // resetForm.reset();
-      dispatch(createProduct(input));
+      dispatch(
+        createProduct({
+          ...input,
+          image: !input.image
+            ? "https://www.pngitem.com/pimgs/m/59-598807_imagenes-de-hamburguesa-png-transparent-png.png"
+            : input.image,
+        })
+      );
     }
   };
 

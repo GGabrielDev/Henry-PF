@@ -1,11 +1,12 @@
 import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
 import styled from "styled-components";
 import Navbar from "../../components/Tugamer/Navbar";
-import Validate from "../../components/Tugamer/validate";
+import Validate from "../../helpers/validate";
 import { symlink } from "fs";
 import Swal from "sweetalert2";
 import { createProduct } from "../../redux/actions";
 import { useAppDispatch } from "../../app/hooks";
+import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,6 @@ const Publicar = () => {
       confirmButtonText: "Perfecto",
     });
   };
-
   // ALERTA PARA CUANDO FALTAN DATOS
 
   const AlertaIncorrecta = () => {
@@ -31,7 +31,7 @@ const Publicar = () => {
     });
   };
 
-  const [err, setErr] = useState({
+  const [err, setErr] = useState<ErrorState>({
     name: "",
     price_local: "",
     stock: "",
@@ -40,15 +40,15 @@ const Publicar = () => {
     image: "Si no se agrega imagen, se pondra una por default",
   });
 
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<InputState>({
     name: "",
-    price_local: -1,
-    stock: -1,
+    price_local: 0,
+    stock: 0,
     description: "",
-    suspended: "",
-    image: "https://definicion.de/wp-content/uploads/2009/06/producto.png",
+    suspended: "DEFAULT",
+    image: "",
     cloudinary: {},
-    categories: "",
+    categories: [],
   });
 
   const dispatch = useAppDispatch();
@@ -70,10 +70,10 @@ const Publicar = () => {
       price_local: -1,
       stock: -1,
       description: "",
-      suspended: "",
+      suspended: "DEFAULT",
       image: "",
       cloudinary: {},
-      categories: "",
+      categories: [],
     });
 
     if (
@@ -82,8 +82,8 @@ const Publicar = () => {
       input.stock === -1 ||
       err.price_local === "Tiene que ser un numero" ||
       input.description === "" ||
-      input.suspended === "" ||
-      input.categories === null
+      input.suspended === "DEFAULT"
+
       //   ) {
       //     alert("Faltan agregar datos");
       //   } else {
@@ -97,29 +97,15 @@ const Publicar = () => {
       AlertaCorrecta();
       // event.target.reset()
       // document.getElementById("form-public").reset();
-      dispatch(createProduct(input));
+      dispatch(
+        createProduct({
+          ...input,
+          image: !input.image
+            ? "https://definicion.de/wp-content/uploads/2009/06/producto.png"
+            : input.image,
+        })
+      );
     }
-  };
-
-  const upLoadImage = async (e: any) => {
-    e.preventDefault();
-
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "henryleo"); // imagenes/ es la carpeta de Cloudinary
-    setLoading(true);
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/minubeleo/image/upload", //https://api.cloudinary.com/v1_1/:cloud_name/:action
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const file = await res.json();
-    setLoading(false);
-    setInput({ ...input, [e.target.name]: file.secure_url });
-    setErr(Validate({ ...input, [e.target.name]: e.target.value }));
   };
   return (
     <PublicarContainer>
@@ -139,17 +125,23 @@ const Publicar = () => {
               </h5>
               <div className="inputinfo">
                 <label htmlFor="">Nombre del producto:</label>
-                <input name="name" type="text" onChange={handleChange} />
+                <input
+                  value={input.name}
+                  name="name"
+                  type="text"
+                  onChange={handleChange}
+                />
                 {err.name ? <p className="errortext"> {err.name} </p> : ""}
               </div>
-              <div className="inputinfo">
+              {/*<div className="inputinfo">
                 <label htmlFor="">Categoria:</label>
                 <input name="categories" type="text" onChange={handleChange} />
-              </div>
+                </div>*/}
               <div className="inputinfo">
                 <label htmlFor="price_local">Precio:</label>
                 <input
                   className="price_local__input"
+                  value={input.price_local}
                   name="price_local"
                   type="text"
                   onChange={handleChange}
@@ -162,12 +154,21 @@ const Publicar = () => {
               </div>
               <div className="inputinfo">
                 <label htmlFor="stock">Stock:</label>
-                <input name="stock" type="text" onChange={handleChange} />
+                <input
+                  value={input.stock}
+                  name="stock"
+                  type="text"
+                  onChange={handleChange}
+                />
                 {err.stock ? <p className="errortext"> {err.stock} </p> : ""}
               </div>
               <div className="inputinfo">
                 <label htmlFor="description">Descripcion:</label>
-                <textarea name="description" onChange={handleChange} />
+                <textarea
+                  value={input.description}
+                  name="description"
+                  onChange={handleChange}
+                />
                 {err.description ? (
                   <p className="errortext"> {err.description} </p>
                 ) : (
@@ -177,7 +178,7 @@ const Publicar = () => {
               <div className="inputinfo ultimo__select">
                 <label htmlFor="suspended">Estado:</label>
                 <select
-                  defaultValue={"DEFAULT"}
+                  value={input.suspended}
                   name="suspended"
                   id=""
                   onChange={handleChange}
@@ -200,7 +201,7 @@ const Publicar = () => {
                 <input
                   type="file"
                   name="image"
-                  onChange={(e) => upLoadImage(e)}
+                  onChange={upLoadImage(input, setLoading, setInput, setErr)}
                 />
               </div>
 
@@ -279,7 +280,7 @@ export const AddProduct = styled.div`
       width: 500px;
       height: 40px;
       padding: 10px;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
     }
@@ -288,7 +289,7 @@ export const AddProduct = styled.div`
       width: 500px;
       min-height: 55px;
       resize: none;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
       margin-bottom: 3px;
@@ -301,10 +302,12 @@ export const AddProduct = styled.div`
     select {
       width: 500px;
       resize: none;
-      background-color: ${({ theme }) => theme.tertiary};
+      background-color: ${({ theme }) => theme.gray};
       border: none;
       border-radius: 4px;
       margin-bottom: 10px;
+      height: 40px;
+      padding: 10px;
     }
   }
 
@@ -322,7 +325,7 @@ export const AddProduct = styled.div`
   .imageupload {
     width: 270px;
     height: 270px;
-    background-color: ${({ theme }) => theme.tertiary};
+    background-color: ${({ theme }) => theme.gray};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -378,6 +381,9 @@ export const AddProduct = styled.div`
         width: 100%;
       }
       textarea {
+        width: 100%;
+      }
+      select {
         width: 100%;
       }
     }

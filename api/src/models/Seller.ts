@@ -1,8 +1,8 @@
 import {
   Association,
-  BelongsToGetAssociationMixin,
-  BelongsToSetAssociationMixin,
-  BelongsToCreateAssociationMixin,
+//  BelongsToGetAssociationMixin,
+//  BelongsToSetAssociationMixin,
+//  BelongsToCreateAssociationMixin,
   CreationOptional,
   DataTypes,
   ForeignKey,
@@ -21,11 +21,12 @@ import {
   Model,
   NonAttribute,
   Sequelize,
+  HasOneSetAssociationMixin,
+  HasOneGetAssociationMixin,
+  HasOneCreateAssociationMixin,
 } from "sequelize";
 import path from "path";
-import { Category_Seller } from "./Category_Seller";
 import { Product } from "./Product";
-import { Review } from "./Review";
 import { User } from "./User";
 
 export class Seller extends Model<
@@ -35,30 +36,21 @@ export class Seller extends Model<
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<number>;
   declare nombreNegocio: string;
-  declare pay_Money: string;
   declare imageLogo: string | null;
+  declare categorias: string;
   declare template_page: string;
+  declare suspended: boolean;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
   // updatedAt can be undefined during creation
   declare updatedAt: CreationOptional<Date>;
-  // foreign keys are automatically added by associations methods (like Project.belongsTo)
-  declare userId: ForeignKey<User["id"]>;
-  declare categoryId: ForeignKey<Category_Seller["id"]>;
   // Since TS cannot determine model association at compile time
   // we have to declare them here purely virtually
   // these will not exist until `Model.init` was called.
-  declare setUser: BelongsToSetAssociationMixin<User, User["id"]>;
-  declare getUser: BelongsToGetAssociationMixin<User>;
-  declare createUser: BelongsToCreateAssociationMixin<User>;
-
-  declare setCategory: BelongsToSetAssociationMixin<
-    Category_Seller,
-    Category_Seller["id"]
-  >;
-  declare getCategory: BelongsToGetAssociationMixin<Category_Seller>;
-  declare createCategory: BelongsToCreateAssociationMixin<Category_Seller>;
+  declare setUser: HasOneSetAssociationMixin<User, User["id"]>;
+  declare getUser: HasOneGetAssociationMixin<User>;
+  declare createUser: HasOneCreateAssociationMixin<User>;
 
   declare getProduct: HasManyGetAssociationsMixin<Product>;
   declare countProducts: HasManyCountAssociationsMixin;
@@ -68,10 +60,7 @@ export class Seller extends Model<
   declare addProduct: HasManyAddAssociationMixin<Product, Product["id"]>;
   declare addProducts: HasManyAddAssociationsMixin<Product, Product["id"]>;
   declare removeProduct: HasManyRemoveAssociationMixin<Product, Product["id"]>;
-  declare removeProducts: HasManyRemoveAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
+  declare removeProducts: HasManyRemoveAssociationsMixin<Product, Product["id"]>;
   declare createProduct: HasManyCreateAssociationMixin<Product>;
 
   // You can also pre-declare possible inclusions, these will only be populated if you
@@ -97,15 +86,10 @@ module.exports = (sequelize: Sequelize) => {
 
       nombreNegocio: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           isAlpha: true,
         },
-      },
-
-      pay_Money: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
 
       imageLogo: {
@@ -116,8 +100,20 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      template_page: {
-        type: DataTypes.ENUM("1", "2", "3"),
+      categorias: {
+        type: DataTypes.ENUM("Gastronomia", "Entretenimiento", "Servicios", "Tecnologia", "Vestimenta", "Educacion", "No esta especificado"),
+        defaultValue: "No esta especificado",
+      },
+
+      template_page:{
+        type:DataTypes.ENUM("1","2","3"),
+        defaultValue:"1",
+      },
+
+      suspended: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
       },
 
       createdAt: DataTypes.DATE,
@@ -138,3 +134,5 @@ module.exports = (sequelize: Sequelize) => {
     }
   );
 };
+
+

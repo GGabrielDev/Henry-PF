@@ -13,9 +13,9 @@ import {
   HasManySetAssociationsMixin,
   HasManyRemoveAssociationMixin,
   HasManyRemoveAssociationsMixin,
-  HasOneGetAssociationMixin,
-  HasOneSetAssociationMixin,
-  HasOneCreateAssociationMixin,
+  //  HasOneGetAssociationMixin,
+  //  HasOneSetAssociationMixin,
+  //  HasOneCreateAssociationMixin,
   InferAttributes,
   InferCreationAttributes,
   Model,
@@ -31,10 +31,13 @@ import {
   BelongsToManySetAssociationsMixin,
   BelongsToManyRemoveAssociationMixin,
   BelongsToManyRemoveAssociationsMixin,
+  BelongsToGetAssociationMixin,
+  BelongsToSetAssociationMixin,
+  BelongsToCreateAssociationMixin,
 } from "sequelize";
 import path from "path";
 import { Seller } from "./Seller";
-import { Countries } from "./Countries";
+//import { Countries } from "./Countries";
 import { Review } from "./Review";
 import { Product } from "./Product";
 
@@ -44,15 +47,14 @@ export class User extends Model<
 > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<string>;
-  declare firstName: string;
+  declare firstName: string | null;
   declare lastName: string;
   declare username: string;
   declare gender: string;
   declare email: string;
-  declare mobile: string;
+  declare phoneNumber: string;
   declare address: string;
   declare imagenDePerfil: string | null;
-  declare userType: string;
   declare suspended: boolean;
   // timestamps!
   // createdAt can be undefined during creation
@@ -61,21 +63,21 @@ export class User extends Model<
   declare updatedAt: CreationOptional<Date>;
   // foreign keys are automatically added by associations methods (like Project.belongsTo)
   declare sellerId: ForeignKey<Seller["id"]>;
-  declare countryId: ForeignKey<Countries["id"]>;
+  //declare countryId: ForeignKey<Countries["id"]>;
   // `seller` is an eagerly-loaded association.
   // We tag it as `NonAttribute`
   declare seller?: NonAttribute<Seller>;
-  declare country?: NonAttribute<Countries>;
+  //declare country?: NonAttribute<Countries>;
   // Since TS cannot determine model association at compile time
   // we have to declare them here purely virtually
   // these will not exist until `Model.init` was called.
-  declare getSeller: HasOneGetAssociationMixin<Seller>;
-  declare setSeller: HasOneSetAssociationMixin<Seller, Seller["id"]>;
-  declare createSeller: HasOneCreateAssociationMixin<Seller>;
+  declare getSeller: BelongsToGetAssociationMixin<Seller>;
+  declare setSeller: BelongsToSetAssociationMixin<Seller, Seller["id"]>;
+  declare createSeller: BelongsToCreateAssociationMixin<Seller>;
 
-  declare getCountry: HasOneGetAssociationMixin<Countries>;
-  declare setCountry: HasOneSetAssociationMixin<Countries, Countries["id"]>;
-  declare createCountry: HasOneCreateAssociationMixin<Countries>;
+  //  declare getCountry: HasOneGetAssociationMixin<Countries>;
+  //  declare setCountry: HasOneSetAssociationMixin<Countries, Countries["id"]>;
+  //  declare createCountry: HasOneCreateAssociationMixin<Countries>;
 
   declare getReview: HasManyGetAssociationsMixin<Review>;
   declare countReviews: HasManyCountAssociationsMixin;
@@ -92,7 +94,10 @@ export class User extends Model<
 
   declare getFavoriteProduct: BelongsToManyGetAssociationsMixin<Product>;
   declare countFavoriteProducts: BelongsToManyCountAssociationsMixin;
-  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<Product, Product["id"]>;
+  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<
+    Product,
+    Product["id"]
+  >;
   declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<
     Product,
     Product["id"]
@@ -101,7 +106,10 @@ export class User extends Model<
     Product,
     Product["id"]
   >;
-  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<Product, Product["id"]>;
+  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<
+    Product,
+    Product["id"]
+  >;
   declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<
     Product,
     Product["id"]
@@ -141,7 +149,7 @@ module.exports = (sequelize: Sequelize) => {
 
       firstName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -149,7 +157,7 @@ module.exports = (sequelize: Sequelize) => {
 
       lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
           is: /^[A-Za-z0-9\s]*$/,
         },
@@ -157,7 +165,7 @@ module.exports = (sequelize: Sequelize) => {
 
       username: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         unique: true,
         validate: {
           isAlphanumeric: true,
@@ -165,31 +173,27 @@ module.exports = (sequelize: Sequelize) => {
       },
 
       gender: {
-        type: DataTypes.ENUM("M", "F", "No binario", "No quiero decir"),
-        defaultValue: "No quiero decir",
+        type: DataTypes.ENUM("M", "F", "No binario", "Prefiero no decirlo"),
       },
 
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: false,
+        unique: true,
         validate: {
           isEmail: true,
         },
       },
 
-      mobile: {
+      phoneNumber: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         unique: false,
-        validate: {
-          is: /^[0-9]+(-[0-9]+)+$/i,
-        },
       },
 
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       imagenDePerfil: {
@@ -198,16 +202,6 @@ module.exports = (sequelize: Sequelize) => {
         validate: {
           isUrl: true,
         },
-      },
-
-      userType: {
-        type: DataTypes.ENUM(
-          "Administrador General",
-          "Administrador",
-          "Usuario"
-        ),
-        defaultValue: "Usuario",
-        allowNull: false,
       },
 
       suspended: {

@@ -1,4 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
+import { resourceLimits } from "worker_threads";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
@@ -7,6 +8,7 @@ const { User } = Models;
 
 type UserParams = {
   userId: string;
+  email:string;
 };
 
 type UserQuery = {};
@@ -17,34 +19,23 @@ type UserBody = {
   username: string;
   gender: string;
   email: string;
-  mobile: string;
+  phoneNumber: string;
   address: string;
   imagenDePerfil: string | null;
-  userType: string;
-  suspended: boolean;
+  
 };
 
 type RouteRequest = Request<UserParams, UserQuery, UserBody>;
 
 router.get(
-  "/:userId",
+  "/:email",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { userId } = req.params;
+      const { email } = req.params;
 
-      const result = await User.findByPk(userId)
-        .then((value) => value)
-        .catch((error) => {
-          if (error.parent.code === "22P02") {
-            throw new HttpException(
-              400,
-              "The format of the request is not UUID"
-            );
-          }
-        });
-
+      const result = await User.findOne({where: {email}})
       if (!result) {
-        throw new HttpException(404, "No User belongs to this ID");
+        throw new HttpException(404, "No User belongs to this email");
       }
       return res.status(200).send(result);
     } catch (error) {
@@ -63,21 +54,13 @@ router.post(
         username,
         gender,
         email,
-        mobile,
+        phoneNumber,
         address,
         imagenDePerfil,
-        userType,
-        suspended,
       } = req.body;
 
       if (
-        firstName &&
-        lastName &&
-        username &&
-        gender &&
-        email &&
-        mobile &&
-        address
+        email 
       ) {
         const result = await User.create({
           firstName,
@@ -85,11 +68,9 @@ router.post(
           username,
           gender,
           email,
-          mobile,
+          phoneNumber,
           address,
           imagenDePerfil,
-          userType,
-          suspended,
         });
 
         return res.status(201).send(result);
@@ -117,14 +98,12 @@ router.put(
         "username",
         "gender",
         "email",
-        "mobile",
+        "phoneNumber",
         "address",
-        "imagenDePerfil",
-        "userType",
-        "suspended",
+        "imagenDePerfil"
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
-        possibleValues.find((possibleValue) => possibleValue === value[0])
+        possibleValues.find((possibleValue) => possibleValue === value[0] && value[1])
       );
 
       if (arrayBody.length === 0) {
@@ -135,7 +114,7 @@ router.put(
       }
 
       const body = Object.fromEntries(arrayBody);
-
+      console.log(body)
       if (!userId) {
         throw new HttpException(400, "The User ID is missing in the request");
       }
@@ -163,6 +142,7 @@ router.put(
       console.log(error);
       next(error);
     }
+    
   }
 );
 

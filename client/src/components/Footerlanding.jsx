@@ -3,8 +3,41 @@ import styled from "styled-components";
 import { AiFillMail, AiFillInstagram, AiFillLinkedin } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import emailjs from "@emailjs/browser";
 
 const Footerlanding = () => {
+  const AlertaError = () => {
+    Swal.fire({
+      title: "Error!",
+      text: "Debes completar tu correctamente tu email",
+      icon: "error",
+      confirmButtonText: "Ok!",
+    });
+  };
+
+  const AlertaCorrecta = () => {
+    Swal.fire({
+      title: "Genial!",
+      text: "Te enterarás de todo lo nuevo de Henry Shops",
+      icon: "success",
+      confirmButtonText: "Continuar",
+    });
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_b8w2oyr",
+      "Hneryfy",
+      "#Myform",
+      "OQv0-3OJpb-GAFP7Q"
+    );
+    e.target.reset();
+    AlertaCorrecta();
+  };
+
   return (
     <FooterlandingContainer className="footer-codemmerce">
       <div className="container-footer">
@@ -25,7 +58,7 @@ const Footerlanding = () => {
               </li>
               <li>
                 <a href="#clients">Cuentas</a>
-              </li>                          
+              </li>
               <li>
                 <a href="#contact">Contactanos</a>
               </li>
@@ -56,9 +89,18 @@ const Footerlanding = () => {
           <div className="footer-col">
             <h4>Exclusivo</h4>
             <div className="form-sub">
-              <form className="form-codemmerce">
-                <input type="email" placeholder="e-mail" required />
-                <button>Suscribirse</button>
+              <form
+                onSubmit={sendEmail}
+                id="Myform"
+                className="form-codemmerce"
+              >
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="e-mail"
+                  required
+                />
+                <button type="submit">Suscribirse</button>
               </form>
             </div>
 

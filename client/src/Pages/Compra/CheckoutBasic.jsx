@@ -15,7 +15,7 @@ import imgtop3 from "../../assets/top3.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
-import Navbarlanding from "../../components/Navbarlanding";
+import Navbarlanding from "./NavbarLanding";
 
 
 const stripePromise = loadStripe(

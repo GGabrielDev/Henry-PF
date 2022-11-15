@@ -1,17 +1,17 @@
-import Validate from "./validate" 
+import Validate from "./validate";
 import { SetStateAction, Dispatch } from "react";
 import ValidateSeller from "./validateseller";
 
 export type InputState = {
-    name: string,
-    price_local: number,
-    stock: number,
-    description: string,
-    suspended: "DEFAULT"|"true"|"false",
-    image: string,
-    cloudinary: any,
-    categories: any[],
-  }
+  name: string;
+  price_local: number;
+  stock: number;
+  description: string;
+  suspended: "DEFAULT" | "true" | "false";
+  image: string;
+  cloudinary: any;
+  categories: any[];
+};
 
 export type InputStateSeller = {
     nombreNegocio: string | null;
@@ -39,10 +39,17 @@ export const uploadToCloudinary = async (url: string)  => {
     return await res.json()
 }
 
-export const upLoadImage = (input: InputState, setLoading: Dispatch<SetStateAction<boolean>>, setInput: Dispatch<SetStateAction<InputState>>, setErr: Dispatch<SetStateAction<ErrorState>>) => async (e: any) => {
+export const upLoadImage =
+  (
+    input: InputState,
+    setLoading: Dispatch<SetStateAction<boolean>>,
+    setInput: Dispatch<SetStateAction<InputState>>,
+    setErr: Dispatch<SetStateAction<ErrorState>>
+  ) =>
+  async (e: any) => {
     e.preventDefault();
     const files = e.target.files;
-   // imagenes/ es la carpeta de Cloudinary
+    // imagenes/ es la carpeta de Cloudinary
     setLoading(true);
     const file = await uploadToCloudinary(files[0]);
     setLoading(false);

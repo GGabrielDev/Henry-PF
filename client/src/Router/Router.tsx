@@ -26,7 +26,7 @@ import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario"
 
-const { getUserByEmail, createUser, getUserById } = actions;
+const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus } = selectors;
 
 const Router = () => {

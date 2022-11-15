@@ -4,18 +4,15 @@ import styled, { useTheme } from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
-import { actions, selectors, UserType } from "../../features/users/userSlice"
+import { actions, selectors, UserType } from "../../features/users/userSlice";
 import { useAppSelector } from "../../app/hooks";
 import { Link } from "react-router-dom";
 
-
 const { selectUser } = selectors;
 
-
 const General = () => {
-  const user = useAppSelector(selectUser) as UserType
+  const user = useAppSelector(selectUser) as UserType;
 
-  
   return (
     <GeneralContainer>
       <ThemeProvider theme={ThemesLanding}>
@@ -26,33 +23,53 @@ const General = () => {
             <h3 className="general__perfil-section">Tu Foto</h3>
             <div className="general__img">
               <div className="img__container">
-                {user.imagenDePerfil ? (<img referrerPolicy="no-referrer" src={user.imagenDePerfil} alt="picture" />) :
-                  (<img src={Perfil} alt="" />)}
+                {user.imagenDePerfil ? (
+                  <img
+                    referrerPolicy="no-referrer"
+                    src={user.imagenDePerfil}
+                    alt="picture"
+                  />
+                ) : (
+                  <img src={Perfil} alt="" />
+                )}
               </div>
-              <Link to= "/usuario/editUser">
-              <button className="botones" >Editar Usuario</button>
+              <Link to="/usuario/editUser">
+                <button className="botones">Editar Usuario</button>
               </Link>
             </div>
             <h2 className="general__perfil-section">Información básica:</h2>
 
             <h3 className="general__perfil-section-item">Nombre/s</h3>
-            <p className="general__input" >{user.firstName}</p>
+            <p className="general__input">{user.firstName}</p>
 
             <h3 className="general__perfil-section-item">Apellido/s</h3>
-            <p className="general__input" >{user.lastName}</p>
+            <p className="general__input">{user.lastName}</p>
 
             <h3 className="general__perfil-section-item">Email</h3>
-            <p className="general__input" >{user.email}</p>
+            <p className="general__input">{user.email}</p>
 
             <h3 className="general__perfil-section-item">Numero de Telefono</h3>
-            <p className="general__input" >{user.phoneNumber}</p>
+            <input
+              type="text"
+              className="general__input"
+              value={
+                user.phoneNumber ? user.phoneNumber : "No hay datos al momento"
+              }
+            />
 
             <h3 className="general__perfil-section-item">Direccion</h3>
-            <p className="general__input" defaultValue={"No hay datos al momento"}>{user.address}</p>
+            <input
+              type="text"
+              className="general__input"
+              value={user.address ? user.address : "No hay datos al momento"}
+            />
 
             <h3 className="general__perfil-section-item">Genero</h3>
-            <p className="general__input" >{user.gender} </p>
-            
+            <input
+              type="text"
+              className="general__input"
+              value={user.gender ? user.gender : "No hay datos al momento"}
+            />
           </div>
         </GeneralContent>
       </ThemeProvider>
@@ -105,12 +122,18 @@ const GeneralContent = styled.div`
   }
 
   .botones {
-    height: 100px;
+    height: 40px;
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
     flex-direction: column;
     margin-left: 20px;
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.primary};
+    border: 1px solid ${({ theme }) => theme.border};
+    color: ${({ theme }) => theme.white};
+    padding: 5px;
+    cursor: pointer;
   }
 
   .subir__img {
@@ -153,15 +176,17 @@ const GeneralContent = styled.div`
   .general__perfil-section-item {
     font-size: 12px;
     color: ${({ theme }) => theme.details};
-    margin-top: 5px;
+    margin-top: 10px;
   }
 
   .general__input {
-    padding: 5px 0;
+    padding: 5px;
     border-radius: 10px;
     width: 50%;
     font-size: 12px;
     color: ${({ theme }) => theme.primary};
+    border: 1px solid ${({ theme }) => theme.border};
+    margin-top: 5px;
   }
 
   @media screen and (max-width: 768px) {

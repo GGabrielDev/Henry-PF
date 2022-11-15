@@ -40,6 +40,8 @@ export class Seller extends Model<
   declare categorias: string;
   declare template_page: string;
   declare suspended: boolean;
+  declare paymentId: string;
+  declare description: string;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -114,6 +116,16 @@ module.exports = (sequelize: Sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
+      },
+
+      paymentId:{
+        type: DataTypes.STRING, 
+        defaultValue: null,
+      },
+
+      description:{
+        type:DataTypes.STRING,
+        defaultValue: null,
       },
 
       createdAt: DataTypes.DATE,

@@ -1,14 +1,20 @@
 import React, { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../../app/hooks";
-
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   filterAsc,
   searchProduct,
 } from "../../../../features/products/productSlice";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectors, UserType } from "../../../../features/users/userSlice";
+
+const { selectUser } = selectors;
 
 const Filtros = () => {
+  const usuario = useAppSelector(selectUser) as UserType;
+  const {isAuthenticated} = useAuth0();
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
   const handleAsc = (
@@ -25,11 +31,15 @@ const Filtros = () => {
       dispatch(searchProduct(search));
     }
   };
+  
   return (
-    <FiltrosContainer>
+    <FiltrosContainer>      
+      {(isAuthenticated && usuario.sellerId !== null) ?
       <Link to="publicar" className="buttonfilter-container">
         <button className="buttonfilter">+</button>
-      </Link>
+      </Link> : 
+      <></>
+      }      
       <div className="inputcontainerfilet">
         <input
           placeholder="Productos"

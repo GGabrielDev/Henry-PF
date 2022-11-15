@@ -1,17 +1,16 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import  { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Themes } from "../../Theme/Theme";
-import { BsFilter, BsSortNumericDown } from "react-icons/bs";
 import { useAppDispatch } from "../../../../app/hooks";
-
 import {
   filterAsc,
   searchProduct,
 } from "../../../../features/products/productSlice";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Filtros = () => {
   const [search, setSearch] = useState("");
+  const { isAuthenticated } = useAuth0();
   const dispatch = useAppDispatch();
   const handleAsc = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -32,9 +31,10 @@ const Filtros = () => {
   }, [search, dispatch]);
   return (
     <FiltrosContainer>
-      <Link to="publicar" className="buttonfilter-container">
+      {isAuthenticated ?  <Link to="publicar" className="buttonfilter-container">
         <button className="buttonfilter">+</button>
-      </Link>
+      </Link>:      
+      <></>}     
       <div className="inputcontainerfilet">
         <input
           placeholder="Productos"

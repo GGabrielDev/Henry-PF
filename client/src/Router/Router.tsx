@@ -28,6 +28,7 @@ import EditarUsuario from "../Pages/Usuario/editarUsuario";
 import EditSeller from "../Pages/Usuario/editarSeller";
 import UserEdit from "../Pages/Usuario/UserEdit";
 
+
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
 
@@ -86,9 +87,13 @@ const Router = () => {
       :
       null    
       }
-      {isAuthenticated && user?.email === "Henryfygrup@gmail.com"?  
+      {isAuthenticated && user?.email === "jcg_95_9@hotmail.com"?  
       <>
-
+      <Route path="/tugamer/publicar" element={<Publicar />} /> 
+      <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+      <Route path="/usuario/editar/producto/" element={<UserEdit />} />
+      <Route path="/usuario/editSeller" element={<EditSeller/>}/>
+      <Route path="/usuario/editar/producto/:productId" element={<EditProduct/>}/>
       {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
       </>
       :

@@ -47,6 +47,7 @@ export const getUserByEmail = createAsyncThunk(
   }
 );
 
+
 export const getUserById = createAsyncThunk(
   "user/getUserById",
   async (id: string) => {
@@ -79,6 +80,7 @@ export const editUser = createAsyncThunk(
     return res.data;
   }
 );
+
 
 export const userSlice = createSlice({
   name: "user",

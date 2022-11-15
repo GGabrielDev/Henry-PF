@@ -22,6 +22,7 @@ type UserBody = {
   phoneNumber: string;
   address: string;
   imagenDePerfil: string | null;
+  isPremium: string;
   
 };
 
@@ -100,7 +101,8 @@ router.put(
         "email",
         "phoneNumber",
         "address",
-        "imagenDePerfil"
+        "imagenDePerfil",
+        "isPremium"
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
         possibleValues.find((possibleValue) => possibleValue === value[0] && value[1])

@@ -5,13 +5,13 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose, IoIosArrowForward } from "react-icons/io";
-import UserDefault from "../../assets/imagenesSlider/defaultuser.jpg";
+import UserDefault from "../assets/imagenesSlider/defaultuser.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
-import { ThemesLanding } from "../../components/ThemesLanding";
+import { ThemesLanding } from "./ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
-import { selectors, UserType } from "../../features/users/userSlice";
+import { useAppSelector } from "../app/hooks";
+import { selectors, UserType } from "../features/users/userSlice";
 
 const { selectUser } = selectors;
 

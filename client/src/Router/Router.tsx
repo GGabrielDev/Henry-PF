@@ -85,7 +85,7 @@ const Router = () => {
           </>
         ) : null}
 
-        {isAuthenticated ? (
+        {isAuthenticated && usuario.sellerId ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
@@ -97,8 +97,18 @@ const Router = () => {
             />
           </>
         ) : null}
-        {isAuthenticated && user?.email === "Henryfygrup@gmail.com" ? (
-          <>{/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}</>
+        {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+          <>
+            <Route path="/tugamer/publicar" element={<Publicar />} />
+            <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+            <Route path="/usuario/editar/producto/" element={<UserEdit />} />
+            <Route path="/usuario/editSeller" element={<EditSeller />} />
+            <Route
+              path="/usuario/editar/producto/:productId"
+              element={<EditProduct />}
+            />
+            {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
+          </>
         ) : null}
       </>
     </Routes>

@@ -1,4 +1,3 @@
-
 import { Route, Routes, Outlet } from "react-router-dom";
 import Landingpage from "../Pages/Landingpage";
 import Error from "../Pages/Error";
@@ -30,74 +29,72 @@ import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 const { getUserByEmail, createUser } = actions;
 const { selectError } = selectors;
 
-
-
 const Router = () => {
-    const dispatch = useAppDispatch();
-    const error = useAppSelector(selectError);
-    const {isAuthenticated, user} = useAuth0(); 
-    useEffect(() => {if(isAuthenticated === true && user && user.email && !error.message){
-      dispatch(getUserByEmail(user.email))
-    } else {if(error.message && error.message === "User not found" && user)
-      dispatch(createUser(user))
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(selectError);
+  const { isAuthenticated, user } = useAuth0();
+  useEffect(() => {
+    if (isAuthenticated === true && user && user.email && !error.message) {
+      dispatch(getUserByEmail(user.email));
+    } else {
+      if (error.message && error.message === "User not found" && user)
+        dispatch(createUser(user));
     }
-
-    },[isAuthenticated, user, error]) 
+  }, [isAuthenticated, user, error]);
   return (
     <Routes>
-      <>    
-           
-      <Route path="/" element={<Landingpage />} />
-      <Route path="/*" element={<Error />} />
-      <Route path="/tugamer" element={<Tugamer />} />
-      <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
-      <Route path="/tugamer/*" element={<Error404 />} />
-      <Route path="/tuhamburguesa" element={<TuHamburguesa />} />
-      <Route path="/tuhamburguesa/detalle/:productId" element={<DetalleH />} />
-      <Route path="/tuhamburguesa/*" element={<Error404H />} />
-      <Route path="auth/recover" element={<Recover />} />
-      <Route path="auth/register" element={<Register />} />
-      <Route path="/auth/login" element={<Login />} />      
-     
-      
-
-      {isAuthenticated ?  
-      <>      
-      <Route path="/usuario/*" element={<UserGeneral />} />
-      <Route path="/usuario/compras" element={<UserCompras />} />
-      <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
-      <Route path="/usuario/favoritos" element={<UserFavoritos />} />      
-      <Route path="/checkout/premium" element={<CheckoutPremium />} />
-      <Route path="/checkout/medium" element={<CheckoutMedium />} />
-      <Route path="/checkout/basic" element={<CheckoutBasic />} />
-      </>
-      :
-      null
-      }
-
-      {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */  ?        <>      
-      <Route path="/tugamer/publicar" element={<Publicar />} /> 
-      <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
-      <Route path="/usuario/editar/producto/:productId" element={<EditProduct />} />
-      <Route path="/usuario/editar" element={<UserEdit />} />
-      </>
-      :
-      null    
-      }
-      {isAuthenticated && user?.email === "Henryfygrup@gmail.com"?  
       <>
-      {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
-      </>
-      :
-      null    
-      }
+        <Route path="/" element={<Landingpage />} />
+        <Route path="/*" element={<Error />} />
+        <Route path="/tugamer" element={<Tugamer />} />
+        <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
+        <Route path="/tugamer/*" element={<Error404 />} />
+        <Route path="/tuhamburguesa" element={<TuHamburguesa />} />
+        <Route
+          path="/tuhamburguesa/detalle/:productId"
+          element={<DetalleH />}
+        />
+        <Route path="/tuhamburguesa/*" element={<Error404H />} />
+        <Route path="auth/recover" element={<Recover />} />
+        <Route path="auth/register" element={<Register />} />
+        <Route path="/auth/login" element={<Login />} />
+
+        {isAuthenticated ? (
+          <>
+            <Route path="/usuario/*" element={<UserGeneral />} />
+            <Route path="/usuario/compras" element={<UserCompras />} />
+            <Route
+              path="/usuario/compras/detalle"
+              element={<UserCompraDetalle />}
+            />
+            <Route path="/usuario/favoritos" element={<UserFavoritos />} />
+            <Route path="/checkout/premium" element={<CheckoutPremium />} />
+            <Route path="/checkout/medium" element={<CheckoutMedium />} />
+            <Route path="/checkout/basic" element={<CheckoutBasic />} />
+          </>
+        ) : null}
+
+        {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */ ? (
+          <>
+            <Route path="/tugamer/publicar" element={<Publicar />} />
+            <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+            <Route
+              path="/usuario/editar/producto/:productId"
+              element={<EditProduct />}
+            />
+            <Route path="/usuario/editar" element={<UserEdit />} />
+          </>
+        ) : null}
+        {isAuthenticated && user?.email === "Henryfygrup@gmail.com" ? (
+          <>{/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}</>
+        ) : null}
       </>
     </Routes>
   );
 };
-      
 
-      {/*
+{
+  /*
       
       PORTAFOLIO  
 
@@ -140,6 +137,8 @@ const Router = () => {
       <Route path="/checkout/premium" element={<CheckoutPremium />} />
       <Route path="/checkout/medium" element={<CheckoutMedium />} />
       <Route path="/checkout/basic" element={<CheckoutBasic />} />
-      */}
+      */
+}
 
 export default Router;
+

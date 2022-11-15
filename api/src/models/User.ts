@@ -13,9 +13,9 @@ import {
   HasManySetAssociationsMixin,
   HasManyRemoveAssociationMixin,
   HasManyRemoveAssociationsMixin,
-//  HasOneGetAssociationMixin,
-//  HasOneSetAssociationMixin,
-//  HasOneCreateAssociationMixin,
+  //  HasOneGetAssociationMixin,
+  //  HasOneSetAssociationMixin,
+  //  HasOneCreateAssociationMixin,
   InferAttributes,
   InferCreationAttributes,
   Model,
@@ -52,10 +52,11 @@ export class User extends Model<
   declare username: string;
   declare gender: string;
   declare email: string;
-  declare mobile: string;
+  declare phoneNumber: string;
   declare address: string;
   declare imagenDePerfil: string | null;
   declare suspended: boolean;
+  declare isPremium: boolean;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -75,9 +76,9 @@ export class User extends Model<
   declare setSeller: BelongsToSetAssociationMixin<Seller, Seller["id"]>;
   declare createSeller: BelongsToCreateAssociationMixin<Seller>;
 
-//  declare getCountry: HasOneGetAssociationMixin<Countries>;
-//  declare setCountry: HasOneSetAssociationMixin<Countries, Countries["id"]>;
-//  declare createCountry: HasOneCreateAssociationMixin<Countries>;
+  //  declare getCountry: HasOneGetAssociationMixin<Countries>;
+  //  declare setCountry: HasOneSetAssociationMixin<Countries, Countries["id"]>;
+  //  declare createCountry: HasOneCreateAssociationMixin<Countries>;
 
   declare getReview: HasManyGetAssociationsMixin<Review>;
   declare countReviews: HasManyCountAssociationsMixin;
@@ -94,13 +95,34 @@ export class User extends Model<
 
   declare getFavoriteProduct: BelongsToManyGetAssociationsMixin<Product>;
   declare countFavoriteProducts: BelongsToManyCountAssociationsMixin;
-  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<Product, Product["id"]>;
-  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<Product, Product["id"]>;
-  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<Product, Product["id"]>;
-  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<Product, Product["id"]>;
-  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<Product, Product["id"]>;
-  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<Product,Product["id"]>;
-  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<Product, Product["id"]>;
+  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
   declare createFavoriteProduct: BelongsToManyCreateAssociationMixin<Product>;
 
   // You can also pre-declare possible inclusions, these will only be populated if you
@@ -152,8 +174,7 @@ module.exports = (sequelize: Sequelize) => {
       },
 
       gender: {
-        type: DataTypes.ENUM("M", "F", "No binario", "No quiero decir"),
-        defaultValue: "No quiero decir",
+        type: DataTypes.ENUM("M", "F", "No binario", "Prefiero no decirlo"),
       },
 
       email: {
@@ -165,13 +186,10 @@ module.exports = (sequelize: Sequelize) => {
         },
       },
 
-      mobile: {
+      phoneNumber: {
         type: DataTypes.STRING,
         allowNull: true,
         unique: false,
-        validate: {
-          is: /^[0-9]+(-[0-9]+)+$/i,
-        },
       },
 
       address: {
@@ -185,6 +203,11 @@ module.exports = (sequelize: Sequelize) => {
         validate: {
           isUrl: true,
         },
+      },
+
+      isPremium:{
+        type:DataTypes.BOOLEAN,
+        defaultValue: false,
       },
 
       suspended: {

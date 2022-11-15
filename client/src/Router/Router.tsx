@@ -4,7 +4,6 @@ import Error from "../Pages/Error";
 import UserGeneral from "../Pages/Usuario/UserGeneral";
 import UserCompras from "../Pages/Usuario/UserCompras";
 import UserCompraDetalle from "../Pages/Usuario/UserComprasDetalle";
-import UserEdit from "../Pages/Usuario/UserEdit";
 import UserFavoritos from "../Pages/Usuario/UserFavoritos";
 import Error404 from "../Pages/Tugamer/Error404";
 import { Register } from "../Pages/Tugamer/Register";
@@ -25,16 +24,26 @@ import { actions, selectors } from "../features/users/userSlice";
 import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
+import EditarUsuario from "../Pages/Usuario/editarUsuario";
+import EditSeller from "../Pages/Usuario/editarSeller";
+import UserEdit from "../Pages/Usuario/UserEdit";
 
 const { getUserByEmail, createUser } = actions;
-const { selectError } = selectors;
+const { selectError, selectStatus } = selectors;
 
 const Router = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectError);
+  const status = useAppSelector(selectStatus);
   const { isAuthenticated, user } = useAuth0();
   useEffect(() => {
-    if (isAuthenticated === true && user && user.email && !error.message) {
+    if (
+      isAuthenticated &&
+      user &&
+      user.email &&
+      !error.message &&
+      status === "loggedOut"
+    ) {
       dispatch(getUserByEmail(user.email));
     } else {
       if (error.message && error.message === "User not found" && user)
@@ -58,6 +67,9 @@ const Router = () => {
         <Route path="auth/recover" element={<Recover />} />
         <Route path="auth/register" element={<Register />} />
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/checkout/premium" element={<CheckoutPremium />} />
+        <Route path="/checkout/medium" element={<CheckoutMedium />} />
+        <Route path="/checkout/basic" element={<CheckoutBasic />} />
 
         {isAuthenticated ? (
           <>
@@ -68,9 +80,7 @@ const Router = () => {
               element={<UserCompraDetalle />}
             />
             <Route path="/usuario/favoritos" element={<UserFavoritos />} />
-            <Route path="/checkout/premium" element={<CheckoutPremium />} />
-            <Route path="/checkout/medium" element={<CheckoutMedium />} />
-            <Route path="/checkout/basic" element={<CheckoutBasic />} />
+            <Route path="/usuario/editUser" element={<EditarUsuario />} />
           </>
         ) : null}
 
@@ -78,11 +88,12 @@ const Router = () => {
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+            <Route path="/usuario/editar/producto/" element={<UserEdit />} />
+            <Route path="/usuario/editSeller" element={<EditSeller />} />
             <Route
               path="/usuario/editar/producto/:productId"
               element={<EditProduct />}
             />
-            <Route path="/usuario/editar" element={<UserEdit />} />
           </>
         ) : null}
         {isAuthenticated && user?.email === "Henryfygrup@gmail.com" ? (
@@ -93,8 +104,7 @@ const Router = () => {
   );
 };
 
-{
-  /*
+/*
       
       PORTAFOLIO  
 
@@ -138,7 +148,5 @@ const Router = () => {
       <Route path="/checkout/medium" element={<CheckoutMedium />} />
       <Route path="/checkout/basic" element={<CheckoutBasic />} />
       */
-}
 
 export default Router;
-

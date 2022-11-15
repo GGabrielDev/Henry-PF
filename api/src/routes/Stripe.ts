@@ -11,7 +11,7 @@ const stripe = new Stripe(
 
 router.post("/api/checkout", async (req, res) => {
   try {
-    const { id, amount, description } = req.body;
+    const { id, amount, description} = req.body;
     console.log(description);
     const payment = await stripe.paymentIntents.create({
       amount,

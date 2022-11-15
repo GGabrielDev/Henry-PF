@@ -5,13 +5,11 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Navbarlanding from "../../components/Navbarlanding";
 import Navbar from "../../components/Tugamer/Navbar";
-import {
-  detailProduct,
-  getProductId,
-  ProductType,
-} from "../../features/products/productSlice";
+import {detailProduct, getProductId, ProductType } from "../../features/products/productSlice";
 import { productEdit } from "../../redux/actions.js";
 import { AddProduct, PublicarContainer } from "../Tugamer/Publicar";
+import { uploadToCloudinary } from "../../helpers/Cloudinary";
+
 export default function EditProduct() {
   const { productId } = useParams<{ productId?: string | undefined }>();
   const [change, setChange] = useState({
@@ -34,6 +32,7 @@ export default function EditProduct() {
   ) => {
     setChange({ ...change, [e.target.name]: e.target.value });
   };
+  
   const upLoadImage = async (e: any) => {
     e.preventDefault();
 

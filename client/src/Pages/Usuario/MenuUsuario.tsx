@@ -36,13 +36,27 @@ const MenuUsuario = () => {
             </NavLink>
           </div>
           <div className="menu__title">
-            Admin <AiOutlineForm className="user__icon " />
+            Vendedor <AiOutlineForm className="user__icon " />
           </div>
           <div className="menu__sections">
-            <NavLink to="/usuario/editar" className="menu__sections-name">
+            <NavLink to="/usuario/editar/producto" className="menu__sections-name">
               <span>Mis Productos</span>
             </NavLink>
           </div>
+          <div className="menu__title">
+            Henry Admin <AiOutlineForm className="user__icon " />
+          </div>
+          <div className="menu__sections">
+            <NavLink to="/ususario/usuarios" className="menu__sections-name">
+              <span>Usuarios</span>
+            </NavLink>
+          </div>
+          <div className="menu__sections">
+            <NavLink to="/usuario/tiendas" className="menu__sections-name">
+              <span>Tiendas</span>
+            </NavLink>
+          </div>
+          
           {/* <NavLink to="/usuario/editar" className="menu__sections-name">
             <span>Mecador Pago</span>
             </NavLink>

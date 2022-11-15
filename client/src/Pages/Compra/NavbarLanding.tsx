@@ -5,13 +5,13 @@ import { HiOutlineUserCircle } from "react-icons/hi";
 import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { useState } from "react";
 import { IoMdClose, IoIosArrowForward } from "react-icons/io";
-import UserDefault from "../assets/imagenesSlider/defaultuser.jpg";
+import UserDefault from "../../assets/imagenesSlider/defaultuser.jpg";
 import { useAuth0 } from "@auth0/auth0-react";
-import { ThemesLanding } from "../components/ThemesLanding";
+import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { selectors, UserType } from "../features/users/userSlice";
+import { useAppSelector } from "../../app/hooks";
+import { selectors, UserType } from "../../features/users/userSlice";
 
 const { selectUser } = selectors;
 
@@ -35,21 +35,21 @@ const Navbarlanding = () => {
               </div>
             </Link>
             <div className="nav__sections-1">
-              <a className="section" href={"#home"}>
+              <Link to="/" className="section">
                 Home
-              </a>
-              <a className="section" href={"#about"}>
+              </Link>
+              <Link to="/" className="section">
                 About
-              </a>
-              <a className="section" href={"#clients"}>
+              </Link>
+              <Link to="/" className="section">
                 Clients
-              </a>
-              <a className="section" href={"#plans"}>
+              </Link>
+              <Link to="/" className="section">
                 Plans
-              </a>
-              <a className="section" href={"#contact"}>
+              </Link>
+              <Link to="/" className="section">
                 Contact
-              </a>
+              </Link>
             </div>
 
             <div className="nav__sections-2">
@@ -59,14 +59,7 @@ const Navbarlanding = () => {
                 </NavLink>
               ) : (
                 <NavLink className="section button" to="">
-                  <HiOutlineUserCircle
-                    onClick={() =>
-                      loginWithRedirect({
-                        returnTo:
-                          window.location.origin + window.location.pathname,
-                      })
-                    }
-                  />
+                  <HiOutlineUserCircle onClick={() => loginWithRedirect()} />
                 </NavLink>
               )}
 
@@ -119,15 +112,7 @@ const Navbarlanding = () => {
                   </NavLink>
                   <NavLink className="section-re" to="#home">
                     <div className="section__cajita">
-                      <span
-                        onClick={() =>
-                          logout({
-                            returnTo:
-                              window.location.origin + window.location.pathname,
-                          })
-                        }
-                        className="section__name"
-                      >
+                      <span onClick={() => logout()} className="section__name">
                         Logout
                       </span>
                       <span className="icon-re">
@@ -141,12 +126,7 @@ const Navbarlanding = () => {
                   <div className="section__cajita">
                     <span
                       className="section__name"
-                      onClick={() =>
-                        loginWithRedirect({
-                          returnTo:
-                            window.location.origin + window.location.pathname,
-                        })
-                      }
+                      onClick={() => loginWithRedirect()}
                     >
                       Login
                     </span>
@@ -159,9 +139,9 @@ const Navbarlanding = () => {
 
               <div className="flex">
                 <div className="cajita__section__page">
-                  <a className="section__page" href={"#home"}>
+                  <Link to="/" className="section__page">
                     Home
-                  </a>
+                  </Link>
                   <span className="icon-re">
                     <IoIosArrowForward />
                   </span>
@@ -170,9 +150,9 @@ const Navbarlanding = () => {
 
               <div className="flex">
                 <div className="cajita__section__page">
-                  <a className="section__page" href={"#about"}>
+                  <Link to="/" className="section__page">
                     About
-                  </a>
+                  </Link>
                   <span className="icon-re">
                     <IoIosArrowForward />
                   </span>
@@ -181,9 +161,9 @@ const Navbarlanding = () => {
 
               <div className="flex">
                 <div className="cajita__section__page">
-                  <a className="section__page" href={"#clients"}>
+                  <Link to="/" className="section__page">
                     Clients
-                  </a>
+                  </Link>
                   <span className="icon-re">
                     <IoIosArrowForward />
                   </span>
@@ -191,9 +171,9 @@ const Navbarlanding = () => {
               </div>
               <div className="flex">
                 <div className="cajita__section__page">
-                  <a className="section__page" href={"#plans"}>
+                  <Link to="/" className="section__page">
                     Plans
-                  </a>
+                  </Link>
                   <span className="icon-re">
                     <IoIosArrowForward />
                   </span>

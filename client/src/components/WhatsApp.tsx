@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Whatsapp from "../assets/imagenesSlider/iconoWTP.png";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const user = [
   {
     nombre: "carlos",
@@ -22,6 +24,7 @@ const carrito = [
 ];
 const numero = "+573053721294";
 const WhatsApp = () => {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   let productosParaWsp = carrito.map(
     (producto) => `- ${producto.Nombre}, $${producto.Monto}`
   );

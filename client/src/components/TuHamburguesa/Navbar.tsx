@@ -22,20 +22,45 @@ const Navbar = () => {
           <Infotop>
             <div className="infotop-item">
               {isAuthenticated ? (
-                <div className="is" onClick={() => logout()}>
+                <div
+                  className="is"
+                  onClick={() =>
+                    logout({
+                      returnTo:
+                        window.location.origin + window.location.pathname,
+                    })
+                  }
+                >
                   {" "}
                   Salir de sesión{" "}
                 </div>
               ) : (
-                <div className="is" onClick={() => loginWithRedirect()}>
+                <div
+                  className="is"
+                  onClick={() =>
+                    loginWithRedirect({
+                      returnTo:
+                        window.location.origin + window.location.pathname,
+                    })
+                  }
+                >
                   {" "}
                   Iniciar sesion{" "}
                 </div>
               )}
             </div>
-            <div className="infotop-item">Client service</div>
-            <div className="infotop-item">FAQ</div>
-            <div className="infotop-item">About</div>
+            <div className="infotop-item">
+              {" "}
+              <Link to="/usuario" className="infotop-item-link">
+                Perfil
+              </Link>{" "}
+            </div>
+            <div className="infotop-item">
+              <Link className="infotop-item-link" to="/">
+                {" "}
+                Henry Shops
+              </Link>
+            </div>
           </Infotop>
         </Headertop>
         <Headermiddle>
@@ -144,6 +169,14 @@ const Infotop = styled.div`
 
   .infotop-item {
     font-size: 12px;
+    span {
+      cursor: poniter;
+    }
+  }
+
+  .infotop-item-link {
+    color: ${({ theme }) => theme.dark};
+    text-decoration: none;
   }
 
   .button__cart {

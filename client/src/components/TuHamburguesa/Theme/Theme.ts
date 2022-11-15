@@ -11,4 +11,5 @@ export const Themes = {
   error: "#ff0000",
   Whatsapp: "#77b8a6",
   info: "rgb(0, 0, 255)",
+  gray: "#ebebeb",
 };

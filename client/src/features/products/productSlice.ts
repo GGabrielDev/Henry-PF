@@ -32,6 +32,7 @@ export interface SliceState {
   productsAll: ProductType[];
   details: ProductDetail;
   search: ProductType[];
+  error: { code: number | null; message: string | null };
 }
 
 export const initialState: SliceState = {
@@ -51,6 +52,10 @@ export const initialState: SliceState = {
     reviews: [],
   },
   search: [],
+  error: {
+    code: null,
+    message: null,
+  },
 };
 
 export const createProduct = createAsyncThunk(
@@ -173,18 +178,21 @@ export const productSlice = createSlice({
         (state, action: PayloadAction<ProductType[]>) => {
           state.products = action.payload || [];
           state.productsAll = action.payload || [];
+          state.error = { code: null, message: null };
         }
       )
       .addCase(
         getProductId.fulfilled,
         (state, action: PayloadAction<ProductDetail>) => {
           state.details = action.payload;
+          state.error = { code: null, message: null };
         }
       )
       .addCase(
         searchProduct.fulfilled,
         (state, action: PayloadAction<ProductType[]>) => {
           state.productsAll = action.payload || [];
+          state.error = { code: null, message: null };
         }
       )
       .addCase(
@@ -193,27 +201,49 @@ export const productSlice = createSlice({
           state.products.forEach((product, index) => {
             if (product.id === action.payload.id) {
               state.products[index] = action.payload;
+              state.error = { code: null, message: null };
             }
           });
         }
       )
       .addCase(
-        createReview.fulfilled,
-        (state, action: PayloadAction<ReviewType>) => {
-          state.details.reviews = [action.payload, ...state.details.reviews];
+        createProduct.fulfilled,
+        (state, action: PayloadAction<ProductType>) => {
+          state.products = [...state.products, action.payload];
+          state.error = { code: null, message: null };
         }
       )
-      .addCase(
-        editReview.fulfilled,
-        (state, action: PayloadAction<ReviewType>) => {
-          const newArray = [...state.details.reviews];
-          const reviewIndex = state.details.reviews.findIndex(
-            (review) => review.id === action.payload.id
-          );
-          newArray.splice(reviewIndex, 1);
-          state.details.reviews = [action.payload, ...newArray];
-        }
-      );
+      .addCase(getProducts.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 404,
+          message: "An error ocurred while getting all the products",
+        };
+      })
+      .addCase(editProduct.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 404,
+          message: "An error ocurred when editing the product",
+        };
+      })
+      .addCase(searchProduct.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 404,
+          message: "An error ocurred while searching for the product",
+        };
+      })
+      .addCase(getProductId.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 404,
+          message:
+            "An error ocurred while searching the product through its Id",
+        };
+      })
+      .addCase(createProduct.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 400,
+          message: "An error ocurred while creating the product",
+        };
+      });
   },
 });
 

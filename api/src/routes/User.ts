@@ -1,4 +1,5 @@
 import { Request, Response, Router, NextFunction } from "express";
+import { resourceLimits } from "worker_threads";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
@@ -18,10 +19,11 @@ type UserBody = {
   username: string;
   gender: string;
   email: string;
-  mobile: string;
+  phoneNumber: string;
   address: string;
   imagenDePerfil: string | null;
-  suspended: boolean;
+  isPremium: string;
+  
 };
 
 type RouteRequest = Request<UserParams, UserQuery, UserBody>;
@@ -53,10 +55,9 @@ router.post(
         username,
         gender,
         email,
-        mobile,
+        phoneNumber,
         address,
         imagenDePerfil,
-        suspended,
       } = req.body;
 
       if (
@@ -68,10 +69,9 @@ router.post(
           username,
           gender,
           email,
-          mobile,
+          phoneNumber,
           address,
           imagenDePerfil,
-          suspended,
         });
 
         return res.status(201).send(result);
@@ -99,14 +99,13 @@ router.put(
         "username",
         "gender",
         "email",
-        "mobile",
+        "phoneNumber",
         "address",
         "imagenDePerfil",
-        "userType",
-        "suspended",
+        "isPremium"
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
-        possibleValues.find((possibleValue) => possibleValue === value[0])
+        possibleValues.find((possibleValue) => possibleValue === value[0] && value[1])
       );
 
       if (arrayBody.length === 0) {
@@ -117,7 +116,7 @@ router.put(
       }
 
       const body = Object.fromEntries(arrayBody);
-
+      console.log(body)
       if (!userId) {
         throw new HttpException(400, "The User ID is missing in the request");
       }
@@ -145,6 +144,7 @@ router.put(
       console.log(error);
       next(error);
     }
+    
   }
 );
 

@@ -9,10 +9,10 @@ export type UserType = {
   firstName: string | null;
   lastName: string | null;
   email: string;
-  phoneNumber: number | null;
+  phoneNumber: string | null;
   isPremium: boolean;
   suspended: boolean;
-  gender: "M" | "F" | "No binario" | "No quiero decir" | null;
+  gender: "M" | "F" | "No binario" | "Prefiero no decirlo" | null;
   imagenDePerfil: string | null;
   address: string | null;
   createdAt: Date | null;
@@ -23,6 +23,7 @@ export type UserType = {
 
 type SliceState = {
   user: UserType | {};
+  status: "loggedIn" | "loggedOut";
   error: {
     code: number | null;
     message: string | null;
@@ -31,13 +32,14 @@ type SliceState = {
 
 const initialState: SliceState = {
   user: {},
+  status: "loggedOut",
   error: {
     code: null,
     message: null,
   },
 };
 
-const getUserByEmail = createAsyncThunk(
+export const getUserByEmail = createAsyncThunk(
   "user/getUserByEmail",
   async (email: string) => {
     const res = await axios.get(`http://localhost:3001/users/${email}`);
@@ -45,30 +47,38 @@ const getUserByEmail = createAsyncThunk(
   }
 );
 
-const getUserById = createAsyncThunk("user/getUserById", async (id: string) => {
-  const res = await axios.get(`http://localhost:3001/users/${id}`);
-  return res.data;
-});
+export const getUserById = createAsyncThunk(
+  "user/getUserById",
+  async (id: string) => {
+    const res = await axios.get(`http://localhost:3001/users/${id}`);
+    return res.data;
+  }
+);
 
-const createUser = createAsyncThunk("user/createUser", async (user: User) => {
-  const res = await axios.post(`http://localhost:3001/users`, {
-    email: user.email,
-    firstName: user.given_name,
-    lastName: user.family_name,
-    mobile: user.phone_number,
-    username: user.nickname,
-    imagenDePerfil: user.picture,
-  });
-  return res.data;
-});
+export const createUser = createAsyncThunk(
+  "user/createUser",
+  async (user: User) => {
+    const res = await axios.post(`http://localhost:3001/users`, {
+      email: user.email,
+      firstName: user.given_name,
+      lastName: user.family_name,
+      phoneNumber: user.phone_number,
+      imagenDePerfil: user.picture,
+    });
+    return res.data;
+  }
+);
 
-const editUser = createAsyncThunk("user/editUser", async (user: UserType) => {
-  const { id, email, isPremium, ...rest } = user;
-  const res = await axios.put(`http://localhost:3001/users/`, {
-    ...rest,
-  });
-  return res.data;
-});
+export const editUser = createAsyncThunk(
+  "user/editUser",
+  async ({ user, id }: { user: Partial<UserType>; id: string }) => {
+    console.log(user);
+    const res = await axios.put(`http://localhost:3001/users/${id}`, {
+      ...user,
+    });
+    return res.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -80,6 +90,8 @@ export const userSlice = createSlice({
         getUserByEmail.fulfilled,
         (state, action: PayloadAction<UserType>) => {
           state.user = action.payload;
+          state.error = { code: null, message: null };
+          state.status = "loggedIn";
         }
       )
 
@@ -94,6 +106,7 @@ export const userSlice = createSlice({
         getUserById.fulfilled,
         (state, action: PayloadAction<UserType>) => {
           state.user = action.payload;
+          state.error = { code: null, message: null };
         }
       )
 
@@ -107,6 +120,7 @@ export const userSlice = createSlice({
         createUser.fulfilled,
         (state, action: PayloadAction<UserType>) => {
           state.user = action.payload;
+          state.error = { code: null, message: null };
         }
       )
       .addCase(createUser.rejected, (state, action: PayloadAction<any>) => {
@@ -117,6 +131,7 @@ export const userSlice = createSlice({
       })
       .addCase(editUser.fulfilled, (state, action: PayloadAction<UserType>) => {
         state.user = action.payload;
+        state.error = { code: null, message: null };
       })
       .addCase(editUser.rejected, (state, action: PayloadAction<any>) => {
         state.error = {
@@ -128,10 +143,11 @@ export const userSlice = createSlice({
 });
 
 const selectError = (state: RootState) => state.user.error;
-const selectUser = (state: RootState) => state.user.user;
+export const selectUser = (state: RootState) => state.user.user;
+const selectStatus = (state: RootState) => state.user.status;
 const {} = userSlice.actions;
 
-export const selectors = { selectError, selectUser };
+export const selectors = { selectError, selectUser, selectStatus };
 export const actions = {
   getUserByEmail,
   createUser,

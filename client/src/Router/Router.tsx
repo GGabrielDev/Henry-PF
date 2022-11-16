@@ -31,6 +31,7 @@ import VerUsuarios from "../Pages/Usuario/verUsuarios";
 import VerTiendas from "../Pages/Usuario/verTiendas";
 import ShopContext from "../Pages/Shop/ShopContext";
 
+import Home from "../Pages/Shop/Home";
 import Details from "../Pages/Shop/Details";
 
 const { getUserByEmail, createUser } = actions;
@@ -77,7 +78,7 @@ const Router = () => {
         <Route path="/checkout/basic" element={<CheckoutBasic />} />
 
         <Route path="/shop/:shopName" element={<ShopContext />}>
-          <Route index element={<Tugamer />} />
+          <Route index element={<Home />} />
           <Route path="detalle/:productId" element={<Details />} />
         </Route>
 

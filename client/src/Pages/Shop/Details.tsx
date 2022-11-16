@@ -11,7 +11,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { MdFavorite, MdStar, MdStarOutline, MdEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 import UserDefault from "../../assets/imagenesSlider/defaultuser.jpg";
-import Navbar from "../../components/Shops/Navbar";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   createReview,
@@ -186,7 +185,6 @@ const Detalle = () => {
   if (productId) {
     return (
       <>
-        <Navbar />
         <DetalleContainer>
           <div className="cajita__maxima">
             <div className="imagen__caja">

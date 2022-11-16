@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
+import { ThemeProvider } from "styled-components";
 import { Outlet, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  selectors,
-  actions,
-} from "../../features/seller/sellerSlice";
+import { selectors, actions } from "../../features/seller/sellerSlice";
+import { Theme1, Theme2, Theme3 } from "../../components/Shops/Themes";
+import Navbar from "../../components/Shops/Navbar";
 
 const { getSellerByName } = actions;
 const { selectSeller, selectError } = selectors;
@@ -42,6 +42,17 @@ export default function ShopContext(): ReactElement {
     }
   }, [shopName, seller, error]);
 
+  const selectTheme = () => {
+    switch (seller.template_page) {
+      case "1":
+        return Theme1;
+      case "2":
+        return Theme2;
+      case "3":
+        return Theme3;
+    }
+  };
+
   const contextSwitch = () => {
     switch (validShop) {
       case "Loading":
@@ -55,7 +66,12 @@ export default function ShopContext(): ReactElement {
       case "Suspended":
         return <p>Suspended Seller Component</p>;
       case "Active":
-        return <Outlet />;
+        return (
+          <ThemeProvider theme={selectTheme()}>
+            <Navbar />
+            <Outlet />
+          </ThemeProvider>
+        );
     }
   };
 

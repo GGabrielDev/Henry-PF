@@ -78,6 +78,21 @@ export const getProducts = createAsyncThunk("product/getProducts", async () => {
   }
 });
 
+export const getProductsBySellerId = createAsyncThunk(
+  "product/getProductsBySellerId",
+  async (sellerId: string) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3001/products/shops/${sellerId}`
+      );
+
+      return res.data.result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const getProductId = createAsyncThunk(
   "product/getProductId",
   async (productId: string | undefined) => {

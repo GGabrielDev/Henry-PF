@@ -12,6 +12,7 @@ const { Product, Review, User } = Models;
 
 type ProductParams = {
   productId: string;
+  sellerId: string;
 };
 
 type ProductQuery = {
@@ -51,6 +52,30 @@ router.get(
           Product.associations.categories,
           Product.associations.reviews,
         ],
+      });
+
+      if (result.length === 0) {
+        return res.status(204).send("No entries have been found.");
+      }
+
+      return res.status(200).send({ amount: result.length, result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/shop/:sellerId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const { sellerId } = req.params;
+
+      const result = await Product.findAll({
+        where: {
+          sellerId,
+        },
+        include: [Product.associations.categories],
       });
 
       if (result.length === 0) {
@@ -121,7 +146,7 @@ router.get(
 router.post(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
-    console.log(req.body)
+    console.log(req.body);
     try {
       const {
         name,

@@ -47,6 +47,11 @@ export const getUserByEmail = createAsyncThunk(
   }
 );
 
+export const getUsers = createAsyncThunk("user/users", async (user: User) => {
+  const res = await axios.get(`http://localhost:3001/users`);
+  return res.data;
+});
+
 export const getUserById = createAsyncThunk(
   "user/getUserById",
   async (id: string) => {

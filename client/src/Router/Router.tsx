@@ -27,6 +27,8 @@ import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario";
 import EditSeller from "../Pages/Usuario/editarSeller";
 import UserEdit from "../Pages/Usuario/UserEdit";
+import VerUsuarios from "../Pages/Usuario/verUsuarios";
+import VerTiendas from "../Pages/Usuario/verTiendas";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
@@ -107,6 +109,8 @@ const Router = () => {
               path="/usuario/editar/producto/:productId"
               element={<EditProduct />}
             />
+            <Route path="/usuario/usuarios" element={<VerUsuarios />}></Route>
+            <Route path="/usuario/tiendas" element={<VerTiendas />}></Route>
             {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
           </>
         ) : null}

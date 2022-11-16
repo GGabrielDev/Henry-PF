@@ -17,7 +17,6 @@ export type InputState = {
 
 export type InputStateCategories = {
   name:string;
-  image: string;
 }
 
 export type InputStateSeller = {
@@ -52,8 +51,7 @@ export type ErrorStateSeller = Record<
 >;
 
 export type ErrorStateCategories = Record<
- | "name"
- | "image",
+ | "name",
  string
 >;
 
@@ -107,21 +105,4 @@ export const upLoadImageSeller =
     setErr(ValidateSeller({ ...input, [e.target.name]: e.target.value }));
   };
 
-  export const upLoadImageCategorias =
-  (
-    input: InputStateCategories,
-    setLoading: Dispatch<SetStateAction<boolean>>,
-    setInput: Dispatch<SetStateAction<InputStateCategories>>,
-    setErr: Dispatch<SetStateAction<ErrorStateCategories>>
-  ) =>
-  async (e: any) => {
-    e.preventDefault();
-    const files = e.target.files;
-    // imagenes/ es la carpeta de Cloudinary
-    setLoading(true);
-    const file = await uploadToCloudinary(files[0]);
-    setLoading(false);
-    setInput({ ...input, [e.target.name]: file.secure_url });
-    setErr(ValidateCategories({ ...input, [e.target.name]: e.target.value }));
-  };
 

@@ -1,13 +1,11 @@
 import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
 import styled from "styled-components";
-import Navbar from "../../components/Tugamer/Navbar";
-import Validate from "../../helpers/validate";
-import { symlink } from "fs";
 import Swal from "sweetalert2";
 import { createCategory } from "../../features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { InputState, ErrorState, upLoadImage, InputStateCategories, ErrorStateCategories, upLoadImageCategorias } from "../../helpers/Cloudinary";
+import { InputStateCategories, ErrorStateCategories } from "../../helpers/Cloudinary";
 import { selectors } from "../../features/seller/sellerSlice";
+import ValidateCategories from "../../helpers/validateCategories";
 
 const {selectSeller} = selectors;
 
@@ -15,6 +13,7 @@ const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
   const seller = useAppSelector(selectSeller)
+  const { id }  = seller
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Producto creado",
@@ -36,12 +35,10 @@ const Publicar = () => {
 
   const [err, setErr] = useState<ErrorStateCategories>({
     name: "",
-    image: "Si no se agrega imagen, no se pondra una imagen",
   });
 
-  const [input, setInput] = useState<InputStateCategories>({
-    name: "",
-    image: "",
+  const [category, setCategory] = useState<InputStateCategories>({
+    name: ""
   });
 
   const dispatch = useAppDispatch();
@@ -51,20 +48,19 @@ const Publicar = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setInput({ ...input, [event.target.name]: event.target.value });
-    setErr(Validate({ ...input, [event.target.name]: event.target.value }));
+    setCategory({ ...category, [event.target.name]: event.target.value });
+    setErr(ValidateCategories({ ...category, [event.target.name]: event.target.value }));
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
-    setErr(Validate(input));
+    setErr(ValidateCategories(category));
     event.preventDefault();
-    setInput({
+    setCategory({
       name: "",
-      image: "",
     });
 
     if (
-      input.name === ""
+      category.name === ""
       //   ) {
       //     alert("Faltan agregar datos");
       //   } else {
@@ -78,9 +74,11 @@ const Publicar = () => {
       AlertaCorrecta();
       // event.target.reset()
       // document.getElementById("form-public").reset();
-      dispatch(
-        createCategory()
-      );
+      if(id){dispatch(
+        createCategory({category, id}))} else {
+          console.log("Id no existe")
+        }
+      
     }
   };
   return (
@@ -101,24 +99,13 @@ const Publicar = () => {
               <div className="inputinfo">
                 <label htmlFor="">Nombre de la Categoria/Categorias:</label>
                 <input
-                  value={input.name}
+                  value={category.name}
                   name="name"
                   type="text"
                   onChange={handleChange}
                 />
                 {err.name ? <p className="errortext"> {err.name} </p> : ""}
               </div>
-            </div>
-            <div className="productinfo__Right">
-              <div className="imageupload">
-                <input
-                  type="file"
-                  name="image"
-                  onChange={upLoadImageCategorias(input, setLoading, setInput, setErr)}
-                />
-              </div>
-
-              {err.image ? <p className="errortext"> {err.image} </p> : ""}
             </div>
           </div>
           <button className="submitproduct">Submit</button>

@@ -1,18 +1,86 @@
 import {
+  Association,
   CreationOptional,
+  DataTypes,
+  ForeignKey,
   InferAttributes,
+  HasManyAddAssociationMixin,         //-
+  HasManyAddAssociationsMixin,         //-
+  HasManyHasAssociationsMixin,         //-
+  HasManyCountAssociationsMixin,         //-
+  HasManyCreateAssociationMixin,         //-
+  HasManyHasAssociationMixin,         //-
+  HasManyGetAssociationsMixin,         //-
+  HasManySetAssociationsMixin,         //-
+  HasManyRemoveAssociationMixin,         //-
+  HasManyRemoveAssociationsMixin,         //-
   InferCreationAttributes,
   Model,
   Sequelize,
-  DataTypes,
+  
+  BelongsToManyAddAssociationMixin,     //-
+  BelongsToManyAddAssociationsMixin,     //-
+  BelongsToManyCountAssociationsMixin,     //-
+  BelongsToManyCreateAssociationMixin,     //-
+  BelongsToManyGetAssociationsMixin,     //-
+  BelongsToManyHasAssociationMixin,     //-
+  BelongsToManyHasAssociationsMixin,     //-
+  BelongsToManySetAssociationsMixin,     //-
+  BelongsToManyRemoveAssociationMixin,     //-
+  BelongsToManyRemoveAssociationsMixin,     //-
+  BelongsToGetAssociationMixin,     //-
+  BelongsToSetAssociationMixin,     //-
+  BelongsToCreateAssociationMixin, 
 } from "sequelize";
 import path from "path";
-import { CallTracker } from "assert";
+import {Customer_Orders} from "./Customer_Orders";
+import { Product_Amount } from "./Product_Amount";
+import { Seller } from "./Seller";
+
+//import {Receipt}from "./Receipt";
+//import {Seller_Prod_Sold} from "./Seller_Prod_Sold";
 
 export class Cart extends Model<InferAttributes<Cart>, InferCreationAttributes<Cart>> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<number>;
-  declare amount: number;
+  //declare amount: number;  // <------------¿ Va o no va ? -----------------
+  declare productId: ForeignKey<Product_Amount["id"]>;
+  declare sellerId: ForeignKey<Seller["id"]>;
+  declare CustomerOrdersId: ForeignKey<Customer_Orders["id"]>;
+  
+  declare getProductAmount: BelongsToGetAssociationMixin<Product_Amount>;
+  declare setProductAmount: BelongsToSetAssociationMixin<Product_Amount, Product_Amount["id"]>;
+  declare createProductAmount: BelongsToCreateAssociationMixin<Product_Amount>;
+
+  declare getCustomerOrders: BelongsToGetAssociationMixin<Customer_Orders>;
+  declare setCustomerOrders: BelongsToSetAssociationMixin<Customer_Orders, Customer_Orders["id"]>;
+  declare createCustomerOrders: BelongsToCreateAssociationMixin<Customer_Orders>;
+
+  declare getSeller: BelongsToGetAssociationMixin<Seller>;
+  declare setSeller: BelongsToSetAssociationMixin<Seller, Seller["id"]>;
+  declare createSeller: BelongsToCreateAssociationMixin<Seller>;
+
+  // declare getReceipt: HasManyGetAssociationsMixin<Receipt>;
+  // declare countReceipts: HasManyCountAssociationsMixin;
+  // declare hasReceipt: HasManyHasAssociationMixin<Receipt, Receipt["id"]>;
+  // declare hasReceipts: HasManyHasAssociationsMixin<Receipt, Receipt["id"]>;
+  // declare setReceipt: HasManySetAssociationsMixin<Receipt, Receipt["id"]>;
+  // declare addReceipt: HasManyAddAssociationMixin<Receipt, Receipt["id"]>;
+  // declare addReceipts: HasManyAddAssociationsMixin<Receipt, Receipt["id"]>;
+  // declare removeReceipt: HasManyRemoveAssociationMixin<Receipt, Receipt["id"]>;
+  // declare removeReceipts: HasManyRemoveAssociationsMixin<Receipt, Receipt["id"]>;
+  // declare createReceipt: HasManyCreateAssociationMixin<Receipt>;
+
+  // declare getSellerProdSold: HasManyGetAssociationsMixin<Seller_Prod_Sold>;
+  // declare countSellerProdSolds: HasManyCountAssociationsMixin;
+  // declare hasSellerProdSold: HasManyHasAssociationMixin<Seller_Prod_Sold, Seller_Prod_Sold["id"]>;
+  // declare hasSellerProdSolds: HasManyHasAssociationsMixin<Seller_Prod_Sold, Seller_Prod_Sold["id"]>;
+  // declare setSellerProdSold: HasManySetAssociationsMixin<Seller_Prod_Sold, Seller_Prod_Sold["id"]>;
+  // declare addSellerProdSold: HasManyAddAssociationMixin<Seller_Prod_Sold, Seller_Prod_Sold["id"]>;
+  // declare addSellerProdSolds: HasManyAddAssociationsMixin<Seller_Prod_Sold, Seller_Prod_Sold["id"]>;
+  // declare removeSellerProdSold: HasManyRemoveAssociationMixin<Seller_Prod_Sold, Seller_Prod_Sold["id"]>;
+  // declare removeSellerProdSolds: HasManyRemoveAssociationsMixin<Seller_Prod_Sold, Seller_Prod_Sold["id"]>;
+  // declare createSellerProdSold: HasManyCreateAssociationMixin<Seller_Prod_Sold>;
 }
 
 // Exportamos una funcion que define el modelo
@@ -27,13 +95,13 @@ module.exports = (sequelize: Sequelize) => {
         primaryKey: true,
       },
 
-      amount: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          isNumeric: false,
-        },
-      },
+      // amount: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      //   validate: {
+      //     isNumeric: false,
+      //   },
+      // },
     },
     {
       sequelize,

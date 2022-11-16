@@ -34,7 +34,7 @@ import {
 } from "sequelize";
 import path from "path";
 import { Product } from "./Product";      //-
-//import {Cart} from "./Cart";      //-
+import {Cart} from "./Cart";      //-
 
 export class Product_Amount extends Model<
   InferAttributes<Product_Amount>,
@@ -59,16 +59,14 @@ export class Product_Amount extends Model<
   declare setProduct: BelongsToSetAssociationMixin<Product, Product["id"]>;
   declare createProduct: BelongsToCreateAssociationMixin<Product>;
 
-  // declare getReview: HasManyGetAssociationsMixin<Cart>;           //-
-  // declare countReviews: HasManyCountAssociationsMixin;           //-
-  // declare hasCart: HasManyHasAssociationMixin<Cart, Cart["id"]>;           //-
-  // declare hasCarts: HasManyHasAssociationsMixin<Cart, Cart["id"]>;           //-
-  // declare setCart: HasManySetAssociationsMixin<Cart, Cart["id"]>;           //-
-  // declare addCart: HasManyAddAssociationMixin<Cart, Cart["id"]>;           //-
-  // declare addCarts: HasManyAddAssociationsMixin<Cart, Cart["id"]>;           //-
-  // declare removeCart: HasManyRemoveAssociationMixin<Cart, Cart["id"]>;           //-
-  // declare removeCarts: HasManyRemoveAssociationsMixin<Cart, Cart["id"]>;           //-
-  // declare createCart: HasManyCreateAssociationMixin<Cart>;              //-
+  declare hasCart: HasManyHasAssociationMixin<Cart, Cart["id"]>;           //-
+  declare hasCarts: HasManyHasAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare setCart: HasManySetAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare addCart: HasManyAddAssociationMixin<Cart, Cart["id"]>;           //-
+  declare addCarts: HasManyAddAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare removeCart: HasManyRemoveAssociationMixin<Cart, Cart["id"]>;           //-
+  declare removeCarts: HasManyRemoveAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare createCart: HasManyCreateAssociationMixin<Cart>;              //-
 
   // FAVORITE
 

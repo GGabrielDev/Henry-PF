@@ -1,12 +1,11 @@
 import { SyntheticEvent } from "react";
 import styled from "styled-components";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectProducts } from "../../features/products/productSlice";
-import { actions, selectors } from "../../features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { selectProducts } from "../../../features/products/productSlice";
+import { actions, selectors } from "../../../features/cart/cartSlice";
 import { CartItem } from "./CartItem";
 import { useAuth0 } from "@auth0/auth0-react";
-import Flotantbutton from "./Home/button/Flotantbutton";
 
 type ShoppingCartProps = {
   isOpen: boolean;
@@ -60,10 +59,18 @@ export default function SoppingCart({ isOpen }: ShoppingCartProps) {
                     }, 0)}
                   </div>
                 </div>
-                <button className="comprar__cart">
-                  Comprar
-                  <Flotantbutton />
-                </button>
+                {isAuthenticated ? (
+                  <button className="comprar__cart" onClick={handleBuy}>
+                    Comprar
+                  </button>
+                ) : (
+                  <button
+                    className="comprar__cart"
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Loguea y compra!
+                  </button>
+                )}
               </div>
             </div>
           </ShoppingCartContainer>

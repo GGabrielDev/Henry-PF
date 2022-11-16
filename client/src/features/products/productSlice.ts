@@ -3,17 +3,21 @@ import { RootState } from "../../app/store";
 import axios from "axios";
 import { UserType } from "../users/userSlice";
 
-export type ProductType = {
-  id: string;
+export type BaseProductType = {
   name: string;
   stock: number;
   price_local: number;
   description: string;
-  price_dolar: number | null | undefined;
   image: string | undefined;
   suspended: boolean;
+  categories: any[];
+  sellerId: string | null;
+
+}
+export type ProductType = BaseProductType & {
+  id: string;
+  price_dolar: number | null | undefined;
   size: string | null | undefined;
-  categories: string;
 };
 
 export type ReviewType = {
@@ -48,8 +52,9 @@ export const initialState: SliceState = {
     image: undefined,
     suspended: false,
     size: null,
-    categories: "",
+    categories: [],
     reviews: [],
+    sellerId: "",
   },
   search: [],
   error: {
@@ -60,7 +65,7 @@ export const initialState: SliceState = {
 
 export const createProduct = createAsyncThunk(
   "product/createProduct",
-  async (product: ProductType) => {
+  async (product: BaseProductType) => {
     const res = await axios.post(`http://localhost:3001/products`, {
       product,
     });
@@ -77,6 +82,21 @@ export const getProducts = createAsyncThunk("product/getProducts", async () => {
     console.log(error);
   }
 });
+
+export const getProductsBySellerId = createAsyncThunk(
+  "product/getProductsBySellerId",
+  async (sellerId: string) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3001/products/shops/${sellerId}`
+      );
+
+      return res.data.result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 export const getProductId = createAsyncThunk(
   "product/getProductId",
@@ -100,7 +120,6 @@ export const searchProduct = createAsyncThunk(
       const res = await axios.get(
         `http://localhost:3001/products?name=${name}`
       );
-      console.log(res.data);
       return res.data.result;
     } catch (error) {
       console.log(error);
@@ -152,6 +171,17 @@ export const editReview = createAsyncThunk(
   }
 );
 
+
+export const createProductBySellerId = createAsyncThunk(
+  "product/createProductBySellerId",
+  async (product: BaseProductType & {sellerId: string}) => {
+    const { sellerId, ...rest} = product
+    const res = await axios.post(`http://localhost:3001/products/${sellerId}`, {
+       ...rest
+    });
+    return res.data;
+  }
+);
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -259,6 +289,24 @@ export const productSlice = createSlice({
           );
           newArray.splice(reviewIndex, 1);
           state.details.reviews = [action.payload, ...newArray];
+        }
+      )
+      .addCase(
+        getProductsBySellerId.fulfilled,
+        (state, action: PayloadAction<ProductType[]>) => {
+          state.products = action.payload || [];
+          state.productsAll = action.payload || [];
+          state.error = { code: null, message: null };
+        }
+      )
+      .addCase(
+        getProductsBySellerId.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.error = {
+            code: 500,
+            message:
+              "An error ocurred while getting the products associated to the shop",
+          };
         }
       );
   },

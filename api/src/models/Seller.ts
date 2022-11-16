@@ -28,6 +28,7 @@ import {
 import path from "path";
 import { Product } from "./Product";
 import { User } from "./User";
+import { Cart } from "./Cart";
 
 export class Seller extends Model<
   InferAttributes<Seller>,
@@ -35,13 +36,14 @@ export class Seller extends Model<
 > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<string>;
-  declare nombreNegocio: string;
+  declare nombreUrl: string | null;
+  declare nombreNegocio: string | null;
   declare imageLogo: string | null;
-  declare categorias: string;
-  declare template_page: string;
+  declare categorias: string | null;
+  declare template_page: string | null;
   declare suspended: boolean;
-  declare paymentId: string;
-  declare description: string;
+  declare paymentId: string | null;
+  declare description: string | null;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -62,11 +64,17 @@ export class Seller extends Model<
   declare addProduct: HasManyAddAssociationMixin<Product, Product["id"]>;
   declare addProducts: HasManyAddAssociationsMixin<Product, Product["id"]>;
   declare removeProduct: HasManyRemoveAssociationMixin<Product, Product["id"]>;
-  declare removeProducts: HasManyRemoveAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
+  declare removeProducts: HasManyRemoveAssociationsMixin<Product, Product["id"]>;
   declare createProduct: HasManyCreateAssociationMixin<Product>;
+
+  declare hasCart: HasManyHasAssociationMixin<Cart, Cart["id"]>;           //-
+  declare hasCarts: HasManyHasAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare setCart: HasManySetAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare addCart: HasManyAddAssociationMixin<Cart, Cart["id"]>;           //-
+  declare addCarts: HasManyAddAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare removeCart: HasManyRemoveAssociationMixin<Cart, Cart["id"]>;           //-
+  declare removeCarts: HasManyRemoveAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare createCart: HasManyCreateAssociationMixin<Cart>;              //-
 
   // You can also pre-declare possible inclusions, these will only be populated if you
   // actively include a relation.
@@ -89,12 +97,17 @@ module.exports = (sequelize: Sequelize) => {
         primaryKey: true,
       },
 
-      nombreNegocio: {
+      nombreUrl: {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
           isAlpha: true,
         },
+      },
+
+      nombreNegocio: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
 
       imageLogo: {
@@ -131,11 +144,13 @@ module.exports = (sequelize: Sequelize) => {
 
       paymentId: {
         type: DataTypes.STRING,
+				allowNull: true,
         defaultValue: null,
       },
 
       description: {
         type: DataTypes.STRING,
+				allowNull: true,
         defaultValue: null,
       },
 

@@ -5,13 +5,16 @@ import Validate from "../../helpers/validate";
 import { symlink } from "fs";
 import Swal from "sweetalert2";
 import { createProduct } from "../../redux/actions";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
+import { selectors } from "../../features/seller/sellerSlice";
+
+const {selectSeller} = selectors;
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
-
+  const seller = useAppSelector(selectSeller)
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Producto creado",
@@ -49,6 +52,7 @@ const Publicar = () => {
     image: "",
     cloudinary: {},
     categories: [],
+    sellerId: seller.id as string,
   });
 
   const dispatch = useAppDispatch();
@@ -74,6 +78,7 @@ const Publicar = () => {
       image: "",
       cloudinary: {},
       categories: [],
+      sellerId: seller.id as string,
     });
 
     if (

@@ -36,7 +36,6 @@ import path from "path";
 import {Customer_Orders} from "./Customer_Orders";
 import { Product_Amount } from "./Product_Amount";
 import { Seller } from "./Seller";
-
 //import {Receipt}from "./Receipt";
 //import {Seller_Prod_Sold} from "./Seller_Prod_Sold";
 

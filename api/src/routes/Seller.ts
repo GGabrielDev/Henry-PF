@@ -9,6 +9,7 @@ const { Seller, User } = Models;
 type SellerParams = {
   sellerId: string;
   userId: string;
+  nombreUrl: string;
 };
 
 type SellerQuery = {};
@@ -50,6 +51,29 @@ router.get(
   }
 );
 
+router.get(
+  "/shop/:nombreUrl",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const { nombreUrl } = req.params;
+
+      const result = await Seller.findOne({
+        where: {
+          nombreUrl,
+        },
+      });
+
+      if (!result) {
+        return res.status(204).send("No entries have been found.");
+      }
+
+      return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/:userId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
@@ -77,11 +101,14 @@ router.put(
     try {
       const { sellerId } = req.params;
       const possibleValues = [
+        "nombreUrl",
         "nombreNegocio",
-        "pay_Money",
         "imageLogo",
+        "categorias",
         "template_page",
         "suspended",
+        "paymentId",
+        "description",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
         possibleValues.find((possibleValue) => possibleValue === value[0])

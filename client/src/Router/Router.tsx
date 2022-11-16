@@ -1,4 +1,4 @@
-import { Route, Routes, Outlet } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Landingpage from "../Pages/Landingpage";
 import Error from "../Pages/Error";
 import UserGeneral from "../Pages/Usuario/UserGeneral";
@@ -21,6 +21,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { actions, selectors, UserType } from "../features/users/userSlice";
+
 import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
@@ -29,6 +30,12 @@ import EditSeller from "../Pages/Usuario/editarSeller";
 import UserEdit from "../Pages/Usuario/UserEdit";
 import VerUsuarios from "../Pages/Usuario/verUsuarios";
 import VerTiendas from "../Pages/Usuario/verTiendas";
+
+import ShopContext from "../Pages/Shop/ShopContext";
+import Home from "../Pages/Shop/Home";
+import Details from "../Pages/Shop/Details";
+import PublicarModular from "../Pages/Shop/Publicar"; 
+
 import Termsandconditions from "../Pages/termsandconditions";
 import Privacidad from "../Pages/Privacidad";
 
@@ -59,9 +66,11 @@ const Router = () => {
     <Routes>
       <>
         <Route path="/" element={<Landingpage />} />
+
         <Route path="/terms" element={<Termsandconditions />} />
         <Route path="/privacidad" element={<Privacidad />} />
         <Route path="/*" element={<Error />} />
+        
         <Route path="/tugamer" element={<Tugamer />} />
         <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
         <Route path="/tugamer/*" element={<Error404 />} />
@@ -77,6 +86,15 @@ const Router = () => {
         <Route path="/checkout/premium" element={<CheckoutPremium />} />
         <Route path="/checkout/medium" element={<CheckoutMedium />} />
         <Route path="/checkout/basic" element={<CheckoutBasic />} />
+      
+        <Route path="/shop/:shopName" element={<ShopContext />}>
+          <Route index element={<Home />} />
+          <Route path="detalle/:productId" element={<Details />} />
+          {isAuthenticated && usuario.sellerId ? (
+          <Route path="publicar" element={<PublicarModular />}/>) :
+          null
+          }
+        </Route>
 
         {isAuthenticated ? (
           <>
@@ -103,7 +121,8 @@ const Router = () => {
             />
           </>
         ) : null}
-        {isAuthenticated && user?.email === "andresr10020@gmail.com" ? (
+        
+        {isAuthenticated && user?.email === "dilisciafelipe@gmail.com" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
@@ -119,6 +138,7 @@ const Router = () => {
           </>
         ) : null}
       </>
+      <Route path="/*" element={<Error />} />
     </Routes>
   );
 };

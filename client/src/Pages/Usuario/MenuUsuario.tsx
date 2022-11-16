@@ -56,7 +56,7 @@ const MenuUsuario = () => {
           ) : (
             <></>
           )}
-          {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+          {isAuthenticated && user?.email === "dilisciafelipe@gmail.com" ? (
             <>
               <div className="menu__title">
                 Henry Admin <AiOutlineForm className="user__icon " />

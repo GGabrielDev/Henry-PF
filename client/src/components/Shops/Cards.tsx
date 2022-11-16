@@ -6,9 +6,8 @@ import {
   getProducts,
   selectProducts,
 } from "../../features/products/productSlice";
-import Card from "../Shops/Card";
-import { selectors } from "../../features/seller/sellerSlice";
-
+import Card from "./Card";
+import { selectors } from "../../features/seller/sellerSlice"
 const { selectSeller } = selectors;
 
 export default function Cards() {

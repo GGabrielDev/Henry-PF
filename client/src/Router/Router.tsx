@@ -96,9 +96,13 @@ const Router = () => {
         <Route path="/shop/:shopName" element={<ShopContext />}>
           <Route index element={<Home />} />
           <Route path="detalle/:productId" element={<Details />} />
+
+
+
           {isAuthenticated && usuario.sellerId ? (
             <Route path="publicar" element={<PublicarModular />} />
           ) : null}
+
         </Route>
 
         {isAuthenticated ? (

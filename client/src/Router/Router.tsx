@@ -34,10 +34,12 @@ import VerTiendas from "../Pages/Usuario/verTiendas";
 import ShopContext from "../Pages/Shop/ShopContext";
 import Home from "../Pages/Shop/Home";
 import Details from "../Pages/Shop/Details";
-import PublicarModular from "../Pages/Shop/Publicar"; 
+import PublicarModular from "../Pages/Shop/Publicar";
 
 import Termsandconditions from "../Pages/termsandconditions";
 import Privacidad from "../Pages/Privacidad";
+import QuienesSomos from "../Pages/QuienesSomos";
+import Sugerencias from "../Pages/Sugerencias";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
@@ -69,8 +71,10 @@ const Router = () => {
 
         <Route path="/terms" element={<Termsandconditions />} />
         <Route path="/privacidad" element={<Privacidad />} />
+        <Route path="/nosotros" element={<QuienesSomos />} />
+        <Route path="/sugerencias" element={<Sugerencias />} />
         <Route path="/*" element={<Error />} />
-        
+
         <Route path="/tugamer" element={<Tugamer />} />
         <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
         <Route path="/tugamer/*" element={<Error404 />} />
@@ -86,14 +90,13 @@ const Router = () => {
         <Route path="/checkout/premium" element={<CheckoutPremium />} />
         <Route path="/checkout/medium" element={<CheckoutMedium />} />
         <Route path="/checkout/basic" element={<CheckoutBasic />} />
-      
+
         <Route path="/shop/:shopName" element={<ShopContext />}>
           <Route index element={<Home />} />
           <Route path="detalle/:productId" element={<Details />} />
           {isAuthenticated && usuario.sellerId ? (
-          <Route path="publicar" element={<PublicarModular />}/>) :
-          null
-          }
+            <Route path="publicar" element={<PublicarModular />} />
+          ) : null}
         </Route>
 
         {isAuthenticated ? (
@@ -121,8 +124,8 @@ const Router = () => {
             />
           </>
         ) : null}
-        
-        {isAuthenticated && user?.email === "dilisciafelipe@gmail.com" ? (
+
+        {isAuthenticated && user?.email === "" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />

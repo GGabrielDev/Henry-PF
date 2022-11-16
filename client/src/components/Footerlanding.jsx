@@ -54,13 +54,13 @@ const Footerlanding = () => {
             <h4>Ayuda</h4>
             <ul>
               <li>
-                <a href="#plans">Pagos</a>
+                <a href="/#plans">Pagos</a>
               </li>
               <li>
-                <a href="#clients">Cuentas</a>
+                <a href="/#clients">Cuentas</a>
               </li>
               <li>
-                <a href="#contact">Contactanos</a>
+                <a href="/#contact">Contactanos</a>
               </li>
             </ul>
           </div>
@@ -69,19 +69,17 @@ const Footerlanding = () => {
             <h4>Nosotros</h4>
             <ul>
               <li>
-                <a href=""> Quienes somos</a>
+                <a href="/nosotros"> Quienes somos</a>
               </li>
-              <li>
-                <a href=""> Recompensas </a>
-              </li>
+
               <li>
                 <Link to="/terms"> Terminos y condiciones </Link>
               </li>
               <li>
-              <Link to="/privacidad"> Privacidad</Link>
+                <Link to="/privacidad"> Privacidad</Link>
               </li>
               <li>
-                <a href=""> Sugerencias </a>
+                <a href="/sugerencias"> Sugerencias </a>
               </li>
             </ul>
           </div>

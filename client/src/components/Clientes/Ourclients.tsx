@@ -47,8 +47,10 @@ const Ourclients = () => {
           categoria.includes(category)
         ) {
           productos.push(product);
+          errores.push(product);
         }
         setProjects(productos);
+        setError(errores);
         console.log(nombre.includes(texto.toLowerCase()));
       }
     } else {
@@ -59,6 +61,7 @@ const Ourclients = () => {
         } else {
           errores.push("No");
         }
+        console.log(setError);
         setError(errores);
         setProjects(productos);
       }
@@ -137,7 +140,7 @@ const Ourclients = () => {
         </div>
 
         <div className="gridcards">
-          {error[5] == "No" ? (
+          {error[5] == "No" || (error == false && projects.length === 0) ? (
             <h4 className="NoHayData">No se encontraron resultados</h4>
           ) : (
             projects.map((item: any) => {

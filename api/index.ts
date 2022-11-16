@@ -25,7 +25,7 @@ const { API_PORT } = process.env || 3001;
 
 // Syncing all the models at once.
 checkConnection().then(async () => {
-  sequelize.sync({ force: true }).then(() => {
+  sequelize.sync({ force: false }).then(() => {
     server.listen(API_PORT, () => {
       console.log(`Server listening at ${API_PORT}`); // eslint-disable-line no-console
     });

@@ -36,6 +36,7 @@ import path from "path";
 import { Category_Product } from "./Category_product";
 import { Review } from "./Review";
 import { Seller } from "./Seller";
+import { Product_Amount } from "./Product_Amount";
 import { User } from "./User";
 
 export class Product extends Model<
@@ -123,6 +124,17 @@ export class Product extends Model<
   declare removeReview: HasManyRemoveAssociationMixin<Review, Review["id"]>;
   declare removeReviews: HasManyRemoveAssociationsMixin<Review, Review["id"]>;
   declare createReview: HasManyCreateAssociationMixin<Review>;
+
+  declare getProduct_Amount: HasManyGetAssociationsMixin<Product_Amount>;
+  declare countProduct_Amounts: HasManyCountAssociationsMixin;
+  declare hasProduct_Amount: HasManyHasAssociationMixin<Product_Amount, Product_Amount["id"]>;
+  declare hasProduct_Amounts: HasManyHasAssociationsMixin<Product_Amount, Product_Amount["id"]>;
+  declare setProduct_Amount: HasManySetAssociationsMixin<Product_Amount, Product_Amount["id"]>;
+  declare addProduct_Amount: HasManyAddAssociationMixin<Product_Amount, Product_Amount["id"]>;
+  declare addProduct_Amounts: HasManyAddAssociationsMixin<Product_Amount, Product_Amount["id"]>;
+  declare removeRProduct_Amount: HasManyRemoveAssociationMixin<Product_Amount, Product_Amount["id"]>;
+  declare removeProduct_Amounts: HasManyRemoveAssociationsMixin<Product_Amount, Product_Amount["id"]>;
+  declare createProduct_Amount: HasManyCreateAssociationMixin<Product_Amount>;
 
   declare getSeller: HasOneGetAssociationMixin<Seller>;
   declare setSeller: HasOneSetAssociationMixin<Seller, Seller["id"]>;

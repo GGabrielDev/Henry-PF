@@ -28,6 +28,7 @@ import {
 import path from "path";
 import { Product } from "./Product";
 import { User } from "./User";
+import { Cart } from "./Cart";
 
 export class Seller extends Model<
   InferAttributes<Seller>,
@@ -63,11 +64,17 @@ export class Seller extends Model<
   declare addProduct: HasManyAddAssociationMixin<Product, Product["id"]>;
   declare addProducts: HasManyAddAssociationsMixin<Product, Product["id"]>;
   declare removeProduct: HasManyRemoveAssociationMixin<Product, Product["id"]>;
-  declare removeProducts: HasManyRemoveAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
+  declare removeProducts: HasManyRemoveAssociationsMixin<Product, Product["id"]>;
   declare createProduct: HasManyCreateAssociationMixin<Product>;
+
+  declare hasCart: HasManyHasAssociationMixin<Cart, Cart["id"]>;           //-
+  declare hasCarts: HasManyHasAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare setCart: HasManySetAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare addCart: HasManyAddAssociationMixin<Cart, Cart["id"]>;           //-
+  declare addCarts: HasManyAddAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare removeCart: HasManyRemoveAssociationMixin<Cart, Cart["id"]>;           //-
+  declare removeCarts: HasManyRemoveAssociationsMixin<Cart, Cart["id"]>;           //-
+  declare createCart: HasManyCreateAssociationMixin<Cart>;              //-
 
   // You can also pre-declare possible inclusions, these will only be populated if you
   // actively include a relation.

@@ -1,12 +1,14 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
+import { User as User_Type } from "../models/User";
 
 const router = Router();
-const { Seller } = Models;
+const { Seller, User } = Models;
 
 type SellerParams = {
   sellerId: string;
+  userId: string;
 };
 
 type SellerQuery = {};
@@ -49,21 +51,18 @@ router.get(
 );
 
 router.post(
-  "/",
+  "/:userId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-      const { nombreNegocio, pay_Money, imageLogo, template_page, suspended } = req.body;
-
-      if (nombreNegocio || pay_Money || template_page) {
-        const result = await Seller.create({
-          nombreNegocio,
-          pay_Money,
-          imageLogo,
-          template_page,
-          suspended,
-        });
-
-        return res.status(201).send(result);
+      const { userId } = req.params;
+      if (userId) {
+        const user = (await User.findByPk(userId)) as User_Type | null;
+        if (user) {
+          await user.createSeller();
+        }
+        return res
+          .status(201)
+          .send(await User.findByPk(userId, { include: Seller }));
       }
     } catch (error) {
       console.log(error);

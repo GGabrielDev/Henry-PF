@@ -28,13 +28,14 @@ const GlobalStyles = createGlobalStyle`
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
-
 root.render(
   <React.StrictMode>
     <Auth0Provider
       domain="dev-n1wylph86zq3zbjr.us.auth0.com"
       clientId="5NIb6mwiSfv2dE7L4A6hkms8kMnONhbk"
       redirectUri={window.location.origin + window.location.pathname}
+      cacheLocation="localstorage"
+      useRefreshTokens
     >
       <BrowserRouter>
         <GlobalStyles />

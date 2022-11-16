@@ -15,7 +15,7 @@ import imgtop2 from "../../assets/top2.jpg";
 import { AiOutlineCheck } from "react-icons/ai";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
-import Navbarlanding from "./NavbarLanding";
+import Navbarlanding from "../../components/NavbarLandingFuera";
 
 const stripePromise = loadStripe(
   "pk_test_51LbWG6CISvGskgcJQ1tAlsYcaFsZYI2XridI8464CZNO17EXAUdRbehJsxs8VA3CUjRwz10bwuThVq8GtBLxFsN900VthEmx1m "
@@ -76,6 +76,7 @@ const CheckoutForm = () => {
             `http://localhost:3001/stripe/api/checkout`,
             {
               id,
+              mode: "subscription",
               amount: 2700,
               description: "premium pack",
             }

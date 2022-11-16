@@ -8,8 +8,15 @@ import {
 import { NavLink } from "react-router-dom";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
+import { useAppSelector } from "../../app/hooks";
+import { selectors, UserType } from "../../features/users/userSlice";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const { selectUser } = selectors;
 
 const MenuUsuario = () => {
+  const usuario = useAppSelector(selectUser) as UserType;
+  const { isAuthenticated, user } = useAuth0();
   return (
     <ThemeProvider theme={ThemesLanding}>
       <MenuUsuarioContainer>
@@ -28,21 +35,45 @@ const MenuUsuario = () => {
             <NavLink to="/usuario/general" className="menu__sections-name">
               <span>General</span>
             </NavLink>
-            <NavLink to="/usuario/compras" className="menu__sections-name">
-              <span>Compras</span>
-            </NavLink>
             <NavLink to="/usuario/favoritos" className="menu__sections-name">
               <span>Favoritos</span>
             </NavLink>
           </div>
-          <div className="menu__title">
-            Admin <AiOutlineForm className="user__icon " />
-          </div>
-          <div className="menu__sections">
-            <NavLink to="/usuario/editar" className="menu__sections-name">
-              <span>Mis Productos</span>
-            </NavLink>
-          </div>
+          {isAuthenticated && usuario.sellerId !== null ? (
+            <>
+              <div className="menu__title">
+                Vendedor <AiOutlineForm className="user__icon " />
+              </div>
+              <div className="menu__sections">
+                <NavLink
+                  to="/usuario/editar/producto"
+                  className="menu__sections-name"
+                >
+                  <span>Mis Productos</span>
+                </NavLink>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+          {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+            <>
+              <div className="menu__title">
+                Henry Admin <AiOutlineForm className="user__icon " />
+              </div>
+              <div className="menu__sections">
+                <NavLink to="/usuario/usuarios" className="menu__sections-name">
+                  <span>Usuarios</span>
+                </NavLink>
+              </div>
+              <div className="menu__sections">
+                <NavLink to="/usuario/tiendas" className="menu__sections-name">
+                  <span>Tiendas</span>
+                </NavLink>
+              </div>
+            </>
+          ) : null}
+
           {/* <NavLink to="/usuario/editar" className="menu__sections-name">
             <span>Mecador Pago</span>
             </NavLink>

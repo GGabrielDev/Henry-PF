@@ -38,9 +38,6 @@ const Navbarlanding = () => {
               <a className="section" href={"#home"}>
                 Home
               </a>
-              <a className="section" href={"#about"}>
-                About
-              </a>
               <a className="section" href={"#clients"}>
                 Clients
               </a>

@@ -150,7 +150,12 @@ router.put(
         throw new HttpException(400, "The Review ID is missing in the request");
       }
 
-      const result = await Review.findByPk(reviewId)
+      const result = await Review.findByPk(reviewId, {
+        attributes: {
+          exclude: ["userId"],
+        },
+        include: User,
+      })
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {

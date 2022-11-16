@@ -20,18 +20,24 @@ import EditProduct from "../Pages/Usuario/EditProduct";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { actions, selectors } from "../features/users/userSlice";
+import { actions, selectors, UserType } from "../features/users/userSlice";
 import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario";
+import EditSeller from "../Pages/Usuario/editarSeller";
+import UserEdit from "../Pages/Usuario/UserEdit";
+import VerUsuarios from "../Pages/Usuario/verUsuarios";
+import VerTiendas from "../Pages/Usuario/verTiendas";
+
 const { getUserByEmail, createUser } = actions;
-const { selectError, selectStatus } = selectors;
+const { selectError, selectStatus, selectUser } = selectors;
 
 const Router = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectError);
   const status = useAppSelector(selectStatus);
+  const usuario = useAppSelector(selectUser) as UserType;
   const { isAuthenticated, user } = useAuth0();
   useEffect(() => {
     if (
@@ -64,6 +70,9 @@ const Router = () => {
         <Route path="auth/recover" element={<Recover />} />
         <Route path="auth/register" element={<Register />} />
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/checkout/premium" element={<CheckoutPremium />} />
+        <Route path="/checkout/medium" element={<CheckoutMedium />} />
+        <Route path="/checkout/basic" element={<CheckoutBasic />} />
 
         {isAuthenticated ? (
           <>
@@ -74,33 +83,43 @@ const Router = () => {
               element={<UserCompraDetalle />}
             />
             <Route path="/usuario/favoritos" element={<UserFavoritos />} />
-            <Route path="/checkout/premium" element={<CheckoutPremium />} />
-            <Route path="/checkout/medium" element={<CheckoutMedium />} />
-            <Route path="/checkout/basic" element={<CheckoutBasic />} />
             <Route path="/usuario/editUser" element={<EditarUsuario />} />
           </>
         ) : null}
 
-        {isAuthenticated /*ACA DEBERIA Ir && user.isPremium */ ? (
+        {isAuthenticated && usuario.sellerId ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+            <Route path="/usuario/editar/producto/" element={<UserEdit />} />
+            <Route path="/usuario/editSeller" element={<EditSeller />} />
             <Route
               path="/usuario/editar/producto/:productId"
               element={<EditProduct />}
             />
           </>
         ) : null}
-        {isAuthenticated && user?.email === "Henryfygrup@gmail.com" ? (
-          <>{/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}</>
+        {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+          <>
+            <Route path="/tugamer/publicar" element={<Publicar />} />
+            <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+            <Route path="/usuario/editar/producto/" element={<UserEdit />} />
+            <Route path="/usuario/editSeller" element={<EditSeller />} />
+            <Route
+              path="/usuario/editar/producto/:productId"
+              element={<EditProduct />}
+            />
+            <Route path="/usuario/usuarios" element={<VerUsuarios />}></Route>
+            <Route path="/usuario/tiendas" element={<VerTiendas />}></Route>
+            {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
+          </>
         ) : null}
       </>
     </Routes>
   );
 };
 
-{
-  /*
+/*
       
       PORTAFOLIO  
 
@@ -144,6 +163,5 @@ const Router = () => {
       <Route path="/checkout/medium" element={<CheckoutMedium />} />
       <Route path="/checkout/basic" element={<CheckoutBasic />} />
       */
-}
 
 export default Router;

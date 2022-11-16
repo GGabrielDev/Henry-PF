@@ -56,6 +56,7 @@ export class User extends Model<
   declare address: string;
   declare imagenDePerfil: string | null;
   declare suspended: boolean;
+  declare isPremium: boolean;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -202,6 +203,11 @@ module.exports = (sequelize: Sequelize) => {
         validate: {
           isUrl: true,
         },
+      },
+
+      isPremium:{
+        type:DataTypes.BOOLEAN,
+        defaultValue: false,
       },
 
       suspended: {

@@ -10,7 +10,7 @@ import {
 import {
   selectors as sellerSelectors,
   SellerType,
-} from "../../features/sellers/sellerSlice";
+} from "../../features/seller/sellerSlice";
 import ShoppingCart from "./ShoppingCart";
 import { selectProducts } from "../../features/products/productSlice";
 

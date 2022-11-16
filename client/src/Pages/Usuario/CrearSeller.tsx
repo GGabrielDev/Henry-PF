@@ -4,7 +4,7 @@ import Navbar from "../../components/Tugamer/Navbar";
 import ValidateSeller from "../../helpers/validateseller";
 
 import Swal from "sweetalert2";
-import { createSeller } from "../../features/sellers/sellerSlice";
+import { createSeller } from "../../features/seller/sellerSlice";
 import { useAppDispatch } from "../../app/hooks";
 import {
   InputStateSeller,

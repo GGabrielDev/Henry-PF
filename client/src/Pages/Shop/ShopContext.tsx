@@ -4,8 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectors,
   actions,
-  SellerType,
-} from "../../features/sellers/sellerSlice";
+} from "../../features/seller/sellerSlice";
 
 const { getSellerByName } = actions;
 const { selectSeller, selectError } = selectors;

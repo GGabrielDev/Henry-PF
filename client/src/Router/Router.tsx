@@ -99,7 +99,7 @@ const Router = () => {
             />
           </>
         ) : null}
-        {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+        {isAuthenticated && user?.email === "andresr10020@gmail.com" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />

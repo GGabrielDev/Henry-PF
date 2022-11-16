@@ -35,9 +35,6 @@ const MenuUsuario = () => {
             <NavLink to="/usuario/general" className="menu__sections-name">
               <span>General</span>
             </NavLink>
-            <NavLink to="/usuario/favoritos" className="menu__sections-name">
-              <span>Favoritos</span>
-            </NavLink>
           </div>
           {isAuthenticated && usuario.sellerId !== null ? (
             <>

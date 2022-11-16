@@ -4,7 +4,7 @@ import Error from "../Pages/Error";
 import UserGeneral from "../Pages/Usuario/UserGeneral";
 import UserCompras from "../Pages/Usuario/UserCompras";
 import UserCompraDetalle from "../Pages/Usuario/UserComprasDetalle";
-import UserFavoritos from "../Pages/Usuario/UserFavoritos";
+
 import Error404 from "../Pages/Tugamer/Error404";
 import { Register } from "../Pages/Tugamer/Register";
 import Detalle from "../Pages/Tugamer/Detalle";
@@ -107,7 +107,7 @@ const Router = () => {
               path="/usuario/compras/detalle"
               element={<UserCompraDetalle />}
             />
-            <Route path="/usuario/favoritos" element={<UserFavoritos />} />
+
             <Route path="/usuario/editUser" element={<EditarUsuario />} />
           </>
         ) : null}
@@ -125,7 +125,7 @@ const Router = () => {
           </>
         ) : null}
 
-        {isAuthenticated && user?.email === "" ? (
+        {isAuthenticated && user?.email === "andresr10020@gmail.com" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />

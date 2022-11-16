@@ -4,7 +4,7 @@ import Error from "../Pages/Error";
 import UserGeneral from "../Pages/Usuario/UserGeneral";
 import UserCompras from "../Pages/Usuario/UserCompras";
 import UserCompraDetalle from "../Pages/Usuario/UserComprasDetalle";
-import UserFavoritos from "../Pages/Usuario/UserFavoritos";
+
 import Error404 from "../Pages/Tugamer/Error404";
 import { Register } from "../Pages/Tugamer/Register";
 import Detalle from "../Pages/Tugamer/Detalle";
@@ -34,11 +34,15 @@ import VerTiendas from "../Pages/Usuario/verTiendas";
 import ShopContext from "../Pages/Shop/ShopContext";
 import Home from "../Pages/Shop/Home";
 import Details from "../Pages/Shop/Details";
-import PublicarModular from "../Pages/Shop/Publicar"; 
+import PublicarModular from "../Pages/Shop/Publicar";
 
 import Termsandconditions from "../Pages/termsandconditions";
 import Privacidad from "../Pages/Privacidad";
+
 import SellerGeneral from "../Pages/Usuario/sellerGeneral"
+
+import QuienesSomos from "../Pages/QuienesSomos";
+import Sugerencias from "../Pages/Sugerencias";
 
 
 const { getUserByEmail, createUser } = actions;
@@ -71,8 +75,10 @@ const Router = () => {
 
         <Route path="/terms" element={<Termsandconditions />} />
         <Route path="/privacidad" element={<Privacidad />} />
+        <Route path="/nosotros" element={<QuienesSomos />} />
+        <Route path="/sugerencias" element={<Sugerencias />} />
         <Route path="/*" element={<Error />} />
-        
+
         <Route path="/tugamer" element={<Tugamer />} />
         <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
         <Route path="/tugamer/*" element={<Error404 />} />
@@ -88,15 +94,17 @@ const Router = () => {
         <Route path="/checkout/premium" element={<CheckoutPremium />} />
         <Route path="/checkout/medium" element={<CheckoutMedium />} />
         <Route path="/checkout/basic" element={<CheckoutBasic />} />
-      
+
         <Route path="/shop/:shopName" element={<ShopContext />}>
           <Route index element={<Home />} />
           <Route path="detalle/:productId" element={<Details />} />
-          {isAuthenticated && usuario.sellerId ? ( 
-          <Route path="publicar" element={<PublicarModular />} />
-          ) :
-          null
-          }
+
+
+
+          {isAuthenticated && usuario.sellerId ? (
+            <Route path="publicar" element={<PublicarModular />} />
+          ) : null}
+
         </Route>
 
         {isAuthenticated ? (
@@ -107,7 +115,7 @@ const Router = () => {
               path="/usuario/compras/detalle"
               element={<UserCompraDetalle />}
             />
-            <Route path="/usuario/favoritos" element={<UserFavoritos />} />
+
             <Route path="/usuario/editUser" element={<EditarUsuario />} />
           </>
         ) : null}
@@ -125,8 +133,8 @@ const Router = () => {
             <Route path="/usuario/editSeller" element={<EditarSeller />} />
           </>
         ) : null}
-        
-        {isAuthenticated && user?.email === "dilisciafelipe@gmail.com" ? (
+
+        {isAuthenticated && user?.email === "andresr10020@gmail.com" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />

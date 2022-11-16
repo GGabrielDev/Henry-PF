@@ -5,7 +5,8 @@ import sellerRouter from "./Seller";
 import customerOrdersRouter from "./Customer_Orders";
 import productAmountRouter from "./Product_Amount";
 import cartRouter from "./Cart";
-import reviewRouter from "./Review"
+import reviewRouter from "./Review";
+//import reciptRouter form "./Recipt";
 import categoryProductRouter from "./Category_Product";
 import MercadoPago from "./MercadoPago";
 import Stripe from "./Stripe"
@@ -19,6 +20,7 @@ router.use("/sellers", sellerRouter);
 router.use("/customerOrders", customerOrdersRouter);
 router.use("/productAmount", productAmountRouter);
 router.use("/cart", cartRouter);
+//router.use("/recipt", reciptRouter);
 router.use("/reviews", reviewRouter)
 router.use("/productCategory", categoryProductRouter);
 router.use("/payment", MercadoPago);

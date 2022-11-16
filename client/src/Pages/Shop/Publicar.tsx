@@ -4,17 +4,20 @@ import Navbar from "../../components/Tugamer/Navbar";
 import Validate from "../../helpers/validate";
 import { symlink } from "fs";
 import Swal from "sweetalert2";
-import { createProduct, ProductType } from "../../features/products/productSlice";
+import {
+  createProduct,
+  ProductType,
+} from "../../features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
 import { selectors } from "../../features/seller/sellerSlice";
 
-const {selectSeller} = selectors;
+const { selectSeller } = selectors;
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
-  const seller = useAppSelector(selectSeller)
+  const seller = useAppSelector(selectSeller);
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Producto creado",
@@ -213,7 +216,9 @@ const Publicar = () => {
               {err.image ? <p className="errortext"> {err.image} </p> : ""}
             </div>
           </div>
-          <button className="submitproduct">Submit</button>
+          <button className="submitproduct" type="submit">
+            Submit
+          </button>
         </form>
       </AddProduct>
     </PublicarContainer>

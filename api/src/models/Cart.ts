@@ -36,7 +36,7 @@ import path from "path";
 import {Customer_Orders} from "./Customer_Orders";
 import { Product_Amount } from "./Product_Amount";
 import { Seller } from "./Seller";
-//import {Receipt}from "./Receipt";
+import {Recipt}from "./Recipt";
 //import {Seller_Prod_Sold} from "./Seller_Prod_Sold";
 
 export class Cart extends Model<InferAttributes<Cart>, InferCreationAttributes<Cart>> {
@@ -59,16 +59,16 @@ export class Cart extends Model<InferAttributes<Cart>, InferCreationAttributes<C
   declare setSeller: BelongsToSetAssociationMixin<Seller, Seller["id"]>;
   declare createSeller: BelongsToCreateAssociationMixin<Seller>;
 
-  // declare getReceipt: HasManyGetAssociationsMixin<Receipt>;
-  // declare countReceipts: HasManyCountAssociationsMixin;
-  // declare hasReceipt: HasManyHasAssociationMixin<Receipt, Receipt["id"]>;
-  // declare hasReceipts: HasManyHasAssociationsMixin<Receipt, Receipt["id"]>;
-  // declare setReceipt: HasManySetAssociationsMixin<Receipt, Receipt["id"]>;
-  // declare addReceipt: HasManyAddAssociationMixin<Receipt, Receipt["id"]>;
-  // declare addReceipts: HasManyAddAssociationsMixin<Receipt, Receipt["id"]>;
-  // declare removeReceipt: HasManyRemoveAssociationMixin<Receipt, Receipt["id"]>;
-  // declare removeReceipts: HasManyRemoveAssociationsMixin<Receipt, Receipt["id"]>;
-  // declare createReceipt: HasManyCreateAssociationMixin<Receipt>;
+  declare getRecipt: HasManyGetAssociationsMixin<Recipt>;
+  declare countRecipts: HasManyCountAssociationsMixin;
+  declare hasRecipt: HasManyHasAssociationMixin<Recipt, Recipt["id"]>;
+  declare hasRecipts: HasManyHasAssociationsMixin<Recipt, Recipt["id"]>;
+  declare setRecipt: HasManySetAssociationsMixin<Recipt, Recipt["id"]>;
+  declare addRecipt: HasManyAddAssociationMixin<Recipt, Recipt["id"]>;
+  declare addRecipts: HasManyAddAssociationsMixin<Recipt, Recipt["id"]>;
+  declare removeRecipt: HasManyRemoveAssociationMixin<Recipt, Recipt["id"]>;
+  declare removeRecipts: HasManyRemoveAssociationsMixin<Recipt, Recipt["id"]>;
+  declare createRecipt: HasManyCreateAssociationMixin<Recipt>;
 
   // declare getSellerProdSold: HasManyGetAssociationsMixin<Seller_Prod_Sold>;
   // declare countSellerProdSolds: HasManyCountAssociationsMixin;

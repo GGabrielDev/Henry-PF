@@ -68,7 +68,7 @@ export const getSellerByName = createAsyncThunk(
 export const getSellerById = createAsyncThunk(
   "seller/getSellerById",
   async (id: number) => {
-    const res = await axios.get(`/sellers/${id}`);
+    const res = await backAxios.get(`/sellers/${id}`);
     return res.data;
   }
 );
@@ -76,7 +76,15 @@ export const getSellerById = createAsyncThunk(
 export const createSeller = createAsyncThunk(
   "seller/createSeller",
   async (seller: BaseSellerType) => {
-    const res = await axios.post(`/sellers`, seller);
+    const res = await backAxios.post(`/sellers`, seller);
+    return res.data;
+  }
+);
+
+export const getSellers = createAsyncThunk(
+  "seller/sellers",
+  async (seller: SellerType) => {
+    const res = await backAxios.get(`/sellers`);
     return res.data;
   }
 );
@@ -85,12 +93,20 @@ export const editSeller = createAsyncThunk(
   "seller/editSeller",
   async (seller: SellerType) => {
     const { id, ...rest } = seller;
-    const res = await axios.put(`/sellers/${id}`, {
+    const res = await backAxios.put(`/sellers/${id}`, {
       ...rest,
     });
     return res.data;
   }
 );
+
+export const getSellerByEmail = createAsyncThunk("seller/getSellerByEmail", 
+  async (sellerId: string & {email: string}) => {
+    const res = await backAxios.get(`/sellers/${sellerId}`);
+    return res.data;
+  }
+);
+
 
 export const userSlice = createSlice({
   name: "seller",

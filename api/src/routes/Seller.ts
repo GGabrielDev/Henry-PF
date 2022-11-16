@@ -16,10 +16,11 @@ type SellerQuery = {};
 
 type SellerBody = {
   nombreNegocio: string;
-  pay_Money: string;
+  description: string | null;
   imageLogo: string | null;
   template_page: string;
   suspended: boolean;
+  categorias: string;
 };
 
 type RouteRequest = Request<SellerParams, SellerQuery, SellerBody>;
@@ -120,7 +121,6 @@ router.put(
         "categorias",
         "template_page",
         "suspended",
-        "paymentId",
         "description",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>

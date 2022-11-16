@@ -20,7 +20,7 @@ export type UserType = {
   createdAt: Date | null;
   updatedAt: Date | null;
   countryId: number | null;
-  sellerId: number | null;
+  sellerId: string | null;
 };
 
 type SliceState = {
@@ -86,6 +86,7 @@ export const editUser = createAsyncThunk(
     return res.data;
   }
 );
+
 
 export const userSlice = createSlice({
   name: "user",

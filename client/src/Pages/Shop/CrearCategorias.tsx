@@ -1,27 +1,19 @@
 import { useState, ChangeEvent, SyntheticEvent, useEffect } from "react";
 import styled from "styled-components";
-import Navbar from "../../components/Tugamer/Navbar";
-import Validate from "../../helpers/validate";
-import { symlink } from "fs";
 import Swal from "sweetalert2";
-import {
-  createProduct,
-<<<<<<< HEAD
-  createProductBySellerId,
-=======
->>>>>>> ffdfb845dc8942e9e7b8201294b4f2465eea20ca
-  ProductType,
-} from "../../features/products/productSlice";
+import { createCategory } from "../../features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
+import { InputStateCategories, ErrorStateCategories } from "../../helpers/Cloudinary";
 import { selectors } from "../../features/seller/sellerSlice";
+import ValidateCategories from "../../helpers/validateCategories";
 
-const { selectSeller } = selectors;
+const {selectSeller} = selectors;
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
-  const seller = useAppSelector(selectSeller);
+  const seller = useAppSelector(selectSeller)
+  const { id }  = seller
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Producto creado",
@@ -41,25 +33,12 @@ const Publicar = () => {
     });
   };
 
-  const [err, setErr] = useState<ErrorState>({
+  const [err, setErr] = useState<ErrorStateCategories>({
     name: "",
-    price_local: "",
-    stock: "",
-    description: "",
-    suspended: "",
-    image: "Si no se agrega imagen, se pondra una por default",
   });
 
-  const [input, setInput] = useState<InputState>({
-    name: "",
-    price_local: 0,
-    stock: 0,
-    description: "",
-    suspended: "DEFAULT",
-    image: "",
-    cloudinary: {},
-    categories: [],
-    sellerId: seller.id as string,
+  const [category, setCategory] = useState<InputStateCategories>({
+    name: ""
   });
 
   const dispatch = useAppDispatch();
@@ -69,33 +48,19 @@ const Publicar = () => {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setInput({ ...input, [event.target.name]: event.target.value });
-    setErr(Validate({ ...input, [event.target.name]: event.target.value }));
+    setCategory({ ...category, [event.target.name]: event.target.value });
+    setErr(ValidateCategories({ ...category, [event.target.name]: event.target.value }));
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
-    setErr(Validate(input));
+    setErr(ValidateCategories(category));
     event.preventDefault();
-    setInput({
+    setCategory({
       name: "",
-      price_local: -1,
-      stock: -1,
-      description: "",
-      suspended: "DEFAULT",
-      image: "",
-      cloudinary: {},
-      categories: [],
-      sellerId: seller.id as string,
     });
 
     if (
-      input.name === "" ||
-      input.price_local === -1 ||
-      input.stock === -1 ||
-      err.price_local === "Tiene que ser un numero" ||
-      input.description === "" ||
-      input.suspended === "DEFAULT"
-
+      category.name === ""
       //   ) {
       //     alert("Faltan agregar datos");
       //   } else {
@@ -109,22 +74,17 @@ const Publicar = () => {
       AlertaCorrecta();
       // event.target.reset()
       // document.getElementById("form-public").reset();
-      dispatch(
-        createProductBySellerId({
-          ...input,
-          suspended: input.suspended === "true",
-          image: !input.image
-            ? "https://definicion.de/wp-content/uploads/2009/06/producto.png"
-            : input.image,
-        })
-      );
+      if(id){dispatch(
+        createCategory({category, id}))} else {
+          console.log("Id no existe")
+        }
+      
     }
   };
-  
   return (
     <PublicarContainer>
       <AddProduct>
-        <h1 className="addproduct-title">Agrega un producto</h1>
+        <h1 className="addproduct-title">Agrega una o mas Categorias</h1>
         <form
           onSubmit={handleSubmit}
           action=""
@@ -137,93 +97,18 @@ const Publicar = () => {
                 Todos los campos son obligatorios
               </h5>
               <div className="inputinfo">
-                <label htmlFor="">Nombre del producto:</label>
+                <label htmlFor="">Nombre de la Categoria/Categorias:</label>
                 <input
-                  value={input.name}
+                  value={category.name}
                   name="name"
                   type="text"
                   onChange={handleChange}
                 />
                 {err.name ? <p className="errortext"> {err.name} </p> : ""}
               </div>
-              {/*<div className="inputinfo">
-                <label htmlFor="">Categoria:</label>
-                <input name="categories" type="text" onChange={handleChange} />
-                </div>*/}
-              <div className="inputinfo">
-                <label htmlFor="price_local">Precio:</label>
-                <input
-                  className="price_local__input"
-                  value={input.price_local}
-                  name="price_local"
-                  type="text"
-                  onChange={handleChange}
-                />
-                {err.price_local ? (
-                  <p className="errortext"> {err.price_local} </p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="inputinfo">
-                <label htmlFor="stock">Stock:</label>
-                <input
-                  value={input.stock}
-                  name="stock"
-                  type="text"
-                  onChange={handleChange}
-                />
-                {err.stock ? <p className="errortext"> {err.stock} </p> : ""}
-              </div>
-              <div className="inputinfo">
-                <label htmlFor="description">Descripcion:</label>
-                <textarea
-                  value={input.description}
-                  name="description"
-                  onChange={handleChange}
-                />
-                {err.description ? (
-                  <p className="errortext"> {err.description} </p>
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="inputinfo ultimo__select">
-                <label htmlFor="suspended">Estado:</label>
-                <select
-                  value={input.suspended}
-                  name="suspended"
-                  id=""
-                  onChange={handleChange}
-                >
-                  <option value="DEFAULT" disabled>
-                    Elige Uno
-                  </option>
-                  <option value="false">Activo</option>
-                  <option value="true">Suspendido</option>
-                </select>
-                {err.suspended ? (
-                  <p className="errortext"> {err.suspended} </p>
-                ) : (
-                  ""
-                )}
-              </div>
-            </div>
-            <div className="productinfo__Right">
-              <div className="imageupload">
-                <input
-                  type="file"
-                  name="image"
-                  onChange={upLoadImage(input, setLoading, setInput, setErr)}
-                />
-              </div>
-
-              {err.image ? <p className="errortext"> {err.image} </p> : ""}
             </div>
           </div>
-          <button className="submitproduct" type="submit">
-            Submit
-          </button>
+          <button className="submitproduct">Submit</button>
         </form>
       </AddProduct>
     </PublicarContainer>

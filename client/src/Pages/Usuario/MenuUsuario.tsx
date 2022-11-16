@@ -35,11 +35,8 @@ const MenuUsuario = () => {
             <NavLink to="/usuario/general" className="menu__sections-name">
               <span>General</span>
             </NavLink>
-            <NavLink to="/usuario/favoritos" className="menu__sections-name">
-              <span>Favoritos</span>
-            </NavLink>
           </div>
-          {isAuthenticated && usuario.sellerId !== null ? (
+          {isAuthenticated && usuario.sellerId ? (
             <>
               <div className="menu__title">
                 Vendedor <AiOutlineForm className="user__icon " />
@@ -50,6 +47,12 @@ const MenuUsuario = () => {
                   className="menu__sections-name"
                 >
                   <span>Mis Productos</span>
+                </NavLink>
+                <NavLink
+                  to="/usuario/sellerGeneral"
+                  className="menu__sections-name"
+                >
+                  <span>Mi Tienda</span>
                 </NavLink>
               </div>
             </>

@@ -16,13 +16,31 @@ type SellerQuery = {};
 
 type SellerBody = {
   nombreNegocio: string;
-  pay_Money: string;
+  description: string | null;
   imageLogo: string | null;
   template_page: string;
   suspended: boolean;
+  categorias: string;
 };
 
 type RouteRequest = Request<SellerParams, SellerQuery, SellerBody>;
+
+router.get(
+  "/",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const result = await Seller.findAll();
+
+      if (result.length === 0) {
+        return res.status(204).send("No entries have been found.");
+      }
+
+      return res.status(200).send({ amount: result.length, result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 router.get(
   "/:sellerId",
@@ -107,7 +125,6 @@ router.put(
         "categorias",
         "template_page",
         "suspended",
-        "paymentId",
         "description",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>

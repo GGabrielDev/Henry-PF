@@ -80,6 +80,14 @@ export const createSeller = createAsyncThunk(
   }
 );
 
+export const getSellers = createAsyncThunk(
+  "seller/sellers",
+  async (seller: SellerType) => {
+    const res = await axios.get(`http://localhost:3001/sellers`);
+    return res.data;
+  }
+);
+
 export const editSeller = createAsyncThunk(
   "seller/editSeller",
   async ({seller, id}:{seller: Partial<SellerType>; id: string}) => {
@@ -89,6 +97,14 @@ export const editSeller = createAsyncThunk(
     return res.data;
   }
 );
+
+export const getSellerByEmail = createAsyncThunk("seller/getSellerByEmail", 
+  async (sellerId: string & {email: string}) => {
+    const res = await axios.get(`http://localhost:3001/sellers/${sellerId}`);
+    return res.data;
+  }
+);
+
 
 export const userSlice = createSlice({
   name: "seller",

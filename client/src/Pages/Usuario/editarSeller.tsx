@@ -4,10 +4,13 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Navbarlanding from "../../components/Navbarlanding";
-import {getSellerById, SellerType, selectors, editSeller } from "../../features/seller/sellerSlice";
+import {getSellerById, SellerType, selectors as sellerSelectors, editSeller } from "../../features/seller/sellerSlice";
 import { AddProduct, PublicarContainer } from "../Tugamer/Publicar";
+import { selectors as userSelectors, actions as userActions, getUserByEmail, UserType} from "../../features/users/userSlice";
 
-const { selectSeller } = selectors;
+const { selectSeller } = sellerSelectors;
+const { selectUser } = userSelectors;
+
 
 export default function EditarSeller() {
   const [seller, setChange] = useState<Partial<SellerType>>({
@@ -19,13 +22,13 @@ export default function EditarSeller() {
    
   });
   const dispatch = useAppDispatch();
-  
+  const detalleUsuario = useAppSelector(selectUser) as UserType;
   const detalleSeller = useAppSelector(selectSeller) as SellerType;
   const { id } = detalleSeller
   useEffect(() => {
   
-    if(detalleSeller.id){      
-      dispatch(getSellerById(detalleSeller.id));     
+    if(!detalleSeller.id){      
+      dispatch(getSellerById(detalleUsuario.sellerId as string));     
     }
   }, [detalleSeller.id])
   const handleChange = (
@@ -59,7 +62,6 @@ export default function EditarSeller() {
     <>
     <PublicarContainer>
     <Navbarlanding />
-    {detalleSeller.id ? (
     <AddProduct>
       <h1 className="addproduct-title">Editar Informacion de Vendedor</h1>
       <form className="formularioproduct">
@@ -70,7 +72,7 @@ export default function EditarSeller() {
               <input
                 name="nombreUrl"
                 type="text"
-                placeholder={"" + detalleSeller.nombreUrl + ""}
+                placeholder={ ""+detalleSeller.nombreUrl+""}
                 onChange={handleChange}
               />
             </div>
@@ -80,7 +82,7 @@ export default function EditarSeller() {
                 className="price_local__input"
                 name="nombreNegocio"
                 type="text"
-                placeholder={"" + detalleSeller.nombreNegocio + ""}
+                placeholder={""+ detalleSeller.nombreNegocio+""}
                 onChange={handleChange}
               />
             </div>
@@ -108,6 +110,26 @@ export default function EditarSeller() {
                 <option value="3"> Azul </option>
               </select>
             </div>
+            <div className="inputinfo ultimo__select">
+              <label htmlFor="categorias">Categoria a la que pertence su tienda:</label>
+              <select
+                defaultValue="No esta especificado"
+                name="categorias"
+                id=""
+                onChange={handleChange}
+              >
+                <option value="null" disabled>
+                  Elige Uno
+                </option>
+                <option value="Educacion"> Educacion </option>
+                <option value="Vestimenta"> Vestimenta </option>
+                <option value="Tecnologia"> Tecnologia </option>
+                <option value="Servicios"> Servicios </option>
+                <option value="Entretenimiento"> Entretenimiento </option>
+                <option value="Gastronomia"> Gastronomia </option>
+                <option value="No esta especificado"> No esta especificado </option>
+              </select>
+            </div>
           </div>
           <div className="productinfo__Right">
             <div className="imageupload">
@@ -120,22 +142,17 @@ export default function EditarSeller() {
             </div>
           </div>
         </div>
-        <Link to="/usuario/general">
-          {detalleSeller.id? 
+        <Link to="/usuario/sellerGeneral">
+        
           <button
             className="submitproduct"
             onClick={() => dispatch(editSeller({seller, id} as {seller: Partial<SellerType>, id:string}))} >
             Cambiar
           </button> 
-          : 
-          null
-          }
+      
         </Link>
       </form>
-    </AddProduct>)
-   : 
-   <>
-   </> }
+    </AddProduct>
    </PublicarContainer>    
    </>
   )

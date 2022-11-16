@@ -26,7 +26,7 @@ import CheckoutBasic from "../Pages/Compra/CheckoutBasic";
 import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario";
-import EditSeller from "../Pages/Usuario/editarSeller";
+import EditarSeller from "../Pages/Usuario/editarSeller";
 import UserEdit from "../Pages/Usuario/UserEdit";
 import VerUsuarios from "../Pages/Usuario/verUsuarios";
 import VerTiendas from "../Pages/Usuario/verTiendas";
@@ -38,6 +38,8 @@ import PublicarModular from "../Pages/Shop/Publicar";
 
 import Termsandconditions from "../Pages/termsandconditions";
 import Privacidad from "../Pages/Privacidad";
+import SellerGeneral from "../Pages/Usuario/sellerGeneral"
+
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
@@ -90,8 +92,9 @@ const Router = () => {
         <Route path="/shop/:shopName" element={<ShopContext />}>
           <Route index element={<Home />} />
           <Route path="detalle/:productId" element={<Details />} />
-          {isAuthenticated && usuario.sellerId ? (
-          <Route path="publicar" element={<PublicarModular />}/>) :
+          {isAuthenticated && usuario.sellerId ? ( 
+          <Route path="publicar" element={<PublicarModular />} />
+          ) :
           null
           }
         </Route>
@@ -114,11 +117,12 @@ const Router = () => {
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
             <Route path="/usuario/editar/producto/" element={<UserEdit />} />
-            <Route path="/usuario/editSeller" element={<EditSeller />} />
             <Route
               path="/usuario/editar/producto/:productId"
               element={<EditProduct />}
             />
+            <Route path="/usuario/sellerGeneral" element={<SellerGeneral />} />
+            <Route path="/usuario/editSeller" element={<EditarSeller />} />
           </>
         ) : null}
         
@@ -127,11 +131,9 @@ const Router = () => {
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
             <Route path="/usuario/editar/producto/" element={<UserEdit />} />
-            <Route path="/usuario/editSeller" element={<EditSeller />} />
-            <Route
-              path="/usuario/editar/producto/:productId"
-              element={<EditProduct />}
+            <Route path="/usuario/editar/producto/:productId" element={<EditProduct />}
             />
+
             <Route path="/usuario/usuarios" element={<VerUsuarios />}></Route>
             <Route path="/usuario/tiendas" element={<VerTiendas />}></Route>
             {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}

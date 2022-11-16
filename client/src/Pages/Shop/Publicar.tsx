@@ -4,7 +4,7 @@ import Navbar from "../../components/Tugamer/Navbar";
 import Validate from "../../helpers/validate";
 import { symlink } from "fs";
 import Swal from "sweetalert2";
-import { createProduct } from "../../redux/actions";
+import { createProduct, ProductType } from "../../features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
 import { selectors } from "../../features/seller/sellerSlice";
@@ -105,6 +105,7 @@ const Publicar = () => {
       dispatch(
         createProduct({
           ...input,
+          suspended: input.suspended === "true",
           image: !input.image
             ? "https://definicion.de/wp-content/uploads/2009/06/producto.png"
             : input.image,

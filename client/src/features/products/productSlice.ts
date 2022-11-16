@@ -3,18 +3,21 @@ import { RootState } from "../../app/store";
 import axios from "axios";
 import { UserType } from "../users/userSlice";
 
-export type ProductType = {
-  id: string;
+export type BaseProductType = {
   name: string;
   stock: number;
   price_local: number;
   description: string;
-  price_dolar: number | null | undefined;
   image: string | undefined;
   suspended: boolean;
+  categories: any[];
+  sellerId: string | null;
+
+}
+export type ProductType = BaseProductType & {
+  id: string;
+  price_dolar: number | null | undefined;
   size: string | null | undefined;
-  categories: string;
-  sellerId: string;
 };
 
 export type ReviewType = {
@@ -49,7 +52,7 @@ export const initialState: SliceState = {
     image: undefined,
     suspended: false,
     size: null,
-    categories: "",
+    categories: [],
     reviews: [],
     sellerId: "",
   },
@@ -62,7 +65,7 @@ export const initialState: SliceState = {
 
 export const createProduct = createAsyncThunk(
   "product/createProduct",
-  async (product: ProductType) => {
+  async (product: BaseProductType) => {
     const res = await axios.post(`http://localhost:3001/products`, {
       product,
     });
@@ -171,7 +174,7 @@ export const editReview = createAsyncThunk(
 
 export const createProductBySellerId = createAsyncThunk(
   "product/createProductBySellerId",
-  async (product: ProductType) => {
+  async (product: BaseProductType & {sellerId: string}) => {
     const { sellerId, ...rest} = product
     const res = await axios.post(`http://localhost:3001/products/${sellerId}`, {
        ...rest

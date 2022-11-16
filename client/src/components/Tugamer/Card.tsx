@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BsInfoCircle } from "react-icons/bs";
 import Swal from "sweetalert2";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { ProductType } from "../../../features/products/productSlice";
-import { actions, helpers } from "../../../features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { ProductType } from "../../features/products/productSlice";
+import { actions, helpers } from "../../features/cart/cartSlice";
 
 const { incrementItemQuantity, decrementItemQuantity } = actions;
 const { getItemQuantity } = helpers;

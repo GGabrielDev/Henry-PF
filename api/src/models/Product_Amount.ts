@@ -8,7 +8,7 @@ import {
 } from "sequelize";
 import path from "path";
 
-class Product_Amount extends Model<
+export class Product_Amount extends Model<
   InferAttributes<Product_Amount>,
   InferCreationAttributes<Product_Amount>
 > {

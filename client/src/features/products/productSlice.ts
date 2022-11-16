@@ -168,6 +168,17 @@ export const editReview = createAsyncThunk(
   }
 );
 
+
+export const createProductBySellerId = createAsyncThunk(
+  "product/createProductBySellerId",
+  async (product: ProductType) => {
+    const { sellerId, ...rest} = product
+    const res = await axios.post(`http://localhost:3001/products/${sellerId}`, {
+       ...rest
+    });
+    return res.data;
+  }
+);
 export const productSlice = createSlice({
   name: "product",
   initialState,

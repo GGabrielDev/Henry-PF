@@ -11,6 +11,7 @@ export type InputState = {
   image: string;
   cloudinary: any;
   categories: any[];
+  sellerId: string;
 };
 
 export type InputStateSeller = {

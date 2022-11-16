@@ -55,7 +55,7 @@ const Card = ({ product }: { product: ProductType }) => {
           </div>
         </div>
         <div className="div__comprar">
-          <Link to={`/tugamer/detalle/${product.id}`}>
+          <Link to={`detalle/${product.id}`}>
             <div className="info">
               <BsInfoCircle />
             </div>

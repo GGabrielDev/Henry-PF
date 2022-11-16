@@ -3,18 +3,17 @@ import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   getProductsBySellerId,
+  getProducts,
   selectProducts,
 } from "../../features/products/productSlice";
-import { selectors } from "../../features/seller/sellerSlice";
 import Card from "./Card";
-
-const { selectSeller } = selectors
+import { selectors } from "../../features/seller/sellerSlice"
+const { selectSeller } = selectors;
 
 export default function Cards() {
-	const seller = useAppSelector(selectSeller);
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
-  console.log(products);
+  const seller = useAppSelector(selectSeller)
   useEffect(() => {
     dispatch(getProductsBySellerId(seller.id as string));
   }, []);

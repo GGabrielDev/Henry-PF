@@ -114,7 +114,6 @@ const Publicar = () => {
   };
   return (
     <PublicarContainer>
-      <Navbar />
       <AddProduct>
         <h1 className="addproduct-title">Agrega un producto</h1>
         <form

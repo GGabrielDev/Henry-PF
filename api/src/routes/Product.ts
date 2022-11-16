@@ -190,6 +190,52 @@ router.post(
   }
 );
 
+router.post(
+  "/:sellerId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    const {sellerId} = req.params
+    try {
+      const {
+        name,
+        description,
+        price_dollar,
+        price_local,
+        stock,
+        image,
+        suspended,
+        size,
+        categories,
+      } = req.body;
+
+      if (name || description || price_local || suspended || categories) {
+        const result = (await Product.create({
+          name,
+          description,
+          price_dollar,
+          price_local,
+          stock,
+          image,
+          suspended,
+          size,
+        })) as Product_Type;
+        result.setSeller(sellerId)
+        result.addCategories(categories.map((value) => value.id));
+        return res.status(201).send(
+          await Product.findByPk(result.id, {
+            include: [
+              Product.associations.categories,
+              Product.associations.reviews,
+            ],
+          })
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+);
+
 router.put(
   "/:productId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {

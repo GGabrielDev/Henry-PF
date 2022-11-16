@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-  getProductBySellerId,
+  getProductsBySellerId,
   getProducts,
   selectProducts,
 } from "../../features/products/productSlice";
-import Card from "../Shops/Pagina Base/Card";
+import Card from "../Shops/Card";
 import { selectors } from "../../features/seller/sellerSlice";
 
 const { selectSeller } = selectors;
@@ -16,7 +16,7 @@ export default function Cards() {
   const dispatch = useAppDispatch();
   const seller = useAppSelector(selectSeller)
   useEffect(() => {
-    dispatch(getProductBySellerId(seller.id as string));
+    dispatch(getProductsBySellerId(seller.id as string));
   }, []);
 
   return (

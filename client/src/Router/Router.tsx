@@ -30,9 +30,9 @@ import UserEdit from "../Pages/Usuario/UserEdit";
 import VerUsuarios from "../Pages/Usuario/verUsuarios";
 import VerTiendas from "../Pages/Usuario/verTiendas";
 import ShopContext from "../Pages/Shop/ShopContext";
-
 import Home from "../Pages/Shop/Home";
 import Details from "../Pages/Shop/Details";
+import PublicarModular from "../Pages/Shop/Publicar"; 
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
@@ -76,10 +76,14 @@ const Router = () => {
         <Route path="/checkout/premium" element={<CheckoutPremium />} />
         <Route path="/checkout/medium" element={<CheckoutMedium />} />
         <Route path="/checkout/basic" element={<CheckoutBasic />} />
-
+      
         <Route path="/shop/:shopName" element={<ShopContext />}>
           <Route index element={<Home />} />
           <Route path="detalle/:productId" element={<Details />} />
+          {isAuthenticated && usuario.sellerId ? (
+          <Route path="publicar" element={<PublicarModular />}/>) :
+          null
+          }
         </Route>
 
         {isAuthenticated ? (
@@ -107,7 +111,7 @@ const Router = () => {
             />
           </>
         ) : null}
-        {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+        {isAuthenticated && user?.email === "dilisciafelipe@gmail.com" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />

@@ -9,7 +9,7 @@ import {
 import path from "path";
 import { CallTracker } from "assert";
 
-class Cart extends Model<InferAttributes<Cart>, InferCreationAttributes<Cart>> {
+export class Cart extends Model<InferAttributes<Cart>, InferCreationAttributes<Cart>> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<number>;
   declare amount: number;

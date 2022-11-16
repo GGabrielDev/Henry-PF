@@ -68,34 +68,13 @@ export class Product extends Model<
   // these will not exist until `Model.init` was called.
   declare getCategory: BelongsToManyGetAssociationsMixin<Category_Product>;
   declare countCategories: BelongsToManyCountAssociationsMixin;
-  declare hasCategory: BelongsToManyHasAssociationMixin<
-    Category_Product,
-    Category_Product["id"]
-  >;
-  declare hasCategories: BelongsToManyHasAssociationsMixin<
-    Category_Product,
-    Category_Product["id"]
-  >;
-  declare setCategory: BelongsToManySetAssociationsMixin<
-    Category_Product,
-    Category_Product["id"]
-  >;
-  declare addCategory: BelongsToManyAddAssociationMixin<
-    Category_Product,
-    Category_Product["id"]
-  >;
-  declare addCategories: BelongsToManyAddAssociationsMixin<
-    Category_Product,
-    Category_Product["id"]
-  >;
-  declare removeCategory: BelongsToManyRemoveAssociationMixin<
-    Category_Product,
-    Category_Product["id"]
-  >;
-  declare removeCategories: BelongsToManyRemoveAssociationsMixin<
-    Category_Product,
-    Category_Product["id"]
-  >;
+  declare hasCategory: BelongsToManyHasAssociationMixin<Category_Product,Category_Product["id"]>;
+  declare hasCategories: BelongsToManyHasAssociationsMixin<Category_Product,Category_Product["id"]>;
+  declare setCategory: BelongsToManySetAssociationsMixin<Category_Product,Category_Product["id"]>;
+  declare addCategory: BelongsToManyAddAssociationMixin<Category_Product,Category_Product["id"]>;
+  declare addCategories: BelongsToManyAddAssociationsMixin<Category_Product,Category_Product["id"]>;
+  declare removeCategory: BelongsToManyRemoveAssociationMixin<Category_Product,Category_Product["id"]>;
+  declare removeCategories: BelongsToManyRemoveAssociationsMixin<Category_Product,Category_Product["id"]>;
   declare createCategory: BelongsToManyCreateAssociationMixin<Category_Product>;
 
   // FAVORITES PRODUCT FROM USER
@@ -108,10 +87,7 @@ export class Product extends Model<
   declare addFavoriteUser: BelongsToManyAddAssociationMixin<User, User["id"]>;
   declare addFavoriteUsers: BelongsToManyAddAssociationsMixin<User, User["id"]>;
   declare removeFavoriteUser: BelongsToManyRemoveAssociationMixin<User, User["id"]>;
-  declare removeFavoriteUsers: BelongsToManyRemoveAssociationsMixin<
-    User,
-    User["id"]
-  >;
+  declare removeFavoriteUsers: BelongsToManyRemoveAssociationsMixin<User, User["id"]>;
   declare createFavorite: BelongsToManyCreateAssociationMixin<User>;
 
   declare getReview: HasManyGetAssociationsMixin<Review>;
@@ -135,6 +111,17 @@ export class Product extends Model<
   declare removeRProduct_Amount: HasManyRemoveAssociationMixin<Product_Amount, Product_Amount["id"]>;
   declare removeProduct_Amounts: HasManyRemoveAssociationsMixin<Product_Amount, Product_Amount["id"]>;
   declare createProduct_Amount: HasManyCreateAssociationMixin<Product_Amount>;
+
+  declare getRecipt: HasManyGetAssociationsMixin<Recipt>;
+  declare countRecipt: HasManyCountAssociationsMixin;
+  declare hasRecipt: HasManyHasAssociationMixin<Recipt, Recipt["id"]>;
+  declare hasRecipts: HasManyHasAssociationsMixin<Recipt, Recipt["id"]>;
+  declare setRecipt: HasManySetAssociationsMixin<Recipt, Recipt["id"]>;
+  declare addRecipt: HasManyAddAssociationMixin<Recipt, Recipt["id"]>;
+  declare addRecipts: HasManyAddAssociationsMixin<Recipt, Recipt["id"]>;
+  declare removeRecipt: HasManyRemoveAssociationMixin<Recipt, Recipt["id"]>;
+  declare removeRecipts: HasManyRemoveAssociationsMixin<Recipt, Recipt["id"]>;
+  declare createRecipt: HasManyCreateAssociationMixin<Recipt>;
 
   declare getSeller: HasOneGetAssociationMixin<Seller>;
   declare setSeller: HasOneSetAssociationMixin<Seller, Seller["id"]>;

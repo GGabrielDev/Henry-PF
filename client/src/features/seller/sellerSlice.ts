@@ -66,7 +66,7 @@ export const getSellerByName = createAsyncThunk(
 
 export const getSellerById = createAsyncThunk(
   "seller/getSellerById",
-  async (id: number) => {
+  async (id: string) => {
     const res = await axios.get(`http://localhost:3001/sellers/${id}`);
     return res.data;
   }
@@ -80,16 +80,31 @@ export const createSeller = createAsyncThunk(
   }
 );
 
+export const getSellers = createAsyncThunk(
+  "seller/sellers",
+  async (seller: SellerType) => {
+    const res = await axios.get(`http://localhost:3001/sellers`);
+    return res.data;
+  }
+);
+
 export const editSeller = createAsyncThunk(
   "seller/editSeller",
-  async (seller: SellerType) => {
-    const { id, ...rest } = seller;
+  async ({seller, id}:{seller: Partial<SellerType>; id: string}) => {
     const res = await axios.put(`http://localhost:3001/sellers/${id}`, {
-      ...rest,
+      ...seller,
     });
     return res.data;
   }
 );
+
+export const getSellerByEmail = createAsyncThunk("seller/getSellerByEmail", 
+  async (sellerId: string & {email: string}) => {
+    const res = await axios.get(`http://localhost:3001/sellers/${sellerId}`);
+    return res.data;
+  }
+);
+
 
 export const userSlice = createSlice({
   name: "seller",

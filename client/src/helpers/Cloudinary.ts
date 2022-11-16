@@ -1,6 +1,7 @@
 import Validate from "./validate";
 import { SetStateAction, Dispatch } from "react";
 import ValidateSeller from "./validateseller";
+import ValidateCategories from "./validateCategories";
 
 export type InputState = {
   name: string;
@@ -13,6 +14,10 @@ export type InputState = {
   categories: any[];
   sellerId: string;
 };
+
+export type InputStateCategories = {
+  name:string;
+}
 
 export type InputStateSeller = {
   nombreUrl: string | null;
@@ -43,6 +48,11 @@ export type ErrorStateSeller = Record<
   | "description"
   | "template_page",
   string
+>;
+
+export type ErrorStateCategories = Record<
+ | "name",
+ string
 >;
 
 export const uploadToCloudinary = async (url: string) => {
@@ -94,4 +104,5 @@ export const upLoadImageSeller =
     setInput({ ...input, [e.target.name]: file.secure_url });
     setErr(ValidateSeller({ ...input, [e.target.name]: e.target.value }));
   };
+
 

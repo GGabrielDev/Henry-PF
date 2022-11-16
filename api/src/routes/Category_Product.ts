@@ -46,7 +46,7 @@ router.get(
 );
 
 router.post(
-  "/",
+  "/:sellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
       const {

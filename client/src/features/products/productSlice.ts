@@ -243,7 +243,24 @@ export const productSlice = createSlice({
           code: 400,
           message: "An error ocurred while creating the product",
         };
-      });
+      })
+      .addCase(
+        createReview.fulfilled,
+        (state, action: PayloadAction<ReviewType>) => {
+          state.details.reviews = [action.payload, ...state.details.reviews];
+        }
+      )
+      .addCase(
+        editReview.fulfilled,
+        (state, action: PayloadAction<ReviewType>) => {
+          const newArray = [...state.details.reviews];
+          const reviewIndex = state.details.reviews.findIndex(
+            (review) => review.id === action.payload.id
+          );
+          newArray.splice(reviewIndex, 1);
+          state.details.reviews = [action.payload, ...newArray];
+        }
+      );
   },
 });
 

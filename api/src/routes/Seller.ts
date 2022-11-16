@@ -1,7 +1,7 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
-import { User as User_Type} from "../models/User";
+import { User as User_Type } from "../models/User";
 
 const router = Router();
 const { Seller, User } = Models;
@@ -54,13 +54,15 @@ router.post(
   "/:userId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
-    const {userId } = req.params
+      const { userId } = req.params;
       if (userId) {
-        const user = await User.findByPk(userId) as User_Type | null;
-      if(user){
-        user.createSeller()
-      }
-        return res.status(201).send(user);
+        const user = (await User.findByPk(userId)) as User_Type | null;
+        if (user) {
+          await user.createSeller();
+        }
+        return res
+          .status(201)
+          .send(await User.findByPk(userId, { include: Seller }));
       }
     } catch (error) {
       console.log(error);

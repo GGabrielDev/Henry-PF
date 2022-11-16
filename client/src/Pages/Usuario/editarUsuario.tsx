@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Navbarlanding from "../../components/Navbarlanding";
+import NavbarLandingFuera from "../../components/NavbarLandingFuera";
 import {
   getUserById,
   UserType,
@@ -63,7 +63,7 @@ export default function EditarUsuario() {
     <>
       <ThemeProvider theme={ThemesLanding}>
         <PublicarContainer>
-          <Navbarlanding />
+          <NavbarLandingFuera />
           {detalleUsuario.id ? (
             <AddProduct>
               <h1 className="addproduct-title">Editar Tu Perfil</h1>

@@ -16,7 +16,7 @@ const { selectUser } = selectors;
 
 const MenuUsuario = () => {
   const usuario = useAppSelector(selectUser) as UserType;
-  const {isAuthenticated, user} = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   return (
     <ThemeProvider theme={ThemesLanding}>
       <MenuUsuarioContainer>
@@ -34,45 +34,46 @@ const MenuUsuario = () => {
           <div className="menu__sections">
             <NavLink to="/usuario/general" className="menu__sections-name">
               <span>General</span>
-            </NavLink>            
+            </NavLink>
             <NavLink to="/usuario/favoritos" className="menu__sections-name">
               <span>Favoritos</span>
             </NavLink>
           </div>
-          { isAuthenticated && usuario.sellerId !== null ?
-           <>
-           <div className="menu__title">
-           Vendedor <AiOutlineForm className="user__icon " />
-          </div>
-         <div className="menu__sections">
-           <NavLink to="/usuario/editar/producto" className="menu__sections-name">
-             <span>Mis Productos</span>
-           </NavLink>
-         </div> 
-         </>
-         :
-         <></>
-          }
-          {isAuthenticated && user?.email === "jcg_95_9@hotmail.com" ?
-          <>
-          <div className="menu__title">
-          Henry Admin <AiOutlineForm className="user__icon " />
-        </div>
-        <div className="menu__sections">
-          <NavLink to="/usuario/usuarios" className="menu__sections-name">
-            <span>Usuarios</span>
-          </NavLink>
-        </div>
-        <div className="menu__sections">
-          <NavLink to="/usuario/tiendas" className="menu__sections-name">
-            <span>Tiendas</span>
-          </NavLink>
-        </div>
-        </> :
-        null
-        }
-          
-          
+          {isAuthenticated && usuario.sellerId !== null ? (
+            <>
+              <div className="menu__title">
+                Vendedor <AiOutlineForm className="user__icon " />
+              </div>
+              <div className="menu__sections">
+                <NavLink
+                  to="/usuario/editar/producto"
+                  className="menu__sections-name"
+                >
+                  <span>Mis Productos</span>
+                </NavLink>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+          {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+            <>
+              <div className="menu__title">
+                Henry Admin <AiOutlineForm className="user__icon " />
+              </div>
+              <div className="menu__sections">
+                <NavLink to="/usuario/usuarios" className="menu__sections-name">
+                  <span>Usuarios</span>
+                </NavLink>
+              </div>
+              <div className="menu__sections">
+                <NavLink to="/usuario/tiendas" className="menu__sections-name">
+                  <span>Tiendas</span>
+                </NavLink>
+              </div>
+            </>
+          ) : null}
+
           {/* <NavLink to="/usuario/editar" className="menu__sections-name">
             <span>Mecador Pago</span>
             </NavLink>

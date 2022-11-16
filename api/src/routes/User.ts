@@ -4,11 +4,11 @@ import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 
 const router = Router();
-const { User } = Models;
+const { User, Seller } = Models;
 
 type UserParams = {
   userId: string;
-  email:string;
+  email: string;
 };
 
 type UserQuery = {};
@@ -23,7 +23,6 @@ type UserBody = {
   address: string;
   imagenDePerfil: string | null;
   isPremium: string;
-  
 };
 
 type RouteRequest = Request<UserParams, UserQuery, UserBody>;
@@ -34,11 +33,28 @@ router.get(
     try {
       const { email } = req.params;
 
-      const result = await User.findOne({where: {email}})
+      const result = await User.findOne({ where: { email } });
       if (!result) {
         throw new HttpException(404, "No User belongs to this email");
       }
       return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const result = await User.findAll({ include: [Seller] });
+
+      if (result.length === 0) {
+        return res.status(204).send("No entries have been found.");
+      }
+
+      return res.status(200).send({ amount: result.length, result });
     } catch (error) {
       next(error);
     }
@@ -60,9 +76,7 @@ router.post(
         imagenDePerfil,
       } = req.body;
 
-      if (
-        email 
-      ) {
+      if (email) {
         const result = await User.create({
           firstName,
           lastName,
@@ -102,10 +116,12 @@ router.put(
         "phoneNumber",
         "address",
         "imagenDePerfil",
-        "isPremium"
+        "isPremium",
       ];
       const arrayBody = Object.entries(req.body).filter((value) =>
-        possibleValues.find((possibleValue) => possibleValue === value[0] && value[1])
+        possibleValues.find(
+          (possibleValue) => possibleValue === value[0] && value[1]
+        )
       );
 
       if (arrayBody.length === 0) {
@@ -116,7 +132,7 @@ router.put(
       }
 
       const body = Object.fromEntries(arrayBody);
-      console.log(body)
+      console.log(body);
       if (!userId) {
         throw new HttpException(400, "The User ID is missing in the request");
       }
@@ -144,7 +160,6 @@ router.put(
       console.log(error);
       next(error);
     }
-    
   }
 );
 

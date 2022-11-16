@@ -1,8 +1,8 @@
 import {
   Association,
-//  BelongsToGetAssociationMixin,
-//  BelongsToSetAssociationMixin,
-//  BelongsToCreateAssociationMixin,
+  //  BelongsToGetAssociationMixin,
+  //  BelongsToSetAssociationMixin,
+  //  BelongsToCreateAssociationMixin,
   CreationOptional,
   DataTypes,
   ForeignKey,
@@ -34,7 +34,7 @@ export class Seller extends Model<
   InferCreationAttributes<Seller>
 > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
-  declare id: CreationOptional<number>;
+  declare id: CreationOptional<string>;
   declare nombreNegocio: string;
   declare imageLogo: string | null;
   declare categorias: string;
@@ -62,7 +62,10 @@ export class Seller extends Model<
   declare addProduct: HasManyAddAssociationMixin<Product, Product["id"]>;
   declare addProducts: HasManyAddAssociationsMixin<Product, Product["id"]>;
   declare removeProduct: HasManyRemoveAssociationMixin<Product, Product["id"]>;
-  declare removeProducts: HasManyRemoveAssociationsMixin<Product, Product["id"]>;
+  declare removeProducts: HasManyRemoveAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
   declare createProduct: HasManyCreateAssociationMixin<Product>;
 
   // You can also pre-declare possible inclusions, these will only be populated if you
@@ -81,8 +84,8 @@ module.exports = (sequelize: Sequelize) => {
   Seller.init(
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
 
@@ -103,13 +106,21 @@ module.exports = (sequelize: Sequelize) => {
       },
 
       categorias: {
-        type: DataTypes.ENUM("Gastronomia", "Entretenimiento", "Servicios", "Tecnologia", "Vestimenta", "Educacion", "No esta especificado"),
+        type: DataTypes.ENUM(
+          "Gastronomia",
+          "Entretenimiento",
+          "Servicios",
+          "Tecnologia",
+          "Vestimenta",
+          "Educacion",
+          "No esta especificado"
+        ),
         defaultValue: "No esta especificado",
       },
 
-      template_page:{
-        type:DataTypes.ENUM("1","2","3"),
-        defaultValue:"1",
+      template_page: {
+        type: DataTypes.ENUM("1", "2", "3"),
+        defaultValue: "1",
       },
 
       suspended: {
@@ -118,13 +129,13 @@ module.exports = (sequelize: Sequelize) => {
         allowNull: false,
       },
 
-      paymentId:{
-        type: DataTypes.STRING, 
+      paymentId: {
+        type: DataTypes.STRING,
         defaultValue: null,
       },
 
-      description:{
-        type:DataTypes.STRING,
+      description: {
+        type: DataTypes.STRING,
         defaultValue: null,
       },
 
@@ -146,5 +157,3 @@ module.exports = (sequelize: Sequelize) => {
     }
   );
 };
-
-

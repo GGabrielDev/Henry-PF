@@ -36,13 +36,14 @@ export class Seller extends Model<
 > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   declare id: CreationOptional<string>;
-  declare nombreNegocio: string;
+  declare nombreUrl: string | null;
+  declare nombreNegocio: string | null;
   declare imageLogo: string | null;
-  declare categorias: string;
-  declare template_page: string;
+  declare categorias: string | null;
+  declare template_page: string | null;
   declare suspended: boolean;
-  declare paymentId: string;
-  declare description: string;
+  declare paymentId: string | null;
+  declare description: string | null;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -96,12 +97,17 @@ module.exports = (sequelize: Sequelize) => {
         primaryKey: true,
       },
 
-      nombreNegocio: {
+      nombreUrl: {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
           isAlpha: true,
         },
+      },
+
+      nombreNegocio: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
 
       imageLogo: {
@@ -138,11 +144,13 @@ module.exports = (sequelize: Sequelize) => {
 
       paymentId: {
         type: DataTypes.STRING,
+				allowNull: true,
         defaultValue: null,
       },
 
       description: {
         type: DataTypes.STRING,
+				allowNull: true,
         defaultValue: null,
       },
 

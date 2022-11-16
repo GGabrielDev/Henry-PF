@@ -12,6 +12,7 @@ const { Product, Review, User } = Models;
 
 type ProductParams = {
   productId: string;
+  sellerId: string;
 };
 
 type ProductQuery = {
@@ -51,6 +52,30 @@ router.get(
           Product.associations.categories,
           Product.associations.reviews,
         ],
+      });
+
+      if (result.length === 0) {
+        return res.status(204).send("No entries have been found.");
+      }
+
+      return res.status(200).send({ amount: result.length, result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/shop/:sellerId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const { sellerId } = req.params;
+
+      const result = await Product.findAll({
+        where: {
+          sellerId,
+        },
+        include: [Product.associations.categories],
       });
 
       if (result.length === 0) {
@@ -121,7 +146,7 @@ router.get(
 router.post(
   "/",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
-    console.log(req.body)
+    console.log(req.body);
     try {
       const {
         name,
@@ -148,6 +173,52 @@ router.post(
         })) as Product_Type;
 
         console.log(result);
+        result.addCategories(categories.map((value) => value.id));
+        return res.status(201).send(
+          await Product.findByPk(result.id, {
+            include: [
+              Product.associations.categories,
+              Product.associations.reviews,
+            ],
+          })
+        );
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/:sellerId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    const {sellerId} = req.params
+    try {
+      const {
+        name,
+        description,
+        price_dollar,
+        price_local,
+        stock,
+        image,
+        suspended,
+        size,
+        categories,
+      } = req.body;
+
+      if (name || description || price_local || suspended || categories) {
+        const result = (await Product.create({
+          name,
+          description,
+          price_dollar,
+          price_local,
+          stock,
+          image,
+          suspended,
+          size,
+        })) as Product_Type;
+        result.setSeller(sellerId)
         result.addCategories(categories.map((value) => value.id));
         return res.status(201).send(
           await Product.findByPk(result.id, {

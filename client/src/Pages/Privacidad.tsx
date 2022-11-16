@@ -2,10 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Footerlanding from "../components/Footerlanding";
+import { ThemesLanding } from "../components/ThemesLanding";
+import { ThemeProvider } from "styled-components";
 
 const Privacidad = () => {
   return (
     <Privacidat>
+         <ThemeProvider theme={ThemesLanding}>
       <div className="Terminosycondiciones">
         <div className="headerterms">
           <Link to="/">
@@ -174,6 +177,7 @@ const Privacidad = () => {
         </div>
       </div>
       <Footerlanding />
+      </ThemeProvider>
     </Privacidat>
   );
 };

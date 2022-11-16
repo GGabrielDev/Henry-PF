@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { clear } from "console";
 import { RootState } from "../../app/store";
+import backAxios from "../../helpers/Axios";
 
 export type SellerType = BaseSellerType & {
   id: string | null;
@@ -57,8 +58,8 @@ const initialState: SliceState = {
 export const getSellerByName = createAsyncThunk(
   "seller/getSellerByName",
   async (nombreNegocio: string) => {
-    const res = await axios.get(
-      `http://localhost:3001/sellers/shop/${nombreNegocio}`
+    const res = await backAxios.get(
+      `/sellers/shop/${nombreNegocio}`
     );
     return res.data;
   }
@@ -67,7 +68,7 @@ export const getSellerByName = createAsyncThunk(
 export const getSellerById = createAsyncThunk(
   "seller/getSellerById",
   async (id: number) => {
-    const res = await axios.get(`http://localhost:3001/sellers/${id}`);
+    const res = await axios.get(`/sellers/${id}`);
     return res.data;
   }
 );
@@ -75,7 +76,7 @@ export const getSellerById = createAsyncThunk(
 export const createSeller = createAsyncThunk(
   "seller/createSeller",
   async (seller: BaseSellerType) => {
-    const res = await axios.post(`http://localhost:3001/sellers`, seller);
+    const res = await axios.post(`/sellers`, seller);
     return res.data;
   }
 );
@@ -84,7 +85,7 @@ export const editSeller = createAsyncThunk(
   "seller/editSeller",
   async (seller: SellerType) => {
     const { id, ...rest } = seller;
-    const res = await axios.put(`http://localhost:3001/sellers/${id}`, {
+    const res = await axios.put(`/sellers/${id}`, {
       ...rest,
     });
     return res.data;

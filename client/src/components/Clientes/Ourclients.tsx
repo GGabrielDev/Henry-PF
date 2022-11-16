@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { projectsData } from "./Data";
 import { projectsNav } from "./Data";
+import axios from "axios";
 
 const Ourclients = () => {
   const [item, setItem] = useState({ name: "todas" });
@@ -17,7 +18,14 @@ const Ourclients = () => {
   const [category, setCategory] = useState("DEFAULT");
   const [error, setError] = useState<any>([]);
 
+  const data = async () => {
+    const res = await axios.get("http://localhost:3001/sellers");
+    console.log(res.data);
+    return res.data;
+  };
+
   useEffect(() => {
+    data();
     if (item.name === "todas") {
       setProjects(projectsData);
     } else {

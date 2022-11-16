@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import axios from "axios";
 import { UserType } from "../users/userSlice";
+import backAxios from "../../helpers/Axios";
 
 export type BaseProductType = {
   name: string;
@@ -12,8 +13,7 @@ export type BaseProductType = {
   suspended: boolean;
   categories: any[];
   sellerId: string | null;
-
-}
+};
 export type ProductType = BaseProductType & {
   id: string;
   price_dolar: number | null | undefined;
@@ -66,7 +66,7 @@ export const initialState: SliceState = {
 export const createProduct = createAsyncThunk(
   "product/createProduct",
   async (product: BaseProductType) => {
-    const res = await axios.post(`http://localhost:3001/products`, {
+    const res = await backAxios.post(`/products`, {
       product,
     });
     return res.data;
@@ -75,7 +75,7 @@ export const createProduct = createAsyncThunk(
 
 export const getProducts = createAsyncThunk("product/getProducts", async () => {
   try {
-    const res = await axios.get("http://localhost:3001/products");
+    const res = await backAxios.get("/products");
 
     return res.data.result;
   } catch (error) {
@@ -87,9 +87,7 @@ export const getProductsBySellerId = createAsyncThunk(
   "product/getProductsBySellerId",
   async (sellerId: string) => {
     try {
-      const res = await axios.get(
-        `http://localhost:3001/products/shops/${sellerId}`
-      );
+      const res = await backAxios.get(`/products/shops/${sellerId}`);
 
       return res.data.result;
     } catch (error) {
@@ -102,9 +100,7 @@ export const getProductId = createAsyncThunk(
   "product/getProductId",
   async (productId: string | undefined) => {
     try {
-      const res = await axios.get(
-        `http://localhost:3001/products/${productId}`
-      );
+      const res = await backAxios.get(`/products/${productId}`);
 
       return res.data;
     } catch (error) {
@@ -117,9 +113,7 @@ export const searchProduct = createAsyncThunk(
   "product/searchProduct",
   async (name: string | undefined) => {
     try {
-      const res = await axios.get(
-        `http://localhost:3001/products?name=${name}`
-      );
+      const res = await backAxios.get(`/products?name=${name}`);
       return res.data.result;
     } catch (error) {
       console.log(error);
@@ -131,12 +125,9 @@ export const editProduct = createAsyncThunk(
   "product/editProduct",
   async (product: ProductType) => {
     const { id, ...rest } = product;
-    const res = await axios.put(
-      `http://localhost:3001/products/${product.id}`,
-      {
-        ...rest,
-      }
-    );
+    const res = await backAxios.put(`/products/${product.id}`, {
+      ...rest,
+    });
     return res.data;
   }
 );
@@ -150,7 +141,7 @@ export const createReview = createAsyncThunk(
   }: Record<"userId" | "productId", string> & {
     review: Partial<ReviewType>;
   }) => {
-    const res = await axios.post("http://localhost:3001/reviews", review, {
+    const res = await backAxios.post("/reviews", review, {
       params: {
         userId,
         productId,
@@ -163,21 +154,17 @@ export const createReview = createAsyncThunk(
 export const editReview = createAsyncThunk(
   "product/editReview",
   async (review: Partial<ReviewType>) => {
-    const res = await axios.put(
-      `http://localhost:3001/reviews/${review.id}`,
-      review
-    );
+    const res = await backAxios.put(`/reviews/${review.id}`, review);
     return res.data;
   }
 );
 
-
 export const createProductBySellerId = createAsyncThunk(
   "product/createProductBySellerId",
-  async (product: BaseProductType & {sellerId: string}) => {
-    const { sellerId, ...rest} = product
-    const res = await axios.post(`http://localhost:3001/products/${sellerId}`, {
-       ...rest
+  async (product: BaseProductType & { sellerId: string }) => {
+    const { sellerId, ...rest } = product;
+    const res = await backAxios.post(`/products/${sellerId}`, {
+      ...rest,
     });
     return res.data;
   }

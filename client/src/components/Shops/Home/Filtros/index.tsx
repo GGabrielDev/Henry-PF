@@ -1,4 +1,4 @@
-import  { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../../app/hooks";
 import {
@@ -35,11 +35,13 @@ const Filtros = () => {
   }, [search, dispatch]);
   return (
     <FiltrosContainer>
-      {(isAuthenticated && usuario.sellerId !== null) ?
+      {isAuthenticated && usuario.sellerId !== null ? (
         <Link to="publicar" className="buttonfilter-container">
-        <button className="buttonfilter">+</button>
-      </Link>:      
-      <></>}     
+          <button className="buttonfilter">+</button>
+        </Link>
+      ) : (
+        <></>
+      )}
       <div className="inputcontainerfilet">
         <input
           placeholder="Productos"
@@ -155,7 +157,7 @@ const FiltrosContainer = styled.div`
   @media screen and (max-width: 400px) {
     position: relative;
     margin-bottom: 20px;
-    justify-content: space-between;
+    justify-content: center;
     .buttonfilter {
       width: 120px;
       select {

@@ -9,12 +9,12 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { InputState, ErrorState, upLoadImage } from "../../helpers/Cloudinary";
 import { selectors } from "../../features/seller/sellerSlice";
 
-const {selectSeller} = selectors;
+const { selectSeller } = selectors;
 
 const Publicar = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
-  const seller = useAppSelector(selectSeller)
+  const seller = useAppSelector(selectSeller);
   const AlertaCorrecta = () => {
     Swal.fire({
       title: "Producto creado",

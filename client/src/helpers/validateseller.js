@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
+import { InputStateSeller, ErrorStateSeller } from "./Cloudinary";
 
-function ValidateSeller(input) {
+function ValidateSeller(input: InputStateSeller): ErrorStateSeller {
   let error = {};
 
   // ALERTA PARA CUANDO FALTAN DATOS
@@ -13,32 +14,29 @@ function ValidateSeller(input) {
       confirmButtonText: "Perfecto",
     });
   };
- 
 
   if (!input.nombreNegocio.trim()) {
-    error.nombreNegocio = "Se requiere un nombre";  }
+    error.nombreNegocio = "Se requiere un nombre";
+  }
 
   if (!input.imageLogo) {
-        error.imageLogo = "Falta seleccionar una imagen";
-      }
+    error.imageLogo = "Falta seleccionar una imagen";
+  }
 
   if (!input.description.trim()) {
     error.description = "Se requiere una descripcion";
   }
 
-  if(!input.categorias){
-    error.categorias = "Elige una categoria"
-  }
- 
-  if(!input.template_page){
-    error.template_page = "Por favor seleccione un template"
+  if (!input.categorias) {
+    error.categorias = "Elige una categoria";
   }
 
-
-  
- 
+  if (!input.template_page) {
+    error.template_page = "Por favor seleccione un template";
+  }
 
   return error;
 }
 
 export default ValidateSeller;
+

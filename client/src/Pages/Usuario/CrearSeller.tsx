@@ -4,191 +4,246 @@ import Navbar from "../../components/Tugamer/Navbar";
 import ValidateSeller from "../../helpers/validateseller";
 
 import Swal from "sweetalert2";
-import { createSeller} from "../../features/sellers/sellerSlice"
+import { createSeller } from "../../features/sellers/sellerSlice";
 import { useAppDispatch } from "../../app/hooks";
-import { InputStateSeller, ErrorStateSeller, upLoadImageSeller } from "../../helpers/Cloudinary"
-
+import {
+  InputStateSeller,
+  ErrorStateSeller,
+  upLoadImageSeller,
+} from "../../helpers/Cloudinary";
 
 const CreateSeller = () => {
-    const [loading, setLoading] = useState(false);
-    
+  const [loading, setLoading] = useState(false);
 
-    const AlertaCorrecta = () => {
-        Swal.fire({
-            title: "Tienda Creada!",
-            text: "Se ha convertido en un vendedor de manera exitosa",
-            icon: "success",
-            confirmButtonText: "Perfecto",
-        });
-    };
-    // ALERTA PARA CUANDO FALTAN DATOS
+  const AlertaCorrecta = () => {
+    Swal.fire({
+      title: "Tienda Creada!",
+      text: "Se ha convertido en un vendedor de manera exitosa",
+      icon: "success",
+      confirmButtonText: "Perfecto",
+    });
+  };
+  // ALERTA PARA CUANDO FALTAN DATOS
 
-    const AlertaIncorrecta = () => {
-        Swal.fire({
-            title: "Error",
-            text: "Faltan datos",
-            icon: "error",
-            confirmButtonText: "Ok!",
-        });
-    };
+  const AlertaIncorrecta = () => {
+    Swal.fire({
+      title: "Error",
+      text: "Faltan datos",
+      icon: "error",
+      confirmButtonText: "Ok!",
+    });
+  };
 
-    const [err, setErr] = useState<ErrorStateSeller>({
-        nombreNegocio: "",
-        imageLogo: "",
-        categorias: "",
-        template_page: "",
-        description: "",
+  const [err, setErr] = useState<ErrorStateSeller>({
+    nombreUrl: "",
+    nombreNegocio: "",
+    imageLogo: "",
+    categorias: "",
+    template_page: "",
+    description: "",
+  });
+
+  const [input, setInput] = useState<InputStateSeller>({
+    nombreUrl: "",
+    nombreNegocio: "",
+    imageLogo: "",
+    categorias: "No esta especificado",
+    template_page: null,
+    description: "",
+    paymentId: "",
+  });
+
+  const dispatch = useAppDispatch();
+
+  const handleChange = (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setInput({ ...input, [event.target.name]: event.target.value });
+    setErr(
+      ValidateSeller({ ...input, [event.target.name]: event.target.value })
+    );
+  };
+
+  const handleSubmit = (event: SyntheticEvent) => {
+    setErr(ValidateSeller(input));
+    event.preventDefault();
+    setInput({
+      nombreUrl: "",
+      nombreNegocio: "",
+      imageLogo: "",
+      template_page: null,
+      description: "",
+      categorias: "No esta especificado",
+      paymentId: "",
     });
 
-    const [input, setInput] = useState<InputStateSeller>({
-        nombreNegocio: "",
-        imageLogo: "",
-        categorias: "No esta especificado",
-        template_page: null,
-        description: "",
-        paymentId: ""
-    });
-
-    const dispatch = useAppDispatch();
-
-    const handleChange = (
-        event: ChangeEvent<
-            HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    if (
+      input.nombreUrl === "" ||
+      input.nombreNegocio === "" ||
+      input.imageLogo === "" ||
+      input.template_page === null ||
+      input.description === "" ||
+      input.categorias === "No esta especificado"
+      //   ) {
+      //     alert("Faltan agregar datos");
+      //   } else {
+      //     alert("Producto agregado exitosamente!");
+      //     dispatch(createProduct(input));
+      //   }
+      // };
+    ) {
+      AlertaIncorrecta();
+    } else {
+      AlertaCorrecta();
+      // event.target.reset()
+      // document.getElementById("form-public").reset();
+      dispatch(createSeller(input));
+    }
+  };
+  return (
+    <PublicarContainer>
+      <Navbar />
+      <AddProduct>
+        <h1 className="addproduct-title">Crea tu pagina</h1>
+        <form
+          onSubmit={handleSubmit}
+          action=""
+          id="form-public"
+          className="formularioproduct"
         >
-    ) => {
-        setInput({ ...input, [event.target.name]: event.target.value });
-        setErr(ValidateSeller({ ...input, [event.target.name]: event.target.value }));
-    };
-
-    const handleSubmit = (event: SyntheticEvent) => {
-        setErr(ValidateSeller(input));
-        event.preventDefault();
-        setInput({
-            nombreNegocio: "",
-            imageLogo: "",
-            template_page: null,
-            description: "",
-            categorias: "No esta especificado",
-            paymentId: "",
-        });
-
-        if (
-            input.nombreNegocio === "" ||
-            input.imageLogo === "" ||
-            input.template_page === null ||
-            input.description === "" ||
-            input.categorias === "No esta especificado"
-            //   ) {
-            //     alert("Faltan agregar datos");
-            //   } else {
-            //     alert("Producto agregado exitosamente!");
-            //     dispatch(createProduct(input));
-            //   }
-            // };
-        ) {
-            AlertaIncorrecta();
-        } else {
-            AlertaCorrecta();
-            // event.target.reset()
-            // document.getElementById("form-public").reset();
-            dispatch(createSeller(input));
-        }
-    };
-    return (
-        <PublicarContainer>
-            <Navbar />
-            <AddProduct>
-                <h1 className="addproduct-title">Crea tu pagina</h1>
-                <form
-                    onSubmit={handleSubmit}
-                    action=""
-                    id="form-public"
-                    className="formularioproduct"
-                >
-                    <div className="productinfo">
-                        <div className="productinfo__left">
-                            <h5 className="campo__obligatorio">
-                                Todos los campos son obligatorios
-                            </h5>
-                            <div className="inputinfo">
-                                <label htmlFor="">Nombre del producto:</label>
-                                <input value={"" + input.nombreNegocio + ""} name="nombreNegocio" type="text" onChange={handleChange} />
-                                {err.nombreNegocio ? <p className="errortext"> {err.nombreNegocio} </p> : ""}
-                            </div>
-                            {/*<div className="inputinfo">
+          <div className="productinfo">
+            <div className="productinfo__left">
+              <h5 className="campo__obligatorio">
+                Todos los campos son obligatorios
+              </h5>
+              <div className="inputinfo">
+                <label htmlFor="">Url del negocio:</label>
+                <input
+                  value={"" + input.nombreUrl + ""}
+                  name="nombreUrl"
+                  type="text"
+                  onChange={handleChange}
+                />
+                {err.nombreUrl ? (
+                  <p className="errortext"> {err.nombreUrl} </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="inputinfo">
+                <label htmlFor="">Nombre del producto:</label>
+                <input
+                  value={"" + input.nombreNegocio + ""}
+                  name="nombreNegocio"
+                  type="text"
+                  onChange={handleChange}
+                />
+                {err.nombreNegocio ? (
+                  <p className="errortext"> {err.nombreNegocio} </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              {/*<div className="inputinfo">
                 <label htmlFor="">Categoria:</label>
                 <input name="categories" type="text" onChange={handleChange} />
                 </div>*/}
-                            <div className="productinfo__Right">
-                                <div className="imageupload">
-                                    <input
-                                        type="file"
-                                        name="imageLogo"
-                                        onChange={upLoadImageSeller(input, setLoading, setInput, setErr)}
-                                    />
-                                </div>
-                                {err.imageLogo ? <p className="errortext"> {err.imageLogo} </p> : ""}
-                            </div>
-                            <div className="inputinfo ultimo__select">
-                                <label htmlFor="template_page">Seleccione el template de su pagina:</label>
-                                <select
-                                    value={"" + input.template_page + ""}
-                                    name="suspended"
-                                    id=""
-                                    onChange={handleChange}
-                                >
-                                    <option value="null" disabled>
-                                        Elige Uno
-                                    </option>
-                                    <option value="1">Rojo</option>
-                                    <option value="2">Verde</option>
-                                    <option value="3">Azul</option>
-                                </select>
-                                {err.template_page ? (
-                                    <p className="errortext"> {err.template_page} </p>
-                                ) : (
-                                    ""
-                                )}
-                            </div>
+              <div className="productinfo__Right">
+                <div className="imageupload">
+                  <input
+                    type="file"
+                    name="imageLogo"
+                    onChange={upLoadImageSeller(
+                      input,
+                      setLoading,
+                      setInput,
+                      setErr
+                    )}
+                  />
+                </div>
+                {err.imageLogo ? (
+                  <p className="errortext"> {err.imageLogo} </p>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="inputinfo ultimo__select">
+                <label htmlFor="template_page">
+                  Seleccione el template de su pagina:
+                </label>
+                <select
+                  value={"" + input.template_page + ""}
+                  name="suspended"
+                  id=""
+                  onChange={handleChange}
+                >
+                  <option value="null" disabled>
+                    Elige Uno
+                  </option>
+                  <option value="1">Rojo</option>
+                  <option value="2">Verde</option>
+                  <option value="3">Azul</option>
+                </select>
+                {err.template_page ? (
+                  <p className="errortext"> {err.template_page} </p>
+                ) : (
+                  ""
+                )}
+              </div>
 
-                            <div className="inputinfo">
-                                <label htmlFor="description">Descripcion de su tienda:</label>
-                                <input value={""+input.description+""} name="description" type="text" onChange={handleChange} />
-                                {err.description ? <p className="errortext"> {err.description} </p> : ""}
-                            </div>
+              <div className="inputinfo">
+                <label htmlFor="description">Descripcion de su tienda:</label>
+                <input
+                  value={"" + input.description + ""}
+                  name="description"
+                  type="text"
+                  onChange={handleChange}
+                />
+                {err.description ? (
+                  <p className="errortext"> {err.description} </p>
+                ) : (
+                  ""
+                )}
+              </div>
 
-                            <div className="inputinfo ultimo__select">
-                                <label htmlFor="categorias">A que categoria pertenece su tienda:</label>
-                                <select
-                                    value={"" + input.categorias + ""}
-                                    name="suspended"
-                                    id=""
-                                    onChange={handleChange}
-                                >
-                                    <option value="null" disabled>
-                                        Elige Uno
-                                    </option>
-                                    <option value="Gastronomia">Gastronomia</option>
-                                    <option value="Entretenimiento">Entretenimiento</option>
-                                    <option value="servicios">Servicios</option>
-                                    <option value="Tecnologia">Tecnologia</option>
-                                    <option value="Vestimenta">Vestimenta</option>
-                                    <option value="Educacion">Educación</option>
-                                    <option value="No esta especificado">No esta especificado</option>
-                                </select>
-                                {err.categorias ? (
-                                    <p className="errortext"> {err.categorias} </p>
-                                ) : (
-                                    ""
-                                )}
-                            </div>                         
-                        </div>
-                    </div>
-                    <button className="submitproduct">Submit</button>
-                </form>
-            </AddProduct>
-        </PublicarContainer>
-    );
+              <div className="inputinfo ultimo__select">
+                <label htmlFor="categorias">
+                  A que categoria pertenece su tienda:
+                </label>
+                <select
+                  value={"" + input.categorias + ""}
+                  name="suspended"
+                  id=""
+                  onChange={handleChange}
+                >
+                  <option value="null" disabled>
+                    Elige Uno
+                  </option>
+                  <option value="Gastronomia">Gastronomia</option>
+                  <option value="Entretenimiento">Entretenimiento</option>
+                  <option value="servicios">Servicios</option>
+                  <option value="Tecnologia">Tecnologia</option>
+                  <option value="Vestimenta">Vestimenta</option>
+                  <option value="Educacion">Educación</option>
+                  <option value="No esta especificado">
+                    No esta especificado
+                  </option>
+                </select>
+                {err.categorias ? (
+                  <p className="errortext"> {err.categorias} </p>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </div>
+          <button className="submitproduct">Submit</button>
+        </form>
+      </AddProduct>
+    </PublicarContainer>
+  );
 };
 
 export const PublicarContainer = styled.div`
@@ -366,3 +421,4 @@ export const AddProduct = styled.div`
 `;
 
 export default CreateSeller;
+

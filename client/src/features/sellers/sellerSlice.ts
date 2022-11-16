@@ -1,147 +1,176 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { stringify } from "querystring";
+import { clear } from "console";
 import { RootState } from "../../app/store";
 
-
-
 export type SellerType = BaseSellerType & {
-  id: number;
+  id: string | null;
+  suspended: boolean;
+  paymentId: string | null;
 };
 
 export type BaseSellerType = {
-nombreNegocio: string | null;
-imageLogo: string | null;
-categorias: "Gastronomia" | "Entretenimiento" | "Servicios" | "Tecnologia" | "Vestimenta" | "Educacion" | "No esta especificado"|null;
-template_page: "1"|"2"|"3"|null;
-paymentId:string | null;
-description: string | null;
-
-}
+  nombreUrl: string | null;
+  nombreNegocio: string | null;
+  imageLogo: string | null;
+  categorias:
+    | "Gastronomia"
+    | "Entretenimiento"
+    | "Servicios"
+    | "Tecnologia"
+    | "Vestimenta"
+    | "Educacion"
+    | "No esta especificado"
+    | null;
+  template_page: "1" | "2" | "3" | null;
+  description: string | null;
+};
 
 type SliceState = {
-  seller: SellerType | {};
+  seller: SellerType;
   error: {
-    code: number | null
-    message: string | null
-  }
-}
+    code: number | null;
+    message: string | null;
+  };
+};
+
+const clearSellerObject: SellerType = {
+  id: null,
+  nombreUrl: null,
+  nombreNegocio: null,
+  imageLogo: null,
+  categorias: null,
+  template_page: null,
+  paymentId: null,
+  suspended: false,
+  description: null,
+};
 
 const initialState: SliceState = {
-  seller: {},
+  seller: clearSellerObject,
   error: {
     code: null,
-    message: null
+    message: null,
+  },
+};
+
+export const getSellerByName = createAsyncThunk(
+  "seller/getSellerByName",
+  async (nombreNegocio: string) => {
+    const res = await axios.get(
+      `http://localhost:3001/sellers/shop/${nombreNegocio}`
+    );
+    return res.data;
   }
-}
+);
 
-export const getSellerByName = createAsyncThunk("seller/getSellerByName", async (nombreNegocio: string) => {
-  const res = await axios.get(`http://localhost:3001/sellers/${nombreNegocio}`)
-  return res.data
-})
+export const getSellerById = createAsyncThunk(
+  "seller/getSellerById",
+  async (id: number) => {
+    const res = await axios.get(`http://localhost:3001/sellers/${id}`);
+    return res.data;
+  }
+);
 
-export const getSellerById = createAsyncThunk("seller/getSellerById", async (id: number) => {
-    const res = await axios.get(`http://localhost:3001/sellers/${id}`)
-    return res.data
-  })
+export const createSeller = createAsyncThunk(
+  "seller/createSeller",
+  async (seller: BaseSellerType) => {
+    const res = await axios.post(`http://localhost:3001/sellers`, seller);
+    return res.data;
+  }
+);
 
-export const createSeller = createAsyncThunk("seller/createSeller", async (seller: BaseSellerType) => {
-  const res = await axios.post(`http://localhost:3001/sellers`, seller)
-  return res.data
-})
-
-export const editSeller = createAsyncThunk("seller/editSeller", async (seller: SellerType) => {
-  const { id,  ...rest } = seller;
-  const res = await axios.put(`http://localhost:3001/sellers/${id}`, {
-    ...rest
-  })
-  return res.data
-})
+export const editSeller = createAsyncThunk(
+  "seller/editSeller",
+  async (seller: SellerType) => {
+    const { id, ...rest } = seller;
+    const res = await axios.put(`http://localhost:3001/sellers/${id}`, {
+      ...rest,
+    });
+    return res.data;
+  }
+);
 
 export const userSlice = createSlice({
   name: "seller",
   initialState,
   reducers: {
-
-  }, extraReducers: (builder) => {
+    clearSeller: (state) => {
+      state.seller = clearSellerObject;
+    },
+  },
+  extraReducers: (builder) => {
     builder
       .addCase(
         getSellerByName.fulfilled,
         (state, action: PayloadAction<SellerType>) => {
-          state.seller = action.payload
-          state.error = {code: null, message:null}
+          state.seller = action.payload;
+          state.error = { code: null, message: null };
         }
       )
-    .addCase(
+      .addCase(
         getSellerByName.rejected,
-      (state, action: PayloadAction<any>) => {
-        state.error = {
-          code: 404,
-          message: "User not found"
+        (state, action: PayloadAction<any>) => {
+          state.error = {
+            code: 404,
+            message: "Seller not found",
+          };
         }
-      }
-    )
-    .addCase(
+      )
+      .addCase(
         getSellerById.fulfilled,
         (state, action: PayloadAction<SellerType>) => {
-          state.seller = action.payload
-          state.error = {code: null, message:null}
+          state.seller = action.payload;
+          state.error = { code: null, message: null };
         }
       )
-    .addCase(
-        getSellerById.rejected,
-      (state, action: PayloadAction<any>) => {
+      .addCase(getSellerById.rejected, (state, action: PayloadAction<any>) => {
         state.error = {
           code: 404,
-          message: "User not found"
-        }
-      }
-    )
+          message: "User not found",
+        };
+      })
 
-    .addCase(
+      .addCase(
         createSeller.fulfilled,
-      (state, action: PayloadAction<SellerType>) => {
-        state.seller = action.payload
-        state.error = {code: null, message:null}
-      }
-    )
-    .addCase(
-        createSeller.rejected,
-      (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<SellerType>) => {
+          state.seller = action.payload;
+          state.error = { code: null, message: null };
+        }
+      )
+      .addCase(createSeller.rejected, (state, action: PayloadAction<any>) => {
         state.error = {
           code: 500,
-          message: "An error ocurred while creating the seller"
-        }
-      }
-    )
-    .addCase(
+          message: "An error ocurred while creating the seller",
+        };
+      })
+      .addCase(
         editSeller.fulfilled,
-      (state, action: PayloadAction<SellerType>) => {
-        state.seller = action.payload
-        state.error = {code: null, message:null}
-      }
-    )
-    .addCase(
-        editSeller.rejected,
-      (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<SellerType>) => {
+          state.seller = action.payload;
+          state.error = { code: null, message: null };
+        }
+      )
+      .addCase(editSeller.rejected, (state, action: PayloadAction<any>) => {
         state.error = {
           code: 500,
-          message: "An error ocurred while editing the seller"
-        }
-      }
-    )
-  }
+          message: "An error ocurred while editing the seller",
+        };
+      });
+  },
 });
 
-const selectError = (state: RootState) => state.user.error
-const selectUser = (state: RootState) => state.user.user
-const {
+const selectError = (state: RootState) => state.seller.error;
+const selectSeller = (state: RootState) => state.seller.seller;
+const { clearSeller } = userSlice.actions;
 
-} = userSlice.actions;
-
-export const selectors = { selectError, selectUser};
+export const selectors = { selectError, selectSeller };
 export const actions = {
-  getSellerByName, getSellerById, editSeller, createSeller
+  getSellerByName,
+  getSellerById,
+  editSeller,
+  createSeller,
+  clearSeller,
 };
 export const helpers = {};
 

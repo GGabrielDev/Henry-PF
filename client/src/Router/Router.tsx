@@ -1,4 +1,4 @@
-import { Route, Routes, Outlet } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Landingpage from "../Pages/Landingpage";
 import Error from "../Pages/Error";
 import UserGeneral from "../Pages/Usuario/UserGeneral";
@@ -29,6 +29,7 @@ import EditSeller from "../Pages/Usuario/editarSeller";
 import UserEdit from "../Pages/Usuario/UserEdit";
 import VerUsuarios from "../Pages/Usuario/verUsuarios";
 import VerTiendas from "../Pages/Usuario/verTiendas";
+import ShopContext from "../Pages/Shop/ShopContext";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
@@ -57,7 +58,6 @@ const Router = () => {
     <Routes>
       <>
         <Route path="/" element={<Landingpage />} />
-        <Route path="/*" element={<Error />} />
         <Route path="/tugamer" element={<Tugamer />} />
         <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
         <Route path="/tugamer/*" element={<Error404 />} />
@@ -73,6 +73,10 @@ const Router = () => {
         <Route path="/checkout/premium" element={<CheckoutPremium />} />
         <Route path="/checkout/medium" element={<CheckoutMedium />} />
         <Route path="/checkout/basic" element={<CheckoutBasic />} />
+
+        <Route path="/shop/:shopName" element={<ShopContext />}>
+          <Route index element={<Tugamer />} />
+        </Route>
 
         {isAuthenticated ? (
           <>
@@ -115,6 +119,7 @@ const Router = () => {
           </>
         ) : null}
       </>
+        <Route path="/*" element={<Error />} />
     </Routes>
   );
 };

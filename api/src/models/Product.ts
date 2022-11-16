@@ -38,6 +38,7 @@ import { Review } from "./Review";
 import { Seller } from "./Seller";
 import { Product_Amount } from "./Product_Amount";
 import { User } from "./User";
+import { Recipt } from "./Recipt";
 
 export class Product extends Model<
   InferAttributes<Product>,

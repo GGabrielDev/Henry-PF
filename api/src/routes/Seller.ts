@@ -25,6 +25,19 @@ type SellerBody = {
 type RouteRequest = Request<SellerParams, SellerQuery, SellerBody>;
 
 router.get(
+  "/",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const result = await Seller.findAll();
+
+      return res.status(200).send({ amount: result.length, result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
   "/:sellerId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {

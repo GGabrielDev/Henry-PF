@@ -3,6 +3,13 @@ import { RootState } from "../../app/store";
 import axios from "axios";
 import { UserType } from "../users/userSlice";
 
+
+export type CategoryType = {
+  id: string;
+  name:string;
+  image:string | null;
+}
+
 export type BaseProductType = {
   name: string;
   stock: number;
@@ -182,6 +189,12 @@ export const createProductBySellerId = createAsyncThunk(
     return res.data;
   }
 );
+
+export const createCategory = createAsyncThunk("", async () =>{
+const res = await axios.post(`http://localhost:3001/products/`)
+})
+
+
 export const productSlice = createSlice({
   name: "product",
   initialState,

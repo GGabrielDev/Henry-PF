@@ -4,36 +4,37 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Navbarlanding from "../../components/Navbarlanding";
-import {getUserById, UserType, selectUser, editUser } from "../../features/users/userSlice";
+import {getSellerById, SellerType, selectors, editSeller } from "../../features/seller/sellerSlice";
 import { AddProduct, PublicarContainer } from "../Tugamer/Publicar";
 
+const { selectSeller } = selectors;
 
-export default function EditarUsuario() {
-  const [user, setChange] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    imagenDePerfil: "",
-    gender: null,
-    address: ""
+export default function EditarSeller() {
+  const [seller, setChange] = useState<Partial<SellerType>>({
+    nombreUrl: "",
+    nombreNegocio: "",
+    paymentId: "",
+    template_page: "1",
+    description: "",
+   
   });
   const dispatch = useAppDispatch();
   
-  const detalleUsuario = useAppSelector(selectUser) as UserType;
-  const { id } = detalleUsuario
+  const detalleSeller = useAppSelector(selectSeller) as SellerType;
+  const { id } = detalleSeller
   useEffect(() => {
-    console.log(detalleUsuario.id);
-    if(detalleUsuario.id){      
-      dispatch(getUserById(detalleUsuario.id));     
+  
+    if(detalleSeller.id){      
+      dispatch(getSellerById(detalleSeller.id));     
     }
-  }, [detalleUsuario.id])
+  }, [detalleSeller.id])
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setChange({ ...user, [e.target.name]: e.target.value })
+    setChange({ ...seller, [e.target.name]: e.target.value })
   };
   
-  const upLoadImage = async (e: any) => {
+  const upLoadImageLogo = async (e: any) => {
     e.preventDefault();
 
     const files = e.target.files;
@@ -50,7 +51,7 @@ export default function EditarUsuario() {
     );
     const file = await res.json();
 
-    setChange({ ...user, [e.target.name]: file.secure_url });
+    setChange({ ...seller, [e.target.name]: file.secure_url });
   }
   
   
@@ -58,54 +59,53 @@ export default function EditarUsuario() {
     <>
     <PublicarContainer>
     <Navbarlanding />
-    {detalleUsuario.id ? (
+    {detalleSeller.id ? (
     <AddProduct>
-      <h1 className="addproduct-title">Editar producto</h1>
+      <h1 className="addproduct-title">Editar Informacion de Vendedor</h1>
       <form className="formularioproduct">
         <div className="productinfo">
           <div className="productinfo__left">
             <div className="inputinfo">
-              <label htmlFor="firstName">Nombre:</label>
+              <label htmlFor="nombreUrl">Nombre que figura en la URL:</label>
               <input
-                name="firstName"
+                name="nombreUrl"
                 type="text"
-                placeholder={"" + detalleUsuario.firstName + ""}
+                placeholder={"" + detalleSeller.nombreUrl + ""}
                 onChange={handleChange}
               />
             </div>
             <div className="inputinfo">
-              <label htmlFor="lastName">Apellido:</label>
+              <label htmlFor="nombreNegocio">Nombre de la tienda:</label>
               <input
                 className="price_local__input"
-                name="lastName"
+                name="nombreNegocio"
                 type="text"
-                placeholder={"" + detalleUsuario.lastName + ""}
+                placeholder={"" + detalleSeller.nombreNegocio + ""}
                 onChange={handleChange}
               />
             </div>
             <div className="inputinfo">
-              <label htmlFor="phonenumber">Numero de Telefono:</label>
+              <label htmlFor="description">Escriba algo de su tienda para que figure en la pagina:</label>
               <textarea
                 name="phoneNumber"
-                placeholder={"" + detalleUsuario.phoneNumber + ""}
+                placeholder={"" + detalleSeller.description + ""}
                 onChange={handleChange}
               />
             </div>
             <div className="inputinfo ultimo__select">
-              <label htmlFor="gender">Genero:</label>
+              <label htmlFor="template_page">Template de pagina(Cambio de color):</label>
               <select
-                defaultValue={"No quiero decir"}
-                name="gender"
+                defaultValue="1"
+                name="template_page"
                 id=""
                 onChange={handleChange}
               >
-                <option value="No quiero decir">
+                <option value="3">
                   Elige Uno
                 </option>
-                <option value="M"> Hombre </option>
-                <option value="F"> Mujer </option>
-                <option value="No binario"> No Binario </option>
-                <option value="No quiero decir"> No quiero decir </option>
+                <option value="1"> Naranja Amarillento </option>
+                <option value="2"> Rojo Rosa </option>
+                <option value="3"> Azul </option>
               </select>
             </div>
           </div>
@@ -114,26 +114,17 @@ export default function EditarUsuario() {
               <input
                 type="file"
                 name="imagenDePerfil"
-                onChange={(e) => upLoadImage(e)}
-                alt={"" + detalleUsuario.imagenDePerfil + ""}
+                onChange={(e) => upLoadImageLogo(e)}
+                alt={"" + detalleSeller.imageLogo + ""}
               />
             </div>
           </div>
         </div>
-        <div className="inputinfo">
-              <label htmlFor="address">Direccion:</label>
-              <input
-                name="address"
-                type="text"
-                placeholder={"" + detalleUsuario.address + ""}
-                onChange={handleChange}
-              />
-            </div>
         <Link to="/usuario/general">
-          {detalleUsuario.id? 
+          {detalleSeller.id? 
           <button
             className="submitproduct"
-            onClick={() => dispatch(editUser({user, id}))} >
+            onClick={() => dispatch(editSeller({seller, id} as {seller: Partial<SellerType>, id:string}))} >
             Cambiar
           </button> 
           : 

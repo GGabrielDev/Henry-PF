@@ -66,7 +66,7 @@ export const getSellerByName = createAsyncThunk(
 
 export const getSellerById = createAsyncThunk(
   "seller/getSellerById",
-  async (id: number) => {
+  async (id: string) => {
     const res = await axios.get(`http://localhost:3001/sellers/${id}`);
     return res.data;
   }
@@ -82,10 +82,9 @@ export const createSeller = createAsyncThunk(
 
 export const editSeller = createAsyncThunk(
   "seller/editSeller",
-  async (seller: SellerType) => {
-    const { id, ...rest } = seller;
+  async ({seller, id}:{seller: Partial<SellerType>; id: string}) => {
     const res = await axios.put(`http://localhost:3001/sellers/${id}`, {
-      ...rest,
+      ...seller,
     });
     return res.data;
   }

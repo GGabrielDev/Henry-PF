@@ -17,6 +17,7 @@ import {
   NonAttribute,
   Sequelize,
   DataTypes,
+  UUIDV4,
 } from "sequelize";
 import path from "path";
 import { Product } from "./Product";
@@ -70,9 +71,8 @@ module.exports = (sequelize: Sequelize) => {
   Category_Product.init(
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        unique: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
 

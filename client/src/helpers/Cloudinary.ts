@@ -1,6 +1,7 @@
 import Validate from "./validate";
 import { SetStateAction, Dispatch } from "react";
 import ValidateSeller from "./validateseller";
+import ValidateCategories from "./validateCategories";
 
 export type InputState = {
   name: string;
@@ -13,6 +14,11 @@ export type InputState = {
   categories: any[];
   sellerId: string;
 };
+
+export type InputStateCategories = {
+  name:string;
+  image: string;
+}
 
 export type InputStateSeller = {
   nombreUrl: string | null;
@@ -43,6 +49,12 @@ export type ErrorStateSeller = Record<
   | "description"
   | "template_page",
   string
+>;
+
+export type ErrorStateCategories = Record<
+ | "name"
+ | "image",
+ string
 >;
 
 export const uploadToCloudinary = async (url: string) => {
@@ -93,5 +105,23 @@ export const upLoadImageSeller =
     setLoading(false);
     setInput({ ...input, [e.target.name]: file.secure_url });
     setErr(ValidateSeller({ ...input, [e.target.name]: e.target.value }));
+  };
+
+  export const upLoadImageCategorias =
+  (
+    input: InputStateCategories,
+    setLoading: Dispatch<SetStateAction<boolean>>,
+    setInput: Dispatch<SetStateAction<InputStateCategories>>,
+    setErr: Dispatch<SetStateAction<ErrorStateCategories>>
+  ) =>
+  async (e: any) => {
+    e.preventDefault();
+    const files = e.target.files;
+    // imagenes/ es la carpeta de Cloudinary
+    setLoading(true);
+    const file = await uploadToCloudinary(files[0]);
+    setLoading(false);
+    setInput({ ...input, [e.target.name]: file.secure_url });
+    setErr(ValidateCategories({ ...input, [e.target.name]: e.target.value }));
   };
 

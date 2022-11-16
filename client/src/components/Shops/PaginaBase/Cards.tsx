@@ -1,14 +1,13 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   getProductBySellerId,
   getProducts,
   selectProducts,
-} from "../../features/products/productSlice";
-import Card from "../Shops/Pagina Base/Card";
-import { selectors } from "../../features/seller/sellerSlice";
-
+} from "../../../features/products/productSlice";
+import Card from "./Card";
+import { selectors } from "../../../features/seller/sellerSlice"
 const { selectSeller } = selectors;
 
 export default function Cards() {

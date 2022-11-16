@@ -14,6 +14,7 @@ export type ProductType = {
   suspended: boolean;
   size: string | null | undefined;
   categories: string;
+  sellerId: string;
 };
 
 export type ReviewType = {
@@ -50,6 +51,7 @@ export const initialState: SliceState = {
     size: null,
     categories: "",
     reviews: [],
+    sellerId: "",
   },
   search: [],
   error: {
@@ -115,7 +117,6 @@ export const searchProduct = createAsyncThunk(
       const res = await axios.get(
         `http://localhost:3001/products?name=${name}`
       );
-      console.log(res.data);
       return res.data.result;
     } catch (error) {
       console.log(error);
@@ -274,6 +275,24 @@ export const productSlice = createSlice({
           );
           newArray.splice(reviewIndex, 1);
           state.details.reviews = [action.payload, ...newArray];
+        }
+      )
+      .addCase(
+        getProductsBySellerId.fulfilled,
+        (state, action: PayloadAction<ProductType[]>) => {
+          state.products = action.payload || [];
+          state.productsAll = action.payload || [];
+          state.error = { code: null, message: null };
+        }
+      )
+      .addCase(
+        getProductsBySellerId.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.error = {
+            code: 500,
+            message:
+              "An error ocurred while getting the products associated to the shop",
+          };
         }
       );
   },

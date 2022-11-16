@@ -58,16 +58,14 @@ const initialState: SliceState = {
 export const getSellerByName = createAsyncThunk(
   "seller/getSellerByName",
   async (nombreNegocio: string) => {
-    const res = await backAxios.get(
-      `/sellers/shop/${nombreNegocio}`
-    );
+    const res = await backAxios.get(`/sellers/shop/${nombreNegocio}`);
     return res.data;
   }
 );
 
 export const getSellerById = createAsyncThunk(
   "seller/getSellerById",
-  async (id: number) => {
+  async (id: string) => {
     const res = await backAxios.get(`/sellers/${id}`);
     return res.data;
   }
@@ -100,13 +98,13 @@ export const editSeller = createAsyncThunk(
   }
 );
 
-export const getSellerByEmail = createAsyncThunk("seller/getSellerByEmail", 
-  async (sellerId: string & {email: string}) => {
+export const getSellerByEmail = createAsyncThunk(
+  "seller/getSellerByEmail",
+  async (sellerId: string & { email: string }) => {
     const res = await backAxios.get(`/sellers/${sellerId}`);
     return res.data;
   }
 );
-
 
 export const userSlice = createSlice({
   name: "seller",

@@ -6,10 +6,7 @@ import { symlink } from "fs";
 import Swal from "sweetalert2";
 import {
   createProduct,
-<<<<<<< HEAD
   createProductBySellerId,
-=======
->>>>>>> ffdfb845dc8942e9e7b8201294b4f2465eea20ca
   ProductType,
 } from "../../features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -120,7 +117,7 @@ const Publicar = () => {
       );
     }
   };
-  
+
   return (
     <PublicarContainer>
       <AddProduct>

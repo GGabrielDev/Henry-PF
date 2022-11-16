@@ -188,14 +188,6 @@ const Detalle = () => {
               </div>
             </div>
             <div className="det__container">
-              <div className="fav">
-                <h3
-                  onClick={handleActive}
-                  className={active ? "det_fav active" : "det_fav"}
-                >
-                  <MdFavorite />
-                </h3>
-              </div>
               <div className="det_props">
                 <div className="det__dec">{detalle.name}</div>
                 <div className="det__dec0">

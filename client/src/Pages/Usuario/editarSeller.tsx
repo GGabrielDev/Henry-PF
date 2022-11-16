@@ -68,15 +68,6 @@ export default function EditarSeller() {
         <div className="productinfo">
           <div className="productinfo__left">
             <div className="inputinfo">
-              <label htmlFor="nombreUrl">Nombre que figura en la URL:</label>
-              <input
-                name="nombreUrl"
-                type="text"
-                placeholder={ ""+detalleSeller.nombreUrl+""}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="inputinfo">
               <label htmlFor="nombreNegocio">Nombre de la tienda:</label>
               <input
                 className="price_local__input"

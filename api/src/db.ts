@@ -61,7 +61,8 @@ const {
   Seller,
   User,
   Product_Amount,
-  Cart
+  Cart,
+  Recipt
 } = sequelize.models;
 
 // Aqui irian las declaraciones de las junction tables.
@@ -123,6 +124,46 @@ User.hasMany(Customer_Orders, {
   foreignKey: "userId",
   as: "customer_orders",
 });
+User.hasMany(Recipt, {
+  sourceKey: "id",
+  foreignKey: "userId",
+  as: "recipts",
+});
+
+Recipt.belongsTo(User, {
+  targetKey: "id",
+});
+
+Product.hasMany(Recipt, {
+  sourceKey: "id",
+  foreignKey: "userId",
+  as: "recipts",
+});
+
+Recipt.belongsTo(Product, {
+  targetKey: "id",
+});
+
+Cart.hasMany(Recipt, {
+  sourceKey: "id",
+  foreignKey: "userId",
+  as: "recipts",
+});
+
+Recipt.belongsTo(Cart, {
+  targetKey: "id",
+});
+
+Seller.hasMany(Recipt, {
+  sourceKey: "id",
+  foreignKey: "userId",
+  as: "recipts",
+});
+
+Recipt.belongsTo(Seller, {
+  targetKey: "id",
+});
+
 Customer_Orders.belongsTo(User, {
   targetKey: "id",
 });
@@ -170,6 +211,8 @@ Seller.hasMany(Cart,{
 Cart.belongsTo(Seller,{
   targetKey: "id",
 });
+
+
 
 export const Models = sequelize.models; // Para importar un objeto con solo los modelos: import { Models } from "./db.js"
 export default sequelize; // Para importar la conexión de Sequelize: import sequelize from './db.js';

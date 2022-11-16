@@ -40,6 +40,7 @@ import { Seller } from "./Seller";
 //import { Countries } from "./Countries";
 import { Review } from "./Review";
 import { Product } from "./Product";
+import { Recipt } from "./Recipt";
 
 export class User extends Model<
   InferAttributes<User>,
@@ -95,35 +96,25 @@ export class User extends Model<
 
   declare getFavoriteProduct: BelongsToManyGetAssociationsMixin<Product>;
   declare countFavoriteProducts: BelongsToManyCountAssociationsMixin;
-  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<
-    Product,
-    Product["id"]
-  >;
-  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
-  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
-  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<
-    Product,
-    Product["id"]
-  >;
-  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
-  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<
-    Product,
-    Product["id"]
-  >;
-  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<
-    Product,
-    Product["id"]
-  >;
+  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<Product,Product["id"]>;
+  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<Product,Product["id"]>;
+  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<Product,Product["id"]>;
+  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<Product,Product["id"]>;
+  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<Product,Product["id"]>;
+  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<Product,Product["id"]>;
+  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<Product,Product["id"]>;
   declare createFavoriteProduct: BelongsToManyCreateAssociationMixin<Product>;
+
+  declare getRecipt: HasManyGetAssociationsMixin<Recipt>;
+  declare countRecipt: HasManyCountAssociationsMixin;
+  declare hasRecipt: HasManyHasAssociationMixin<Recipt, Recipt["id"]>;
+  declare hasRecipts: HasManyHasAssociationsMixin<Recipt, Recipt["id"]>;
+  declare setRecipt: HasManySetAssociationsMixin<Recipt, Recipt["id"]>;
+  declare addRecipt: HasManyAddAssociationMixin<Recipt, Recipt["id"]>;
+  declare addRecipts: HasManyAddAssociationsMixin<Recipt, Recipt["id"]>;
+  declare removeRecipt: HasManyRemoveAssociationMixin<Recipt, Recipt["id"]>;
+  declare removeRecipts: HasManyRemoveAssociationsMixin<Recipt, Recipt["id"]>;
+  declare createRecipt: HasManyCreateAssociationMixin<Recipt>;
 
   // You can also pre-declare possible inclusions, these will only be populated if you
   // actively include a relation.

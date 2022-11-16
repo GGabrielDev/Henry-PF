@@ -27,78 +27,93 @@ import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario";
 import EditSeller from "../Pages/Usuario/editarSeller";
 import UserEdit from "../Pages/Usuario/UserEdit";
-
+import VerUsuarios from "../Pages/Usuario/verUsuarios";
+import VerTiendas from "../Pages/Usuario/verTiendas";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
 
 const Router = () => {
-
-    const dispatch = useAppDispatch();
-    const error = useAppSelector(selectError);
-    const status = useAppSelector(selectStatus);
-    const usuario = useAppSelector(selectUser) as UserType;
-    const {isAuthenticated, user} = useAuth0(); 
-    useEffect(() => {if(isAuthenticated && user && user.email && !error.message && status === "loggedOut"){
-      dispatch(getUserByEmail(user.email))
-    } else {if(error.message && error.message === "User not found" && user)
-      dispatch(createUser(user))
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(selectError);
+  const status = useAppSelector(selectStatus);
+  const usuario = useAppSelector(selectUser) as UserType;
+  const { isAuthenticated, user } = useAuth0();
+  useEffect(() => {
+    if (
+      isAuthenticated &&
+      user &&
+      user.email &&
+      !error.message &&
+      status === "loggedOut"
+    ) {
+      dispatch(getUserByEmail(user.email));
+    } else {
+      if (error.message && error.message === "User not found" && user)
+        dispatch(createUser(user));
     }
   }, [isAuthenticated, user, error]);
   return (
     <Routes>
-      <>    
-           
-      <Route path="/" element={<Landingpage />} />
-      <Route path="/*" element={<Error />} />
-      <Route path="/tugamer" element={<Tugamer />} />
-      <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
-      <Route path="/tugamer/*" element={<Error404 />} />
-      <Route path="/tuhamburguesa" element={<TuHamburguesa />} />
-      <Route path="/tuhamburguesa/detalle/:productId" element={<DetalleH />} />
-      <Route path="/tuhamburguesa/*" element={<Error404H />} />
-      <Route path="auth/recover" element={<Recover />} />
-      <Route path="auth/register" element={<Register />} />
-      <Route path="/auth/login" element={<Login />} />      
-      <Route path="/checkout/premium" element={<CheckoutPremium />} />
-      <Route path="/checkout/medium" element={<CheckoutMedium />} />
-      <Route path="/checkout/basic" element={<CheckoutBasic />} />
-
-      
-
-      {isAuthenticated ? 
-      <>      
-      <Route path="/usuario/*" element={<UserGeneral />} />
-      <Route path="/usuario/compras" element={<UserCompras />} />
-      <Route path="/usuario/compras/detalle" element={<UserCompraDetalle />} />
-      <Route path="/usuario/favoritos" element={<UserFavoritos />} />      
-      <Route path="/usuario/editUser" element={<EditarUsuario/>}/>
-      </>
-      : null
-      }
-
-      {isAuthenticated && usuario.sellerId  ? <>      
-      <Route path="/tugamer/publicar" element={<Publicar />} /> 
-      <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
-      <Route path="/usuario/editar/producto/" element={<UserEdit />} />
-      <Route path="/usuario/editSeller" element={<EditSeller/>}/>
-      <Route path="/usuario/editar/producto/:productId" element={<EditProduct/>}/>
-      </>
-      :
-      null    
-      }
-      {isAuthenticated && user?.email === "jcg_95_9@hotmail.com"?  
       <>
-      <Route path="/tugamer/publicar" element={<Publicar />} /> 
-      <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
-      <Route path="/usuario/editar/producto/" element={<UserEdit />} />
-      <Route path="/usuario/editSeller" element={<EditSeller/>}/>
-      <Route path="/usuario/editar/producto/:productId" element={<EditProduct/>}/>
-      {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
-      </>
-      :
-      null    
-      }
+        <Route path="/" element={<Landingpage />} />
+        <Route path="/*" element={<Error />} />
+        <Route path="/tugamer" element={<Tugamer />} />
+        <Route path="/tugamer/detalle/:productId" element={<Detalle />} />
+        <Route path="/tugamer/*" element={<Error404 />} />
+        <Route path="/tuhamburguesa" element={<TuHamburguesa />} />
+        <Route
+          path="/tuhamburguesa/detalle/:productId"
+          element={<DetalleH />}
+        />
+        <Route path="/tuhamburguesa/*" element={<Error404H />} />
+        <Route path="auth/recover" element={<Recover />} />
+        <Route path="auth/register" element={<Register />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/checkout/premium" element={<CheckoutPremium />} />
+        <Route path="/checkout/medium" element={<CheckoutMedium />} />
+        <Route path="/checkout/basic" element={<CheckoutBasic />} />
+
+        {isAuthenticated ? (
+          <>
+            <Route path="/usuario/*" element={<UserGeneral />} />
+            <Route path="/usuario/compras" element={<UserCompras />} />
+            <Route
+              path="/usuario/compras/detalle"
+              element={<UserCompraDetalle />}
+            />
+            <Route path="/usuario/favoritos" element={<UserFavoritos />} />
+            <Route path="/usuario/editUser" element={<EditarUsuario />} />
+          </>
+        ) : null}
+
+        {isAuthenticated && usuario.sellerId ? (
+          <>
+            <Route path="/tugamer/publicar" element={<Publicar />} />
+            <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+            <Route path="/usuario/editar/producto/" element={<UserEdit />} />
+            <Route path="/usuario/editSeller" element={<EditSeller />} />
+            <Route
+              path="/usuario/editar/producto/:productId"
+              element={<EditProduct />}
+            />
+          </>
+        ) : null}
+        {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+          <>
+            <Route path="/tugamer/publicar" element={<Publicar />} />
+            <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
+            <Route path="/usuario/editar/producto/" element={<UserEdit />} />
+            <Route path="/usuario/editSeller" element={<EditSeller />} />
+            <Route
+              path="/usuario/editar/producto/:productId"
+              element={<EditProduct />}
+            />
+            <Route path="/usuario/usuarios" element={<VerUsuarios />}></Route>
+            <Route path="/usuario/tiendas" element={<VerTiendas />}></Route>
+            {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
+          </>
+        ) : null}
       </>
     </Routes>
   );

@@ -80,9 +80,6 @@ const GeneralContainer = styled.div`
   display: flex;
   height: 100vh;
   width: 100%;
-  @media screen and (max-width: 768px) {
-    height: auto;
-  }
 `;
 
 const GeneralContent = styled.div`
@@ -183,7 +180,7 @@ const GeneralContent = styled.div`
     }
   }
 
-  @media screen and (max-width: 576px) {
+  @media screen and (max-width: 700px) {
     padding: 5px 5px;
 
     .general__perfil-title {

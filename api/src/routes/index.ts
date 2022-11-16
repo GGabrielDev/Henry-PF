@@ -2,6 +2,8 @@ import { Router } from "express";
 import ProductRouter from "./Product";
 import UsersRouter from "./User";
 import sellerRouter from "./Seller";
+import customerOrdersRouter from "./Customer_Orders";
+import productAmountRouter from "./Product_Amount";
 import reviewRouter from "./Review"
 import categoryProductRouter from "./Category_Product";
 import MercadoPago from "./MercadoPago";
@@ -13,6 +15,8 @@ const router = Router();
 router.use("/products", ProductRouter);
 router.use("/users", UsersRouter);
 router.use("/sellers", sellerRouter);
+router.use("/customerOrders",customerOrdersRouter);
+router.use("/productAmount",productAmountRouter);
 router.use("/reviews", reviewRouter)
 router.use("/productCategory", categoryProductRouter);
 router.use("/payment", MercadoPago);

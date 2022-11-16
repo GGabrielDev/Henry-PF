@@ -75,10 +75,10 @@ const Footerlanding = () => {
                 <a href=""> Recompensas </a>
               </li>
               <li>
-                <a href=""> Terminos y condiciones </a>
+                <Link to="/terms"> Terminos y condiciones </Link>
               </li>
               <li>
-                <a href=""> Privacidad</a>
+              <Link to="/privacidad"> Privacidad</Link>
               </li>
               <li>
                 <a href=""> Sugerencias </a>

@@ -29,6 +29,8 @@ import EditSeller from "../Pages/Usuario/editarSeller";
 import UserEdit from "../Pages/Usuario/UserEdit";
 import VerUsuarios from "../Pages/Usuario/verUsuarios";
 import VerTiendas from "../Pages/Usuario/verTiendas";
+import Termsandconditions from "../Pages/termsandconditions";
+import Privacidad from "../Pages/Privacidad";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
@@ -57,6 +59,8 @@ const Router = () => {
     <Routes>
       <>
         <Route path="/" element={<Landingpage />} />
+        <Route path="/terms" element={<Termsandconditions />} />
+        <Route path="/privacidad" element={<Privacidad />} />
         <Route path="/*" element={<Error />} />
         <Route path="/tugamer" element={<Tugamer />} />
         <Route path="/tugamer/detalle/:productId" element={<Detalle />} />

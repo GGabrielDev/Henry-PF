@@ -49,9 +49,15 @@ const MenuUsuario = () => {
                   <span>Mis Productos</span>
                 </NavLink>
                 <NavLink
-                  to="/usuario/sellerGeneral"
+                  to="/usuario/crearCategorias"
                   className="menu__sections-name"
                 >
+                 {/* <span>Mis Categorias</span>
+                </NavLink>
+                <NavLink
+                  to="/usuario/sellerGeneral"
+                  className="menu__sections-name"
+                >*/} 
                   <span>Mi Tienda</span>
                 </NavLink>
               </div>

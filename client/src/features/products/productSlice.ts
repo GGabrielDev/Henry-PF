@@ -18,12 +18,12 @@ export type BaseProductType = {
   suspended: boolean;
   categories: any[];
   sellerId: string | null;
- 
+
 };
 export type ProductType = BaseProductType & {
   id: string;
   price_dolar: number | null | undefined;
-  size: string | null | undefined; 
+  size: string | null | undefined;
   deletedAt: Date | null;
 };
 
@@ -206,6 +206,7 @@ export const deleteProduct = createAsyncThunk("product/deleteProduct", async (pr
   return res.data
 })
 
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -215,13 +216,13 @@ export const productSlice = createSlice({
       const ordenamiento =
         action.payload === "asc"
           ? allproducts.sort(function (a, b) {
-              return a.price_local - b.price_local;
-            })
+            return a.price_local - b.price_local;
+          })
           : action.payload === "des"
-          ? allproducts.sort(function (a, b) {
+            ? allproducts.sort(function (a, b) {
               return b.price_local - a.price_local;
             })
-          : state.productsAll;
+            : state.productsAll;
       state.products = ordenamiento;
     },
   },

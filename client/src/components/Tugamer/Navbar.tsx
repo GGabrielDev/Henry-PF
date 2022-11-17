@@ -220,7 +220,7 @@ export const Logo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 700;
   color: ${({ theme }) => theme.primary};
 

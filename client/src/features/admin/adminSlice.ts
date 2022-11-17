@@ -66,6 +66,14 @@ const getUsers = createAsyncThunk("admin/getUsers", async () => {
   return res.data;
 });
 
+export const restoreSeller = createAsyncThunk(
+  "admin/storeSeller",
+  async (sellerId: string) => {
+    const res = await backAxios.put(`/sellers/restore/${sellerId}`);
+    return res.data;
+  }
+);
+
 const crearVendedor = createAsyncThunk(
   "admin/crearVendedor",
   async (userId: string) => {
@@ -141,7 +149,24 @@ export const adminSlice = createSlice({
           code: 500,
           message: "An error ocurred while deleting the seller",
         };
-      });
+      })
+      .addCase(restoreSeller.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 500,
+          message: "An error ocurred while restoring the seller",
+        };
+      })
+      .addCase(
+        restoreSeller.fulfilled,
+        (state, action: PayloadAction<SellerType>) => {
+          const newArray = [...state.sellers];
+          const reviewIndex = state.sellers.findIndex(
+            (seller) => seller.id === action.payload.id
+          );
+          newArray.splice(reviewIndex, 1);
+          state.sellers = [action.payload, ...newArray];
+        }
+      );
   },
 });
 

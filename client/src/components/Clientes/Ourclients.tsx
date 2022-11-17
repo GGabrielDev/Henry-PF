@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { projectsData } from "./Data";
 import { projectsNav } from "./Data";
+import axios from "axios";
 
 const Ourclients = () => {
   const [item, setItem] = useState({ name: "todas" });
@@ -17,7 +18,14 @@ const Ourclients = () => {
   const [category, setCategory] = useState("DEFAULT");
   const [error, setError] = useState<any>([]);
 
+  const data = async () => {
+    const res = await axios.get("http://localhost:3001/sellers");
+    console.log(res.data);
+    return res.data;
+  };
+
   useEffect(() => {
+    data();
     if (item.name === "todas") {
       setProjects(projectsData);
     } else {
@@ -47,8 +55,10 @@ const Ourclients = () => {
           categoria.includes(category)
         ) {
           productos.push(product);
+          errores.push(product);
         }
         setProjects(productos);
+        setError(errores);
         console.log(nombre.includes(texto.toLowerCase()));
       }
     } else {
@@ -59,6 +69,7 @@ const Ourclients = () => {
         } else {
           errores.push("No");
         }
+        console.log(setError);
         setError(errores);
         setProjects(productos);
       }
@@ -137,7 +148,7 @@ const Ourclients = () => {
         </div>
 
         <div className="gridcards">
-          {error[5] == "No" ? (
+          {error[5] == "No" || (error == false && projects.length === 0) ? (
             <h4 className="NoHayData">No se encontraron resultados</h4>
           ) : (
             projects.map((item: any) => {

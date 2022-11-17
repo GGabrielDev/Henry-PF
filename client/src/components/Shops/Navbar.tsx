@@ -229,7 +229,7 @@ export const Logo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 700;
   color: ${({ theme }) => theme.primary};
 
@@ -237,6 +237,9 @@ export const Logo = styled.div`
     width: auto;
     justify-content: start;
     font-size: 30px;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 20px;
   }
 `;
 

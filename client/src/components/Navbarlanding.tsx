@@ -67,18 +67,19 @@ const Navbarlanding = () => {
                 </NavLink>
               )}
 
-              <NavLink
+              <span
                 onClick={handleChange}
-                className="section button"
-                to="#contact"
+                className={`${menu ? "dn-menu" : "section button"} `}
               >
                 <AiOutlineMenu />
-              </NavLink>
+              </span>
             </div>
 
             <div className={menu ? "menu" : "menu menu-dn"}>
-              <span className="x" onClick={handleChange}>
-                <IoMdClose />
+              <span className="x">
+                <p>
+                  <IoMdClose onClick={handleChange} />
+                </p>
               </span>
 
               <div className="img__container">
@@ -99,7 +100,7 @@ const Navbarlanding = () => {
                 <>
                   <div className="section-re">
                     <div className="section__cajita2">
-                      <span className="section__name">
+                      <span className="section__name-name">
                         {usuario.firstName + " " + usuario.lastName}
                       </span>
                       <span className="icon-re"></span>
@@ -290,6 +291,7 @@ const Navbarlandings = styled.div`
     color: ${({ theme }) => theme.white};
     padding: 0 10px;
     transition: 0.4s;
+    cursor: pointer;
     &:hover {
       color: ${({ theme }) => theme.secondary};
     }
@@ -318,6 +320,10 @@ const Navbarlandings = styled.div`
   .menu-dn {
     position: absolute;
     top: -5000px;
+  }
+
+  .dn-menu {
+    visibility: hidden;
   }
 
   .img__container {
@@ -371,6 +377,16 @@ const Navbarlandings = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
+  }
+
+  .section__name-name {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: ${({ theme }) => theme.primary};
+    font-weight: 600;
   }
 
   .section__page {
@@ -436,12 +452,14 @@ const Navbarlandings = styled.div`
 
   .x {
     padding: 20px;
-    cursor: pointer;
     width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: end;
+    p {
+      cursor: pointer;
+    }
   }
 
   AiFillSetting {

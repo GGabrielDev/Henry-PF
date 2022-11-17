@@ -3,9 +3,15 @@ import styled, { useTheme } from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
-import { actions, selectors, UserType } from "../../features/admin/adminSlice";
+import {
+  actions,
+  restoreSeller,
+  selectors,
+  UserType,
+} from "../../features/admin/adminSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const { selectUsers } = selectors;
 const { getUsers, crearVendedor, deleteSeller } = actions;
@@ -13,6 +19,45 @@ const { getUsers, crearVendedor, deleteSeller } = actions;
 const General = () => {
   const users = useAppSelector(selectUsers);
   const dispatch = useAppDispatch();
+
+  const Alerta = () => {
+    Swal.fire({
+      title: "Role cambiado",
+      text: "Has cambiado el role del usuario",
+      icon: "success",
+      confirmButtonText: "Ok!",
+    });
+  };
+
+  const AlertaRestore = () => {
+    Swal.fire({
+      title: "Role cambiado",
+      text: "En breve se actualizara la página",
+      icon: "success",
+      confirmButtonText: "Ok!",
+    });
+  };
+
+  const handleDispatchUser = (user: UserType) => {
+    dispatch(crearVendedor(user.id));
+    Alerta();
+  };
+
+  const handleDispatchDelete = (user: UserType) => {
+    AlertaRestore();
+    setTimeout(() => {
+      window.location.reload();
+      dispatch(deleteSeller(user.sellerId as string));
+    }, 1000);
+  };
+
+  const handleDispatchRestore = (user: UserType) => {
+    AlertaRestore();
+    setTimeout(() => {
+      window.location.reload();
+      dispatch(restoreSeller(user.sellerId as string));
+    }, 1000);
+  };
 
   const renderUsers = (user: UserType) => (
     <div className="users__container" key={user.id}>
@@ -23,25 +68,27 @@ const General = () => {
         {!user.sellerId ? (
           <button
             className="status__button"
-            onClick={() => dispatch(crearVendedor(user.id))}
+            onClick={() => handleDispatchUser(user)}
           >
             user
           </button>
         ) : (
           <>
-            <button
-              className="status__button"
-              onClick={() => dispatch(deleteSeller(user.sellerId as string))}
-            >
-              seller
-            </button>
-            {/* <div className="alerta">
-              Estas seguro que quieres eso?
-              <div className="buttons">
-                <button>Ni</button>
-                <button>No</button>
-              </div>
-            </div> */}
+            {user.seller ? (
+              <button
+                className="status__button"
+                onClick={() => handleDispatchDelete(user)}
+              >
+                suspender
+              </button>
+            ) : (
+              <button
+                className="status__button"
+                onClick={() => handleDispatchRestore(user)}
+              >
+                restaurar
+              </button>
+            )}
           </>
         )}
       </div>
@@ -122,6 +169,10 @@ const GeneralContent = styled.div`
     background-color: transparent;
     text-decoration: underline;
     cursor: pointer;
+    transition: 0.4s;
+    &:hover {
+      color: ${({ theme }) => theme.secondary};
+    }
   }
 
   @media screen and (max-width: 768px) {

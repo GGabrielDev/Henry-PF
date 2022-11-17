@@ -2,6 +2,7 @@ import { Request, Response, Router, NextFunction } from "express";
 import { Models } from "../db";
 import HttpException from "../exceptions/HttpException";
 import { User as User_Type } from "../models/User";
+import { Seller as Seller_Type } from "../models/Seller";
 
 const router = Router();
 const { Seller, User } = Models;
@@ -30,10 +31,6 @@ router.get(
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
       const result = await Seller.findAll();
-
-      if (result.length === 0) {
-        return res.status(204).send("No entries have been found.");
-      }
 
       return res.status(200).send({ amount: result.length, result });
     } catch (error) {
@@ -165,6 +162,40 @@ router.put(
       }
     } catch (error) {
       console.log(error);
+      next(error);
+    }
+  }
+);
+
+router.put(
+  "/restore/:sellerId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      console.log("hola");
+      const { sellerId } = req.params;
+
+      if (!sellerId) {
+        throw new HttpException(
+          400,
+          "The Product ID is missing in the request"
+        );
+      }
+
+      let result = await Seller.findByPk(sellerId, { paranoid: false })
+        .then((value) => value as Seller_Type)
+        .catch((error) => {
+          console.log(error);
+          throw new HttpException(
+            500,
+            "An error has occured getting the Seller"
+          );
+        });
+
+      if (!result)
+        throw new HttpException(404, "The requested Seller doesn't exist");
+      result.restore();
+      return res.status(200).send(result);
+    } catch (error) {
       next(error);
     }
   }

@@ -135,7 +135,7 @@ const Router = () => {
           </>
         ) : null}
 
-        {isAuthenticated && user?.email === "lieutenet.85@gmail.com" ? (
+        {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />

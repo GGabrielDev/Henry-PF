@@ -26,7 +26,6 @@ export default function ShopContext(): ReactElement {
         } else {
           if (
             seller.categorias &&
-            seller.description &&
             seller.imageLogo &&
             seller.nombreNegocio &&
             seller.template_page

@@ -27,9 +27,9 @@ import CheckoutPremium from "../Pages/Compra/CheckoutPremium";
 import CheckoutMedium from "../Pages/Compra/CheckoutMedium";
 import EditarUsuario from "../Pages/Usuario/editarUsuario";
 import EditarSeller from "../Pages/Usuario/editarSeller";
-import UserEdit from "../Pages/Usuario/UserEdit";
+import UserEdit from "../Pages/Usuario/MisProductos";
 import VerUsuarios from "../Pages/Usuario/verUsuarios";
-import VerTiendas from "../Pages/Usuario/verTiendas";
+//import VerTiendas from "../Pages/Usuario/verTiendas";
 
 import ShopContext from "../Pages/Shop/ShopContext";
 import Home from "../Pages/Shop/Home";
@@ -42,6 +42,8 @@ import SellerGeneral from "../Pages/Usuario/sellerGeneral"
 
 import QuienesSomos from "../Pages/QuienesSomos";
 import Sugerencias from "../Pages/Sugerencias";
+
+import CrearCategorias from "../Pages/Shop/CrearCategorias";
 
 const { getUserByEmail, createUser } = actions;
 const { selectError, selectStatus, selectUser } = selectors;
@@ -129,10 +131,11 @@ const Router = () => {
             />
             <Route path="/usuario/sellerGeneral" element={<SellerGeneral />} />
             <Route path="/usuario/editSeller" element={<EditarSeller />} />
+            <Route path="/usuario/crearCategorias" element={<CrearCategorias />} />
           </>
         ) : null}
 
-        {isAuthenticated && user?.email === "estebaanlunaaa@gmail.com" ? (
+        {isAuthenticated && user?.email === "lieutenet.85@gmail.com" ? (
           <>
             <Route path="/tugamer/publicar" element={<Publicar />} />
             <Route path="/tuhamburguesa/publicar" element={<PublicarH />} />
@@ -141,7 +144,7 @@ const Router = () => {
             />
 
             <Route path="/usuario/usuarios" element={<VerUsuarios />}></Route>
-            <Route path="/usuario/tiendas" element={<VerTiendas />}></Route>
+            {/*<Route path="/usuario/tiendas" element={<VerTiendas />}></Route>*/}
             {/* IRIA LA RUTA DE ELIMINACION DE USUARIO*/}
           </>
         ) : null}

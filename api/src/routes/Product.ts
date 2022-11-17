@@ -90,6 +90,31 @@ router.get(
 );
 
 router.get(
+  "/seller/:sellerId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const { sellerId } = req.params;
+
+      const result = await Product.findAll({
+        where: {
+          sellerId,
+        },
+        include: [Product.associations.categories],
+        paranoid: false,
+      });
+
+      if (result.length === 0) {
+        return res.status(204).send("No entries have been found.");
+      }
+
+      return res.status(200).send({ amount: result.length, result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
   "/:productId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
     try {
@@ -297,6 +322,39 @@ router.put(
   }
 );
 
+router.put(
+  "/seller/:productId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const { productId } = req.params;
+
+      if (!productId) {
+        throw new HttpException(
+          400,
+          "The Product ID is missing in the request"
+        );
+      }
+
+      let result = await Product.findByPk(productId, {paranoid: false})
+        .then((value) => value as Product_Type)
+        .catch((error) => {
+          console.log(error);
+          throw new HttpException(
+            500,
+            "An error has occured getting the Product"
+          );
+        });
+
+      if (!result)
+        throw new HttpException(404, "The requested Product doesn't exist");
+        result.restore()
+        return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.delete(
   "/:productId",
   async (req: RouteRequest, res: Response, next: NextFunction) => {
@@ -364,4 +422,6 @@ router.post(
   }
 );
 
+
+router.post('/:productId')
 export default router;

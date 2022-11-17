@@ -63,18 +63,19 @@ const Navbarlanding = () => {
                 </NavLink>
               )}
 
-              <NavLink
+              <span
                 onClick={handleChange}
-                className="section button"
-                to="#contact"
+                className={`${menu ? "dn-menu" : "section button"} `}
               >
                 <AiOutlineMenu />
-              </NavLink>
+              </span>
             </div>
 
             <div className={menu ? "menu" : "menu menu-dn"}>
-              <span className="x" onClick={handleChange}>
-                <IoMdClose />
+              <span className="x">
+                <p>
+                  <IoMdClose onClick={handleChange} />
+                </p>
               </span>
 
               <div className="img__container">
@@ -269,10 +270,15 @@ const Navbarlandings = styled.div`
     justify-content: center;
   }
 
+  .dn-menu {
+    visibility: hidden;
+  }
+
   .section {
     color: ${({ theme }) => theme.white};
     padding: 0 10px;
     transition: 0.4s;
+    cursor: pointer;
     &:hover {
       color: ${({ theme }) => theme.secondary};
     }
@@ -322,6 +328,18 @@ const Navbarlandings = styled.div`
     justify-content: center;
     border-radius: 100%;
     margin-bottom: 10px;
+  }
+
+  .x {
+    padding: 20px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    p {
+      cursor: pointer;
+    }
   }
 
   .edit {

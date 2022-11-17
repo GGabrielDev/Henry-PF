@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import backAxios from "../../helpers/Axios";
 import { RootState } from "../../app/store";
 
-
 export type UserType = {
   id: string;
   username: string | null;
@@ -66,6 +65,14 @@ const getUsers = createAsyncThunk("admin/getUsers", async () => {
   const res = await backAxios.get(`/users`);
   return res.data;
 });
+
+export const restoreSeller = createAsyncThunk(
+  "admin/storeSeller",
+  async (sellerId: string) => {
+    const res = await backAxios.put(`/sellers/restore/${sellerId}`);
+    return res.data;
+  }
+);
 
 const crearVendedor = createAsyncThunk(
   "admin/crearVendedor",
@@ -142,7 +149,24 @@ export const adminSlice = createSlice({
           code: 500,
           message: "An error ocurred while deleting the seller",
         };
-      });
+      })
+      .addCase(restoreSeller.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 500,
+          message: "An error ocurred while restoring the seller",
+        };
+      })
+      .addCase(
+        restoreSeller.fulfilled,
+        (state, action: PayloadAction<SellerType>) => {
+          const newArray = [...state.sellers];
+          const reviewIndex = state.sellers.findIndex(
+            (seller) => seller.id === action.payload.id
+          );
+          newArray.splice(reviewIndex, 1);
+          state.sellers = [action.payload, ...newArray];
+        }
+      );
   },
 });
 

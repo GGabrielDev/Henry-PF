@@ -5,7 +5,6 @@ import Validate from "../../helpers/validate";
 import { symlink } from "fs";
 import Swal from "sweetalert2";
 import {
-  createProduct,
   createProductBySellerId,
   ProductType,
 } from "../../features/products/productSlice";

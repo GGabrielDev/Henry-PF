@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { AiFillEdit, AiOutlineClose } from "react-icons/ai";
+import { AiFillEdit, AiOutlineClose, AiOutlineUpload } from "react-icons/ai";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import Swal from "sweetalert2";
 import { ProductType } from "../../features/products/productSlice";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
-import { deleteProduct } from "../../redux/actions";
+import { deleteProduct, restoreProduct } from "../../features/products/productSlice";
 
 //NECESITAMOS Q LA IMAGEN SEA 320x285 hasta hacer la card responsive
 const Card = ({ product }: { product: ProductType }) => {
@@ -19,20 +19,37 @@ const Card = ({ product }: { product: ProductType }) => {
       icon: "success",
       confirmButtonText: "Perfecto",
     });
+
+    
     dispatch(deleteProduct(product.id));
     setTimeout(() => {
       window.location.reload();
     }, 2000);
   };
+const AlertaRestaurar = () => {
+  Swal.fire({
+    title: "Producto Restaurado",
+    text: "Has restaurado el producto de manera exitosa",
+    icon: "success",
+    confirmButtonText: "Perfecto",
+  });
 
+  dispatch(restoreProduct(product.id));
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+}
   return (
     <CardContainer>
       <ThemeProvider theme={ThemesLanding}>
         <div className="card__container">
           <div className="edit__container">
-            <span className="delete" onClick={AlertaCorrecta}>
+            {!product.deletedAt ? (<span className="delete" onClick={AlertaCorrecta}>
               <AiOutlineClose />
-            </span>
+            </span>) : (<span className="delete" onClick={AlertaRestaurar}>
+              <AiOutlineUpload/>
+            </span>)
+            }
             <Link to={`/usuario/editar/producto/${product.id}`}>
               <span className="edit">
                 <AiFillEdit />

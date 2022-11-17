@@ -53,7 +53,7 @@ const MenuUsuario = () => {
                   className="menu__sections-name"
                 >
                   <span>Mis Categorias</span>
-                </NavLink>*/} 
+                </NavLink>*/}
                 <NavLink
                   to="/usuario/sellerGeneral"
                   className="menu__sections-name"
@@ -65,7 +65,7 @@ const MenuUsuario = () => {
           ) : (
             <></>
           )}
-          {isAuthenticated && user?.email === "luisgabrielramosrobles@gmail.com" ? (
+          {isAuthenticated && user?.email === "henryfygrup@gmail.com" ? (
             <>
               <div className="menu__title">
                 Henry Admin <AiOutlineForm className="user__icon " />

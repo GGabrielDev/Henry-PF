@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import backAxios from "../../helpers/Axios";
 import { RootState } from "../../app/store";
 import { User } from "@auth0/auth0-react";
 
@@ -42,20 +42,20 @@ const initialState: SliceState = {
 export const getUserByEmail = createAsyncThunk(
   "user/getUserByEmail",
   async (email: string) => {
-    const res = await axios.get(`http://localhost:3001/users/${email}`);
+    const res = await backAxios.get(`/users/${email}`);
     return res.data;
   }
 );
 
 export const getUsers = createAsyncThunk("user/users", async (user: User) => {
-  const res = await axios.get(`http://localhost:3001/users`);
+  const res = await backAxios.get(`/users`);
   return res.data;
 });
 
 export const getUserById = createAsyncThunk(
   "user/getUserById",
   async (id: string) => {
-    const res = await axios.get(`http://localhost:3001/users/${id}`);
+    const res = await backAxios.get(`/users/${id}`);
     return res.data;
   }
 );
@@ -63,7 +63,7 @@ export const getUserById = createAsyncThunk(
 export const createUser = createAsyncThunk(
   "user/createUser",
   async (user: User) => {
-    const res = await axios.post(`http://localhost:3001/users`, {
+    const res = await backAxios.post(`/users`, {
       email: user.email,
       firstName: user.given_name,
       lastName: user.family_name,
@@ -78,13 +78,12 @@ export const editUser = createAsyncThunk(
   "user/editUser",
   async ({ user, id }: { user: Partial<UserType>; id: string }) => {
     console.log(user);
-    const res = await axios.put(`http://localhost:3001/users/${id}`, {
+    const res = await backAxios.put(`/users/${id}`, {
       ...user,
     });
     return res.data;
   }
 );
-
 
 export const userSlice = createSlice({
   name: "user",

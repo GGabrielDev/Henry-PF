@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import backAxios from "../../helpers/Axios";
 import { RootState } from "../../app/store";
 
 export type UserType = {
@@ -62,14 +62,14 @@ const initialState: SliceState = {
 };
 
 const getUsers = createAsyncThunk("admin/getUsers", async () => {
-  const res = await axios.get(`http://localhost:3001/users`);
+  const res = await backAxios.get(`/users`);
   return res.data;
 });
 
 const crearVendedor = createAsyncThunk(
   "admin/crearVendedor",
   async (userId: string) => {
-    const res = await axios.post(`http://localhost:3001/sellers/${userId}`);
+    const res = await backAxios.post(`/sellers/${userId}`);
     return res.data;
   }
 );
@@ -77,7 +77,7 @@ const crearVendedor = createAsyncThunk(
 export const deleteSeller = createAsyncThunk(
   "admin/deleteSeller",
   async (id: string) => {
-    const res = await axios.delete(`http://localhost:3001/sellers/${id}`);
+    const res = await backAxios.delete(`/sellers/${id}`);
     return res.data;
   }
 );
@@ -85,7 +85,7 @@ export const deleteSeller = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   "admin/deleteUser",
   async (id: string) => {
-    const res = await axios.delete(`http://localhost:3001/users/${id}`);
+    const res = await backAxios.delete(`/users/${id}`);
     return id;
   }
 );

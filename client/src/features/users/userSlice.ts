@@ -10,7 +10,6 @@ export type UserType = {
   lastName: string | null;
   email: string;
   phoneNumber: string | null;
-  isPremium: boolean;
   suspended: boolean;
   gender: "M" | "F" | "No binario" | "Prefiero no decirlo" | null;
   imagenDePerfil: string | null;

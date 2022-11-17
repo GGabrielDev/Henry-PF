@@ -6,20 +6,31 @@ import Paisaje from "../../assets/imagenesSlider/49838.jpg";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
-  getProducts,
+  getProductsSeller,
   selectProducts,
 } from "../../features/products/productSlice";
 import Card from "./Card";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
+import {getSellerById, SellerType, selectors as sellerSelectors, editSeller } from "../../features/seller/sellerSlice";
+import { selectors as userSelectors, actions as userActions, getUserByEmail, UserType} from "../../features/users/userSlice";
+
+const { selectSeller } = sellerSelectors;
+const { selectUser } = userSelectors;
 
 const General = () => {
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
-
+  const seller = useAppSelector(selectSeller) as SellerType
+  const user = useAppSelector(selectUser) as UserType
   useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+  
+    if(!seller.id){      
+      dispatch(getSellerById(user.sellerId as string));     
+    } else {
+      dispatch(getProductsSeller(seller.id))
+    }
+  }, [user, seller.id])
 
   return (
     <GeneralContainer>

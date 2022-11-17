@@ -3,14 +3,24 @@ import styled, { useTheme } from "styled-components";
 import Perfil from "../../assets/imagenesSlider/profile.png";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
-import { actions, selectors, SellerType } from "../../features/seller/sellerSlice";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { Link } from "react-router-dom";
+import {getSellerById, SellerType, selectors as sellerSelectors, editSeller, getSellerByEmail } from "../../features/seller/sellerSlice";
+import { selectors as userSelectors, actions as userActions, getUserByEmail, UserType} from "../../features/users/userSlice";
+import {useEffect} from "react";
 
-const { selectSeller } = selectors;
-
+const { selectSeller } = sellerSelectors;
+const { selectUser } = userSelectors;
 const GeneralSeller = () => {
+  const user = useAppSelector(selectUser) as UserType;
   const seller = useAppSelector(selectSeller) as SellerType;
+  const dispatch = useAppDispatch()
+  useEffect( () => {
+    if(seller.id === null){
+      dispatch(getSellerById(user.sellerId as string) )
+    }
+  })
+
 
   return (
     <GeneralContainer>

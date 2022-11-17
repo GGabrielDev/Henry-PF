@@ -69,7 +69,7 @@ const Navbarlanding = () => {
 
               <NavLink
                 onClick={handleChange}
-                className="section button"
+                className={`${menu ? "dn-menu" : "section button"} `}
                 to="#contact"
               >
                 <AiOutlineMenu />
@@ -77,8 +77,10 @@ const Navbarlanding = () => {
             </div>
 
             <div className={menu ? "menu" : "menu menu-dn"}>
-              <span className="x" onClick={handleChange}>
-                <IoMdClose />
+              <span className="x">
+                <p>
+                  <IoMdClose onClick={handleChange} />
+                </p>
               </span>
 
               <div className="img__container">
@@ -320,6 +322,11 @@ const Navbarlandings = styled.div`
     top: -5000px;
   }
 
+  .dn-menu {
+    visibility: hidden;
+    /* opacity: 0; */
+  }
+
   .img__container {
     width: 100%;
     display: flex;
@@ -436,12 +443,14 @@ const Navbarlandings = styled.div`
 
   .x {
     padding: 20px;
-    cursor: pointer;
     width: 100%;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: end;
+    p {
+      cursor: pointer;
+    }
   }
 
   AiFillSetting {

@@ -7,7 +7,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
+import backAxios from "../../helpers/Axios"
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
@@ -72,8 +72,8 @@ const CheckoutForm = () => {
         const { id } = paymentMethod;
 
         try {
-          const { data } = await axios.post(
-            `http://localhost:3001/stripe/api/checkout`,
+          const { data } = await backAxios.post(
+            `/stripe/api/checkout`,
             {
               id,
               mode: "subscription",

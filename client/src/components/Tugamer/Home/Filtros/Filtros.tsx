@@ -36,7 +36,9 @@ const Filtros = () => {
   }, [search, dispatch]);
   return (
     <FiltrosContainer>
-      {isAuthenticated && usuario.sellerId !== null ? (
+      {isAuthenticated &&
+      usuario.sellerId !== null &&
+      usuario.suspended !== true ? (
         <Link to="publicar" className="buttonfilter-container">
           <button className="buttonfilter">+</button>
         </Link>

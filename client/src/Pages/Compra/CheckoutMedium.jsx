@@ -7,7 +7,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
+import backAxios from "../../helpers/Axios";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link } from "react-router-dom";
@@ -16,7 +16,6 @@ import { AiOutlineCheck } from "react-icons/ai";
 import Swal from "sweetalert2";
 import emailjs from "@emailjs/browser";
 import Navbarlanding from "../../components/NavbarLandingFuera";
-
 
 const stripePromise = loadStripe(
   "pk_test_51LbWG6CISvGskgcJQ1tAlsYcaFsZYI2XridI8464CZNO17EXAUdRbehJsxs8VA3CUjRwz10bwuThVq8GtBLxFsN900VthEmx1m "
@@ -73,15 +72,12 @@ const CheckoutForm = () => {
         const { id } = paymentMethod;
 
         try {
-          const { data } = await axios.post(
-            `http://localhost:3001/stripe/api/checkout`,
-            {
-              id,
-              mode: "subscription",
-              amount: 2000,
-              description: "medium pack",
-            }
-          );
+          const { data } = await backAxios.post(`/stripe/api/checkout`, {
+            id,
+            mode: "subscription",
+            amount: 2000,
+            description: "medium pack",
+          });
 
           if (data.message == "Succes") {
             emailjs.sendForm(
@@ -135,7 +131,7 @@ export default function Payment() {
   return (
     <Elements stripe={stripePromise}>
       <ThemeProvider theme={ThemesLanding}>
-        <Navbarlanding/>
+        <Navbarlanding />
         <SectionPago>
           <div className="formulario__pago">
             <div className="formcontent">

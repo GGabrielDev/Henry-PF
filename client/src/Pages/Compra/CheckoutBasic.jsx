@@ -7,7 +7,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
+import backAxios from "../../helpers/Axios";
 import { ThemesLanding } from "../../components/ThemesLanding";
 import { ThemeProvider } from "styled-components";
 import { Link, Navigate } from "react-router-dom";
@@ -72,17 +72,13 @@ const CheckoutForm = () => {
         const { id } = paymentMethod;
 
         try {
-          const { data } = await axios.post(
-            `http://localhost:3001/stripe/api/checkout`,
-            {
-              id,
-              mode:"subscription",
-              amount: 1500,
-              description: "basic pack",
-            }
-          );
+          const { data } = await backAxios.post(`/stripe/api/checkout`, {
+            id,
+            mode: "subscription",
+            amount: 1500,
+            description: "basic pack",
+          });
           if (data.message == "Succes") {
-           
             emailjs.sendForm(
               "service_zeb79a1",
               "template_zdwmfkk",
@@ -103,7 +99,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    < form onSubmit = { handleSubmit } id = "Myform" className = "formpaycard" >
+    <form onSubmit={handleSubmit} id="Myform" className="formpaycard">
       <div className="checkout__nombre">
         <p className="nombre__checkout">Nombre Completo: </p>
         <input className="input__nombre__checkout" name="name" type="text" />
@@ -117,19 +113,17 @@ const CheckoutForm = () => {
         />
       </div>
       <CardElement className="inputpay" />
-  {
-    loader ? (
-      <button className="pago__boton" disabled>
-        <span>Cargando...</span>
-      </button>
-    ) : (
-      <button type="submit" className="pago__boton">
-        <span>Comprar</span>
-      </button>
-    )
-  }
-    </form >
-  ) 
+      {loader ? (
+        <button className="pago__boton" disabled>
+          <span>Cargando...</span>
+        </button>
+      ) : (
+        <button type="submit" className="pago__boton">
+          <span>Comprar</span>
+        </button>
+      )}
+    </form>
+  );
 };
 
 export default function Payment() {

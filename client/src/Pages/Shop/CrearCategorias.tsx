@@ -4,20 +4,28 @@ import Swal from "sweetalert2";
 import { createCategory } from "../../features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { InputStateCategories, ErrorStateCategories } from "../../helpers/Cloudinary";
-import { selectors } from "../../features/seller/sellerSlice";
 import ValidateCategories from "../../helpers/validateCategories";
+import {getSellerById, SellerType, selectors as sellerSelectors, editSeller } from "../../features/seller/sellerSlice";
+import { selectors as userSelectors, actions as userActions, getUserByEmail, UserType} from "../../features/users/userSlice";
+import { getProductsSeller, selectProducts } from "../../features/products/productSlice";
 
-const {selectSeller} = selectors;
+const { selectSeller } = sellerSelectors;
+const { selectUser } = userSelectors;
 
-const Publicar = () => {
+
+
+const CrearCategorias = () => {
   const [loading, setLoading] = useState(false);
   const [previewSource, setPreviewSource] = useState("");
+ 
   const seller = useAppSelector(selectSeller)
+  const products = useAppSelector(selectProducts);
   const { id }  = seller
+
   const AlertaCorrecta = () => {
     Swal.fire({
-      title: "Producto creado",
-      text: "Se ha creado un producto de manera exitosa",
+      title: "Categoria creada",
+      text: "Se ha creado una nueva categoria de manera exitosa",
       icon: "success",
       confirmButtonText: "Perfecto",
     });
@@ -27,7 +35,7 @@ const Publicar = () => {
   const AlertaIncorrecta = () => {
     Swal.fire({
       title: "Error",
-      text: "Faltan datos",
+      text: "Faltan datos o la categoria ya esta creada!",
       icon: "error",
       confirmButtonText: "Ok!",
     });
@@ -97,13 +105,18 @@ const Publicar = () => {
                 Todos los campos son obligatorios
               </h5>
               <div className="inputinfo">
-                <label htmlFor="">Nombre de la Categoria/Categorias:</label>
-                <input
-                  value={category.name}
-                  name="name"
-                  type="text"
-                  onChange={handleChange}
-                />
+                <label htmlFor="">Nombre de la Categoria para tus productos a crear:</label>
+                <select name="name" onChange={handleChange}>
+                  <option value="{category.name}"></option>
+                  {products.map(item => {
+                    return (
+                      <option value={item.name}>{item.name}</option>
+                    )
+                  })}
+                  
+                  
+                 
+                </select>
                 {err.name ? <p className="errortext"> {err.name} </p> : ""}
               </div>
             </div>
@@ -114,6 +127,7 @@ const Publicar = () => {
     </PublicarContainer>
   );
 };
+
 
 export const PublicarContainer = styled.div`
   width: 100%;
@@ -294,4 +308,4 @@ export const AddProduct = styled.div`
   }
 `;
 
-export default Publicar;
+export default CrearCategorias;

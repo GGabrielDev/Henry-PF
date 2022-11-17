@@ -48,6 +48,12 @@ const MenuUsuario = () => {
                 >
                   <span>Mis Productos</span>
                 </NavLink>
+                {/*<NavLink
+                  to="/usuario/crearCategorias"
+                  className="menu__sections-name"
+                >
+                  <span>Mis Categorias</span>
+                </NavLink>*/} 
                 <NavLink
                   to="/usuario/sellerGeneral"
                   className="menu__sections-name"
@@ -69,11 +75,11 @@ const MenuUsuario = () => {
                   <span>Usuarios</span>
                 </NavLink>
               </div>
-              <div className="menu__sections">
+              {/*<div className="menu__sections">
                 <NavLink to="/usuario/tiendas" className="menu__sections-name">
                   <span>Tiendas</span>
                 </NavLink>
-              </div>
+          </div>*/}
             </>
           ) : null}
 

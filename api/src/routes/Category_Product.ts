@@ -7,6 +7,7 @@ const { Category_Product } = Models;
 
 type Category_ProductParams = {
     categoryProductId: string;
+    sellerId: string;
 };
 
 type Category_ProductQuery = {};
@@ -25,6 +26,37 @@ router.get(
       const { categoryProductId } = req.params;
 
       const result = await Category_Product.findByPk(categoryProductId)
+        .then((value) => value)
+        .catch((error) => {
+          if (error.parent.code === "22P02") {
+            throw new HttpException(
+              400,
+              "The format of the request is not UUID"
+            );
+          }
+        });
+
+      if (!result) {
+        throw new HttpException(404, "No category belongs to this ID");
+      }
+      return res.status(200).send(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  "/seller/:sellerId",
+  async (req: RouteRequest, res: Response, next: NextFunction) => {
+    try {
+      const { sellerId } = req.params;
+
+      const result = await Category_Product.findAll({
+        where: {
+          sellerId
+        }
+      })
         .then((value) => value)
         .catch((error) => {
           if (error.parent.code === "22P02") {

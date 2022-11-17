@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppSelector } from "../../../../app/hooks";
 import { selectors, UserType } from "../../../../features/users/userSlice";
+import sellerSlice from "../../../../features/seller/sellerSlice";
 const { selectUser } = selectors;
 
 const Filtros = () => {
@@ -35,7 +36,7 @@ const Filtros = () => {
   }, [search, dispatch]);
   return (
     <FiltrosContainer>
-      {(isAuthenticated && usuario.sellerId !== null) ?
+      {(isAuthenticated && usuario.sellerId !== null && usuario.suspended === true) ?
         <Link to="publicar" className="buttonfilter-container">
         <button className="buttonfilter">+</button>
       </Link>:      

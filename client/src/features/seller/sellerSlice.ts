@@ -103,6 +103,11 @@ export const getSellerByEmail = createAsyncThunk(
   }
 );
 
+export const getCategories = createAsyncThunk("seller/getCategories", async (sellerId: string, ) => {
+  const res = await backAxios.get(`/sellers/categories`)
+  return res.data
+})
+
 export const userSlice = createSlice({
   name: "seller",
   initialState,

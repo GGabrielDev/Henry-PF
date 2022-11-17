@@ -31,7 +31,7 @@ server.use(express.json());
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use((_, res: Response, next: NextFunction) => {
-  res.header("Access-Control-Allow-Origin", "https://henry-pf.vercel.app/"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "https://henry-pf.vercel.app"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",

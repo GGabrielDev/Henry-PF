@@ -5,20 +5,23 @@ import Work4 from "../../assets/ImagenesClients/Perfumeria.jpg";
 import Work5 from "../../assets/imagenesSlider/hamburguesas.jpg";
 import Work6 from "../../assets/imagenesSlider/5fa8fb32d99eb.jpeg";
 
+
+
 export const projectsData = [
+
   {
     id: 1,
     image: Work1,
     Title: "Tu Gamer",
     Category: "Entretenimiento",
-    Demo: "/tugamer",
+    Demo: "/shop/tugamer",
   },
   {
     id: 2,
     image: Work2,
-    Title: "Tu Panadería",
+    Title: "Tu Pancito",
     Category: "Gastronomia",
-    Demo: "/tugamer",
+    Demo: "/shop/tupancito",
   },
   {
     id: 3,
@@ -39,7 +42,7 @@ export const projectsData = [
     image: Work5,
     Title: "Tu Hamburguesa",
     Category: "Gastronomia",
-    Demo: "/tuhamburguesa",
+    Demo: "/shop/tuhamburguesa",
   },
   {
     id: 6,

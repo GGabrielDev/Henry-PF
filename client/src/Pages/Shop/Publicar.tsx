@@ -116,6 +116,7 @@ const Publicar = () => {
       );
     }
   };
+
   return (
     <PublicarContainer>
       <AddProduct>

@@ -4,7 +4,7 @@ import morgan from "morgan";
 import routes from "./routes";
 import errorHandler from "./middleware/error.middleware";
 import cors from "cors";
-import { auth } from 'express-openid-connect';
+import { auth } from "express-openid-connect";
 
 require("./db.js");
 
@@ -14,20 +14,19 @@ const config = {
   secret: process.env.SECRET,
   baseURL: process.env.BASE_URL,
   clientID: process.env.CLIENT_ID,
-  issuerBaseURL: process.env.DOMAIN
+  issuerBaseURL: process.env.DOMAIN,
 };
 
-
-const corsOptions ={
-  origin:'http://localhost:3000', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
+//const corsOptions ={
+//  origin:'http://localhost:3000',
+//  credentials:true,            //access-control-allow-credentials:true
+//  optionSuccessStatus:200
+//}
 express.json({ limit: "50mb" });
 const server = express();
 
 server.use(auth(config));
-server.use(cors(corsOptions));
+server.use(cors());
 server.use(express.json());
 server.use(cookieParser());
 server.use(morgan("dev"));
@@ -48,3 +47,4 @@ server.use("/", routes);
 server.use(errorHandler);
 
 export default server;
+

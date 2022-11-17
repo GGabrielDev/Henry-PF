@@ -14,7 +14,6 @@ const { selectUser } = userSelectors;
 
 export default function EditarSeller() {
   const [seller, setChange] = useState<Partial<SellerType>>({
-    nombreUrl: "",
     nombreNegocio: "",
     paymentId: "",
     template_page: "1",

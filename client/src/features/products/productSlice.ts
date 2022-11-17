@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { create } from "domain";
 import { RootState } from "../../app/store";
 import backAxios from "../../helpers/Axios";
 import { UserType } from "../users/userSlice";
@@ -17,11 +18,13 @@ export type BaseProductType = {
   suspended: boolean;
   categories: any[];
   sellerId: string | null;
+ 
 };
 export type ProductType = BaseProductType & {
   id: string;
   price_dolar: number | null | undefined;
-  size: string | null | undefined;
+  size: string | null | undefined; 
+  deletedAt: Date | null;
 };
 
 export type ReviewType = {
@@ -59,6 +62,7 @@ export const initialState: SliceState = {
     categories: [],
     reviews: [],
     sellerId: "",
+    deletedAt: null,
   },
   search: [],
   error: {
@@ -66,6 +70,16 @@ export const initialState: SliceState = {
     message: null,
   },
 };
+
+export const getProductsSeller = createAsyncThunk('product/getProductSeller', async (sellerId: string) => {
+  try {
+    const res = await backAxios.get(`/products/seller/${sellerId}`);
+
+    return res.data.result;
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 export const createProduct = createAsyncThunk(
   "product/createProduct",
@@ -175,12 +189,22 @@ export const createProductBySellerId = createAsyncThunk(
 );
 
 export const createCategory = createAsyncThunk(
-  "productCategory/Categories",
+  "product/Categories",
   async ({ category, id }: { category: Partial<CategoryType>; id: string }) => {
     const res = await backAxios.post(`/productCategory/${id}`, category);
     return res.data;
   }
 );
+
+export const restoreProduct = createAsyncThunk("product/restoreProduct", async (productId: string) => {
+  const res = await backAxios.put(`/products/seller/${productId}`)
+  return res.data
+})
+
+export const deleteProduct = createAsyncThunk("product/deleteProduct", async (productId: string) => {
+  const res = await backAxios.delete(`/products/${productId}`)
+  return res.data
+})
 
 export const productSlice = createSlice({
   name: "product",
@@ -308,7 +332,36 @@ export const productSlice = createSlice({
               "An error ocurred while getting the products associated to the shop",
           };
         }
-      );
+      )
+      .addCase(
+        getProductsSeller.fulfilled,
+        (state, action: PayloadAction<ProductType[]>) => {
+          state.products = action.payload || [];
+          state.productsAll = action.payload || [];
+          state.error = { code: null, message: null };
+        }
+      )
+      .addCase(getProductsSeller.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 404,
+          message: "An error ocurred while getting all the products",
+        };
+      })
+
+      .addCase(
+        restoreProduct.fulfilled,
+        (state, action: PayloadAction<ProductType>) => {
+          state.products = [...state.products, action.payload];
+          state.error = { code: null, message: null };
+        }
+      )
+
+      .addCase(restoreProduct.rejected, (state, action: PayloadAction<any>) => {
+        state.error = {
+          code: 404,
+          message: "An error ocurred when restoring the product",
+        };
+      })
   },
 });
 

@@ -5,7 +5,7 @@ import Validate from "../../helpers/validate";
 import { symlink } from "fs";
 import Swal from "sweetalert2";
 import {
-  createProduct,
+  createProductBySellerId,
   ProductType,
 } from "../../features/products/productSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -106,7 +106,7 @@ const Publicar = () => {
       // event.target.reset()
       // document.getElementById("form-public").reset();
       dispatch(
-        createProduct({
+        createProductBySellerId({
           ...input,
           suspended: input.suspended === "true",
           image: !input.image

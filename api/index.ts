@@ -22,10 +22,9 @@ import sequelize, { checkConnection } from "./src/db";
 
 const { API_PORT } = process.env || 3001;
 
-
 // Syncing all the models at once.
 checkConnection().then(async () => {
-  sequelize.sync({ force: false }).then(() => {
+  sequelize.sync().then(() => {
     server.listen(API_PORT, () => {
       console.log(`Server listening at ${API_PORT}`); // eslint-disable-line no-console
     });

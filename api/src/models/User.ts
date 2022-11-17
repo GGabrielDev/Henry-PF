@@ -57,7 +57,6 @@ export class User extends Model<
   declare address: string;
   declare imagenDePerfil: string | null;
   declare suspended: boolean;
-  declare isPremium: boolean;
   // timestamps!
   // createdAt can be undefined during creation
   declare createdAt: CreationOptional<Date>;
@@ -96,13 +95,34 @@ export class User extends Model<
 
   declare getFavoriteProduct: BelongsToManyGetAssociationsMixin<Product>;
   declare countFavoriteProducts: BelongsToManyCountAssociationsMixin;
-  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<Product,Product["id"]>;
-  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<Product,Product["id"]>;
-  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<Product,Product["id"]>;
-  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<Product,Product["id"]>;
-  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<Product,Product["id"]>;
-  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<Product,Product["id"]>;
-  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<Product,Product["id"]>;
+  declare hasFavoriteProduct: BelongsToManyHasAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare hasFavoriteProducts: BelongsToManyHasAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare setFavoriteProduct: BelongsToManySetAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare addFavoriteProduct: BelongsToManyAddAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare addFavoriteProducts: BelongsToManyAddAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeFavoriteProduct: BelongsToManyRemoveAssociationMixin<
+    Product,
+    Product["id"]
+  >;
+  declare removeFavoriteProducts: BelongsToManyRemoveAssociationsMixin<
+    Product,
+    Product["id"]
+  >;
   declare createFavoriteProduct: BelongsToManyCreateAssociationMixin<Product>;
 
   declare getRecipt: HasManyGetAssociationsMixin<Recipt>;
@@ -194,11 +214,6 @@ module.exports = (sequelize: Sequelize) => {
         validate: {
           isUrl: true,
         },
-      },
-
-      isPremium:{
-        type:DataTypes.BOOLEAN,
-        defaultValue: false,
       },
 
       suspended: {

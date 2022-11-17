@@ -48,7 +48,7 @@ const General = () => {
     setTimeout(() => {
       window.location.reload();
       dispatch(deleteSeller(user.sellerId as string));
-    }, 2000);
+    }, 1000);
   };
 
   const handleDispatchRestore = (user: UserType) => {

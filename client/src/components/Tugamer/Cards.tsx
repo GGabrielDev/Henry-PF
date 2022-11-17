@@ -14,9 +14,9 @@ const { selectSeller } = selectors;
 export default function Cards() {
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
-  const seller = useAppSelector(selectSeller)
+  const seller = useAppSelector(selectSeller);
   useEffect(() => {
-    dispatch(getProductsBySellerId(seller.id as string));
+    dispatch(getProducts());
   }, []);
 
   return (

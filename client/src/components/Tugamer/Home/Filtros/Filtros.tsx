@@ -1,4 +1,4 @@
-import  { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../../../app/hooks";
 import {
@@ -36,11 +36,13 @@ const Filtros = () => {
   }, [search, dispatch]);
   return (
     <FiltrosContainer>
-      {(isAuthenticated && usuario.sellerId !== null && usuario.suspended === true) ?
+      {isAuthenticated && usuario.sellerId !== null ? (
         <Link to="publicar" className="buttonfilter-container">
-        <button className="buttonfilter">+</button>
-      </Link>:      
-      <></>}     
+          <button className="buttonfilter">+</button>
+        </Link>
+      ) : (
+        <></>
+      )}
       <div className="inputcontainerfilet">
         <input
           placeholder="Productos"

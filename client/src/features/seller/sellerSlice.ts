@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { clear } from "console";
-import { RootState } from "../../app/store";
 import backAxios from "../../helpers/Axios";
+import { RootState } from "../../app/store";
 
 export type SellerType = BaseSellerType & {
   id: string | null;
@@ -89,10 +87,9 @@ export const getSellers = createAsyncThunk(
 
 export const editSeller = createAsyncThunk(
   "seller/editSeller",
-  async (seller: SellerType) => {
-    const { id, ...rest } = seller;
+  async ({ seller, id }: { seller: Partial<SellerType>; id: string }) => {
     const res = await backAxios.put(`/sellers/${id}`, {
-      ...rest,
+      ...seller,
     });
     return res.data;
   }

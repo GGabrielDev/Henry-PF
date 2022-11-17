@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { RootState } from "../../app/store";
 import backAxios from "../../helpers/Axios";
+import { RootState } from "../../app/store";
+
 
 export type UserType = {
   id: string;

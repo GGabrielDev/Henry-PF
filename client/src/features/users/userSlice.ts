@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import backAxios from "../../helpers/Axios";
 import { RootState } from "../../app/store";
 import { User } from "@auth0/auth0-react";
-import backAxios from "../../helpers/Axios";
 
 
 export type UserType = {
@@ -86,7 +85,6 @@ export const editUser = createAsyncThunk(
     return res.data;
   }
 );
-
 
 export const userSlice = createSlice({
   name: "user",

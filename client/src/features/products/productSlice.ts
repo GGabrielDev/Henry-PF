@@ -1,14 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import axios from "axios";
-import { UserType } from "../users/userSlice";
 import backAxios from "../../helpers/Axios";
+import { UserType } from "../users/userSlice";
 
-
-export type CategoryType ={
+export type CategoryType = {
   id: string;
-  name:string;
-}
+  name: string;
+};
 
 export type BaseProductType = {
   name: string;
@@ -176,12 +174,13 @@ export const createProductBySellerId = createAsyncThunk(
   }
 );
 
-export const createCategory = createAsyncThunk("productCategory/Categories", async ({category, id}: {category: Partial<CategoryType>, 
-  id: string})=>{
-const res = await axios.post(`http://localhost:3001/productCategory/${id}`, category)
-return res.data
-})
-
+export const createCategory = createAsyncThunk(
+  "productCategory/Categories",
+  async ({ category, id }: { category: Partial<CategoryType>; id: string }) => {
+    const res = await backAxios.post(`/productCategory/${id}`, category);
+    return res.data;
+  }
+);
 
 export const productSlice = createSlice({
   name: "product",

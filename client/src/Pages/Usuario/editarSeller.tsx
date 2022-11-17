@@ -23,7 +23,6 @@ const { selectUser } = userSelectors;
 
 export default function EditarSeller() {
   const [seller, setChange] = useState<Partial<SellerType>>({
-    nombreUrl: "",
     nombreNegocio: "",
     paymentId: "",
     template_page: "1",
@@ -147,11 +146,19 @@ export default function EditarSeller() {
               </div>
             </div>
             <Link to="/usuario/sellerGeneral">
-              {/* <button
-            className="submitproduct"
-            onClick={() => dispatch(editSeller({seller, id} as {seller: Partial<SellerType>, id:string}))} >
-            Cambiar
-          </button>  */}
+              <button
+                className="submitproduct"
+                onClick={() =>
+                  dispatch(
+                    editSeller({ seller, id } as {
+                      seller: Partial<SellerType>;
+                      id: string;
+                    })
+                  )
+                }
+              >
+                Cambiar
+              </button>
             </Link>
           </form>
         </AddProduct>
